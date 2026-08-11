@@ -1051,17 +1051,43 @@
                 t_updateErrorCounter();
                 t_initLevel();
                 t_clearCode();
+                // Show tutorial for this level if not seen
+                setTimeout(() => t_checkLevelTutorial(t_level), 300);
             };
         });
         t_initLevel();
         t_updateArduinoCode();
         t_updateErrorCounter();
-        // Check if tutorial needed
+        // Slides: só mostra na primeira visita de todas
         setTimeout(() => {
-            if(!localStorage.getItem('tesouro_tutorial_done')) {
-                t_showTutorialIntro();
+            if(!localStorage.getItem('tesouro_slides_done')) {
+                // Slides já estão visíveis no DOM
+            } else {
+                document.getElementById('t_slides').style.display = 'none';
+                // Se slides já vistos mas tutorial nível 1 não, mostra logo o tut
+                if(!localStorage.getItem('tesouro_tut_lvl_1')) {
+                    setTimeout(() => t_checkLevelTutorial(1), 500);
+                }
             }
         }, 400);
+    }
+    
+    // ================= SISTEMA DE TUTORIAIS POR NÍVEL =================
+    function t_checkLevelTutorial(lvl) {
+        const key = 'tesouro_tut_lvl_' + lvl;
+        if(localStorage.getItem(key)) return; // Already shown
+        
+        if(lvl === 1) {
+            t_showTutorialIntro();
+        } else if(lvl === 2) {
+            t_showLevel2Tutorial();
+        } else if(lvl === 3) {
+            t_showLevel3Tutorial();
+        }
+    }
+    
+    function t_markTutorialDone(lvl) {
+        localStorage.setItem('tesouro_tut_lvl_' + lvl, '1');
     }
     
     // ================= SLIDES DE INTRODUÇÃO =================
@@ -1091,7 +1117,8 @@
     function t_slidePrev() { if(t_currentSlide > 0) { t_currentSlide--; t_updateSlides(); } }
     function t_startFromSlides() {
         document.getElementById('t_slides').style.display = 'none';
-        t_showTutorialIntro();
+        localStorage.setItem('tesouro_slides_done', '1');
+        t_checkLevelTutorial(1);
     }
     
     // ================= TUTORIAL INTERATIVO =================
@@ -1193,7 +1220,7 @@
         btn.innerText = '🎮 Vamos Jogar!';
         btn.onclick = t_startPlaying;
         
-        localStorage.setItem('tesouro_tutorial_done', '1');
+        localStorage.setItem('tesouro_tut_lvl_1', '1');
         t_tutorialRunning = false;
     }
     
@@ -1210,7 +1237,7 @@
     function t_skipTutorial() {
         const overlay = document.getElementById('t_tutorial_overlay');
         overlay.classList.remove('active');
-        localStorage.setItem('tesouro_tutorial_done', '1');
+        localStorage.setItem('tesouro_tut_lvl_1', '1');
         t_level = 1;
         t_errors = 0;
         t_initLevel();
@@ -1341,7 +1368,7 @@
         btn.innerText = '🎮 Vamos Jogar!';
         btn.onclick = t_startLvl2Playing;
         
-        localStorage.setItem('tesouro_lvl2_tutorial_done', '1');
+        localStorage.setItem('tesouro_tut_lvl_2', '1');
         t_tutorialRunning = false;
     }
     
@@ -1358,8 +1385,156 @@
     function t_skipLvl2Tutorial() {
         const overlay = document.getElementById('t_tutorial_overlay');
         overlay.classList.remove('active');
-        localStorage.setItem('tesouro_lvl2_tutorial_done', '1');
+        localStorage.setItem('tesouro_tut_lvl_2', '1');
         t_level = 2;
+        t_errors = 0;
+        t_initLevel();
+        t_clearCode();
+        t_updateErrorCounter();
+    }
+
+    // ================= TUTORIAL NÍVEL 3 =================
+    const t_lvl3TutorialSteps = ['RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN','SUBIR','UP','UP','UP','RIGHT','RIGHT','SUBIR','RIGHT','DOWN','DOWN','DOWN','DOWN','DOWN'];
+    
+    function t_showLevel3Tutorial() {
+        const overlay = document.getElementById('t_tutorial_overlay');
+        if(!overlay) return;
+        overlay.classList.add('active');
+        document.getElementById('t_tut_icon').innerText = '🏰';
+        document.getElementById('t_tut_title').innerText = 'Nível 3 — A Torre!';
+        document.getElementById('t_tut_text').innerHTML = 'O tesouro está no <b style="color:#60A5FA;">topo da torre!</b><br><br>'
+            + '<span style="color:#F59E0B;">🪜 Suba 2 escadas</span> em andares diferentes para chegar ao topo.<br>'
+            + '<span style="color:#38BDF8;">🗺️ Mini-mapa:</span> Mostra o próximo andar — use para planejar!<br>'
+            + '<span style="color:#A78BFA;">🧩 Estratégia:</span> Planeje andar por andar: chão → escada 1 → plataforma → escada 2 → topo 🏆<br><br>'
+            + '<b>Assista a demonstração!</b>';
+        document.getElementById('t_tut_btn').innerText = '▶ Assistir Nível 3';
+        document.getElementById('t_tut_btn').onclick = t_runLvl3Demo;
+        document.getElementById('t_tut_skip').style.display = 'block';
+        document.getElementById('t_tut_skip').onclick = t_skipLvl3Tutorial;
+        const progress = document.getElementById('t_tut_progress');
+        progress.innerHTML = '';
+        for(let i=0; i<t_lvl3TutorialSteps.length; i++) {
+            const dot = document.createElement('span');
+            dot.style.width = '8px'; dot.style.height = '8px'; dot.style.borderRadius = '50%';
+            dot.style.background = '#334155'; dot.id = 'tutdot3-'+i;
+            progress.appendChild(dot);
+        }
+    }
+    
+    async function t_runLvl3Demo() {
+        if(t_tutorialRunning) return;
+        t_tutorialRunning = true;
+        const overlay = document.getElementById('t_tutorial_overlay');
+        const btn = document.getElementById('t_tut_btn');
+        const skipBtn = document.getElementById('t_tut_skip');
+        const counter = document.getElementById('t_tutorial_counter');
+        
+        overlay.classList.remove('active');
+        if(skipBtn) skipBtn.style.display = 'none';
+        if(counter) counter.classList.add('show');
+        
+        t_level = 3;
+        t_errors = 0;
+        t_initLevel();
+        t_clearCode();
+        await t_sleep(400);
+        
+        t_robotPos = {x:0, y:0, z:0};
+        t_renderBoard();
+        let px=0, py=0, pz=0;
+        
+        for(let i=0; i<t_lvl3TutorialSteps.length; i++) {
+            counter.innerText = `Passo ${i+1} / ${t_lvl3TutorialSteps.length}`;
+            const dot = document.getElementById('tutdot3-'+i);
+            if(dot) dot.style.background = '#F59E0B';
+            
+            const cmd = t_lvl3TutorialSteps[i];
+            const prevX=px, prevY=py;
+            
+            if(cmd==='SUBIR') {
+                counter.innerText = `🪜 SUBINDO para o Andar ${pz+2}...`;
+                await t_sleep(600);
+                const trans = document.getElementById('t_floor_transition');
+                const transText = document.getElementById('t_transition_text');
+                if(trans && transText) {
+                    transText.innerText = '⬆ SUBINDO...';
+                    trans.classList.add('show');
+                }
+                await t_sleep(500);
+                pz++;
+                t_robotPos = {x:px, y:py, z:pz};
+                t_renderBoard();
+                t_drawRobot(px, py, 'climbing');
+                if(trans) { await t_sleep(400); trans.classList.remove('show'); }
+                await t_sleep(300);
+                continue;
+            }
+            
+            if(cmd==='RIGHT') px++; else if(cmd==='DOWN') py++;
+            else if(cmd==='LEFT') px--; else if(cmd==='UP') py--;
+            
+            const nextCell = document.getElementById(`tc-${px}-${py}`);
+            if(nextCell && pz === t_robotPos.z) {
+                nextCell.classList.add('t-tutorial-highlight');
+                nextCell.style.background = 'rgba(56,189,248,0.3)';
+                nextCell.style.borderColor = '#38BDF8';
+            }
+            await t_sleep(450);
+            
+            const prevCell = document.getElementById(`tc-${prevX}-${prevY}`);
+            if(prevCell && pz === t_robotPos.z) {
+                prevCell.classList.remove('robot');
+                prevCell.innerHTML = '';
+                prevCell.classList.remove('t-tutorial-highlight');
+                prevCell.style.background = 'rgba(30,41,59,0.75)';
+                prevCell.style.borderColor = 'rgba(51,65,85,0.7)';
+            }
+            if(nextCell && pz === t_robotPos.z) {
+                nextCell.classList.add('robot', 'moving');
+                nextCell.innerHTML = T_ROBOT_SVG;
+                nextCell.classList.remove('t-tutorial-highlight');
+                setTimeout(() => nextCell.classList.remove('moving'), 300);
+            }
+            playSound('step');
+            await t_sleep(250);
+        }
+        
+        const treasureCell = document.getElementById(`tc-${px}-${py}`);
+        if(treasureCell && pz === t_robotPos.z) {
+            treasureCell.classList.add('robot', 'win');
+            treasureCell.innerHTML = '<div style="position:relative;">'+T_ROBOT_SVG+'<span style="position:absolute;top:-18px;right:-12px;font-size:1.4rem;">🎉</span></div>';
+        }
+        playSound('success');
+        counter.innerText = '🏆 Tesouro no Topo da Torre!';
+        await t_sleep(800);
+        
+        counter.classList.remove('show');
+        overlay.classList.add('active');
+        document.getElementById('t_tut_icon').innerText = '🧑‍💻';
+        document.getElementById('t_tut_title').innerText = 'Sua Vez na Torre!';
+        document.getElementById('t_tut_text').innerHTML = '3 andares, 2 escadas, 20 comandos!<br><br><b style="color:#38BDF8;">Dica:</b> Andar 1 → escada (4,5). Andar 2→ escada (6,2). Andar 3 → tesouro em (7,7)!<br><br>Use o <b style="color:#FBBF24;">mini-mapa</b> para planejar cada andar!';
+        btn.innerText = '🎮 Vamos Jogar!';
+        btn.onclick = t_startLvl3Playing;
+        
+        localStorage.setItem('tesouro_tut_lvl_3', '1');
+        t_tutorialRunning = false;
+    }
+    
+    function t_startLvl3Playing() {
+        const overlay = document.getElementById('t_tutorial_overlay');
+        overlay.classList.remove('active');
+        t_level = 3;
+        t_errors = 0;
+        t_initLevel();
+        t_clearCode();
+        t_updateErrorCounter();
+    }
+    
+    function t_skipLvl3Tutorial() {
+        const overlay = document.getElementById('t_tutorial_overlay');
+        overlay.classList.remove('active');
+        localStorage.setItem('tesouro_tut_lvl_3', '1');
+        t_level = 3;
         t_errors = 0;
         t_initLevel();
         t_clearCode();
@@ -1379,8 +1554,11 @@
                 if(nextBtn) {
                     nextBtn.click();
                     // Tutorial do novo nível
-                    if(nextLevel === 2 && !localStorage.getItem('tesouro_lvl2_tutorial_done')) {
+                    if(nextLevel === 2 && !localStorage.getItem('tesouro_tut_lvl_2')) {
                         setTimeout(() => t_showLevel2Tutorial(), 800);
+                    }
+                    if(nextLevel === 3 && !localStorage.getItem('tesouro_tut_lvl_3')) {
+                        setTimeout(() => t_showLevel3Tutorial(), 800);
                     }
                 }
             }, 2500);
