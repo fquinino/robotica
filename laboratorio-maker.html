@@ -336,23 +336,14 @@
 
     // ================= TRILHA DE APRENDIZAGEM =================
     // ================= PLANO DE AULAS (10 aulas) =================
-    const LESSON_START_DATE = '2026-08-11'; // Data da Aula 1
-    
-    function getLessonUnlockDate(dayOffset) {
-        const d = new Date(LESSON_START_DATE + 'T00:00:00');
-        d.setDate(d.getDate() + dayOffset);
-        return d;
-    }
+    const UNLOCKED_LESSONS = 1; // <-- Mude aqui: 1 = só aula 1, 2 = aulas 1-2, ..., 10 = todas
     
     function isLessonUnlocked(dayOffset) {
-        const now = new Date();
-        const unlockDate = getLessonUnlockDate(dayOffset);
-        return now >= unlockDate;
+        return dayOffset < UNLOCKED_LESSONS;
     }
     
     function formatUnlockDate(dayOffset) {
-        const d = getLessonUnlockDate(dayOffset);
-        return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+        return 'Aula ' + (dayOffset + 1);
     }
     
     const trailModules = [
@@ -471,8 +462,8 @@
             const stars = statuses[idx];
             const prevDone = idx === 0 || statuses[idx-1] >= 1;
             const isDone = stars >= 3;
-            const isCurrent = !isDone && prevDone;
-            const isLocked = !prevDone;
+            const isLocked = !prevDone || !isLessonUnlocked(m.day);
+            const isCurrent = !isDone && !isLocked;
 
             // Connector (not for first)
             if(idx > 0) {
@@ -494,7 +485,7 @@
                     <p style="color:#CBD5E1;margin:3px 0 0;font-size:0.78rem;line-height:1.3;">${m.pratica}</p>
                 </div>
                 <div style="text-align:right;flex-shrink:0;min-width:90px;">
-                    <div class="trail-node-badge">${isDone ? '✅ Concluída' : isCurrent ? '▶ Em Andamento' : '🔒 Bloqueada'}</div>
+                    <div class="trail-node-badge">${isDone ? '✅ Concluída' : isCurrent ? '▶ Em Andamento' : !isLessonUnlocked(m.day) ? '🔒 Em breve' : '🔒 Bloqueada'}</div>
                     <div style="margin-top:6px;font-size:0.85rem;">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
                 </div>
             `;
