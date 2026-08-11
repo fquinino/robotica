@@ -819,6 +819,16 @@
                 .t-bg-icon:nth-child(5) { top:40%; left:2%; animation-delay:5s; font-size:1.5rem; }
                 .t-bg-icon:nth-child(6) { top:50%; right:3%; animation-delay:3s; font-size:1.6rem; }
                 @keyframes t_float_bg { 0%,100%{transform:translateY(0) rotate(0deg)} 25%{transform:translateY(-8px) rotate(3deg)} 75%{transform:translateY(4px) rotate(-3deg)} }
+
+                /* Tutorial overlay */
+                .t-tutorial-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; z-index:998; opacity:0; pointer-events:none; transition:0.3s; }
+                .t-tutorial-overlay.active { opacity:1; pointer-events:all; }
+                .t-tutorial-box { background:#1E293B; border:3px solid #38BDF8; border-radius:28px; padding:28px 24px; max-width:480px; width:92%; text-align:center; box-shadow:0 0 50px rgba(56,189,248,0.3); }
+                .t-tutorial-step-counter { position:fixed; top:20px; left:50%; transform:translateX(-50%); background:rgba(15,23,42,0.95); border:2px solid #F59E0B; border-radius:20px; padding:8px 20px; color:#F59E0B; font-weight:900; font-size:1rem; z-index:997; font-family:'Fredoka One'; display:none; }
+                .t-tutorial-step-counter.show { display:block; animation:ardFadeIn 0.3s ease; }
+                .t-tutorial-highlight { animation: t_tut_pulse 0.8s ease-in-out infinite; }
+                @keyframes t_tut_pulse { 0%,100%{box-shadow:0 0 8px rgba(245,158,11,0.5)} 50%{box-shadow:0 0 20px rgba(245,158,11,0.9)} }
+                .t-blur-board { filter:blur(1px); transition:filter 0.3s; }
             </style>
             <div class="tesouro-wrapper">
                 <div class="t-intro-box" id="t_intro_box">
@@ -893,6 +903,19 @@
                     </div>
                     <button class="t-demo-reveal" id="t_demo_reveal_btn" onclick="t_revealSteps()" style="display:none;">🔍 Ainda não conseguiu? Ver passos em texto</button>
                 </div>
+                <div class="t-tutorial-step-counter" id="t_tutorial_counter">Passo 1 / 8</div>
+                <div class="t-tutorial-overlay" id="t_tutorial_overlay">
+                    <div class="t-tutorial-box">
+                        <div style="font-size:3.5rem;margin-bottom:8px;" id="t_tut_icon">🤖</div>
+                        <h2 style="font-family:'Fredoka One';color:white;margin:0 0 6px;" id="t_tut_title">Bem-vindo ao Caça ao Tesouro!</h2>
+                        <p style="color:#CBD5E1;font-size:0.95rem;line-height:1.6;margin-bottom:10px;" id="t_tut_text">
+                            Vou te mostrar como o robô pensa! <span style="color:#F59E0B;">Assista o robô resolver sozinho</span> — depois você faz igual.
+                        </p>
+                        <div id="t_tut_progress" style="display:flex;gap:4px;justify-content:center;margin-bottom:12px;"></div>
+                        <button class="btn-run" style="background:linear-gradient(135deg,#38BDF8,#0284C7);border-bottom:4px solid #0C4A6E;width:100%;font-size:1.1rem;" id="t_tut_btn" onclick="t_tutorialAction()">▶ Iniciar Tutorial</button>
+                        <button class="t-demo-reveal" style="margin-top:10px;" id="t_tut_skip" onclick="t_skipTutorial()">⏭ Pular tutorial — já sei jogar!</button>
+                    </div>
+                </div>
                 <button class="t-hint-btn" id="t_hint_btn" onclick="t_showSolution()">💡 Ver Solução (após 3 erros)</button>
                 <div class="t-solution-box" id="t_solution_box">
                     <div style="color:#A78BFA;font-weight:900;margin-bottom:8px;">🗺️ Caminho Correto:</div>
@@ -960,6 +983,164 @@
         t_initLevel();
         t_updateArduinoCode();
         t_updateErrorCounter();
+        // Check if tutorial needed
+        setTimeout(() => {
+            if(!localStorage.getItem('tesouro_tutorial_done')) {
+                t_showTutorialIntro();
+            }
+        }, 400);
+    }
+    
+    // ================= TUTORIAL INTERATIVO =================
+    let t_tutorialRunning = false;
+    const t_tutorialSol = ['RIGHT','RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN'];
+    
+    function t_showTutorialIntro() {
+        const overlay = document.getElementById('t_tutorial_overlay');
+        if(!overlay) return;
+        overlay.classList.add('active');
+        document.getElementById('t_tut_icon').innerText = '🤖';
+        document.getElementById('t_tut_title').innerText = 'Bem-vindo ao Caça ao Tesouro!';
+        document.getElementById('t_tut_text').innerHTML = 'Vou te mostrar como o robô pensa! <span style="color:#F59E0B;">Assista o robô resolver sozinho</span> — depois você faz igual.';
+        document.getElementById('t_tut_btn').innerText = '▶ Iniciar Tutorial';
+        document.getElementById('t_tut_btn').onclick = t_tutorialAction;
+        document.getElementById('t_tut_skip').style.display = 'block';
+        // Build progress dots
+        const progress = document.getElementById('t_tut_progress');
+        progress.innerHTML = '';
+        for(let i=0; i<t_tutorialSol.length; i++) {
+            const dot = document.createElement('span');
+            dot.style.width = '8px'; dot.style.height = '8px'; dot.style.borderRadius = '50%';
+            dot.style.background = '#334155'; dot.id = 'tutdot-'+i;
+            progress.appendChild(dot);
+        }
+    }
+    
+    async function t_tutorialAction() {
+        if(t_tutorialRunning) return;
+        t_tutorialRunning = true;
+        const overlay = document.getElementById('t_tutorial_overlay');
+        const btn = document.getElementById('t_tut_btn');
+        const skipBtn = document.getElementById('t_tut_skip');
+        const counter = document.getElementById('t_tutorial_counter');
+        
+        // Hide overlay during animation
+        overlay.classList.remove('active');
+        if(skipBtn) skipBtn.style.display = 'none';
+        if(counter) counter.classList.add('show');
+        
+        // Reset board for level 1
+        t_level = 1;
+        t_errors = 0;
+        t_initLevel();
+        t_clearCode();
+        await t_sleep(400);
+        
+        // Animate robot through solution
+        t_robotPos = {x:0, y:0, z:0};
+        t_renderBoard();
+        let px=0, py=0;
+        
+        for(let i=0; i<t_tutorialSol.length; i++) {
+            counter.innerText = `Passo ${i+1} / ${t_tutorialSol.length}`;
+            
+            // Update progress dot
+            const dot = document.getElementById('tutdot-'+i);
+            if(dot) dot.style.background = '#F59E0B';
+            
+            const cmd = t_tutorialSol[i];
+            const prevX=px, prevY=py;
+            if(cmd==='RIGHT') px++; else if(cmd==='DOWN') py++;
+            else if(cmd==='LEFT') px--; else if(cmd==='UP') py--;
+            
+            // Highlight next cell
+            const nextCell = document.getElementById(`tc-${px}-${py}`);
+            if(nextCell) {
+                nextCell.classList.add('t-tutorial-highlight');
+                nextCell.style.background = 'rgba(56,189,248,0.3)';
+                nextCell.style.borderColor = '#38BDF8';
+            }
+            
+            await t_sleep(500);
+            
+            // Move robot
+            const prevCell = document.getElementById(`tc-${prevX}-${prevY}`);
+            if(prevCell) {
+                prevCell.classList.remove('robot');
+                prevCell.innerHTML = '';
+                prevCell.classList.remove('t-tutorial-highlight');
+                prevCell.style.background = 'rgba(30,41,59,0.75)';
+                prevCell.style.borderColor = 'rgba(51,65,85,0.7)';
+            }
+            
+            if(nextCell) {
+                nextCell.classList.add('robot', 'moving');
+                nextCell.innerHTML = T_ROBOT_SVG;
+                nextCell.classList.remove('t-tutorial-highlight');
+                setTimeout(() => nextCell.classList.remove('moving'), 300);
+            }
+            
+            playSound('step');
+            await t_sleep(300);
+        }
+        
+        // Treasure reached!
+        const treasureCell = document.getElementById(`tc-${px}-${py}`);
+        if(treasureCell) {
+            treasureCell.classList.add('robot', 'win');
+            treasureCell.innerHTML = '<div style="position:relative;">'+T_ROBOT_SVG+'<span style="position:absolute;top:-18px;right:-12px;font-size:1.4rem;">🎉</span></div>';
+        }
+        
+        playSound('success');
+        counter.innerText = '🏆 Tesouro Encontrado!';
+        await t_sleep(800);
+        
+        // Show "Now it's your turn" overlay
+        counter.classList.remove('show');
+        overlay.classList.add('active');
+        document.getElementById('t_tut_icon').innerText = '🧑‍💻';
+        document.getElementById('t_tut_title').innerText = 'Agora é Sua Vez!';
+        document.getElementById('t_tut_text').innerHTML = 'Você viu o robô fazer <span style="color:#F59E0B;">8 passos</span> (4 ➡️ Direita + 4 ⬇️ Baixo)<br><br><b style="color:#38BDF8;">Monte os mesmos comandos</b> nos botões abaixo e clique em ▶ Executar!';
+        btn.innerText = '🎮 Vamos Jogar!';
+        btn.onclick = t_startPlaying;
+        
+        // Mark tutorial as done
+        localStorage.setItem('tesouro_tutorial_done', '1');
+        t_tutorialRunning = false;
+    }
+    
+    function t_startPlaying() {
+        const overlay = document.getElementById('t_tutorial_overlay');
+        overlay.classList.remove('active');
+        t_level = 1;
+        t_errors = 0;
+        t_initLevel();
+        t_clearCode();
+        t_updateErrorCounter();
+    }
+    
+    function t_skipTutorial() {
+        const overlay = document.getElementById('t_tutorial_overlay');
+        overlay.classList.remove('active');
+        localStorage.setItem('tesouro_tutorial_done', '1');
+        t_level = 1;
+        t_errors = 0;
+        t_initLevel();
+        t_clearCode();
+        t_updateErrorCounter();
+    }
+    
+    // ================= AUTO-AVANÇAR NÍVEL =================
+    let t_autoAdvTimer = null;
+    function t_checkAutoAdvance() {
+        if(t_level < 3) {
+            t_autoAdvTimer = setTimeout(() => {
+                t_autoAdvTimer = null;
+                const nextLevel = t_level + 1;
+                const nextBtn = document.querySelector(`.tesouro-wrapper .level-btn[data-level="${nextLevel}"]`);
+                if(nextBtn) nextBtn.click();
+            }, 2500);
+        }
     }
 
     function t_updateErrorCounter() {
@@ -1491,12 +1672,14 @@
         }
         if(t_robotPos.x===t_treasurePos.x&&t_robotPos.y===t_treasurePos.y&&t_robotPos.z===t_treasurePos.z) {
             t_drawRobot(t_robotPos.x,t_robotPos.y,'win');
-            t_showModal('🏆','Tesouro Encontrado! 🎉','O robô chegou ao pote de ouro! Incrível!');
+            const nextMsg = t_level < 3 ? `<br><br><span style="color:#38BDF8;">Nível ${t_level+1} desbloqueado em 3 segundos...</span>` : '';
+            t_showModal('🏆','Tesouro Encontrado! 🎉','O robô chegou ao pote de ouro! Incrível!'+nextMsg);
             playSound('success');
             let saved=JSON.parse(localStorage.getItem('tesouro_levels')||'[]');
             if(!saved.includes(t_level)) saved.push(t_level);
             localStorage.setItem('tesouro_levels', JSON.stringify(saved));
             updateTrail();
+            t_checkAutoAdvance();
         } else {
             t_showModal('❌','Quase lá!','O robô não chegou ao tesouro. Revise o caminho!');
             playSound('error');
@@ -1506,7 +1689,7 @@
     }
 
     function t_showModal(icon,title,text){ document.getElementById('t_mIcon').innerText=icon; document.getElementById('t_mTitle').innerText=title; document.getElementById('t_mText').innerText=text; document.getElementById('t_modal').classList.add('active'); }
-    function t_closeModal(){ document.getElementById('t_modal').classList.remove('active'); t_clearCode(); }
+    function t_closeModal(){ document.getElementById('t_modal').classList.remove('active'); if(t_autoAdvTimer){clearTimeout(t_autoAdvTimer);t_autoAdvTimer=null;} t_clearCode(); }
 
 
     // ================= LABMAKER (BANCADA INTERATIVA DE ELETRÔNICA & PROTOBOARD) =================
