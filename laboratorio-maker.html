@@ -788,8 +788,51 @@
                 /* Animação de transição entre andares */
                 .t-floor-transition { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:30; border-radius:22px; font-family:'Fredoka One'; font-size:1.5rem; color:#F59E0B; pointer-events:none; opacity:0; transition:opacity 0.15s; }
                 .t-floor-transition.show { opacity:1; }
+
+                /* Caixa intro algoritmo */
+                .t-intro-box { background:linear-gradient(135deg,#1E3A5F,#0F172A); border:2px solid #38BDF8; border-radius:18px; padding:16px 20px; margin-bottom:14px; position:relative; overflow:hidden; }
+                .t-intro-box::before { content:''; position:absolute; top:-20px; right:-20px; font-size:5rem; opacity:0.07; }
+                .t-intro-box .t-intro-title { color:#38BDF8; font-family:'Fredoka One'; margin:0 0 6px; font-size:1.2rem; }
+                .t-intro-box .t-intro-text { color:#CBD5E1; font-size:0.9rem; line-height:1.6; margin:0; }
+                .t-intro-highlight { color:#F59E0B; font-weight:900; background:rgba(245,158,11,0.1); padding:1px 6px; border-radius:4px; }
+                .t-intro-emoji { display:inline-block; font-size:1.2rem; margin:0 2px; vertical-align:middle; }
+
+                /* Preview animado */
+                .t-demo-board-wrap { position:relative; background:#0B132B; border:2px solid #38BDF8; border-radius:16px; padding:16px 20px; margin-top:10px; display:none; }
+                .t-demo-board-wrap.visible { display:block; animation:ardFadeIn 0.4s ease; }
+                .t-demo-hint { color:#38BDF8; font-weight:800; font-size:0.88rem; text-align:center; margin-bottom:10px; }
+                .t-demo-btn-play { background:linear-gradient(135deg,#38BDF8,#0284C7); border:none; color:white; padding:10px 20px; border-radius:50px; font-weight:900; cursor:pointer; font-size:0.95rem; border-bottom:4px solid #0C4A6E; width:100%; transition:0.15s; }
+                .t-demo-btn-play:active { transform:translateY(3px); border-bottom-width:1px; }
+                .t-demo-btn-play:disabled { background:#475569; border-bottom-color:#1E293B; cursor:not-allowed; }
+                .t-demo-cursor { width:18px; height:18px; background:#F59E0B; border-radius:50%; position:absolute; transition:all 0.35s ease; z-index:10; box-shadow:0 0 12px #F59E0B; display:none; pointer-events:none; }
+                .t-demo-cursor.visible { display:block; }
+                .t-demo-reveal { background:transparent; border:1px solid #64748B; color:#64748B; padding:6px 14px; border-radius:20px; font-size:0.75rem; cursor:pointer; margin-top:8px; display:block; margin-left:auto; margin-right:auto; }
+                .t-demo-reveal:hover { border-color:#94A3B8; color:#94A3B8; }
+
+                /* Background decorativo */
+                .t-bg-icons { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; border-radius:22px; }
+                .t-bg-icon { position:absolute; opacity:0.08; font-size:2rem; animation: t_float_bg 8s ease-in-out infinite; }
+                .t-bg-icon:nth-child(1) { top:5%; left:3%; animation-delay:0s; font-size:2.5rem; }
+                .t-bg-icon:nth-child(2) { top:15%; right:5%; animation-delay:2s; font-size:2rem; }
+                .t-bg-icon:nth-child(3) { bottom:10%; left:8%; animation-delay:4s; font-size:1.8rem; }
+                .t-bg-icon:nth-child(4) { bottom:20%; right:6%; animation-delay:1s; font-size:2.2rem; }
+                .t-bg-icon:nth-child(5) { top:40%; left:2%; animation-delay:5s; font-size:1.5rem; }
+                .t-bg-icon:nth-child(6) { top:50%; right:3%; animation-delay:3s; font-size:1.6rem; }
+                @keyframes t_float_bg { 0%,100%{transform:translateY(0) rotate(0deg)} 25%{transform:translateY(-8px) rotate(3deg)} 75%{transform:translateY(4px) rotate(-3deg)} }
             </style>
             <div class="tesouro-wrapper">
+                <div class="t-intro-box" id="t_intro_box">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span class="t-intro-title">🧠 O que é um Algoritmo?</span>
+                        <button onclick="document.getElementById('t_intro_box').style.display='none'" style="background:none;border:none;color:#64748B;cursor:pointer;font-size:1.1rem;">✕</button>
+                    </div>
+                    <p class="t-intro-text">
+                        Um <span class="t-intro-highlight">algoritmo</span> é como uma <span class="t-intro-highlight">receita de bolo</span>: uma sequência de passos organizados para resolver um problema! 
+                        <span class="t-intro-emoji">🤖</span> O robô precisa de <b>comandos na ordem certa</b> (⬆️⬇️⬅️➡️) para desviar dos obstáculos ✖, usar as escadas 🪜 e chegar ao tesouro 🏆.
+                        <br><br>
+                        <span style="color:#FCD34D;">💡 Dica:</span> Antes de programar, <b>observe o mini-mapa do próximo andar</b> abaixo do tabuleiro. Planeje cada passo — um comando errado e o robô bate!
+                    </p>
+                </div>
                 <div class="level-bar">
                     <button class="level-btn active" data-level="1">⭐ Nível 1 — Térreo</button>
                     <button class="level-btn" data-level="2">⭐⭐ Nível 2 — Plataforma Elevada</button>
@@ -801,6 +844,14 @@
                     <span style="color:#F59E0B;font-weight:900;font-size:0.82rem;" id="t_floor_label">1 / 1</span>
                 </div>
                 <div class="board-wrap">
+                    <div class="t-bg-icons">
+                        <span class="t-bg-icon">🤖</span>
+                        <span class="t-bg-icon">🏆</span>
+                        <span class="t-bg-icon">🪜</span>
+                        <span class="t-bg-icon">✖</span>
+                        <span class="t-bg-icon">🗺️</span>
+                        <span class="t-bg-icon">💎</span>
+                    </div>
                     <div class="board" id="t_board"></div>
                     <div class="t-floor-transition" id="t_floor_transition"><span id="t_transition_text"></span></div>
                 </div>
@@ -833,6 +884,15 @@
                     <button class="btn btn-run" onclick="t_runCode()"><i class="fas fa-play"></i> Executar</button>
                 </div>
                 <div class="t-error-counter" id="t_err_counter"></div>
+                <div class="t-demo-board-wrap" id="t_demo_board_wrap">
+                    <div class="t-demo-hint" id="t_demo_hint">🎬 Veja o robô resolver sozinho e depois faça igual!</div>
+                    <button class="t-demo-btn-play" id="t_demo_btn_play" onclick="t_playDemo()">▶ Assistir Demonstração</button>
+                    <div style="position:relative;margin-top:10px;">
+                        <div class="board" id="t_demo_board" style="max-width:320px;margin:0 auto;"></div>
+                        <div class="t-demo-cursor" id="t_demo_cursor"></div>
+                    </div>
+                    <button class="t-demo-reveal" id="t_demo_reveal_btn" onclick="t_revealSteps()" style="display:none;">🔍 Ainda não conseguiu? Ver passos em texto</button>
+                </div>
                 <button class="t-hint-btn" id="t_hint_btn" onclick="t_showSolution()">💡 Ver Solução (após 3 erros)</button>
                 <div class="t-solution-box" id="t_solution_box">
                     <div style="color:#A78BFA;font-weight:900;margin-bottom:8px;">🗺️ Caminho Correto:</div>
@@ -927,19 +987,154 @@
             2: { steps: ['RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN','SUBIR','DOWN','RIGHT','RIGHT'], text: 'Andar 1→ Vá 3x Direita e 4x Baixo até a escada em (3,4). Suba! Andar 2→ Desça 1x e vá 2x Direita até o tesouro em (5,5)!' },
             3: { steps: ['RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN','SUBIR','UP','UP','UP','RIGHT','RIGHT','SUBIR','RIGHT','DOWN','DOWN','DOWN','DOWN','DOWN'], text: 'Andar 1→ 3x Direita e 4x Baixo até escada (3,4). Suba. Andar 2→ 3x Cima e 2x Direita até escada (5,1). Suba. Andar 3→ 1x Direita e 5x Baixo até o tesouro em (6,6)!' }
         };
-        const sol = solutionData[t_level] || solutionData[1];
+        t_currentSol = solutionData[t_level] || solutionData[1];
+        
+        // Show the demo board
+        const demoWrap = document.getElementById('t_demo_board_wrap');
+        const demoHint = document.getElementById('t_demo_hint');
+        const btnPlay = document.getElementById('t_demo_btn_play');
+        const revealBtn = document.getElementById('t_demo_reveal_btn');
+        const cursor = document.getElementById('t_demo_cursor');
+        
+        if(demoWrap) demoWrap.classList.add('visible');
+        if(demoHint) demoHint.innerText = '🎬 Veja o robô resolver sozinho — depois monte os mesmos comandos!';
+        if(btnPlay) { btnPlay.disabled = false; btnPlay.innerHTML = '▶ Assistir Demonstração'; }
+        if(revealBtn) revealBtn.style.display = 'block';
+        if(cursor) cursor.classList.remove('visible');
+        
+        t_buildDemoBoard(0);
+        
+        // Also highlight solution on the main board
+        t_highlightSolutionPath(t_currentSol.steps);
+    }
+    
+    let t_currentSol = null;
+    let t_demoAnimating = false;
+    
+    function t_buildDemoBoard(startFloor) {
+        const board = document.getElementById('t_demo_board');
+        if(!board) return;
+        board.innerHTML = '';
+        board.style.gridTemplateColumns = `repeat(${t_gridSize}, 1fr)`;
+        const floor = t_floors[startFloor];
+        board.style.background = ['linear-gradient(180deg,#78350F,#451A03)','linear-gradient(180deg,#166534,#14532D)','linear-gradient(180deg,#1E3A8A,#172554)'][startFloor] || '#1E293B';
+        board.style.padding = '6px';
+        board.style.gap = '2px';
+        board.style.borderRadius = '14px';
+        board.style.minHeight = 'auto';
+        
+        for(let y=0; y<t_gridSize; y++) {
+            for(let x=0; x<t_gridSize; x++) {
+                const cell = document.createElement('div');
+                cell.id = `tdc-${x}-${y}`;
+                cell.style.aspectRatio = '1';
+                cell.style.minHeight = '24px';
+                cell.style.borderRadius = '5px';
+                cell.style.display = 'flex';
+                cell.style.alignItems = 'center';
+                cell.style.justifyContent = 'center';
+                cell.style.background = 'rgba(30,41,59,0.7)';
+                cell.style.border = '1.5px solid rgba(51,65,85,0.5)';
+                cell.style.fontSize = '0.6rem';
+                const isObs = floor.obstacles.some(o=>o.x===x&&o.y===y);
+                const isLad = floor.ladders.some(l=>l.x===x&&l.y===y);
+                const isTreas = t_treasurePos.x===x && t_treasurePos.y===y && t_treasurePos.z===startFloor;
+                if(isObs) { cell.style.background = 'repeating-linear-gradient(45deg,#334155,#334155 3px,#1E293B 3px,#1E293B 6px)'; cell.style.borderColor = '#EF4444'; }
+                if(isLad) { cell.style.background = 'rgba(245,158,11,0.3)'; cell.style.borderColor = '#F59E0B'; cell.innerHTML = '🪜'; }
+                if(isTreas) { cell.style.background = 'rgba(245,158,11,0.3)'; cell.style.borderColor = '#FCD34D'; cell.innerHTML = '🏆'; }
+                board.appendChild(cell);
+            }
+        }
+    }
+    
+    async function t_playDemo() {
+        if(t_demoAnimating || !t_currentSol) return;
+        t_demoAnimating = true;
+        const btnPlay = document.getElementById('t_demo_btn_play');
+        const cursorEl = document.getElementById('t_demo_cursor');
+        const revealBtn = document.getElementById('t_demo_reveal_btn');
+        if(btnPlay) { btnPlay.disabled = true; btnPlay.innerHTML = '▶ Executando...'; }
+        if(revealBtn) revealBtn.style.display = 'block';
+        
+        let px=0, py=0, pz=0, boardFloor=0;
+        t_buildDemoBoard(0);
+        
+        // Show starting position
+        const startCell = document.getElementById('tdc-0-0');
+        if(startCell) { startCell.style.background = '#F59E0B'; startCell.innerHTML = '🤖'; }
+        
+        if(cursorEl) cursorEl.classList.add('visible');
+        
+        for(let i=0; i<t_currentSol.steps.length; i++) {
+            const cmd = t_currentSol.steps[i];
+            const prevX=px, prevY=py;
+            
+            if(cmd==='SUBIR'||cmd==='DESCER') {
+                const oldZ = pz;
+                if(cmd==='SUBIR' && pz < t_floors.length-1) pz++;
+                else if(cmd==='DESCER' && pz > 0) pz--;
+                if(pz !== oldZ) {
+                    await t_sleep(500);
+                    // Show transition on demo
+                    const demoWrap = document.getElementById('t_demo_board_wrap');
+                    if(demoWrap) demoWrap.style.opacity = '0.5';
+                    await t_sleep(300);
+                    t_buildDemoBoard(pz);
+                    // Mark where we entered
+                    const entryCell = document.getElementById(`tdc-${px}-${py}`);
+                    if(entryCell) { entryCell.style.background = '#F59E0B'; entryCell.innerHTML = '🤖'; }
+                    if(demoWrap) demoWrap.style.opacity = '1';
+                    await t_sleep(400);
+                    continue;
+                }
+            } else {
+                if(cmd==='RIGHT') px++; else if(cmd==='LEFT') px--;
+                else if(cmd==='DOWN') py++; else if(cmd==='UP') py--;
+                
+                // Check bounds
+                if(px<0||px>=t_gridSize||py<0||py>=t_gridSize) { t_demoAnimating=false; if(btnPlay){btnPlay.disabled=false;btnPlay.innerHTML='▶ Assistir Demonstração';} return; }
+                
+                // Animate cursor
+                await t_sleep(350);
+                
+                // Clear previous
+                const prevCell = document.getElementById(`tdc-${prevX}-${prevY}`);
+                if(prevCell && !(prevX===0&&prevY===0)) {
+                    const floorT = t_floors[boardFloor];
+                    const isLad = floorT.ladders.some(l=>l.x===prevX&&l.y===prevY);
+                    if(isLad) { prevCell.style.background = 'rgba(245,158,11,0.3)'; prevCell.innerHTML = '🪜'; }
+                    else { prevCell.style.background = 'rgba(30,41,59,0.7)'; prevCell.innerHTML = ''; }
+                }
+                
+                // Mark new position
+                const newCell = document.getElementById(`tdc-${px}-${py}`);
+                if(newCell) {
+                    const isTreasure = t_treasurePos.x===px && t_treasurePos.y===py && t_treasurePos.z===pz;
+                    newCell.style.background = isTreasure ? '#10B981' : '#F59E0B';
+                    newCell.innerHTML = isTreasure ? '🏆✨' : '🤖';
+                }
+            }
+        }
+        
+        await t_sleep(600);
+        if(btnPlay) { btnPlay.disabled = false; btnPlay.innerHTML = '🔄 Repetir Demonstração'; }
+        t_demoAnimating = false;
+    }
+    
+    function t_revealSteps() {
+        const box = document.getElementById('t_solution_box');
         const stepsEl = document.getElementById('t_solution_steps');
         const textEl = document.getElementById('t_solution_text');
-        const box = document.getElementById('t_solution_box');
-        if(stepsEl) stepsEl.innerHTML = sol.steps.map(s => `<span class="t-sol-step">${s}</span>`).join(' → ');
-        if(textEl) textEl.innerHTML = `📝 <strong>Explicação:</strong> ${sol.text}`;
+        if(!t_currentSol) return;
+        if(stepsEl) stepsEl.innerHTML = t_currentSol.steps.map(s => `<span class="t-sol-step">${s}</span>`).join(' → ');
+        if(textEl) textEl.innerHTML = `📝 <strong>Explicação:</strong> ${t_currentSol.text}`;
         if(box) box.classList.add('visible');
-        // Highlight solution path on board
-        t_highlightSolutionPath(sol.steps);
     }
-
+    
     function t_highlightSolutionPath(steps) {
         let px=0, py=0, pz=0;
+        const allCells = document.querySelectorAll('.tesouro-wrapper .solution-path');
+        allCells.forEach(c => { c.classList.remove('solution-path'); delete c.dataset.step; });
         steps.forEach((cmd, i) => {
             if(cmd==='RIGHT') px++;
             else if(cmd==='LEFT') px--;
@@ -949,7 +1144,7 @@
             else if(cmd==='DESCER') pz--;
             if(cmd==='SUBIR'||cmd==='DESCER') return;
             const cell = document.getElementById(`tc-${px}-${py}`);
-            if(cell && !cell.classList.contains('obstacle') && !cell.classList.contains('treasure')) {
+            if(cell && !cell.classList.contains('obstacle') && !cell.classList.contains('treasure') && pz===t_treasurePos.z?false:true) {
                 cell.classList.add('solution-path');
                 cell.dataset.step = i+1;
             }
@@ -1207,6 +1402,13 @@
         t_updateArduinoCode();
         const box = document.getElementById('t_solution_box');
         if(box) box.classList.remove('visible');
+        const demoWrap = document.getElementById('t_demo_board_wrap');
+        if(demoWrap) demoWrap.classList.remove('visible');
+        t_currentSol = null;
+        // Clear solution highlights
+        document.querySelectorAll('.tesouro-wrapper .solution-path').forEach(c => { c.classList.remove('solution-path'); delete c.dataset.step; });
+        const cursor = document.getElementById('t_demo_cursor');
+        if(cursor) cursor.classList.remove('visible');
     }
 
     function t_updateArduinoCode() {
