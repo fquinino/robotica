@@ -671,9 +671,9 @@
             <style>
                 .tesouro-wrapper .board-wrap { position:relative; max-width:500px; margin:0 auto; }
                 .tesouro-wrapper .board { display:grid; gap:3px; padding:8px; border-radius:22px; background:linear-gradient(180deg,#475569,#1E293B,#0F172A); border:3px solid #334155; box-shadow:0 12px 40px rgba(0,0,0,0.65), inset 0 0 60px rgba(0,0,0,0.4); position:relative; transition:background 0.5s; }
-                .tesouro-wrapper .board.floor-0 { background:linear-gradient(180deg,#78350F,#451A03); }
-                .tesouro-wrapper .board.floor-1 { background:linear-gradient(180deg,#166534,#14532D); }
-                .tesouro-wrapper .board.floor-2 { background:linear-gradient(180deg,#1E3A8A,#172554); }
+                .tesouro-wrapper .board.floor-0 { background:linear-gradient(180deg,#C2410C,#7C2D12); border-color:#F97316; }
+                .tesouro-wrapper .board.floor-1 { background:linear-gradient(180deg,#16A34A,#14532D); border-color:#22C55E; }
+                .tesouro-wrapper .board.floor-2 { background:linear-gradient(180deg,#3B82F6,#1E3A8A); border-color:#60A5FA; }
                 .tesouro-wrapper .cell { background:rgba(30,41,59,0.75); border-radius:8px; display:flex; align-items:center; justify-content:center; border:2px solid rgba(51,65,85,0.7); transition:all 0.25s; aspect-ratio:1; min-height:44px; position:relative; overflow:hidden; cursor:default; }
                 .tesouro-wrapper .cell:hover { border-color:rgba(56,189,248,0.5); box-shadow:inset 0 0 10px rgba(56,189,248,0.1); }
                 
@@ -719,9 +719,10 @@
                 .tesouro-wrapper .cell.solution-path { background:rgba(56,189,248,0.22) !important; border-color:#38BDF8 !important; }
                 .tesouro-wrapper .cell.solution-path::before { content:attr(data-step); position:absolute; font-size:0.7rem; font-weight:900; color:#38BDF8; top:2px; left:4px; z-index:5; }
 
-                .tesouro-wrapper .controls { display:flex; gap:8px; justify-content:center; margin:12px 0; flex-wrap:wrap; }
-                .tesouro-wrapper .btn { background:#334155; border:none; color:white; padding:10px 16px; border-radius:12px; font-size:1.4rem; border-bottom:4px solid #0F172A; cursor:pointer; min-width:54px; transition:0.1s; font-weight:900; }
-                .tesouro-wrapper .btn:active { transform:translateY(3px); border-bottom-width:1px; }
+                .tesouro-wrapper .controls { display:flex; gap:10px; justify-content:center; margin:14px 0; flex-wrap:wrap; }
+                .tesouro-wrapper .btn { background:#475569; border:none; color:white; padding:12px 18px; border-radius:14px; font-size:1.5rem; border-bottom:5px solid #1E293B; cursor:pointer; min-width:56px; transition:0.1s; font-weight:900; }
+                .tesouro-wrapper .btn:active { transform:translateY(4px); border-bottom-width:1px; }
+                .tesouro-wrapper .btn.special { background:linear-gradient(135deg,#8B5CF6,#7C3AED); font-size:1rem; border-bottom-color:#5B21B6; }
                 .tesouro-wrapper .code-area { background:#0F172A; border-radius:14px; min-height:46px; padding:10px; border:2px dashed #334155; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
                 .tesouro-wrapper .code-slot { background:#1E293B; padding:4px 12px; border-radius:8px; color:#F59E0B; font-size:1.1rem; font-weight:900; }
                 .tesouro-wrapper .actions { display:flex; gap:8px; margin-top:8px; }
@@ -731,6 +732,7 @@
                 .tesouro-wrapper .level-bar { display:flex; gap:8px; justify-content:center; margin:8px 0; flex-wrap:wrap; }
                 .tesouro-wrapper .level-btn { background:#334155; border:none; color:#94A3B8; padding:7px 18px; border-radius:30px; font-weight:900; cursor:pointer; transition:0.2s; }
                 .tesouro-wrapper .level-btn.active { background:#F59E0B; color:#0F172A; box-shadow:0 0 15px rgba(245,158,11,0.4); }
+                .tesouro-wrapper .level-btn.done { background:#065F46; color:#34D399; border-color:#10B981; }
                 .tesouro-wrapper .modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:flex; justify-content:center; align-items:center; z-index:999; opacity:0; pointer-events:none; transition:0.3s; }
                 .tesouro-wrapper .modal.active { opacity:1; pointer-events:all; }
                 .tesouro-wrapper .modal-box { background:#1E293B; padding:28px; border-radius:28px; max-width:400px; width:90%; text-align:center; border:3px solid #F59E0B; box-shadow:0 0 40px rgba(245,158,11,0.3); }
@@ -819,6 +821,19 @@
                 .t-bg-icon:nth-child(5) { top:40%; left:2%; animation-delay:5s; font-size:1.5rem; }
                 .t-bg-icon:nth-child(6) { top:50%; right:3%; animation-delay:3s; font-size:1.6rem; }
                 @keyframes t_float_bg { 0%,100%{transform:translateY(0) rotate(0deg)} 25%{transform:translateY(-8px) rotate(3deg)} 75%{transform:translateY(4px) rotate(-3deg)} }
+
+                /* Confetes na vitória */
+                .t-confetti { position:fixed; pointer-events:none; z-index:1000; font-size:2rem; animation:t_confettiFall 2.5s ease-out forwards; }
+                @keyframes t_confettiFall { 0%{transform:translateY(-80px) rotate(0deg);opacity:1} 100%{transform:translateY(105vh) rotate(720deg);opacity:0} }
+
+                /* Modal vitória mais infantil */
+                .tesouro-wrapper .modal-box { background:linear-gradient(180deg,#1E293B,#0F172A); padding:32px; border-radius:32px; max-width:420px; width:92%; text-align:center; border:4px solid #FBBF24; box-shadow:0 0 60px rgba(251,191,36,0.35); animation:t_bounceIn 0.5s ease; }
+                @keyframes t_bounceIn { 0%{transform:scale(0.7);opacity:0} 60%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
+                .tesouro-wrapper .modal-title { font-family:'Fredoka One'; color:#FBBF24; font-size:1.8rem; margin:6px 0; text-shadow:0 2px 8px rgba(251,191,36,0.3); }
+                .tesouro-wrapper .modal-text { color:#CBD5E1; margin:8px 0 20px; line-height:1.6; font-size:1rem; }
+                .tesouro-wrapper .btn-modal { background:linear-gradient(135deg,#FBBF24,#F59E0B); border:none; padding:14px 36px; border-radius:50px; font-weight:900; cursor:pointer; color:#0F172A; font-size:1.1rem; border-bottom:5px solid #B45309; transition:0.15s; }
+                .tesouro-wrapper .btn-modal:active { transform:translateY(4px); border-bottom-width:1px; }
+                .tesouro-wrapper .modal-icon { font-size:5rem; margin-bottom:4px; animation:t_bounceIn 0.6s ease 0.2s both; }
 
                 /* Tutorial overlay */
                 .t-tutorial-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; z-index:998; opacity:0; pointer-events:none; transition:0.3s; }
@@ -942,8 +957,8 @@
                     <button class="btn" onclick="t_addCmd('DOWN')" title="Mover para baixo">⬇</button>
                     <button class="btn" onclick="t_addCmd('LEFT')" title="Mover para esquerda">⬅</button>
                     <button class="btn" onclick="t_addCmd('RIGHT')" title="Mover para direita">➡</button>
-                    <button class="btn" style="background:#7C3AED;font-size:1rem;" onclick="t_addCmd('SUBIR')">Subir 🪜</button>
-                    <button class="btn" style="background:#7C3AED;font-size:1rem;" onclick="t_addCmd('DESCER')">Descer 🪜</button>
+                    <button class="btn special" onclick="t_addCmd('SUBIR')">🪜 Subir</button>
+                    <button class="btn special" onclick="t_addCmd('DESCER')">🪜 Descer</button>
                 </div>
                 <div class="code-area" id="t_codeArea"><span style="color:#64748B;">Adicione comandos...</span></div>
                 <div class="actions">
@@ -1357,13 +1372,15 @@
         if(t_level < 3) {
             t_autoAdvTimer = setTimeout(() => {
                 t_autoAdvTimer = null;
+                // Fecha o modal de vitória
+                document.getElementById('t_modal').classList.remove('active');
                 const nextLevel = t_level + 1;
                 const nextBtn = document.querySelector(`.tesouro-wrapper .level-btn[data-level="${nextLevel}"]`);
                 if(nextBtn) {
                     nextBtn.click();
-                    // Show tutorial for new level mechanics if first time
+                    // Tutorial do novo nível
                     if(nextLevel === 2 && !localStorage.getItem('tesouro_lvl2_tutorial_done')) {
-                        setTimeout(() => t_showLevel2Tutorial(), 600);
+                        setTimeout(() => t_showLevel2Tutorial(), 800);
                     }
                 }
             }, 2500);
@@ -1585,7 +1602,17 @@
                 { obstacles:[{x:4,y:5},{x:3,y:2}], ladders:[{x:5,y:1}] }
             ];
         }
+        t_markCompletedLevels();
         t_renderBoard();
+    }
+    
+    function t_markCompletedLevels() {
+        const saved = JSON.parse(localStorage.getItem('tesouro_levels')||'[]');
+        document.querySelectorAll('.tesouro-wrapper .level-btn').forEach(btn => {
+            const lvl = parseInt(btn.dataset.level);
+            if(saved.includes(lvl)) btn.classList.add('done');
+            else btn.classList.remove('done');
+        });
     }
 
     function t_renderBoard() {
@@ -1899,7 +1926,8 @@
         }
         if(t_robotPos.x===t_treasurePos.x&&t_robotPos.y===t_treasurePos.y&&t_robotPos.z===t_treasurePos.z) {
             t_drawRobot(t_robotPos.x,t_robotPos.y,'win');
-            const nextMsg = t_level < 3 ? `<br><br><span style="color:#38BDF8;">Nível ${t_level+1} desbloqueado em 3 segundos...</span>` : '';
+            t_spawnConfetti();
+            const nextMsg = t_level < 3 ? `<br><br><span style="color:#38BDF8;font-size:0.9rem;">Nível ${t_level+1} desbloqueado em 3 segundos...</span>` : '';
             t_showModal('🏆','Tesouro Encontrado! 🎉','O robô chegou ao pote de ouro! Incrível!'+nextMsg);
             playSound('success');
             let saved=JSON.parse(localStorage.getItem('tesouro_levels')||'[]');
@@ -1917,6 +1945,22 @@
 
     function t_showModal(icon,title,text){ document.getElementById('t_mIcon').innerText=icon; document.getElementById('t_mTitle').innerText=title; document.getElementById('t_mText').innerText=text; document.getElementById('t_modal').classList.add('active'); }
     function t_closeModal(){ document.getElementById('t_modal').classList.remove('active'); if(t_autoAdvTimer){clearTimeout(t_autoAdvTimer);t_autoAdvTimer=null;} t_clearCode(); }
+    
+    function t_spawnConfetti() {
+        const emojis = ['🎉','🌟','✨','💫','🎊','⭐','🔶','💛','🎯','🏆'];
+        for(let i=0; i<20; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.className = 't-confetti';
+                confetti.style.left = (5 + Math.random() * 90) + '%';
+                confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }, i * 60);
+        }
+    }
 
 
     // ================= LABMAKER (BANCADA INTERATIVA DE ELETRÔNICA & PROTOBOARD) =================
