@@ -669,46 +669,65 @@
         const container = document.getElementById('tesouro-container');
         container.innerHTML = `
             <style>
-                .tesouro-wrapper .board { display:grid; gap:4px; max-width:420px; margin:0 auto; padding:12px; border-radius:18px; background:linear-gradient(135deg,#0F172A,#1E293B); border:2px solid #334155; box-shadow:0 8px 30px rgba(0,0,0,0.5); position:relative; }
-                .tesouro-wrapper .cell { background:rgba(30,41,59,0.9); border-radius:8px; display:flex; align-items:center; justify-content:center; border:1.5px solid #334155; transition:all 0.2s; aspect-ratio:1; min-height:40px; position:relative; overflow:hidden; }
+                .tesouro-wrapper .board-wrap { position:relative; max-width:500px; margin:0 auto; }
+                .tesouro-wrapper .board { display:grid; gap:3px; padding:8px; border-radius:22px; background:linear-gradient(180deg,#475569,#1E293B,#0F172A); border:3px solid #334155; box-shadow:0 12px 40px rgba(0,0,0,0.65), inset 0 0 60px rgba(0,0,0,0.4); position:relative; transition:background 0.5s; }
+                .tesouro-wrapper .board.floor-0 { background:linear-gradient(180deg,#78350F,#451A03); }
+                .tesouro-wrapper .board.floor-1 { background:linear-gradient(180deg,#166534,#14532D); }
+                .tesouro-wrapper .board.floor-2 { background:linear-gradient(180deg,#1E3A8A,#172554); }
+                .tesouro-wrapper .cell { background:rgba(30,41,59,0.75); border-radius:8px; display:flex; align-items:center; justify-content:center; border:2px solid rgba(51,65,85,0.7); transition:all 0.25s; aspect-ratio:1; min-height:44px; position:relative; overflow:hidden; cursor:default; }
+                .tesouro-wrapper .cell:hover { border-color:rgba(56,189,248,0.5); box-shadow:inset 0 0 10px rgba(56,189,248,0.1); }
+                
+                /* Plataformas elevadas (células que formam a base de um andar superior) */
+                .tesouro-wrapper .cell.platform { background:rgba(245,158,11,0.2); border-color:#F59E0B; border-style:dashed; }
+                .tesouro-wrapper .cell.platform::after { content:''; position:absolute; top:3px; right:3px; width:6px; height:6px; border-radius:50%; background:#F59E0B; opacity:0.8; }
 
                 /* Robô SVG */
-                .tesouro-wrapper .cell.robot { background:rgba(254,240,138,0.15); border-color:#F59E0B; box-shadow:0 0 12px rgba(245,158,11,0.4); }
-                .tesouro-wrapper .cell.robot .robot-svg { animation:robotIdle 1s ease-in-out infinite; }
+                .tesouro-wrapper .cell.robot { background:rgba(254,240,138,0.2); border-color:#F59E0B; box-shadow:0 0 16px rgba(245,158,11,0.5); z-index:5; }
+                .tesouro-wrapper .cell.robot .robot-svg { animation:robotIdle 1s ease-in-out infinite; filter:drop-shadow(0 0 6px rgba(245,158,11,0.6)); }
                 .tesouro-wrapper .cell.robot.moving .robot-svg { animation:robotWalk 0.3s ease-in-out; }
-                .tesouro-wrapper .cell.robot.crash { background:rgba(239,68,68,0.15); border-color:#EF4444; box-shadow:0 0 20px rgba(239,68,68,0.5); }
+                .tesouro-wrapper .cell.robot.crash { background:rgba(239,68,68,0.25); border-color:#EF4444; box-shadow:0 0 25px rgba(239,68,68,0.6); animation:t_shake 0.3s ease-in-out; }
                 .tesouro-wrapper .cell.robot.crash .robot-svg { animation:robotCrash 0.4s ease-in-out; }
-                .tesouro-wrapper .cell.robot.win { background:rgba(16,185,129,0.2); border-color:#10B981; box-shadow:0 0 25px rgba(16,185,129,0.5); }
+                .tesouro-wrapper .cell.robot.win { background:rgba(16,185,129,0.3); border-color:#10B981; box-shadow:0 0 30px rgba(16,185,129,0.7); }
                 .tesouro-wrapper .cell.robot.win .robot-svg { animation:robotWin 0.5s ease-in-out infinite; }
+                .tesouro-wrapper .cell.robot.climbing .robot-svg { animation:robotClimb 0.5s ease-in-out; }
+                @keyframes t_shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-4px)} 40%{transform:translateX(4px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} }
                 @keyframes robotIdle { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px)} }
-                @keyframes robotWalk { 0%{transform:translateX(-4px) rotate(-3deg)} 50%{transform:translateY(-4px)} 100%{transform:translateX(0) rotate(0)} }
+                @keyframes robotWalk { 0%{transform:translateX(-3px) rotate(-3deg)} 50%{transform:translateY(-3px)} 100%{transform:translateX(0) rotate(0)} }
                 @keyframes robotCrash { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
-                @keyframes robotWin { 0%,100%{transform:scale(1) rotate(0)} 25%{transform:scale(1.15) rotate(-8deg)} 75%{transform:scale(1.15) rotate(8deg)} }
+                @keyframes robotWin { 0%,100%{transform:scale(1) rotate(0)} 25%{transform:scale(1.2) rotate(-10deg)} 75%{transform:scale(1.2) rotate(10deg)} }
+                @keyframes robotClimb { 0%{transform:translateY(0) scale(1)} 40%{transform:translateY(-15px) scale(0.8)} 100%{transform:translateY(0) scale(1)} }
 
-                /* Bloqueios: X vermelho */
-                .tesouro-wrapper .cell.obstacle { background:rgba(71,85,105,0.6); border-color:#475569; }
-                .tesouro-wrapper .cell.obstacle::after { content:'✖'; color:#EF4444; font-size:1.4rem; font-weight:900; text-shadow:0 0 8px rgba(239,68,68,0.8); line-height:1; }
+                /* Bloqueios: parede de tijolos */
+                .tesouro-wrapper .cell.obstacle { background:repeating-linear-gradient(45deg,#334155,#334155 4px,#1E293B 4px,#1E293B 8px); border-color:#475569; }
+                .tesouro-wrapper .cell.obstacle::after { content:'✖'; color:#EF4444; font-size:1.5rem; font-weight:900; text-shadow:0 0 10px rgba(239,68,68,0.9); line-height:1; z-index:1; }
+                .tesouro-wrapper .cell.obstacle.path-block::after { content:''; }
 
-                /* Tesouro: pote de ouro */
-                .tesouro-wrapper .cell.treasure { background:rgba(245,158,11,0.12); border-color:#F59E0B; animation:treasureGlow 1.5s ease-in-out infinite; }
-                @keyframes treasureGlow { 0%,100%{box-shadow:0 0 10px rgba(245,158,11,0.3)} 50%{box-shadow:0 0 25px rgba(245,158,11,0.7)} }
+                /* Tesouro no pedestal */
+                .tesouro-wrapper .cell.treasure { background:rgba(245,158,11,0.18); border-color:#F59E0B; animation:treasureGlow 1.5s ease-in-out infinite; }
+                .tesouro-wrapper .cell.treasure.elevated { border-color:#FCD34D; box-shadow:0 0 20px rgba(245,158,11,0.5), 0 8px 0 rgba(0,0,0,0.3); transform:translateY(-4px); }
+                .tesouro-wrapper .cell.treasure.elevated::before { content:''; position:absolute; bottom:-8px; left:10%; width:80%; height:8px; background:linear-gradient(90deg,transparent,#92400E,transparent); border-radius:4px; z-index:0; }
+                @keyframes treasureGlow { 0%,100%{box-shadow:0 0 12px rgba(245,158,11,0.3)} 50%{box-shadow:0 0 30px rgba(245,158,11,0.8),0 10px 0 rgba(0,0,0,0.3)} }
 
                 /* Escada */
-                .tesouro-wrapper .cell.ladder { background:rgba(245,158,11,0.18); border-color:#F59E0B; }
-                .tesouro-wrapper .cell.ladder::after { content:'🪜'; position:absolute; font-size:1.5rem; opacity:0.9; }
+                .tesouro-wrapper .cell.ladder { background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(245,158,11,0.08)); border-color:#F59E0B; border-style:dashed; }
+                .tesouro-wrapper .cell.ladder::after { content:'🪜'; position:absolute; font-size:1.8rem; opacity:0.95; filter:drop-shadow(0 2px 3px rgba(0,0,0,0.5)); z-index:2; }
+                .tesouro-wrapper .cell.ladder.ladder-up::before { content:'⬆'; position:absolute; top:2px; right:3px; font-size:0.7rem; color:#34D399; z-index:3; animation:ladderPulse 1s infinite; }
+                .tesouro-wrapper .cell.ladder.ladder-down::before { content:'⬇'; position:absolute; top:2px; right:3px; font-size:0.7rem; color:#EF4444; z-index:3; }
+                @keyframes ladderPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
 
                 /* Caminho solução */
-                .tesouro-wrapper .cell.solution-path { background:rgba(56,189,248,0.18) !important; border-color:#38BDF8 !important; }
+                .tesouro-wrapper .cell.solution-path { background:rgba(56,189,248,0.22) !important; border-color:#38BDF8 !important; }
                 .tesouro-wrapper .cell.solution-path::before { content:attr(data-step); position:absolute; font-size:0.7rem; font-weight:900; color:#38BDF8; top:2px; left:4px; z-index:5; }
 
-                .tesouro-wrapper .controls { display:flex; gap:8px; justify-content:center; margin:10px 0; flex-wrap:wrap; }
+                .tesouro-wrapper .controls { display:flex; gap:8px; justify-content:center; margin:12px 0; flex-wrap:wrap; }
                 .tesouro-wrapper .btn { background:#334155; border:none; color:white; padding:10px 16px; border-radius:12px; font-size:1.4rem; border-bottom:4px solid #0F172A; cursor:pointer; min-width:54px; transition:0.1s; font-weight:900; }
                 .tesouro-wrapper .btn:active { transform:translateY(3px); border-bottom-width:1px; }
                 .tesouro-wrapper .code-area { background:#0F172A; border-radius:14px; min-height:46px; padding:10px; border:2px dashed #334155; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
-                .tesouro-wrapper .code-slot { background:#1E293B; padding:4px 10px; border-radius:8px; color:#F59E0B; font-size:1.1rem; font-weight:900; }
+                .tesouro-wrapper .code-slot { background:#1E293B; padding:4px 12px; border-radius:8px; color:#F59E0B; font-size:1.1rem; font-weight:900; }
                 .tesouro-wrapper .actions { display:flex; gap:8px; margin-top:8px; }
                 .tesouro-wrapper .btn-run { background:linear-gradient(135deg,#10B981,#059669); flex:2; border-bottom:4px solid #047857; font-size:1rem; }
                 .tesouro-wrapper .btn-clear { background:#EF4444; flex:1; border-bottom:4px solid #991B1B; }
+                .tesouro-wrapper .btn-undo { background:#F59E0B; flex:1; border-bottom:4px solid #B45309; color:#0F172A; }
                 .tesouro-wrapper .level-bar { display:flex; gap:8px; justify-content:center; margin:8px 0; flex-wrap:wrap; }
                 .tesouro-wrapper .level-btn { background:#334155; border:none; color:#94A3B8; padding:7px 18px; border-radius:30px; font-weight:900; cursor:pointer; transition:0.2s; }
                 .tesouro-wrapper .level-btn.active { background:#F59E0B; color:#0F172A; box-shadow:0 0 15px rgba(245,158,11,0.4); }
@@ -738,20 +757,34 @@
                 .t-solution-box.visible { display:block; animation:ardFadeIn 0.3s ease; }
                 .t-sol-step { display:inline-block; background:#1E293B; border:1px solid #7C3AED; color:#A78BFA; padding:4px 10px; border-radius:8px; font-weight:900; margin:3px; font-size:0.9rem; }
 
-                /* Floor indicator */
-                .t-floor-indicator { background:rgba(0,0,0,0.6); color:white; font-weight:900; font-size:0.8rem; padding:3px 10px; border-radius:10px; position:absolute; top:8px; left:8px; z-index:10; }
+                /* Indicador de andar melhorado */
+                .t-floor-bar { background:rgba(15,23,42,0.92); border:2px solid #334155; border-radius:16px; padding:10px 16px; display:flex; align-items:center; gap:12px; justify-content:center; margin-bottom:12px; }
+                .t-floor-dot { width:14px; height:14px; border-radius:50%; transition:all 0.3s; border:2px solid #475569; }
+                .t-floor-dot.active { background:#F59E0B; border-color:#F59E0B; box-shadow:0 0 12px rgba(245,158,11,0.7); transform:scale(1.3); }
+                .t-floor-dot.done { background:#10B981; border-color:#10B981; }
+                .t-floor-dot-label { font-size:0.7rem; color:#94A3B8; font-weight:800; }
 
                 /* Erro counter */
                 .t-error-counter { background:#1E293B; border:1px solid #334155; border-radius:12px; padding:5px 12px; font-size:0.82rem; color:#94A3B8; font-weight:800; text-align:center; margin-top:6px; }
+                
+                /* Animação de transição entre andares */
+                .t-floor-transition { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:30; border-radius:22px; font-family:'Fredoka One'; font-size:1.5rem; color:#F59E0B; pointer-events:none; opacity:0; transition:opacity 0.15s; }
+                .t-floor-transition.show { opacity:1; }
             </style>
             <div class="tesouro-wrapper">
                 <div class="level-bar">
-                    <button class="level-btn active" data-level="1">⭐ Nível 1 — Sequências</button>
-                    <button class="level-btn" data-level="2">⭐⭐ Nível 2 — 2 Andares</button>
-                    <button class="level-btn" data-level="3">⭐⭐⭐ Nível 3 — Labirinto</button>
+                    <button class="level-btn active" data-level="1">⭐ Nível 1 — Térreo</button>
+                    <button class="level-btn" data-level="2">⭐⭐ Nível 2 — Plataforma Elevada</button>
+                    <button class="level-btn" data-level="3">⭐⭐⭐ Nível 3 — Torre</button>
                 </div>
-                <div style="position:relative;">
+                <div class="t-floor-bar" id="t_floor_bar">
+                    <span style="color:#94A3B8;font-weight:800;font-size:0.85rem;">Andar:</span>
+                    <span style="display:flex;gap:8px;align-items:center;" id="t_floor_dots"></span>
+                    <span style="color:#F59E0B;font-weight:900;font-size:0.82rem;" id="t_floor_label">1 / 1</span>
+                </div>
+                <div class="board-wrap">
                     <div class="board" id="t_board"></div>
+                    <div class="t-floor-transition" id="t_floor_transition"><span id="t_transition_text"></span></div>
                 </div>
                 <div class="controls">
                     <button class="btn" onclick="t_addCmd('UP')" title="Mover para cima">⬆</button>
@@ -776,10 +809,10 @@
                 </div>
                 <div class="t-code-panel" id="t_codePanel">
                     <div class="t-code-header" onclick="t_toggleCode()">
-                        <span style="font-weight:900;color:#38BDF8;font-size:0.9rem;"><i class="fa-solid fa-code"></i> Código Arduino C++ (Tempo Real) <span id="t_code_arrow">▼</span></span>
+                        <span style="font-weight:900;color:#38BDF8;font-size:0.9rem;"><i class="fa-solid fa-code"></i> Código Arduino C++ (Tempo Real) <span id="t_code_arrow">▶</span></span>
                         <button onclick="event.stopPropagation();t_copyCode()" style="background:#334155;color:#38BDF8;border:1px solid #38BDF8;padding:3px 10px;border-radius:8px;font-size:0.78rem;font-weight:800;cursor:pointer;"><i class="fa-regular fa-copy"></i> Copiar</button>
                     </div>
-                    <div class="t-code-body" id="t_codePanelBody">
+                    <div class="t-code-body" id="t_codePanelBody" style="display:none;">
                         <pre id="t_arduinoCode"></pre>
                     </div>
                 </div>
@@ -793,7 +826,7 @@
 
 
     let t_level = 1, t_seq = [], t_running = false, t_robotPos = {x:0,y:0,z:0}, t_treasurePos = {x:4,y:4,z:0}, t_floors = [], t_gridSize = 5;
-    let t_errors = 0, t_codePanelOpen = true;
+    let t_errors = 0, t_codePanelOpen = false;
 
     const T_ROBOT_SVG = `<svg class="robot-svg" width="32" height="38" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="8" y="10" width="16" height="14" rx="4" fill="#60A5FA" stroke="#3B82F6" stroke-width="1.5"/>
@@ -859,8 +892,8 @@
     function t_showSolution() {
         const solutionData = {
             1: { steps: ['RIGHT','RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN'], text: 'Vá 4x para a Direita e depois 4x para Baixo. Evite os bloqueios indo pelo lado direito!' },
-            2: { steps: ['RIGHT','RIGHT','DOWN','DOWN','RIGHT','DOWN','DOWN','SUBIR','RIGHT','RIGHT','DOWN','DOWN'], text: 'Andar 1→ Chegue à escada em (3,4), suba. Andar 2→ Vá até (5,5). Dica: planeje o caminho antes!' },
-            3: { steps: ['RIGHT','DOWN','RIGHT','DOWN','RIGHT','DOWN','RIGHT','DOWN','SUBIR','...'], text: 'Este labirinto tem 3 andares! Use as escadas em sequência. Planeje andar por andar.' }
+            2: { steps: ['RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN','SUBIR','DOWN','RIGHT','RIGHT'], text: 'Andar 1→ Vá 3x Direita e 4x Baixo até a escada em (3,4). Suba! Andar 2→ Desça 1x e vá 2x Direita até o tesouro em (5,5)!' },
+            3: { steps: ['RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN','SUBIR','UP','UP','UP','RIGHT','RIGHT','SUBIR','RIGHT','DOWN','DOWN','DOWN','DOWN','DOWN'], text: 'Andar 1→ 3x Direita e 4x Baixo até escada (3,4). Suba. Andar 2→ 3x Cima e 2x Direita até escada (5,1). Suba. Andar 3→ 1x Direita e 5x Baixo até o tesouro em (6,6)!' }
         };
         const sol = solutionData[t_level] || solutionData[1];
         const stepsEl = document.getElementById('t_solution_steps');
@@ -874,15 +907,17 @@
     }
 
     function t_highlightSolutionPath(steps) {
-        let px=0, py=0;
+        let px=0, py=0, pz=0;
         steps.forEach((cmd, i) => {
             if(cmd==='RIGHT') px++;
             else if(cmd==='LEFT') px--;
             else if(cmd==='DOWN') py++;
             else if(cmd==='UP') py--;
-            else return;
+            else if(cmd==='SUBIR') pz++;
+            else if(cmd==='DESCER') pz--;
+            if(cmd==='SUBIR'||cmd==='DESCER') return;
             const cell = document.getElementById(`tc-${px}-${py}`);
-            if(cell && !cell.classList.contains('obstacle')) {
+            if(cell && !cell.classList.contains('obstacle') && !cell.classList.contains('treasure')) {
                 cell.classList.add('solution-path');
                 cell.dataset.step = i+1;
             }
@@ -922,8 +957,12 @@
         const board = document.getElementById('t_board');
         if(!board) return;
         board.style.gridTemplateColumns = `repeat(${t_gridSize}, 1fr)`;
-        board.innerHTML = `<div class="t-floor-indicator">Andar ${t_robotPos.z + 1} / ${t_floors.length}</div>`;
+        board.className = 'board floor-' + t_robotPos.z;
+        board.innerHTML = '';
         const floor = t_floors[t_robotPos.z];
+        const numFloors = t_floors.length;
+        const hasUpperLadder = t_robotPos.z < numFloors - 1 && floor.ladders.length > 0;
+        
         for(let y=0; y<t_gridSize; y++) {
             for(let x=0; x<t_gridSize; x++) {
                 const cell = document.createElement('div');
@@ -933,12 +972,52 @@
                 const isLad = floor.ladders.some(l=>l.x===x&&l.y===y);
                 const isTreas = t_treasurePos.x===x && t_treasurePos.y===y && t_treasurePos.z===t_robotPos.z;
                 if(isObs) cell.classList.add('obstacle');
-                if(isLad) cell.classList.add('ladder');
-                if(isTreas) { cell.classList.add('treasure'); cell.innerHTML = T_TREASURE_SVG; }
+                if(isLad) {
+                    cell.classList.add('ladder');
+                    cell.classList.add(t_robotPos.z < numFloors-1 ? 'ladder-up' : 'ladder-down');
+                }
+                if(isTreas) {
+                    cell.classList.add('treasure');
+                    if(t_robotPos.z > 0) cell.classList.add('elevated');
+                    cell.innerHTML = T_TREASURE_SVG;
+                }
                 board.appendChild(cell);
             }
         }
         t_drawRobot(t_robotPos.x, t_robotPos.y);
+        t_updateFloorBar();
+    }
+    
+    function t_updateFloorBar() {
+        const dotsContainer = document.getElementById('t_floor_dots');
+        const label = document.getElementById('t_floor_label');
+        const numFloors = t_floors.length;
+        if(!dotsContainer || !label) return;
+        dotsContainer.innerHTML = '';
+        for(let i=0; i<numFloors; i++) {
+            const dot = document.createElement('span');
+            dot.className = 't-floor-dot';
+            if(i === t_robotPos.z) dot.classList.add('active');
+            if(i < t_robotPos.z) dot.classList.add('done');
+            dotsContainer.appendChild(dot);
+        }
+        label.innerText = t_robotPos.z + 1 + ' / ' + numFloors;
+        if(t_robotPos.z === 0) label.style.color = '#94A3B8';
+        else if(t_robotPos.z === 1) label.style.color = '#34D399';
+        else label.style.color = '#F59E0B';
+    }
+    
+    async function t_showFloorTransition(direction, fromZ, toZ) {
+        const overlay = document.getElementById('t_floor_transition');
+        const text = document.getElementById('t_transition_text');
+        if(!overlay || !text) return;
+        text.innerText = direction === 'up' ? '⬆ SUBINDO...' : '⬇ DESCENDO...';
+        overlay.classList.add('show');
+        await t_sleep(600);
+        t_renderBoard();
+        t_drawRobot(t_robotPos.x, t_robotPos.y, 'climbing');
+        await t_sleep(400);
+        overlay.classList.remove('show');
     }
 
     function t_drawRobot(x, y, status='') {
@@ -1051,7 +1130,11 @@
                     if(cmd==='SUBIR'&&nz<t_floors.length-1) nz++;
                     else if(cmd==='DESCER'&&nz>0) nz--;
                     else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_showModal('💥','Sem saída!','Não há mais andares nessa direção!'); playSound('error'); t_errors++; t_updateErrorCounter(); t_running=false; return; }
-                    t_robotPos={x:t_robotPos.x,y:t_robotPos.y,z:nz}; playSound('success'); t_renderBoard(); continue;
+                    const dir = cmd==='SUBIR'?'up':'down';
+                    playSound('success');
+                    t_robotPos={x:t_robotPos.x,y:t_robotPos.y,z:nz};
+                    await t_showFloorTransition(dir, t_robotPos.z, nz);
+                    continue;
                 } else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_showModal('💥','Sem escada!','Você precisa estar em 🪜 para subir/descer!'); playSound('error'); t_errors++; t_updateErrorCounter(); t_running=false; return; }
             }
             if(nx<0||nx>=t_gridSize||ny<0||ny>=t_gridSize) {
