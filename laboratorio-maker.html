@@ -72,6 +72,22 @@
         .pratica-code { background:#0F172A; border:2px solid #38BDF8; border-radius:16px; padding:18px; font-family:'Courier New',monospace; color:#E2E8F0; font-size:0.88rem; line-height:1.8; overflow-x:auto; white-space:pre-wrap; }
         .pratica-highlight { color:#FBBF24; font-weight:900; }
         .pratica-check { color:#34D399; font-weight:900; }
+
+        /* ===== MODAL DE AULA (teoria lúdica) ===== */
+        .lesson-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; z-index:1001; opacity:0; pointer-events:none; transition:0.3s; }
+        .lesson-modal.active { opacity:1; pointer-events:all; }
+        .lesson-modal-box { background:linear-gradient(180deg,#1E293B,#0F172A); border:4px solid #38BDF8; border-radius:28px; padding:24px 22px; max-width:520px; width:94%; max-height:85vh; overflow-y:auto; text-align:center; }
+        .lesson-modal-emoji { font-size:4rem; margin-bottom:6px; }
+        .lesson-modal h2 { font-family:'Fredoka One'; color:#FBBF24; margin:0 0 4px; font-size:1.4rem; }
+        .lesson-modal .lesson-objetivo { color:#CBD5E1; font-size:0.9rem; line-height:1.7; margin:10px 0; text-align:left; }
+        .lesson-modal .lesson-teoria { background:rgba(56,189,248,0.08); border-left:3px solid #38BDF8; border-radius:12px; padding:12px 16px; margin:12px 0; text-align:left; }
+        .lesson-modal .lesson-teoria h4 { color:#38BDF8; font-family:'Fredoka One'; margin:0 0 6px; font-size:1rem; }
+        .lesson-modal .lesson-teoria p { color:#CBD5E1; font-size:0.88rem; line-height:1.7; margin:0; }
+        .lesson-modal .lesson-btn { background:linear-gradient(135deg,#10B981,#059669); border:none; color:white; padding:14px 30px; border-radius:50px; font-weight:900; cursor:pointer; font-size:1.1rem; border-bottom:5px solid #047857; margin-top:14px; width:100%; transition:0.15s; }
+        .lesson-modal .lesson-btn:active { transform:translateY(4px); border-bottom-width:1px; }
+        .lesson-modal .lesson-close { position:absolute; top:14px; right:18px; background:none; border:none; color:#64748B; font-size:1.4rem; cursor:pointer; }
+        .lesson-exemplo { background:#0F172A; border-radius:12px; padding:10px 14px; margin:8px 0; font-family:'Courier New',monospace; font-size:0.82rem; color:#E2E8F0; text-align:left; white-space:pre-wrap; }
+        .lesson-dica { background:rgba(251,191,36,0.1); border:1px dashed #FBBF24; border-radius:12px; padding:10px 14px; margin:8px 0; color:#FBBF24; font-size:0.85rem; font-weight:700; }
         </style>
         <div class="trail-wrap">
             <div class="trail-title">
@@ -212,6 +228,11 @@
 
     <div class="footer">⭐ 3 estrelas por jogo = 100% completo!</div>
 
+    <!-- Modal de Aula -->
+    <div class="lesson-modal" id="lesson-modal">
+        <div class="lesson-modal-box" id="lesson-modal-box"></div>
+    </div>
+
     <div class="game-panel pratica-scene" id="tab-aula9" style="padding-top:12px;">
         <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:16px;">← Voltar para Aulas</button>
         <div class="pratica-card" style="background:linear-gradient(135deg,#451A03,#1E293B);border-color:#EF4444;">
@@ -344,6 +365,279 @@
     function openTrail() {
         openTab('tab-trail');
         document.querySelector('.tab-btn[data-tab="tab-trail"]').classList.add('active');
+    }
+    
+    // ================= CONTEÚDO DAS 10 AULAS (LÚDICO PARA CRIANÇAS) =================
+    const lessonContents = {
+        1: {
+            emoji:'🤖', title:'Algoritmos e Sequências', color:'#FBBF24',
+            objetivo:'🧠 <b>O que você vai aprender:</b> Que um programa de computador é como uma <span style="color:#FBBF24;">receita de bolo</span> — uma lista de passos na <b>ordem certa</b>! Se trocar a ordem, o bolo não cresce e o robô bate na parede!',
+            teoria:`<b>Imagine que você é um robô...</b>
+            
+Um robô não sabe pensar sozinho. Ele precisa que você dê <b>comandos exatos</b>, um por um, na sequência correta.
+
+É igual a fazer um bolo de chocolate:
+1️⃣ Pegar os ingredientes → 2️⃣ Misturar tudo → 3️⃣ Colocar na forma → 4️⃣ Assar no forno
+
+Se você tentar <b>assar antes de misturar</b>... não vai dar certo, né? 😂
+            
+No computador é a mesma coisa! Cada comando é um passo. Juntos na ordem certa, eles formam um <b>ALGORITMO</b> — a palavra mágica da programação!`,
+            exemplo:`Comandos para o robô achar o tesouro:
+➡️ Direita, ➡️ Direita, ➡️ Direita, ➡️ Direita
+⬇️ Baixo, ⬇️ Baixo, ⬇️ Baixo, ⬇️ Baixo
+🏆 TESOURO!`,
+            dica:'💡 <b>Dica de Maker:</b> Antes de rodar o programa, imagine o robô andando na sua cabeça. Isso se chama "teste de mesa"!',
+            jogo:'tab-tesouro', btntext:'🎮 Jogar Caça ao Tesouro!'
+        },
+        2: {
+            emoji:'🔄', title:'Estruturas de Repetição (Loops)', color:'#A78BFA',
+            objetivo:'🔁 <b>O que você vai aprender:</b> Que existe um jeito mágico de fazer o computador <b>repetir tarefas</b> sem ter que escrever o mesmo comando 100 vezes! Isso se chama <span style="color:#A78BFA;">LOOP</span>.',
+            teoria:`<b>Você já teve que escrever a mesma coisa várias vezes?</b>
+
+Imagina que você precisa carimbar <b>100 caixas</b> em uma fábrica. Escrever "carimba" 100 vezes no código seria muito chato e demorado!
+
+Mas o computador tem um superpoder: o <b>FOR LOOP</b>! 🦸
+
+Em vez de escrever 100 comandos iguais, você diz:
+"Ei computador, repete essa ação <b>10 vezes</b>!"
+
+O computador obedece e faz tudo sozinho. Isso se chama <b>AUTOMAÇÃO</b> — e é o que programadores fazem o tempo todo!`,
+            exemplo:`Sem loop (ruim):
+carimba();
+carimba();
+carimba(); // ...99 vezes... 😴
+
+Com loop (bom!):
+for(int i=0; i<10; i++) {
+  carimba();  // Faz 10 vezes automático!
+}`,
+            dica:'💡 <b>Dica de Maker:</b> Toda vez que você sentir que está copiando e colando código, pare! Provavelmente existe um jeito de usar um loop!',
+            jogo:'tab-loopmaker', btntext:'🎮 Jogar Máquina de Loops!'
+        },
+        3: {
+            emoji:'🌱', title:'Condicionais — Tomando Decisões', color:'#34D399',
+            objetivo:'🤔 <b>O que você vai aprender:</b> Que o computador pode <b>ESCOLHER</b> o que fazer dependendo da situação! Se chover 🌧️, leve guarda-chuva ☂️. Se fizer sol ☀️, leve óculos escuros 😎.',
+            teoria:`<b>Você toma decisões o dia todo!</b>
+
+Se está com fome → você come 🍕
+Se está com sono → você dorme 😴
+Se está chovendo → você pega o guarda-chuva ☂️
+
+O computador também pode decidir! Usamos o comando <b>IF/ELSE</b>:
+
+"SE (if) o sensor detectar um buraco vazio → plante uma semente 🌱"
+"SENÃO (else) se já tiver uma planta → regue ela 💧"
+
+Isso se chama <b>CONDICIONAL</b> — o programa escolhe um caminho diferente baseado no que está acontecendo!`,
+            exemplo:`if(buracoVazio) {
+  plantarSemente();  // 🌱 Buraco vazio? Planta!
+} else {
+  regarPlanta();     // 💧 Já tem planta? Rega!
+}`,
+            dica:'💡 <b>Dica de Maker:</b> Todo sensor no mundo real usa condicionais! Sensor de temperatura, de luz, de movimento — todos funcionam com IF!',
+            jogo:'tab-jardim', btntext:'🎮 Jogar Jardim dos Loops!'
+        },
+        4: {
+            emoji:'🚦', title:'Sequências Temporizadas', color:'#F59E0B',
+            objetivo:'⏱ <b>O que você vai aprender:</b> Que nem tudo acontece ao mesmo tempo no computador. Usamos <span style="color:#F59E0B;">delay()</span> para controlar <b>QUANTO TEMPO</b> cada ação dura!',
+            teoria:`<b>Você já viu um semáforo de trânsito? 🚦</b>
+
+Ele não acende todas as luzes de uma vez, né? Tem uma <b>sequência com tempos</b>:
+
+🟢 Verde (5 segundos) — "Pode ir!"
+🟡 Amarelo (2 segundos) — "Atenção, vai fechar!"
+🔴 Vermelho (5 segundos) — "PARE!"
+
+Para programar isso, usamos o comando <b>delay(milissegundos)</b> — ele faz o Arduino <b>esperar</b> antes de executar o próximo comando.
+
+delay(5000) = espera 5 segundos
+delay(2000) = espera 2 segundos`,
+            exemplo:`digitalWrite(verde, HIGH);  // Acende verde 🟢
+delay(5000);                // Espera 5 segundos...
+digitalWrite(verde, LOW);   // Apaga verde
+
+digitalWrite(amarelo, HIGH);// Acende amarelo 🟡
+delay(2000);                // Espera 2 segundos...`,
+            dica:'💡 <b>Dica de Maker:</b> 1000 milissegundos = 1 segundo. Então 5000 = 5 segundos, 2000 = 2 segundos. Fácil de lembrar!',
+            jogo:'tab-semaforo', btntext:'🎮 Jogar Semáforo Digital!'
+        },
+        5: {
+            emoji:'🧮', title:'Variáveis e Tipos de Dados', color:'#38BDF8',
+            objetivo:'📦 <b>O que você vai aprender:</b> Que o computador guarda informações em <span style="color:#38BDF8;">caixinhas de memória</span> chamadas <b>variáveis</b>. É como etiquetar gavetas: uma para números, outra para textos!',
+            teoria:`<b>O computador tem uma memória gigante!</b>
+
+Mas para usar essa memória, precisamos de <b>variáveis</b> — que são como <b>caixinhas com nome</b> onde guardamos informações.
+
+Tipos de caixinhas:
+📦 <b>int</b> = números inteiros (1, 2, 100, -5)
+📦 <b>float</b> = números com vírgula (3.14, 2.5)
+📦 <b>String</b> = texto ("Olá", "Robô")
+📦 <b>bool</b> = verdadeiro ou falso (true/false)
+
+É como ter gavetas etiquetadas no seu quarto:
+"A gaveta 'idade' guarda o número 10"
+"A gaveta 'nome' guarda o texto Maria"`,
+            exemplo:`int   idade    = 10;       // Gaveta "idade"
+float altura   = 1.45;     // Gaveta "altura"  
+String nome    = "Maria";  // Gaveta "nome"
+bool   gostaDeRobotica = true;  // É verdade!`,
+            dica:'💡 <b>Dica de Maker:</b> Dê nomes que fazem sentido para suas variáveis! "ledVermelho" é muito melhor que "x1" — seu eu do futuro vai agradecer!',
+            jogo:'tab-tesouro', btntext:'🎮 Jogar Caça ao Tesouro Nível 3!'
+        },
+        6: {
+            emoji:'🔬', title:'Introdução à Eletrônica', color:'#10B981',
+            objetivo:'⚡ <b>O que você vai aprender:</b> Os 3 superpoderes da eletricidade: <span style="color:#10B981;">Tensão (V)</span>, <span style="color:#38BDF8;">Corrente (I)</span> e <span style="color:#F87171;">Resistência (R)</span>. Eles trabalham juntos como água em um cano!',
+            teoria:`<b>Eletricidade é como água encanada! 🚿</b>
+
+Pense em uma mangueira de jardim:
+
+🔋 <b>Tensão (V)</b> = A pressão da água. Quanto mais pressão, mais forte a água sai. Medido em <b>Volts</b>.
+
+💧 <b>Corrente (I)</b> = A quantidade de água que passa pelo cano. Medido em <b>Ampères</b> (A).
+
+🧱 <b>Resistência (R)</b> = Uma pedra no meio do cano que dificulta a passagem da água. Medido em <b>Ohms</b> (Ω).
+
+Esses 3 formam a <b>Lei de Ohm</b>: V = R × I
+É a fórmula mais importante da eletrônica!`,
+            exemplo:`Se você tem 5V (tensão do Arduino)
+e um resistor de 250Ω (a "pedra no cano"):
+
+I = V ÷ R = 5 ÷ 250 = 0.02A = 20mA
+
+Essa é a corrente perfeita para um LED! ⭐`,
+            dica:'💡 <b>Dica de Maker:</b> Seu Arduino tem 5 Volts nas portas de saída. SEMPRE use um resistor ao ligar um LED, ou ele queima! 🔥',
+            jogo:'tab-labmaker', btntext:'🔬 Explorar Laboratório Maker!'
+        },
+        7: {
+            emoji:'🔌', title:'Circuitos e Protoboard', color:'#F59E0B',
+            objetivo:'🧰 <b>O que você vai aprender:</b> Como usar uma <span style="color:#F59E0B;">protoboard</span> (placa de ensaio) para montar circuitos sem solda! Conectar fios, resistores e LEDs.',
+            teoria:`<b>Protoboard é como um LEGO® da eletrônica! 🧱</b>
+
+Ela tem furinhos organizados em colunas e fileiras. Por dentro, os furos são conectados assim:
+
+🔴🔴 +5V (barramento vermelho — energia)
+⚫⚫ GND  (barramento azul — terra)
+⬜⬜⬜⬜⬜ Colunas A-E (conectadas na vertical)
+⬜⬜⬜⬜⬜ Colunas F-J (conectadas na vertical)
+
+Para fazer um circuito, você:
+1️⃣ Conecta o +5V do Arduino no barramento vermelho
+2️⃣ Conecta o GND no barramento azul
+3️⃣ Coloca o LED e o resistor nos furinhos
+4️⃣ Usa JUMPERS (fios) para conectar tudo`,
+            exemplo:`Circuito do LED:
++5V → resistor 220Ω → LED (perna longa)
+LED (perna curta) → GND
+
+Quando tudo está conectado:
+A energia sai do +5V, passa pelo resistor
+(que limita a corrente), acende o LED,
+e volta para o GND. Circuito completo!`,
+            dica:'💡 <b>Dica de Maker:</b> LED tem polaridade! A perna LONGA é o + (positivo) e a perna CURTA é o - (negativo). Se ligar ao contrário, não acende!',
+            jogo:'tab-labmaker', btntext:'🔬 Ir para Bancada & Protoboard!'
+        },
+        8: {
+            emoji:'🛠️', title:'Arduino e Linguagem C++', color:'#F87171',
+            objetivo:'🧰 <b>O que você vai aprender:</b> As partes da placa <span style="color:#F87171;">Arduino UNO</span>, para que serve cada pino, e como escrever código em C++ com setup() e loop().',
+            teoria:`<b>O Arduino é o cérebro do seu robô! 🧠</b>
+
+A placa Arduino UNO tem várias partes importantes:
+
+📌 <b>Pinos Digitais (0-13):</b> Ligam e desligam coisas (LEDs, motores). Os pinos com ~ fazem PWM (simulam voltagens intermediárias).
+
+📌 <b>Pinos Analógicos (A0-A5):</b> Leem sensores (temperatura, luz, distância).
+
+📌 <b>5V e GND:</b> Fornecem energia para seus componentes.
+
+📌 <b>Microcontrolador:</b> O chip que executa seu código!
+
+Todo programa Arduino tem 2 funções principais:
+🔹 <b>setup():</b> Roda UMA VEZ quando liga (configura os pinos)
+🔹 <b>loop():</b> Repete PARA SEMPRE (o coração do programa)`,
+            exemplo:`void setup() {
+  pinMode(13, OUTPUT);  // Pino 13 vai controlar um LED
+}
+
+void loop() {
+  digitalWrite(13, HIGH);  // Liga o LED
+  delay(1000);             // Espera 1 segundo
+  digitalWrite(13, LOW);   // Desliga o LED
+  delay(1000);             // Espera 1 segundo
+  // O LED fica piscando para sempre! 🔄
+}`,
+            dica:'💡 <b>Dica de Maker:</b> PWM significa Pulse Width Modulation — o Arduino liga e desliga tão rápido que a gente vê uma "voltagem média". É assim que controlamos brilho de LED e velocidade de motor!',
+            jogo:'tab-arduino', btntext:'🛠️ Ir para Oficina do Arduino!'
+        },
+        9: {
+            emoji:'🔧', title:'Prática — Montagem do Semáforo', color:'#EF4444',
+            objetivo:'🔨 <b>O que você vai fazer:</b> Colocar a <span style="color:#EF4444;">mão na massa</span> e montar o circuito físico do semáforo com Arduino, protoboard, 3 LEDs e 3 resistores!',
+            teoria:`<b>Chegou a hora do MAKER de verdade! 🛠️</b>
+
+Você já programou o semáforo digital no jogo. Agora vai montar o circuito REAL!
+
+A diferença é que agora você vai:
+🔌 Encaixar LEDs de verdade na protoboard
+📏 Medir e escolher os resistores certos (220Ω)
+🔗 Conectar jumpers (fios) do Arduino à protoboard
+⚡ Ligar o Arduino no computador via USB
+
+<b>E o melhor:</b> o que você montar aqui vai FUNCIONAR no mundo real! As luzes vão acender de verdade! 🤩`,
+            exemplo:`Materiais que você vai usar:
+✅ 1 Arduino UNO
+✅ 1 Protoboard  
+✅ 1 LED Vermelho 🔴
+✅ 1 LED Amarelo 🟡
+✅ 1 LED Verde 🟢
+✅ 3 Resistores 220Ω (vermelho-vermelho-marrom)
+✅ Jumpers (fios coloridos)`,
+            dica:'🚨 <b>Atenção Maker:</b> NUNCA ligue um LED sem resistor! A corrente alta vai queimar o LED na hora. O resistor de 220Ω é seu amigo!',
+            jogo:'tab-aula9', btntext:'🔧 Ver Guia Completo de Montagem!'
+        },
+        10: {
+            emoji:'💻', title:'Prática — Programação do Semáforo', color:'#10B981',
+            objetivo:'💻 <b>O que você vai fazer:</b> Escrever o código C++ completo, fazer <span style="color:#10B981;">upload para o Arduino</span> e ver seu semáforo funcionando de verdade!',
+            teoria:`<b>Hora de dar VIDA ao circuito! ⚡</b>
+
+Com o circuito montado, agora você vai programar o Arduino para controlar as luzes na sequência correta.
+
+O código tem 3 partes:
+1️⃣ <b>Declarar variáveis:</b> Dizer quais pinos controlam quais cores
+2️⃣ <b>setup():</b> Configurar os pinos como SAÍDA (OUTPUT)
+3️⃣ <b>loop():</b> A sequência infinita: 🟢 verde (5s) → 🟡 amarelo (2s) → 🔴 vermelho (5s)
+
+Depois de escrever o código, você conecta o Arduino no computador, clica em <b>UPLOAD</b> e... MÁGICA! ✨ As luzes acendem na sequência correta!`,
+            exemplo:`Sequência do semáforo:
+1. 🟢 Verde aceso (5 segundos) — "Pode passar!"
+2. 🟡 Amarelo aceso (2 segundos) — "Atenção!"
+3. 🔴 Vermelho aceso (5 segundos) — "PARE!"
+4. Volta para o verde... e repete PARA SEMPRE 🔄`,
+            dica:'🏆 <b>Parabéns, Maker!</b> Ao completar esta aula, você terá construído seu primeiro projeto de robótica do início ao fim: desde o conceito até o circuito funcionando!',
+            jogo:'tab-aula10', btntext:'💻 Ver Código Completo do Semáforo!'
+        }
+    };
+    
+    function showLessonModal(lessonNum) {
+        const l = lessonContents[lessonNum];
+        if(!l) return;
+        const box = document.getElementById('lesson-modal-box');
+        box.innerHTML = `
+            <button class="lesson-close" onclick="closeLessonModal()">✕</button>
+            <div class="lesson-modal-emoji">${l.emoji}</div>
+            <h2 style="color:${l.color};">${l.title}</h2>
+            <div class="lesson-objetivo">${l.objetivo}</div>
+            <div class="lesson-teoria">
+                <h4>📖 Entendendo o Conceito</h4>
+                <p>${l.teoria.replace(/\n/g,'<br>')}</p>
+            </div>
+            ${l.exemplo ? `<div class="lesson-exemplo">${l.exemplo}</div>` : ''}
+            ${l.dica ? `<div class="lesson-dica">${l.dica}</div>` : ''}
+            <button class="lesson-btn" onclick="closeLessonModal();openTab('${l.jogo}')">${l.btntext}</button>
+        `;
+        document.getElementById('lesson-modal').classList.add('active');
+    }
+    
+    function closeLessonModal() {
+        document.getElementById('lesson-modal').classList.remove('active');
     }
 
     function updateHubProgress() {
@@ -599,8 +893,7 @@
 
             if(!isLocked) {
                 node.onclick = () => {
-                    const targetBtn = document.querySelector(`.tab-btn[data-tab="${m.id}"]`);
-                    if(targetBtn) targetBtn.click();
+                    showLessonModal(idx + 1);
                 };
             }
 
