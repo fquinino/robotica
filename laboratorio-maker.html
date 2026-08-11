@@ -869,9 +869,26 @@
                 .board.floor-0 { box-shadow:inset 0 0 80px rgba(0,0,0,0.5), 0 12px 40px rgba(0,0,0,0.65), 0 0 0 8px #78350F; }
                 .board.floor-1 { box-shadow:inset 0 0 80px rgba(0,0,0,0.5), 0 12px 40px rgba(0,0,0,0.65), 0 0 0 8px #166534; }
                 .board.floor-2 { box-shadow:inset 0 0 80px rgba(0,0,0,0.5), 0 12px 40px rgba(0,0,0,0.65), 0 0 0 8px #1E3A8A; }
+
+                .t-subtabs { display:flex; gap:6px; background:#1E293B; padding:5px; border-radius:20px; margin-bottom:12px; }
+                .t-subtab { flex:1; background:transparent; border:none; color:#94A3B8; padding:10px 14px; border-radius:16px; font-weight:900; font-size:0.9rem; cursor:pointer; transition:0.2s; }
+                .t-subtab:hover { background:#334155; color:white; }
+                .t-subtab.active { background:linear-gradient(135deg,#FBBF24,#F59E0B); color:#0F172A; box-shadow:0 0 15px rgba(251,191,36,0.4); }
+                .t-subtab-panel { display:none; animation:ardFadeIn 0.3s ease; }
+                .t-subtab-panel.active { display:block; }
+                .t-hidden-tab { display:none !important; }
+                .t-game-grid { display:grid; grid-template-columns:1fr; gap:10px; }
+                @media(min-width:700px) { .t-game-grid { grid-template-columns:1fr 280px; } }
+                .t-game-left { display:flex; flex-direction:column; gap:10px; }
+                .t-cmds-panel { background:#0F172A; border:2px solid #334155; border-radius:16px; padding:12px; }
+                .t-cmds-panel h4 { color:#FBBF24; margin:0 0 8px; font-size:0.85rem; font-family:'Fredoka One'; }
             </style>
             <div class="tesouro-wrapper">
-                <div class="t-slides-container" id="t_slides">
+                <div class="t-subtabs" id="t_subtabs">
+                    <button class="t-subtab active" data-subtab="jogar" onclick="t_switchSubtab('jogar')">🎮 Jogar</button>
+                    <button class="t-subtab" data-subtab="guia" onclick="t_switchSubtab('guia')">📖 Guia & Código</button>
+                </div>
+                <div class="t-slides-container t-guia-content" id="t_slides">
                     <!-- Slide 1: Teoria -->
                     <div class="t-slide active" data-slide="0">
                         <div class="t-slide-icon">🧠</div>
@@ -921,12 +938,12 @@
                     <button class="level-btn" data-level="2">⭐⭐ Nível 2 — Plataforma Elevada</button>
                     <button class="level-btn" data-level="3">⭐⭐⭐ Nível 3 — Torre</button>
                 </div>
-                <div class="t-floor-bar" id="t_floor_bar">
+                <div class="t-floor-bar t-jogar-content" id="t_floor_bar">
                     <span style="color:#94A3B8;font-weight:800;font-size:0.85rem;">Andar:</span>
                     <span style="display:flex;gap:8px;align-items:center;" id="t_floor_dots"></span>
                     <span style="color:#F59E0B;font-weight:900;font-size:0.82rem;" id="t_floor_label">1 / 1</span>
                 </div>
-                <div class="board-wrap">
+                <div class="board-wrap t-jogar-content">
                     <div class="t-bg-icons">
                         <span class="t-bg-icon">🤖</span>
                         <span class="t-bg-icon">🏆</span>
@@ -938,7 +955,7 @@
                     <div class="board" id="t_board"></div>
                     <div class="t-floor-transition" id="t_floor_transition"><span id="t_transition_text"></span></div>
                 </div>
-                <div class="t-floor-preview" id="t_floor_preview">
+                <div class="t-floor-preview t-guia-content" id="t_floor_preview">
                     <div class="t-floor-preview-header">
                         <span style="color:#FCD34D;font-weight:900;font-size:0.95rem;">🗺️ Mini-mapa do <span id="t_preview_floor_label">Próximo Andar</span></span>
                         <span style="color:#64748B;font-size:0.78rem;" id="t_preview_hint">Planeje sua rota antes de SUBIR a escada!</span>
@@ -952,7 +969,7 @@
                         <span><span class="t-dot" style="background:#F59E0B;border:1px solid #FCD34D;"></span> Você ⬇</span>
                     </div>
                 </div>
-                <div class="controls">
+                <div class="controls t-jogar-content">
                     <button class="btn" onclick="t_addCmd('UP')" title="Mover para cima">⬆</button>
                     <button class="btn" onclick="t_addCmd('DOWN')" title="Mover para baixo">⬇</button>
                     <button class="btn" onclick="t_addCmd('LEFT')" title="Mover para esquerda">⬅</button>
@@ -960,14 +977,14 @@
                     <button class="btn special" onclick="t_addCmd('SUBIR')">🪜 Subir</button>
                     <button class="btn special" onclick="t_addCmd('DESCER')">🪜 Descer</button>
                 </div>
-                <div class="code-area" id="t_codeArea"><span style="color:#64748B;">Adicione comandos...</span></div>
-                <div class="actions">
+                <div class="code-area t-jogar-content" id="t_codeArea"><span style="color:#64748B;">Adicione comandos...</span></div>
+                <div class="actions t-jogar-content">
                     <button class="btn btn-undo" style="background:#F59E0B;color:#0F172A;flex:1;border-bottom:4px solid #B45309;" onclick="t_undoCmd()"><i class="fas fa-undo"></i></button>
                     <button class="btn btn-clear" onclick="t_clearCode()"><i class="fas fa-trash"></i></button>
                     <button class="btn btn-run" onclick="t_runCode()"><i class="fas fa-play"></i> Executar</button>
                 </div>
-                <div class="t-error-counter" id="t_err_counter"></div>
-                <div class="t-demo-board-wrap" id="t_demo_board_wrap">
+                <div class="t-error-counter t-jogar-content" id="t_err_counter"></div>
+                <div class="t-demo-board-wrap t-guia-content" id="t_demo_board_wrap">
                     <div class="t-demo-hint" id="t_demo_hint">🎬 Veja o robô resolver sozinho e depois faça igual!</div>
                     <button class="t-demo-btn-play" id="t_demo_btn_play" onclick="t_playDemo()">▶ Assistir Demonstração</button>
                     <div style="position:relative;margin-top:10px;">
@@ -989,13 +1006,13 @@
                         <button class="t-demo-reveal" style="margin-top:10px;" id="t_tut_skip" onclick="t_skipTutorial()">⏭ Pular tutorial — já sei jogar!</button>
                     </div>
                 </div>
-                <button class="t-hint-btn" id="t_hint_btn" onclick="t_showSolution()">💡 Ver Solução (após 3 erros)</button>
-                <div class="t-solution-box" id="t_solution_box">
+                <button class="t-hint-btn t-jogar-content" id="t_hint_btn" onclick="t_showSolution()">💡 Ver Solução (após 3 erros)</button>
+                <div class="t-solution-box t-guia-content" id="t_solution_box">
                     <div style="color:#A78BFA;font-weight:900;margin-bottom:8px;">🗺️ Caminho Correto:</div>
                     <div id="t_solution_steps"></div>
                     <div id="t_solution_text" style="color:#94A3B8;font-size:0.85rem;margin-top:10px;line-height:1.5;"></div>
                 </div>
-                <div class="t-code-panel" id="t_codePanel">
+                <div class="t-code-panel t-guia-content" id="t_codePanel">
                     <div class="t-code-header" onclick="t_toggleCode()">
                         <span style="font-weight:900;color:#38BDF8;font-size:0.9rem;"><i class="fa-solid fa-code"></i> Código Arduino C++ (Tempo Real) <span id="t_code_arrow">▶</span></span>
                         <button onclick="event.stopPropagation();t_copyCode()" style="background:#334155;color:#38BDF8;border:1px solid #38BDF8;padding:3px 10px;border-radius:8px;font-size:0.78rem;font-weight:800;cursor:pointer;"><i class="fa-regular fa-copy"></i> Copiar</button>
@@ -1041,6 +1058,14 @@
       <circle cx="22" cy="25" r="1" fill="#FCD34D" opacity="0.5"/>
     </svg>`;
 
+    function t_switchSubtab(name) {
+        document.querySelectorAll('.t-subtab').forEach(b => b.classList.toggle('active', b.dataset.subtab === name));
+        const guiaEls = document.querySelectorAll('.t-guia-content');
+        const jogarEls = document.querySelectorAll('.t-jogar-content');
+        guiaEls.forEach(el => el.classList.toggle('t-hidden-tab', name !== 'guia'));
+        jogarEls.forEach(el => el.classList.toggle('t-hidden-tab', name !== 'jogar'));
+    }
+
     function t_init() {
         document.querySelectorAll('.tesouro-wrapper .level-btn').forEach(btn => {
             btn.onclick = () => {
@@ -1051,7 +1076,7 @@
                 t_updateErrorCounter();
                 t_initLevel();
                 t_clearCode();
-                // Show tutorial for this level if not seen
+                t_switchSubtab('jogar');
                 setTimeout(() => t_checkLevelTutorial(t_level), 300);
             };
         });
@@ -1148,6 +1173,7 @@
     async function t_tutorialAction() {
         if(t_tutorialRunning) return;
         t_tutorialRunning = true;
+        t_switchSubtab('jogar');
         const overlay = document.getElementById('t_tutorial_overlay');
         const btn = document.getElementById('t_tut_btn');
         const skipBtn = document.getElementById('t_tut_skip');
@@ -1275,6 +1301,7 @@
     async function t_runLvl2Demo() {
         if(t_tutorialRunning) return;
         t_tutorialRunning = true;
+        t_switchSubtab('jogar');
         const overlay = document.getElementById('t_tutorial_overlay');
         const btn = document.getElementById('t_tut_btn');
         const skipBtn = document.getElementById('t_tut_skip');
@@ -1424,6 +1451,7 @@
     async function t_runLvl3Demo() {
         if(t_tutorialRunning) return;
         t_tutorialRunning = true;
+        t_switchSubtab('jogar');
         const overlay = document.getElementById('t_tutorial_overlay');
         const btn = document.getElementById('t_tut_btn');
         const skipBtn = document.getElementById('t_tut_skip');
@@ -1585,6 +1613,7 @@
     }
 
     function t_showSolution() {
+        t_switchSubtab('guia');
         const solutionData = {
             1: { steps: ['RIGHT','RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN'], text: 'Vá 4x para a Direita e depois 4x para Baixo. Evite os bloqueios indo pelo lado direito!' },
             2: { steps: ['RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN','SUBIR','DOWN','RIGHT','RIGHT'], text: 'Andar 1→ Vá 3x Direita e 4x Baixo até a escada em (3,4). Suba! Andar 2→ Desça 1x e vá 2x Direita até o tesouro em (5,5)!' },
