@@ -51,7 +51,7 @@
             .trail-nodes { display:flex; flex-direction:column; gap:0; position:relative; }
             .trail-connector { width:4px; height:30px; background:#334155; margin:0 auto; border-radius:2px; }
             .trail-connector.done { background:linear-gradient(180deg,#10B981,#38BDF8); }
-            .trail-node { display:flex; align-items:center; gap:18px; padding:14px 18px; border-radius:22px; border:2px solid #334155; background:#1E293B; cursor:pointer; transition:all 0.25s; position:relative; }
+            .trail-node { display:flex; align-items:flex-start; gap:18px; padding:16px 20px; border-radius:22px; border:2px solid #334155; background:#1E293B; cursor:pointer; transition:all 0.25s; position:relative; }
             .trail-node:hover { transform:translateX(6px); border-color:#38BDF8; box-shadow:0 0 20px rgba(56,189,248,0.2); }
             .trail-node.locked { opacity:0.45; cursor:not-allowed; }
             .trail-node.locked:hover { transform:none; border-color:#334155; box-shadow:none; }
@@ -71,8 +71,8 @@
         </style>
         <div class="trail-wrap">
             <div class="trail-title">
-                <h2>🗺️ Trilha Arduino Maker</h2>
-                <p>Complete os módulos em ordem para dominar programação e eletrônica com Arduino!</p>
+                <h2>🗺️ Plano de Aulas — Lógica de Programação e Arduino</h2>
+                <p>Complete as aulas em ordem. Cada aula tem: 🎯 objetivo, 📖 teoria e 🎮 prática!</p>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                     <span style="color:#94A3B8;font-size:0.85rem;">Progresso Geral</span>
                     <span id="trail-star-count" style="color:#F59E0B;font-weight:900;font-size:0.9rem;">0 / 18 ⭐</span>
@@ -336,12 +336,54 @@
 
     // ================= TRILHA DE APRENDIZAGEM =================
     const trailModules = [
-        { id:'tab-tesouro', icon:'🤖', color:'#60A5FA', bg:'rgba(96,165,250,0.15)', label:'Caça ao Tesouro', desc:'Lógica, Algoritmos e Sequências de comandos', key:'tesouro_levels' },
-        { id:'tab-semaforo', icon:'🚦', color:'#F59E0B', bg:'rgba(245,158,11,0.15)', label:'Semáforo', desc:'Temporização, delay() e ordem de execução', key:'semaforo_levels' },
-        { id:'tab-loopmaker', icon:'🔄', color:'#A78BFA', bg:'rgba(167,139,250,0.15)', label:'Máquina de Loops', desc:'Estruturas de repetição for/while', key:'loopmaker_levels' },
-        { id:'tab-jardim', icon:'🌱', color:'#34D399', bg:'rgba(52,211,153,0.15)', label:'Jardim dos Loops', desc:'Condicionais if/else e funções', key:'jardim_levels' },
-        { id:'tab-labmaker', icon:'🔬', color:'#38BDF8', bg:'rgba(56,189,248,0.15)', label:'Laboratório de Eletrônica', desc:'Protoboard, LEDs, resistores e circuitos', key:'labmaker_levels' },
-        { id:'tab-arduino', icon:'🛠️', color:'#F87171', bg:'rgba(248,113,113,0.15)', label:'Oficina do Arduino', desc:'Hardware, Lei de Ohm, PWM e C++', key:'arduino_levels' },
+        { 
+            id:'tab-tesouro', icon:'🤖', color:'#FBBF24', bg:'rgba(251,191,36,0.15)', 
+            label:'Aula 1: Lógica de Programação', 
+            desc:'O que são algoritmos? Comandos sequenciais para guiar um robô até o tesouro.',
+            objetivo:'🧠 Entender que um programa é uma sequência de passos na ordem certa — como uma receita de bolo!',
+            pratica:'🎮 Caça ao Tesouro (Níveis 1-2): mova o robô com comandos ⬆⬇⬅➡, desvie de obstáculos e encontre o tesouro.',
+            key:'tesouro_levels'
+        },
+        { 
+            id:'tab-semaforo', icon:'🚦', color:'#F59E0B', bg:'rgba(245,158,11,0.15)', 
+            label:'Aula 2: Sequências Temporizadas', 
+            desc:'Controle o tempo com delays. Monte a sequência de um semáforo real!',
+            objetivo:'⏱ Aprender a controlar a ordem e o tempo de cada ação usando delay().',
+            pratica:'🚦 Semáforo (Níveis 1-3): programe as luzes na ordem correta com tempos de espera.',
+            key:'semaforo_levels'
+        },
+        { 
+            id:'tab-loopmaker', icon:'🔄', color:'#A78BFA', bg:'rgba(167,139,250,0.15)', 
+            label:'Aula 3: Estruturas de Repetição',
+            desc:'Loops! Faça o computador repetir tarefas sem copiar comandos.',
+            objetivo:'🔁 Aprender o conceito de loop (for) para repetir ações N vezes.',
+            pratica:'🔄 Máquina de Loops (Níveis 1-3): ajuste o loop para carimbar o número certo de caixas na esteira.',
+            key:'loopmaker_levels'
+        },
+        { 
+            id:'tab-jardim', icon:'🌱', color:'#34D399', bg:'rgba(52,211,153,0.15)', 
+            label:'Aula 4: Condicionais - Decisões',
+            desc:'Use if/else para o robô decidir o que fazer baseado em condições!',
+            objetivo:'🤔 Entender que um programa pode tomar decisões diferentes dependendo de condições (sensores).',
+            pratica:'🌱 Jardim dos Loops (Níveis 1-3): use if/else para plantar nos vazios e regar nos brotados.',
+            key:'jardim_levels'
+        },
+        { 
+            id:'tab-labmaker', icon:'🔬', color:'#38BDF8', bg:'rgba(56,189,248,0.15)', 
+            label:'Aula 5: Laboratório de Eletrônica', 
+            desc:'Protoboard, resistores, LEDs e circuitos. Monte seu primeiro circuito!',
+            objetivo:'⚡ Entender tensão, corrente, resistência e montar um circuito na protoboard.',
+            pratica:'🔬 Laboratório Maker (Missões 1-3): conecte +5V, GND, resistores e LEDs para acender o circuito.',
+            key:'labmaker_levels'
+        },
+        { 
+            id:'tab-arduino', icon:'🛠️', color:'#F87171', bg:'rgba(248,113,113,0.15)', 
+            label:'Aula 6: Oficina do Arduino', 
+            desc:'Hardware, pinos, Lei de Ohm, PWM, C++ — tudo sobre a placa Arduino!',
+            objetivo:'🧰 Conhecer a placa Arduino UNO, seus pinos, e programar em C++ com PWM.',
+            pratica:'🛠️ Oficina do Arduino: anatomia da placa, Lei de Ohm interativa, PWM, osciloscópio e Quiz!',
+            key:'arduino_levels'
+        },
     ];
 
     function updateTrail() {
@@ -382,13 +424,15 @@
             node.className = 'trail-node' + (isDone ? ' done' : isCurrent ? ' current' : isLocked ? ' locked' : '');
             node.style.background = isDone || isCurrent ? m.bg : '';
             node.innerHTML = `
-                <div class="trail-node-icon" style="background:${m.bg};border-color:${isDone||isCurrent?m.color:'#334155'};">${isLocked ? '🔒' : m.icon}</div>
-                <div class="trail-node-info">
-                    <h3>${m.label}</h3>
-                    <p>${m.desc}</p>
+                <div class="trail-node-icon" style="background:${m.bg};border-color:${isDone||isCurrent?m.color:'#334155'};font-size:2.2rem;">${isLocked ? '🔒' : m.icon}</div>
+                <div class="trail-node-info" style="flex:1;">
+                    <h3 style="color:${isLocked?'#64748B':m.color};margin:0 0 2px;font-family:'Fredoka One';font-size:1.05rem;">${m.label}</h3>
+                    <p style="color:#94A3B8;margin:0 0 4px;font-size:0.8rem;">${m.desc}</p>
+                    <p style="color:#CBD5E1;margin:0;font-size:0.78rem;line-height:1.3;">🎯 <b>Objetivo:</b> ${m.objetivo}</p>
+                    <p style="color:#CBD5E1;margin:3px 0 0;font-size:0.78rem;line-height:1.3;">${m.pratica}</p>
                 </div>
-                <div style="text-align:right;flex-shrink:0;">
-                    <div class="trail-node-badge">${isDone ? '✅ Concluído' : isCurrent ? '▶ Em Andamento' : '🔒 Bloqueado'}</div>
+                <div style="text-align:right;flex-shrink:0;min-width:90px;">
+                    <div class="trail-node-badge">${isDone ? '✅ Concluída' : isCurrent ? '▶ Em Andamento' : '🔒 Bloqueada'}</div>
                     <div style="margin-top:6px;font-size:0.85rem;">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
                 </div>
             `;
