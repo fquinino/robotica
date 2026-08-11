@@ -29,14 +29,8 @@
     <p class="subtitle">🧩 Aprenda Lógica de Programação e Arduino passo a passo — 10 aulas para virar um Maker!</p>
     
     <div class="tabs">
-        <button class="tab-btn active" data-tab="tab-trail"><i class="fa-solid fa-map"></i> Trilha</button>
-        <button class="tab-btn" data-tab="tab-hub"><i class="fa-solid fa-trophy"></i> Conquistas</button>
-        <button class="tab-btn" data-tab="tab-tesouro"><i class="fa-solid fa-robot"></i> Tesouro</button>
-        <button class="tab-btn" data-tab="tab-semaforo"><i class="fa-solid fa-traffic-light"></i> Semáforo</button>
-        <button class="tab-btn" data-tab="tab-loopmaker"><i class="fa-solid fa-arrows-rotate"></i> Loops</button>
-        <button class="tab-btn" data-tab="tab-jardim"><i class="fa-solid fa-seedling"></i> Jardim</button>
-        <button class="tab-btn" data-tab="tab-labmaker"><i class="fa-solid fa-flask"></i> Lab</button>
-        <button class="tab-btn" data-tab="tab-arduino"><i class="fa-solid fa-microchip"></i> Oficina</button>
+        <button class="tab-btn active" data-tab="tab-trail">📚 Aulas</button>
+        <button class="tab-btn" data-tab="tab-hub">🏆 Conquistas</button>
     </div>
 
     <!-- TRILHA DE APRENDIZAGEM -->
@@ -68,6 +62,16 @@
             .trail-node-badge { background:#334155; color:#94A3B8; font-size:0.75rem; font-weight:800; padding:3px 10px; border-radius:10px; }
             .trail-node.done .trail-node-badge { background:#064E3B; color:#34D399; }
             .trail-node.current .trail-node-badge { background:#0C4A6E; color:#38BDF8; }
+
+        .pratica-scene { max-width:700px; margin:0 auto; }
+        .pratica-card { background:#1E293B; border:2px solid #334155; border-radius:20px; padding:24px; margin-bottom:16px; }
+        .pratica-card h3 { font-family:'Fredoka One'; color:#FBBF24; margin:0 0 8px; font-size:1.2rem; }
+        .pratica-card p { color:#CBD5E1; line-height:1.7; font-size:0.95rem; }
+        .pratica-step { display:flex; align-items:flex-start; gap:14px; padding:12px 0; border-bottom:1px solid #1E293B; }
+        .pratica-step-num { background:#FBBF24; color:#0F172A; min-width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.9rem; flex-shrink:0; }
+        .pratica-code { background:#0F172A; border:2px solid #38BDF8; border-radius:16px; padding:18px; font-family:'Courier New',monospace; color:#E2E8F0; font-size:0.88rem; line-height:1.8; overflow-x:auto; white-space:pre-wrap; }
+        .pratica-highlight { color:#FBBF24; font-weight:900; }
+        .pratica-check { color:#34D399; font-weight:900; }
         </style>
         <div class="trail-wrap">
             <div class="trail-title">
@@ -171,36 +175,120 @@
 
     <!-- SEMÁFORO -->
     <div class="game-panel" id="tab-semaforo">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
         <!-- Incluir o código do semáforo aqui -->
         <div id="semaforo-container"></div>
     </div>
 
     <!-- TESOURO -->
     <div class="game-panel" id="tab-tesouro">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
         <div id="tesouro-container"></div>
     </div>
 
     <!-- LABMAKER -->
     <div class="game-panel" id="tab-labmaker">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
         <div id="labmaker-container"></div>
     </div>
 
     <!-- LOOPMAKER -->
     <div class="game-panel" id="tab-loopmaker">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
         <div id="loopmaker-container"></div>
     </div>
 
     <!-- JARDIM -->
     <div class="game-panel" id="tab-jardim">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
         <div id="jardim-container"></div>
     </div>
 
     <!-- OFICINA ARDUINO -->
     <div class="game-panel" id="tab-arduino">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
         <div id="arduino-container"></div>
     </div>
 
     <div class="footer">⭐ 3 estrelas por jogo = 100% completo!</div>
+
+    <div class="game-panel pratica-scene" id="tab-aula9" style="padding-top:12px;">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:16px;">← Voltar para Aulas</button>
+        <div class="pratica-card" style="background:linear-gradient(135deg,#451A03,#1E293B);border-color:#EF4444;">
+            <h3>🔧 Aula 9: Montagem do Semáforo</h3>
+            <p>Chegou a hora de colocar a <span class="pratica-highlight">mão na massa</span>! Você vai montar o circuito real do semáforo usando componentes eletrônicos de verdade.</p>
+        </div>
+        <div class="pratica-card">
+            <h3>📦 Materiais Necessários</h3>
+            <p>✅ 1 Arduino UNO<br>✅ 1 Protoboard<br>✅ 1 LED <span style="color:#EF4444;">Vermelho</span><br>✅ 1 LED <span style="color:#F59E0B;">Amarelo</span><br>✅ 1 LED <span style="color:#10B981;">Verde</span><br>✅ 3 Resistores de 220Ω (vermelho-vermelho-marrom)<br>✅ Jumpers (fios de conexão)</p>
+        </div>
+        <div class="pratica-card">
+            <h3>📋 Passo a Passo</h3>
+            <div class="pratica-step"><div class="pratica-step-num">1</div><div>Encaixe os 3 LEDs na protoboard — deixe espaço entre eles.</div></div>
+            <div class="pratica-step"><div class="pratica-step-num">2</div><div>Conecte o resistor de 220Ω no <b>catodo</b> (perna curta, GND) de cada LED.</div></div>
+            <div class="pratica-step"><div class="pratica-step-num">3</div><div>Conecte o outro lado dos resistores ao <b>GND</b> da protoboard.</div></div>
+            <div class="pratica-step"><div class="pratica-step-num">4</div><div>Conecte o <b>anodo</b> (perna longa) do LED <span style="color:#EF4444;">vermelho</span> ao pino <b>13</b> do Arduino com um jumper.</div></div>
+            <div class="pratica-step"><div class="pratica-step-num">5</div><div>Conecte o anodo do LED <span style="color:#F59E0B;">amarelo</span> ao pino <b>12</b> do Arduino.</div></div>
+            <div class="pratica-step"><div class="pratica-step-num">6</div><div>Conecte o anodo do LED <span style="color:#10B981;">verde</span> ao pino <b>11</b> do Arduino.</div></div>
+            <div class="pratica-step"><div class="pratica-step-num">7</div><div>Conecte o GND do Arduino ao barramento GND da protoboard.</div></div>
+        </div>
+        <div class="pratica-card">
+            <h3>⚠️ Atenção!</h3>
+            <p>Nunca ligue um LED sem resistor — a corrente excessiva <span style="color:#EF4444;">queima o LED</span> na hora! O resistor de 220Ω limita a corrente para ~15mA, seguro para o Arduino.</p>
+        </div>
+    </div>
+
+    <div class="game-panel pratica-scene" id="tab-aula10" style="padding-top:12px;">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:16px;">← Voltar para Aulas</button>
+        <div class="pratica-card" style="background:linear-gradient(135deg,#064E3B,#1E293B);border-color:#10B981;">
+            <h3>💻 Aula 10: Programação do Semáforo</h3>
+            <p>Agora que o circuito está montado, vamos <span class="pratica-highlight">programar</span> o Arduino para controlar as luzes!</p>
+        </div>
+        <div class="pratica-card">
+            <h3>🧠 Lógica do Semáforo</h3>
+            <p>O semáforo segue uma sequência infinita:</p>
+            <p>🟢 <b>Verde</b> (5 segundos) → 🟡 <b>Amarelo</b> (2 segundos) → 🔴 <b>Vermelho</b> (5 segundos) → 🔁 Repete</p>
+        </div>
+        <div class="pratica-card">
+            <h3>📝 Código Arduino C++</h3>
+            <div class="pratica-code">
+<span style="color:#64748B;">// Semáforo — Criadores de Código</span>
+<span style="color:#F472B6;">int</span> ledVermelho = 13;
+<span style="color:#F472B6;">int</span> ledAmarelo  = 12;
+<span style="color:#F472B6;">int</span> ledVerde    = 11;
+
+<span style="color:#F472B6;">void</span> <span style="color:#60A5FA;">setup</span>() {
+  <span style="color:#60A5FA;">pinMode</span>(ledVermelho, <span style="color:#F472B6;">OUTPUT</span>);
+  <span style="color:#60A5FA;">pinMode</span>(ledAmarelo,  <span style="color:#F472B6;">OUTPUT</span>);
+  <span style="color:#60A5FA;">pinMode</span>(ledVerde,    <span style="color:#F472B6;">OUTPUT</span>);
+}
+
+<span style="color:#F472B6;">void</span> <span style="color:#60A5FA;">loop</span>() {
+  <span style="color:#64748B;">// VERDE — siga!</span>
+  <span style="color:#60A5FA;">digitalWrite</span>(ledVerde,    <span style="color:#F472B6;">HIGH</span>);
+  <span style="color:#60A5FA;">digitalWrite</span>(ledAmarelo,  <span style="color:#F472B6;">LOW</span>);
+  <span style="color:#60A5FA;">digitalWrite</span>(ledVermelho, <span style="color:#F472B6;">LOW</span>);
+  <span style="color:#60A5FA;">delay</span>(<span style="color:#FBBF24;">5000</span>); <span style="color:#64748B;">// 5 segundos</span>
+
+  <span style="color:#64748B;">// AMARELO — atenção!</span>
+  <span style="color:#60A5FA;">digitalWrite</span>(ledVerde,    <span style="color:#F472B6;">LOW</span>);
+  <span style="color:#60A5FA;">digitalWrite</span>(ledAmarelo,  <span style="color:#F472B6;">HIGH</span>);
+  <span style="color:#60A5FA;">digitalWrite</span>(ledVermelho, <span style="color:#F472B6;">LOW</span>);
+  <span style="color:#60A5FA;">delay</span>(<span style="color:#FBBF24;">2000</span>); <span style="color:#64748B;">// 2 segundos</span>
+
+  <span style="color:#64748B;">// VERMELHO — pare!</span>
+  <span style="color:#60A5FA;">digitalWrite</span>(ledVerde,    <span style="color:#F472B6;">LOW</span>);
+  <span style="color:#60A5FA;">digitalWrite</span>(ledAmarelo,  <span style="color:#F472B6;">LOW</span>);
+  <span style="color:#60A5FA;">digitalWrite</span>(ledVermelho, <span style="color:#F472B6;">HIGH</span>);
+  <span style="color:#60A5FA;">delay</span>(<span style="color:#FBBF24;">5000</span>); <span style="color:#64748B;">// 5 segundos</span>
+}
+            </div>
+        </div>
+        <div class="pratica-card" style="background:linear-gradient(135deg,#1E3A5F,#1E293B);border-color:#38BDF8;">
+            <h3>🚀 Como Fazer Upload</h3>
+            <p>1️⃣ Conecte o Arduino no USB do computador<br>2️⃣ Abra o Arduino IDE<br>3️⃣ Copie e cole o código acima<br>4️⃣ Selecione a placa: <b>Ferramentas → Placa → Arduino UNO</b><br>5️⃣ Selecione a porta: <b>Ferramentas → Porta → COMx</b><br>6️⃣ Clique no botão <b>Upload (→)</b><br>7️⃣ 🎉 Seu semáforo está funcionando!</p>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -235,8 +323,27 @@
 
     // ================= CONTROLE DE ABAS E HUB =================
     function openTab(tabId) {
-        const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
-        if(btn) btn.click();
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.game-panel').forEach(p=>p.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        
+        if (tabId === 'tab-trail') { updateTrail(); return; }
+        if (tabId === 'tab-hub') { updateHubProgress(); return; }
+        if (tabId === 'tab-semaforo' && !document.getElementById('semaforo-loaded')) loadSemaforo();
+        if (tabId === 'tab-tesouro' && !document.getElementById('tesouro-loaded')) loadTesouro();
+        if (tabId === 'tab-labmaker') {
+            if(!document.getElementById('labmaker-loaded')) loadLabmaker();
+            else setTimeout(() => { if(typeof lab_renderComponents==='function') lab_renderComponents(); }, 60);
+        }
+        if (tabId === 'tab-loopmaker' && !document.getElementById('loopmaker-loaded')) loadLoopmaker();
+        if (tabId === 'tab-jardim' && !document.getElementById('jardim-loaded')) loadJardim();
+        if (tabId === 'tab-arduino' && !document.getElementById('arduino-loaded')) loadArduino();
+        window.scrollTo({top:0,behavior:'smooth'});
+    }
+    
+    function openTrail() {
+        openTab('tab-trail');
+        document.querySelector('.tab-btn[data-tab="tab-trail"]').classList.add('active');
     }
 
     function updateHubProgress() {
@@ -420,7 +527,7 @@
             key:'arduino_levels'
         },
         { 
-            id:'tab-semaforo', icon:'🔧', color:'#EF4444', bg:'rgba(239,68,68,0.15)', 
+            id:'tab-aula9', icon:'🔧', color:'#EF4444', bg:'rgba(239,68,68,0.15)', 
             label:'Aula 9: Prática — Montagem do Semáforo',
             day:8,
             desc:'Mão na massa! Monte o circuito físico do semáforo com Arduino, LEDs e resistores.',
@@ -429,7 +536,7 @@
             key:'semaforo_levels'
         },
         { 
-            id:'tab-semaforo', icon:'💻', color:'#10B981', bg:'rgba(16,185,129,0.15)', 
+            id:'tab-aula10', icon:'💻', color:'#10B981', bg:'rgba(16,185,129,0.15)', 
             label:'Aula 10: Prática — Programação do Semáforo',
             day:9,
             desc:'Hora de programar! Escreva o código C++ completo do semáforo no Arduino IDE.',
@@ -1180,7 +1287,7 @@
         t_initLevel();
         t_updateArduinoCode();
         t_updateErrorCounter();
-        // Slides: só mostra na primeira visita de todas
+        t_switchSubtab('jogar');
         setTimeout(() => {
             if(!localStorage.getItem('tesouro_slides_done')) {
                 // Slides já estão visíveis no DOM
