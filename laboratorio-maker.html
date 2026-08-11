@@ -764,7 +764,25 @@
                 .t-floor-dot.done { background:#10B981; border-color:#10B981; }
                 .t-floor-dot-label { font-size:0.7rem; color:#94A3B8; font-weight:800; }
 
-                /* Erro counter */
+                /* Mini mapa preview do proximo andar */
+                .t-floor-preview { background:#0F172A; border:2px solid #334155; border-radius:16px; padding:14px 16px; margin-top:10px; display:none; animation:ardFadeIn 0.3s ease; }
+                .t-floor-preview.visible { display:block; }
+                .t-floor-preview-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px; }
+                .t-mini-grid { display:grid; gap:2px; justify-content:center; }
+                .t-mini-cell { width:22px; height:22px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.6rem; transition:0.15s; border:1px solid rgba(51,65,85,0.5); }
+                .t-mini-empty { background:#1E293B; }
+                .t-mini-obstacle { background:repeating-linear-gradient(45deg,#334155,#334155 3px,#1E293B 3px,#1E293B 6px); border-color:#EF4444; }
+                .t-mini-ladder { background:rgba(245,158,11,0.35); border-color:#F59E0B; }
+                .t-mini-ladder::after { content:'🪜'; font-size:0.55rem; }
+                .t-mini-treasure { background:rgba(245,158,11,0.35); border-color:#FCD34D; box-shadow:0 0 8px rgba(245,158,11,0.5); }
+                .t-mini-treasure::after { content:'🏆'; font-size:0.7rem; }
+                .t-mini-you { background:#F59E0B !important; border-color:#FCD34D !important; }
+                .t-mini-you::after { content:'⬇'; font-size:0.7rem; color:#0F172A; }
+                .t-mini-ladder-from { background:rgba(139,92,246,0.4); border-color:#A78BFA; }
+                .t-mini-ladder-from::after { content:'🪜'; font-size:0.55rem; }
+                .t-preview-legend { display:flex; gap:12px; flex-wrap:wrap; align-items:center; font-size:0.72rem; color:#94A3B8; margin-top:8px; }
+                .t-preview-legend span { display:inline-flex; align-items:center; gap:4px; }
+                .t-preview-legend .t-dot { width:10px; height:10px; border-radius:3px; display:inline-block; }
                 .t-error-counter { background:#1E293B; border:1px solid #334155; border-radius:12px; padding:5px 12px; font-size:0.82rem; color:#94A3B8; font-weight:800; text-align:center; margin-top:6px; }
                 
                 /* Animação de transição entre andares */
@@ -785,6 +803,20 @@
                 <div class="board-wrap">
                     <div class="board" id="t_board"></div>
                     <div class="t-floor-transition" id="t_floor_transition"><span id="t_transition_text"></span></div>
+                </div>
+                <div class="t-floor-preview" id="t_floor_preview">
+                    <div class="t-floor-preview-header">
+                        <span style="color:#FCD34D;font-weight:900;font-size:0.95rem;">🗺️ Mini-mapa do <span id="t_preview_floor_label">Próximo Andar</span></span>
+                        <span style="color:#64748B;font-size:0.78rem;" id="t_preview_hint">Planeje sua rota antes de SUBIR a escada!</span>
+                    </div>
+                    <div class="t-mini-grid" id="t_mini_grid"></div>
+                    <div class="t-preview-legend">
+                        <span><span class="t-dot" style="background:#1E293B;border:1px solid #475569;"></span> Vazio</span>
+                        <span><span class="t-dot" style="background:repeating-linear-gradient(45deg,#334155,#334155 3px,#1E293B 3px,#1E293B 6px);border:1px solid #EF4444;"></span> Obstáculo ✖</span>
+                        <span><span class="t-dot" style="background:rgba(245,158,11,0.35);border:1px solid #F59E0B;"></span> Escada 🪜</span>
+                        <span><span class="t-dot" style="background:rgba(245,158,11,0.35);border:1px solid #FCD34D;"></span> Tesouro 🏆</span>
+                        <span><span class="t-dot" style="background:#F59E0B;border:1px solid #FCD34D;"></span> Você ⬇</span>
+                    </div>
                 </div>
                 <div class="controls">
                     <button class="btn" onclick="t_addCmd('UP')" title="Mover para cima">⬆</button>
@@ -1005,6 +1037,110 @@
         if(t_robotPos.z === 0) label.style.color = '#94A3B8';
         else if(t_robotPos.z === 1) label.style.color = '#34D399';
         else label.style.color = '#F59E0B';
+        t_renderFloorPreview();
+    }
+    
+    function t_renderFloorPreview() {
+        const panel = document.getElementById('t_floor_preview');
+        const miniGrid = document.getElementById('t_mini_grid');
+        const floorLabel = document.getElementById('t_preview_floor_label');
+        const hint = document.getElementById('t_preview_hint');
+        if(!panel || !miniGrid) return;
+        
+        const numFloors = t_floors.length;
+        const currFloor = t_floors[t_robotPos.z];
+        const floor = t_floors[t_robotPos.z];
+        let previewFloorIdx = -1;
+        let previewFloor = null;
+        let direction = '';
+        
+        // Show the floor we can go to (prefer going up if there's a ladder)
+        const hasLadderUp = t_robotPos.z < numFloors - 1 && floor.ladders.length > 0;
+        const hasLadderDown = t_robotPos.z > 0 && floor.ladders.length > 0;
+        
+        if(hasLadderUp) {
+            previewFloorIdx = t_robotPos.z + 1;
+            previewFloor = t_floors[previewFloorIdx];
+            direction = 'up';
+        } else if(hasLadderDown) {
+            previewFloorIdx = t_robotPos.z - 1;
+            previewFloor = t_floors[previewFloorIdx];
+            direction = 'down';
+        }
+        
+        if(!previewFloor) {
+            panel.classList.remove('visible');
+            return;
+        }
+        
+        panel.classList.add('visible');
+        
+        // Find the matching ladder that connects floors
+        const ladderPositions = floor.ladders.filter(l => previewFloor.ladders.some(pl => pl.x === l.x && pl.y === l.y));
+        const entryLadder = ladderPositions.length > 0 ? ladderPositions[0] : (previewFloor.ladders.length > 0 ? previewFloor.ladders[0] : null);
+        
+        if(direction === 'up') {
+            floorLabel.innerText = 'Andar ' + (previewFloorIdx + 1) + ' (acima)';
+            hint.innerText = 'Seu robô aparecerá na posição da escada ao SUBIR!';
+        } else {
+            floorLabel.innerText = 'Andar ' + (previewFloorIdx + 1) + ' (abaixo)';
+            hint.innerText = 'Seu robô aparecerá na posição da escada ao DESCER!';
+        }
+        
+        miniGrid.innerHTML = '';
+        miniGrid.style.gridTemplateColumns = `repeat(${t_gridSize}, 1fr)`;
+        miniGrid.style.maxWidth = `${t_gridSize * 26}px`;
+        miniGrid.style.margin = '0 auto';
+        
+        // Column headers
+        for(let col=0; col<t_gridSize; col++) {
+            const hdr = document.createElement('div');
+            hdr.style.textAlign = 'center';
+            hdr.style.fontSize = '0.55rem';
+            hdr.style.color = '#64748B';
+            hdr.style.fontWeight = '800';
+            hdr.innerText = col + 1;
+            miniGrid.appendChild(hdr);
+        }
+        
+        for(let y=0; y<t_gridSize; y++) {
+            // Row label
+            const rowLabel = document.createElement('div');
+            rowLabel.style.fontSize = '0.55rem';
+            rowLabel.style.color = '#64748B';
+            rowLabel.style.fontWeight = '800';
+            rowLabel.style.display = 'flex';
+            rowLabel.style.alignItems = 'center';
+            rowLabel.style.justifyContent = 'center';
+            rowLabel.innerText = y + 1;
+            // Actually let me skip row labels to keep it simple, use a different approach
+            // Just render the grid without labels - simpler
+            
+            for(let x=0; x<t_gridSize; x++) {
+                const cell = document.createElement('div');
+                cell.className = 't-mini-cell';
+                const isObs = previewFloor.obstacles.some(o=>o.x===x&&o.y===y);
+                const isLad = previewFloor.ladders.some(l=>l.x===x&&l.y===y);
+                const isTreas = t_treasurePos.x===x && t_treasurePos.y===y && t_treasurePos.z===previewFloorIdx;
+                const isEntry = entryLadder && entryLadder.x===x && entryLadder.y===y;
+                
+                if(isObs) cell.classList.add('t-mini-obstacle');
+                else if(isTreas) cell.classList.add('t-mini-treasure');
+                else if(isEntry) cell.classList.add('t-mini-you');
+                else if(isLad) cell.classList.add('t-mini-ladder');
+                else cell.classList.add('t-mini-empty');
+                
+                // Tooltip
+                const labelParts = [];
+                if(isObs) labelParts.push('Obstáculo');
+                if(isTreas) labelParts.push('TESOURO');
+                if(isLad) labelParts.push('Escada');
+                if(isEntry) labelParts.push('Sua chegada');
+                cell.title = `(${x+1},${y+1})` + (labelParts.length > 0 ? ' - ' + labelParts.join(', ') : '');
+                
+                miniGrid.appendChild(cell);
+            }
+        }
     }
     
     async function t_showFloorTransition(direction, fromZ, toZ) {
