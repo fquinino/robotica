@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🏆 Laboratório Maker - Todos os Jogos</title>
+    <title>🤖 Criadores de Código — Curso de Lógica de Programação</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -25,8 +25,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>🔧 Laboratório Maker</h1>
-    <p class="subtitle">🧩 Escolha um jogo e aprenda programação com Arduino</p>
+    <h1>🤖 Criadores de Código</h1>
+    <p class="subtitle">🧩 Aprenda Lógica de Programação e Arduino passo a passo — 10 aulas para virar um Maker!</p>
     
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-trail"><i class="fa-solid fa-map"></i> Trilha</button>
@@ -335,54 +335,116 @@
     setTimeout(() => { updateHubProgress(); updateTrail(); }, 100);
 
     // ================= TRILHA DE APRENDIZAGEM =================
+    // ================= PLANO DE AULAS (10 aulas) =================
+    const LESSON_START_DATE = '2026-08-11'; // Data da Aula 1
+    
+    function getLessonUnlockDate(dayOffset) {
+        const d = new Date(LESSON_START_DATE + 'T00:00:00');
+        d.setDate(d.getDate() + dayOffset);
+        return d;
+    }
+    
+    function isLessonUnlocked(dayOffset) {
+        const now = new Date();
+        const unlockDate = getLessonUnlockDate(dayOffset);
+        return now >= unlockDate;
+    }
+    
+    function formatUnlockDate(dayOffset) {
+        const d = getLessonUnlockDate(dayOffset);
+        return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+    }
+    
     const trailModules = [
         { 
             id:'tab-tesouro', icon:'🤖', color:'#FBBF24', bg:'rgba(251,191,36,0.15)', 
-            label:'Aula 1: Lógica de Programação', 
-            desc:'O que são algoritmos? Comandos sequenciais para guiar um robô até o tesouro.',
-            objetivo:'🧠 Entender que um programa é uma sequência de passos na ordem certa — como uma receita de bolo!',
-            pratica:'🎮 Caça ao Tesouro (Níveis 1-2): mova o robô com comandos ⬆⬇⬅➡, desvie de obstáculos e encontre o tesouro.',
+            label:'Aula 1: Algoritmos e Sequências',
+            day:0,
+            desc:'O que é um algoritmo? Como dar comandos em sequência para resolver problemas.',
+            objetivo:'🧠 Entender que programar é escrever uma sequência de passos na ordem certa — como uma receita!',
+            pratica:'🎮 Caça ao Tesouro (Níveis 1-2): mova o robô com ⬆⬇⬅➡, desvie de obstáculos e encontre o tesouro.',
             key:'tesouro_levels'
         },
         { 
-            id:'tab-semaforo', icon:'🚦', color:'#F59E0B', bg:'rgba(245,158,11,0.15)', 
-            label:'Aula 2: Sequências Temporizadas', 
-            desc:'Controle o tempo com delays. Monte a sequência de um semáforo real!',
-            objetivo:'⏱ Aprender a controlar a ordem e o tempo de cada ação usando delay().',
-            pratica:'🚦 Semáforo (Níveis 1-3): programe as luzes na ordem correta com tempos de espera.',
-            key:'semaforo_levels'
-        },
-        { 
             id:'tab-loopmaker', icon:'🔄', color:'#A78BFA', bg:'rgba(167,139,250,0.15)', 
-            label:'Aula 3: Estruturas de Repetição',
-            desc:'Loops! Faça o computador repetir tarefas sem copiar comandos.',
-            objetivo:'🔁 Aprender o conceito de loop (for) para repetir ações N vezes.',
+            label:'Aula 2: Estruturas de Repetição',
+            day:1,
+            desc:'Loops! Como fazer o computador repetir tarefas sem copiar e colar comandos.',
+            objetivo:'🔁 Aprender o conceito de repetição (loop for) para executar ações N vezes automaticamente.',
             pratica:'🔄 Máquina de Loops (Níveis 1-3): ajuste o loop para carimbar o número certo de caixas na esteira.',
             key:'loopmaker_levels'
         },
         { 
             id:'tab-jardim', icon:'🌱', color:'#34D399', bg:'rgba(52,211,153,0.15)', 
-            label:'Aula 4: Condicionais - Decisões',
-            desc:'Use if/else para o robô decidir o que fazer baseado em condições!',
-            objetivo:'🤔 Entender que um programa pode tomar decisões diferentes dependendo de condições (sensores).',
-            pratica:'🌱 Jardim dos Loops (Níveis 1-3): use if/else para plantar nos vazios e regar nos brotados.',
+            label:'Aula 3: Condicionais — Decisões',
+            day:2,
+            desc:'Use if/else para o programa tomar decisões baseado em condições!',
+            objetivo:'🤔 Entender que o computador pode ESCOLHER caminhos diferentes dependendo de condições (como sensores).',
+            pratica:'🌱 Jardim dos Loops (Níveis 1-3): use if/else para plantar nos buracos vazios e regar onde já brotou.',
             key:'jardim_levels'
         },
         { 
-            id:'tab-labmaker', icon:'🔬', color:'#38BDF8', bg:'rgba(56,189,248,0.15)', 
-            label:'Aula 5: Laboratório de Eletrônica', 
-            desc:'Protoboard, resistores, LEDs e circuitos. Monte seu primeiro circuito!',
-            objetivo:'⚡ Entender tensão, corrente, resistência e montar um circuito na protoboard.',
-            pratica:'🔬 Laboratório Maker (Missões 1-3): conecte +5V, GND, resistores e LEDs para acender o circuito.',
+            id:'tab-semaforo', icon:'🚦', color:'#F59E0B', bg:'rgba(245,158,11,0.15)', 
+            label:'Aula 4: Sequências Temporizadas',
+            day:3,
+            desc:'Controle o TEMPO das ações com delays. Programe um semáforo completo!',
+            objetivo:'⏱ Aprender a usar delay() para controlar QUANTO TEMPO cada ação dura.',
+            pratica:'🚦 Semáforo Digital (Níveis 1-3): programe verde → amarelo → vermelho com tempos corretos.',
+            key:'semaforo_levels'
+        },
+        { 
+            id:'tab-tesouro', icon:'🧮', color:'#38BDF8', bg:'rgba(56,189,248,0.15)', 
+            label:'Aula 5: Variáveis e Tipos de Dados',
+            day:4,
+            desc:'Caixas de memória! Como guardar números, texto e estados no computador.',
+            objetivo:'📦 Entender o que são variáveis (int, float, bool, String) e como usá-las para armazenar informações.',
+            pratica:'🏆 Caça ao Tesouro Nível 3: use a lógica de variáveis para planejar rotas com múltiplos andares e escadas.',
+            key:'tesouro_levels'
+        },
+        { 
+            id:'tab-labmaker', icon:'🔬', color:'#10B981', bg:'rgba(16,185,129,0.15)', 
+            label:'Aula 6: Introdução à Eletrônica',
+            day:5,
+            desc:'Tensão, corrente, resistência. Como a energia elétrica funciona nos circuitos.',
+            objetivo:'⚡ Entender a tríade da eletricidade: Tensão (V), Corrente (I) e Resistência (R) com a analogia da água.',
+            pratica:'🔬 Laboratório Maker — Aba Teoria: explore a analogia da água e entenda o que cada grandeza faz.',
+            key:'labmaker_levels'
+        },
+        { 
+            id:'tab-labmaker', icon:'🔌', color:'#F59E0B', bg:'rgba(245,158,11,0.15)', 
+            label:'Aula 7: Circuitos e Protoboard',
+            day:6,
+            desc:'Monte circuitos de verdade! Protoboard, jumpers, resistores e LEDs.',
+            objetivo:'🧰 Aprender a usar a protoboard: barramentos, furos, jumpers e componentes reais.',
+            pratica:'🔬 Laboratório Maker — Aba Bancada: monte o circuito do LED com resistor de 220Ω e acenda!',
             key:'labmaker_levels'
         },
         { 
             id:'tab-arduino', icon:'🛠️', color:'#F87171', bg:'rgba(248,113,113,0.15)', 
-            label:'Aula 6: Oficina do Arduino', 
-            desc:'Hardware, pinos, Lei de Ohm, PWM, C++ — tudo sobre a placa Arduino!',
-            objetivo:'🧰 Conhecer a placa Arduino UNO, seus pinos, e programar em C++ com PWM.',
-            pratica:'🛠️ Oficina do Arduino: anatomia da placa, Lei de Ohm interativa, PWM, osciloscópio e Quiz!',
+            label:'Aula 8: Arduino e Linguagem C++',
+            day:7,
+            desc:'Conheça a placa Arduino UNO e aprenda a programar em C++!',
+            objetivo:'🧰 Identificar os pinos, portas e componentes da placa. Entender setup() e loop().',
+            pratica:'🛠️ Oficina do Arduino: anatomia da placa, simulador Lei de Ohm, PWM interativo e Quiz final.',
             key:'arduino_levels'
+        },
+        { 
+            id:'tab-semaforo', icon:'🔧', color:'#EF4444', bg:'rgba(239,68,68,0.15)', 
+            label:'Aula 9: Prática — Montagem do Semáforo',
+            day:8,
+            desc:'Mão na massa! Monte o circuito físico do semáforo com Arduino, LEDs e resistores.',
+            objetivo:'🔨 Conectar 3 LEDs (verde, amarelo, vermelho) com resistores nos pinos do Arduino na protoboard.',
+            pratica:'🚦 Siga o guia de montagem: Arduino + protoboard + 3 LEDs + 3 resistores 220Ω + jumpers.',
+            key:'semaforo_levels'
+        },
+        { 
+            id:'tab-semaforo', icon:'💻', color:'#10B981', bg:'rgba(16,185,129,0.15)', 
+            label:'Aula 10: Prática — Programação do Semáforo',
+            day:9,
+            desc:'Hora de programar! Escreva o código C++ completo do semáforo no Arduino IDE.',
+            objetivo:'💻 Escrever o código com pinMode, digitalWrite e delay para controlar o semáforo real.',
+            pratica:'💻 Programe: 5s verde → 2s amarelo → 5s vermelho → loop infinito. Depois carregue na placa!',
+            key:'semaforo_levels'
         },
     ];
 
