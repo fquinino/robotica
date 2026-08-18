@@ -150,7 +150,7 @@
                         <span style="font-size:2rem;">🗺️</span>
                         <div>
                             <div style="color:#38BDF8;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:2px;">Missão do Nível 2</div>
-                            <div id="l2_obj_text" style="color:#CBD5E1;font-size:0.95rem;">🪙 Pegue as 2 moedas e chegue ao 🏆 Tesouro no canto inferior direito!</div>
+                            <div id="l2_obj_text" style="color:#CBD5E1;font-size:0.95rem;">🪙 Colete as 2 moedas no caminho e leve o robô até o 🏆 Tesouro!</div>
                         </div>
                     </div>
                     <div class="loop-ide-layout">
@@ -307,8 +307,8 @@
             start: { r:0, c:0 },
             chest: { r:4, c:4 },
             walls: [ {r:1,c:1}, {r:1,c:2}, {r:2,c:1}, {r:2,c:2}, {r:3,c:2} ],
-            coins: [ {r:0,c:4}, {r:4,c:0} ],
-            objective: "🪙 Pegue as 2 moedas e chegue ao 🏆 Tesouro no canto inferior direito!",
+            coins: [ {r:0,c:4}, {r:2,c:4} ],
+            objective: "🪙 Coletar as 2 moedas no caminho e chegar ao 🏆 Tesouro no canto inferior direito!",
             initialCode: ""
         },
         3: {
