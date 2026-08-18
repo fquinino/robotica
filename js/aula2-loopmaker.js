@@ -910,50 +910,157 @@
     }
 
     // Parser simples de Portugol/C++ para o Nível 4
+        // Parser robusto e flexível de C/C++ para a Mini-IDE (Nível 4)
     function l2_parseC(code) {
-        const cleanLines = code.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('//'));
-        const commands = [];
-
-        for(let i=0; i<cleanLines.length; i++) {
-            const line = cleanLines[i];
-
-            const forMatch = line.match(/^for\s*\(\s*int\s+\w+\s*=\s*\d+\s*;\s*\w+\s*<\s*(\d+)\s*;\s*\w+\+\+\s*\)\s*\{?/);
-            if(forMatch) {
-                const count = parseInt(forMatch[1]);
-                let bodyCmd = null;
-
-                let nextLineIndex = i + 1;
-                while(nextLineIndex < cleanLines.length) {
-                    const subLine = cleanLines[nextLineIndex];
-                    if(subLine.includes('direita()')) bodyCmd = 'RIGHT';
-                    else if(subLine.includes('baixo()')) bodyCmd = 'DOWN';
-                    else if(subLine.includes('esquerda()')) bodyCmd = 'LEFT';
-                    else if(subLine.includes('cima()')) bodyCmd = 'UP';
-
-                    if(subLine.includes('}') || bodyCmd) break;
-                    nextLineIndex++;
-                }
-
-                if(!bodyCmd) {
-                    return { success: false, title: 'Laço FOR Vazio!', msg: 'O laço FOR não contém nenhum comando válido dentro.', hint: 'Coloque direita();, baixo();, etc. dentro do laço!' };
-                }
-
-                for(let k=0; k<count; k++) {
-                    commands.push({ cmd: bodyCmd });
-                }
-
-                while(i < cleanLines.length && !cleanLines[i].includes('}')) i++;
-                continue;
-            }
-
-            if(line.includes('direita()')) commands.push({ cmd: 'RIGHT' });
-            else if(line.includes('baixo()')) commands.push({ cmd: 'DOWN' });
-            else if(line.includes('esquerda()')) commands.push({ cmd: 'LEFT' });
-            else if(line.includes('cima()')) commands.push({ cmd: 'UP' });
+        if (!code || !code.trim()) {
+            return {
+                success: false,
+                title: 'Código Vazio!',
+                msg: 'Escreva seu código em C/C++ na Mini-IDE.',
+                hint: 'Use os atalhos acima ou digite laços FOR e comandos para guiar o robô!'
+            };
         }
 
-        if(commands.length === 0) {
-            return { success: false, title: 'Nenhum Comando Encontrado!', msg: 'Escreva comandos como direita(); ou laços FOR.', hint: 'Use os botões de atalho acima do editor para inserir código rapidamente!' };
+        // 1. Limpar comentários (// ... e /* ... */)
+        let cleanCode = code
+            .replace(/\/\*[\s\S]*?\*\//g, '')
+            .replace(/\/\/.*/g, '');
+
+        const commands = [];
+
+        // Extrai todos os comandos simples (direita, baixo, esquerda, cima) de um trecho de texto
+        function extractCmdsFromText(text) {
+            const result = [];
+            const regex = /(direita|baixo|esquerda|cima)\s*\(\s*\)/gi;
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+                const fn = match[1].toLowerCase();
+                if (fn === 'direita') result.push('RIGHT');
+                else if (fn === 'baixo') result.push('DOWN');
+                else if (fn === 'esquerda') result.push('LEFT');
+                else if (fn === 'cima') result.push('UP');
+            }
+            return result;
+        }
+
+        let pos = 0;
+        const len = cleanCode.length;
+
+        while (pos < len) {
+            const forIdx = cleanCode.substring(pos).search(/\bfor\s*\(/i);
+
+            if (forIdx === -1) {
+                const remainingText = cleanCode.substring(pos);
+                const standaloneCmds = extractCmdsFromText(remainingText);
+                standaloneCmds.forEach(c => commands.push({ cmd: c }));
+                break;
+            }
+
+            const absoluteForIdx = pos + forIdx;
+            const textBeforeFor = cleanCode.substring(pos, absoluteForIdx);
+            const cmdsBefore = extractCmdsFromText(textBeforeFor);
+            cmdsBefore.forEach(c => commands.push({ cmd: c }));
+
+            pos = absoluteForIdx;
+
+            const openParenIdx = cleanCode.indexOf('(', pos);
+            if (openParenIdx === -1) { pos++; continue; }
+
+            let closeParenIdx = -1;
+            let parenDepth = 0;
+            for (let k = openParenIdx; k < len; k++) {
+                if (cleanCode[k] === '(') parenDepth++;
+                else if (cleanCode[k] === ')') {
+                    parenDepth--;
+                    if (parenDepth === 0) {
+                        closeParenIdx = k;
+                        break;
+                    }
+                }
+            }
+
+            if (closeParenIdx === -1) { pos++; continue; }
+
+            const forHeader = cleanCode.substring(openParenIdx + 1, closeParenIdx);
+
+            let iterations = 1;
+            const condMatch = forHeader.match(/;\s*\w+\s*(<|<=|>|>=|!=)\s*(\d+)/);
+            const initMatch = forHeader.match(/=\s*(\d+)/);
+
+            if (condMatch) {
+                const op = condMatch[1];
+                const targetVal = parseInt(condMatch[2]);
+                const startVal = initMatch ? parseInt(initMatch[1]) : 0;
+
+                if (op === '<') iterations = Math.max(0, targetVal - startVal);
+                else if (op === '<=') iterations = Math.max(0, targetVal - startVal + 1);
+                else iterations = targetVal;
+            } else {
+                const numMatch = forHeader.match(/(\d+)/);
+                if (numMatch) iterations = parseInt(numMatch[1]);
+            }
+
+            pos = closeParenIdx + 1;
+            while (pos < len && /\s/.test(cleanCode[pos])) pos++;
+
+            let bodyText = '';
+            if (pos < len && cleanCode[pos] === '{') {
+                const openBraceIdx = pos;
+                let closeBraceIdx = -1;
+                let braceDepth = 0;
+
+                for (let k = openBraceIdx; k < len; k++) {
+                    if (cleanCode[k] === '{') braceDepth++;
+                    else if (cleanCode[k] === '}') {
+                        braceDepth--;
+                        if (braceDepth === 0) {
+                            closeBraceIdx = k;
+                            break;
+                        }
+                    }
+                }
+
+                if (closeBraceIdx !== -1) {
+                    bodyText = cleanCode.substring(openBraceIdx + 1, closeBraceIdx);
+                    pos = closeBraceIdx + 1;
+                } else {
+                    bodyText = cleanCode.substring(openBraceIdx + 1);
+                    pos = len;
+                }
+            } else {
+                const semicolonIdx = cleanCode.indexOf(';', pos);
+                if (semicolonIdx !== -1) {
+                    bodyText = cleanCode.substring(pos, semicolonIdx + 1);
+                    pos = semicolonIdx + 1;
+                } else {
+                    bodyText = cleanCode.substring(pos);
+                    pos = len;
+                }
+            }
+
+            const loopBodyCmds = extractCmdsFromText(bodyText);
+
+            if (loopBodyCmds.length === 0) {
+                return {
+                    success: false,
+                    title: 'Laço FOR Vazio!',
+                    msg: 'Um dos laços FOR não contém nenhum comando dentro.',
+                    hint: 'Coloque comandos como direita(); ou baixo(); dentro do bloco { } do laço FOR!'
+                };
+            }
+
+            for (let it = 0; it < iterations; it++) {
+                loopBodyCmds.forEach(c => commands.push({ cmd: c }));
+            }
+        }
+
+        if (commands.length === 0) {
+            return {
+                success: false,
+                title: 'Nenhum Comando Válido!',
+                msg: 'Não encontramos nenhuma instrução reconhecida no seu código.',
+                hint: 'Escreva comandos como direita();, baixo();, esquerda();, cima(); ou laços for (...)'
+            };
         }
 
         return { success: true, commands };
