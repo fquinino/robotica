@@ -216,6 +216,14 @@
                     <button class="loop-level-btn" data-level="4" onclick="l2_switchLevel(4)"><i class="fa-solid fa-code"></i> Nível 4: Mini-IDE C/C++</button>
                 </div>
 
+                <!-- CONTROLES GLOBAIS DE EXECUÇÃO -->
+                <div style="display:flex;justify-content:center;margin-bottom:15px;gap:15px;align-items:center;background:rgba(15,23,42,0.6);padding:10px;border-radius:14px;border:1px dashed #8B5CF6;">
+                    <label style="color:#C4B5FD;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:0.9rem;">
+                        <input type="checkbox" id="l2_step_checkbox" style="transform:scale(1.2);"> 🐢 Modo Passo a Passo (Manual)
+                    </label>
+                    <button id="l2_btn_step" onclick="l2_doNextStep()" style="display:none;background:#FBBF24;color:#0F172A;border:none;padding:8px 16px;border-radius:12px;font-family:'Fredoka One';font-size:0.9rem;cursor:pointer;border-bottom:3px solid #D97706;transition:0.1s;">▶️ PRÓXIMO PASSO</button>
+                </div>
+
                 <!-- CONTEÚDO NÍVEL 1: FÁBRICA DE LOOPS -->
                 <div id="l2_view_lvl1">
                     <div class="loop-factory-scene">
@@ -293,7 +301,10 @@
                         <div class="loop-sim-card">
                             <div class="loop-sim-topbar">
                                 <div class="loop-sim-title"><i class="fa-solid fa-robot"></i> Simulador do Robô</div>
-                                <div class="loop-sim-hud" id="l2_hud_coins">🪙 0 / 2 Moedas</div>
+                                <div style="display:flex;gap:6px;align-items:center;">
+                                    <div class="loop-sim-hud" id="l2_hud_i" style="display:none;background:rgba(139,92,246,0.2);border:1px solid #8B5CF6;color:#C4B5FD;">🔢 i = 0</div>
+                                    <div class="loop-sim-hud" id="l2_hud_coins">🪙 0 / 2 Moedas</div>
+                                </div>
                             </div>
                             <div class="loop-board" id="loop-board-lvl2" style="grid-template-columns:repeat(5, 1fr);"></div>
                         </div>
@@ -352,7 +363,10 @@
                         <div class="loop-sim-card">
                             <div class="loop-sim-topbar">
                                 <div class="loop-sim-title"><i class="fa-solid fa-robot"></i> Robô no Zigue-Zague</div>
-                                <div class="loop-sim-hud" id="l3_multi_hud_coins">🪙 0 / 3 Moedas</div>
+                                <div style="display:flex;gap:6px;align-items:center;">
+                                    <div class="loop-sim-hud" id="l3_hud_i" style="display:none;background:rgba(139,92,246,0.2);border:1px solid #8B5CF6;color:#C4B5FD;">🔢 i = 0</div>
+                                    <div class="loop-sim-hud" id="l3_multi_hud_coins">🪙 0 / 3 Moedas</div>
+                                </div>
                             </div>
                             <div class="loop-board" id="loop-board-lvl3" style="grid-template-columns:repeat(5, 1fr);"></div>
                         </div>
@@ -433,7 +447,10 @@
                         <div class="loop-sim-card">
                             <div class="loop-sim-topbar">
                                 <div class="loop-sim-title"><i class="fa-solid fa-robot"></i> Labirinto Maker 6x6</div>
-                                <div class="loop-sim-hud" id="l4_hud_coins">🪙 0 / 3 Moedas</div>
+                                <div style="display:flex;gap:6px;align-items:center;">
+                                    <div class="loop-sim-hud" id="l4_hud_i" style="display:none;background:rgba(139,92,246,0.2);border:1px solid #8B5CF6;color:#C4B5FD;">🔢 i = 0</div>
+                                    <div class="loop-sim-hud" id="l4_hud_coins">🪙 0 / 3 Moedas</div>
+                                </div>
                             </div>
                             <div class="loop-board" id="loop-board-lvl4" style="grid-template-columns:repeat(6, 1fr);"></div>
                         </div>
@@ -463,8 +480,18 @@
     const l2_sleep = ms => new Promise(r => setTimeout(r, ms));
     let l2_currentLevel = 1;
     let l2_isExecuting = false;
-    let l2_robotState = { r:0, c:0 };
+    let l2_robotState = {r:0, c:0, dir:'RIGHT'};
     let l2_collectedCoins = 0;
+    
+    // Controle de Passo a Passo
+    let l2_nextStepResolve = null;
+    
+    window.l2_doNextStep = function() {
+        if(l2_nextStepResolve) {
+            l2_nextStepResolve();
+            l2_nextStepResolve = null;
+        }
+    };
 
     // Configuração dos Grids dos Níveis 2, 3 e 4 (em C / C++)
     const L2_MAPS = {
@@ -848,8 +875,8 @@
         const cmd2 = valCmd2;
 
         const commands = [];
-        for(let i=0; i<num1; i++) commands.push({ cmd: cmd1, lineId: 'sc_l2' });
-        for(let i=0; i<num2; i++) commands.push({ cmd: cmd2, lineId: 'sc_l5' });
+        for(let i=0; i<num1; i++) commands.push({ cmd: cmd1, lineId: 'sc_l2', loopIndex: i, totalLoops: num1 });
+        for(let i=0; i<num2; i++) commands.push({ cmd: cmd2, lineId: 'sc_l5', loopIndex: i, totalLoops: num2 });
 
         await l2_executeCommandList(commands, 2);
 
@@ -883,8 +910,8 @@
         const num = parseInt(valNum) || 0;
         const commands = [];
         for (let i = 0; i < num; i++) {
-            commands.push({ cmd: valCmd1 });
-            commands.push({ cmd: valCmd2 });
+            commands.push({ cmd: valCmd1, loopIndex: i, totalLoops: num });
+            commands.push({ cmd: valCmd2, loopIndex: i, totalLoops: num });
         }
 
         await l2_executeCommandList(commands, 3);
@@ -936,10 +963,20 @@
         if (lvl === 4) solCode = solution4;
 
         const attemptKey = 'loop_lvl_' + lvl;
+        const btnStep = document.getElementById('l2_btn_step');
+        if (btnStep) btnStep.style.display = 'none';
 
         for(let i=0; i<commands.length; i++) {
             const item = commands[i];
             const dir = item.cmd;
+            
+            if (item.loopIndex !== undefined) {
+                let hud_i = document.getElementById(`l${lvl}_hud_i`);
+                if (hud_i) {
+                    hud_i.style.display = 'block';
+                    hud_i.innerHTML = `🔢 i = ${item.loopIndex}`;
+                }
+            }
 
             if(item.lineId) {
                 document.querySelectorAll('.scaffold-line').forEach(el => el.classList.remove('active'));
@@ -985,9 +1022,16 @@
                 l2_updateCoinsHud(lvl);
             }
 
-            await l2_sleep(320);
+            const stepCheckbox = document.getElementById('l2_step_checkbox');
+            if (stepCheckbox && stepCheckbox.checked) {
+                if (btnStep) btnStep.style.display = 'inline-block';
+                await new Promise(resolve => l2_nextStepResolve = resolve);
+            } else {
+                await l2_sleep(320);
+            }
         }
 
+        if (btnStep) btnStep.style.display = 'none';
         document.querySelectorAll('.scaffold-line').forEach(el => el.classList.remove('active'));
 
         if(!crashed) {
@@ -1182,7 +1226,7 @@
             }
 
             for (let it = 0; it < iterations; it++) {
-                loopBodyCmds.forEach(c => commands.push({ cmd: c }));
+                loopBodyCmds.forEach(c => commands.push({ cmd: c, loopIndex: it, totalLoops: iterations }));
             }
         }
 
