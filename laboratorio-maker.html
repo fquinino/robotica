@@ -238,13 +238,35 @@
     <canvas id="fx-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:99999;display:none;"></canvas>
 
     <!-- MODAL SPLASH DE ERRO LÚDICO -->
-    <div class="error-splash-modal" id="error-splash-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.9);backdrop-filter:blur(8px);display:flex;justify-content:center;align-items:center;z-index:99998;opacity:0;pointer-events:none;transition:opacity 0.25s ease;">
-        <div class="error-splash-box" style="background:linear-gradient(180deg,#1E293B,#0F172A);border:4px solid #EF4444;border-radius:28px;padding:30px 24px;max-width:480px;width:92%;text-align:center;box-shadow:0 0 50px rgba(239,68,68,0.45);animation:errorPop 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">
-            <div id="error-splash-icon" style="font-size:4.2rem;margin-bottom:8px;animation:errorShake 0.4s ease-in-out;">💥</div>
-            <h2 id="error-splash-title" style="font-family:'Fredoka One';color:#EF4444;font-size:1.8rem;margin:0 0 10px;">Ops! O Robô bateu!</h2>
-            <p id="error-splash-msg" style="color:#CBD5E1;font-size:1rem;line-height:1.6;margin-bottom:15px;">Parece que o robô tentou andar para onde não devia.</p>
-            <div id="error-splash-hint" style="background:rgba(251,191,36,0.12);border:1px dashed #FBBF24;border-radius:14px;padding:12px;color:#FBBF24;font-size:0.9rem;font-weight:700;margin-bottom:20px;text-align:left;line-height:1.5;">💡 <b>Dica de Maker:</b> Verifique o número de repetições!</div>
-            <button onclick="closeErrorSplash()" style="background:linear-gradient(135deg,#EF4444,#DC2626);color:white;border:none;padding:12px 32px;border-radius:50px;font-weight:900;font-size:1.1rem;cursor:pointer;box-shadow:0 6px 20px rgba(239,68,68,0.4);border-bottom:4px solid #991B1B;transition:0.15s;"><i class="fa-solid fa-rotate-left"></i> Tentar Novamente</button>
+    <div class="error-splash-modal" id="error-splash-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.92);backdrop-filter:blur(10px);display:flex;justify-content:center;align-items:center;z-index:99998;opacity:0;pointer-events:none;transition:opacity 0.25s ease;">
+        <div class="error-splash-box" style="background:linear-gradient(180deg,#1E293B,#0F172A);border:4px solid #EF4444;border-radius:28px;padding:28px 24px;max-width:500px;width:92%;text-align:center;box-shadow:0 0 50px rgba(239,68,68,0.45);max-height:90vh;overflow-y:auto;">
+            <!-- Badge de Tentativas -->
+            <div id="error-splash-attempts" style="background:rgba(239,68,68,0.15);border:1px solid #EF4444;color:#FCA5A5;font-size:0.85rem;font-weight:800;padding:4px 14px;border-radius:20px;display:inline-block;margin-bottom:10px;">
+                ❤️ Tentativa 1 de 3
+            </div>
+
+            <div id="error-splash-icon" style="font-size:4.2rem;margin-bottom:6px;animation:errorShake 0.4s ease-in-out;">💥</div>
+            <h2 id="error-splash-title" style="font-family:'Fredoka One';color:#EF4444;font-size:1.8rem;margin:0 0 8px;">Ops! O Robô bateu!</h2>
+            <p id="error-splash-msg" style="color:#CBD5E1;font-size:0.95rem;line-height:1.5;margin-bottom:14px;">Parece que o robô tentou andar para onde não devia.</p>
+
+            <!-- Dica de Maker -->
+            <div id="error-splash-hint" style="background:rgba(251,191,36,0.12);border:1px dashed #FBBF24;border-radius:14px;padding:12px;color:#FBBF24;font-size:0.9rem;font-weight:700;margin-bottom:14px;text-align:left;line-height:1.5;">💡 <b>Dica de Maker:</b> Verifique o número de repetições!</div>
+
+            <!-- Resolução em Código C/C++ -->
+            <div id="error-splash-solution-wrapper" style="display:none;margin-bottom:18px;text-align:left;">
+                <button onclick="toggleErrorSolution()" style="background:#334155;color:#A78BFA;border:1px solid #8B5CF6;padding:10px 16px;border-radius:12px;font-weight:800;font-size:0.85rem;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:space-between;transition:0.2s;">
+                    <span>💻 Ver Resolução do Código em C/C++</span>
+                    <span id="error-solution-arrow">▼</span>
+                </button>
+                <div id="error-splash-solution-box" style="display:none;background:#0F172A;border:1px solid #8B5CF6;border-radius:12px;padding:14px;margin-top:8px;">
+                    <div style="color:#CBD5E1;font-size:0.8rem;margin-bottom:6px;font-family:'Fira Code',monospace;">// Solução Recomendada em Linguagem C/C++:</div>
+                    <pre id="error-splash-solution-code" style="margin:0;color:#38BDF8;font-family:'Fira Code',monospace;font-size:0.85rem;white-space:pre-wrap;line-height:1.5;"></pre>
+                </div>
+            </div>
+
+            <button onclick="closeErrorSplash()" style="background:linear-gradient(135deg,#EF4444,#DC2626);color:white;border:none;padding:12px 32px;border-radius:50px;font-weight:900;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(239,68,68,0.4);border-bottom:4px solid #991B1B;transition:0.15s;">
+                <i class="fa-solid fa-rotate-left"></i> Tentar Novamente
+            </button>
         </div>
     </div>
 
@@ -456,13 +478,39 @@
     }
 
     // ================= SPLASH DE ERRO LÚDICO =================
-    function triggerErrorSplash(title, message, hint = '', icon = '💥') {
+    const currentAttemptsMap = {};
+
+    function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCode = '', attemptKey = 'default', maxAttempts = 3) {
         playSound('error');
         const modal = document.getElementById('error-splash-modal');
         if (!modal) return;
+
+        // Gerencia contador de tentativas por atividade
+        if (!currentAttemptsMap[attemptKey]) currentAttemptsMap[attemptKey] = 0;
+        currentAttemptsMap[attemptKey]++;
+        const attempts = currentAttemptsMap[attemptKey];
+
         document.getElementById('error-splash-icon').innerText = icon;
         document.getElementById('error-splash-title').innerText = title;
         document.getElementById('error-splash-msg').innerText = message;
+
+        // Atualiza contador de tentativas
+        const attemptsEl = document.getElementById('error-splash-attempts');
+        if (attemptsEl) {
+            if (attempts >= maxAttempts) {
+                attemptsEl.innerHTML = `⚠️ ${attempts}ª Tentativa — 💡 <b>Resolução C/C++ Liberada!</b>`;
+                attemptsEl.style.borderColor = '#F59E0B';
+                attemptsEl.style.color = '#FBBF24';
+                attemptsEl.style.background = 'rgba(245,158,11,0.15)';
+            } else {
+                attemptsEl.innerHTML = `❤️ Tentativa ${attempts} de ${maxAttempts}`;
+                attemptsEl.style.borderColor = '#EF4444';
+                attemptsEl.style.color = '#FCA5A5';
+                attemptsEl.style.background = 'rgba(239,68,68,0.15)';
+            }
+        }
+
+        // Atualiza Dica
         const hintEl = document.getElementById('error-splash-hint');
         if (hint) {
             hintEl.innerHTML = `💡 <b>Dica de Maker:</b> ${hint}`;
@@ -470,8 +518,40 @@
         } else {
             hintEl.style.display = 'none';
         }
+
+        // Atualiza Resolução em C/C++
+        const solWrapper = document.getElementById('error-splash-solution-wrapper');
+        const solCodeEl = document.getElementById('error-splash-solution-code');
+        const solBox = document.getElementById('error-splash-solution-box');
+        const solArrow = document.getElementById('error-solution-arrow');
+
+        if (solutionCode) {
+            if (solCodeEl) solCodeEl.innerText = solutionCode;
+            if (solWrapper) solWrapper.style.display = 'block';
+
+            // Revela a resolução automaticamente a partir de 3 tentativas
+            if (attempts >= maxAttempts) {
+                if (solBox) solBox.style.display = 'block';
+                if (solArrow) solArrow.textContent = '▲';
+            } else {
+                if (solBox) solBox.style.display = 'none';
+                if (solArrow) solArrow.textContent = '▼';
+            }
+        } else {
+            if (solWrapper) solWrapper.style.display = 'none';
+        }
+
         modal.style.opacity = '1';
         modal.style.pointerEvents = 'all';
+    }
+
+    function toggleErrorSolution() {
+        const box = document.getElementById('error-splash-solution-box');
+        const arrow = document.getElementById('error-solution-arrow');
+        if (!box) return;
+        const isOpen = box.style.display === 'block';
+        box.style.display = isOpen ? 'none' : 'block';
+        if (arrow) arrow.textContent = isOpen ? '▼' : '▲';
     }
 
     function closeErrorSplash() {
@@ -2730,6 +2810,24 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
 
     function t_sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
+    function t_getSolutionCode(lvl) {
+        if(lvl === 1) {
+            return `// Resolução C++ (Caça ao Tesouro — Nível 1):\nfor (int i = 0; i < 4; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
+        } else if(lvl === 2) {
+            return `// Resolução C++ (Caça ao Tesouro — Nível 2):\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nsubirEscada();\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
+        } else {
+            return `// Resolução C++ (Caça ao Tesouro — Nível 3):\nfor (int i = 0; i < 3; i++) { direita(); }\nsubirEscada();\nfor (int i = 0; i < 2; i++) { direita(); }\nsubirEscada();\nfor (int i = 0; i < 5; i++) { baixo(); }`;
+        }
+    }
+
+    function t_triggerError(title, msg, hint) {
+        const solCode = t_getSolutionCode(t_level);
+        triggerErrorSplash(title, msg, hint, '💥', solCode, 'tesouro_lvl_' + t_level, 3);
+        t_errors++;
+        t_updateErrorCounter();
+        t_running = false;
+    }
+
     async function t_runCode() {
         if(t_running || t_seq.length===0) return;
         playSound('click');
@@ -2746,19 +2844,19 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                 if(floor.ladders.some(l=>l.x===t_robotPos.x&&l.y===t_robotPos.y)) {
                     if(cmd==='SUBIR'&&nz<t_floors.length-1) nz++;
                     else if(cmd==='DESCER'&&nz>0) nz--;
-                    else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_showModal('💥','Sem saída!','Não há mais andares nessa direção!'); playSound('error'); t_errors++; t_updateErrorCounter(); t_running=false; return; }
+                    else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_triggerError('Sem saída!','Não há mais andares nessa direção!','Use a escada 🪜 na posição certa.'); return; }
                     const dir = cmd==='SUBIR'?'up':'down';
                     playSound('success');
                     t_robotPos={x:t_robotPos.x,y:t_robotPos.y,z:nz};
                     await t_showFloorTransition(dir, t_robotPos.z, nz);
                     continue;
-                } else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_showModal('💥','Sem escada!','Você precisa estar em 🪜 para subir/descer!'); playSound('error'); t_errors++; t_updateErrorCounter(); t_running=false; return; }
+                } else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_triggerError('Sem escada!','Você precisa estar sobre a escada 🪜 para subir ou descer!','Posicione o robô exatamente no quadrado com a escada.'); return; }
             }
             if(nx<0||nx>=t_gridSize||ny<0||ny>=t_gridSize) {
-                t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_showModal('💥','Saiu do mapa!','O robô foi além dos limites do grid.'); playSound('error'); t_errors++; t_updateErrorCounter(); t_running=false; return;
+                t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_triggerError('Saiu do mapa!','O robô foi além dos limites do grid.','Ajuste a quantidade de passos para não passar dos limites.'); return;
             }
             if(floor.obstacles.some(o=>o.x===nx&&o.y===ny)) {
-                t_robotPos={x:nx,y:ny,z:nz}; t_drawRobot(nx,ny,'crash'); t_showModal('💥','Bloqueado!','O robô bateu num obstáculo ✖ — escolha outro caminho!'); playSound('error'); t_errors++; t_updateErrorCounter(); t_running=false; return;
+                t_robotPos={x:nx,y:ny,z:nz}; t_drawRobot(nx,ny,'crash'); t_triggerError('Bloqueado!','O robô bateu num obstáculo ✖!','Planeje uma rota desviando das barreiras.'); return;
             }
             const prevX=t_robotPos.x, prevY=t_robotPos.y;
             t_robotPos={x:nx,y:ny,z:nz};
@@ -2780,9 +2878,7 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
             updateTrail();
             t_checkAutoAdvance();
         } else {
-            t_showModal('❌','Quase lá!','O robô não chegou ao tesouro. Revise o caminho!');
-            playSound('error');
-            t_errors++; t_updateErrorCounter();
+            t_triggerError('Quase lá!','O robô não chegou ao tesouro. Revise a sequência!','Verifique se não faltaram comandos para alcançar o baú.');
         }
         t_running=false;
     }
@@ -4034,6 +4130,14 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
 
                 <!-- CONTEÚDO NÍVEL 2: SCAFFOLDING COM O ROBÔ (C/C++) -->
                 <div id="l2_view_lvl2" style="display:none;">
+                    <!-- Card de Objetivo -->
+                    <div id="l2_objective_card" style="background:linear-gradient(135deg,#1E3A5F,#0F172A);border:2px solid #38BDF8;border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:2rem;">🗺️</span>
+                        <div>
+                            <div style="color:#38BDF8;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:2px;">Missão do Nível 2</div>
+                            <div id="l2_obj_text" style="color:#CBD5E1;font-size:0.95rem;">🪙 Pegue as 2 moedas e chegue ao 🏆 Tesouro no canto inferior direito!</div>
+                        </div>
+                    </div>
                     <div class="loop-ide-layout">
                         <!-- Editor com Lacunas -->
                         <div class="loop-editor-card">
@@ -4041,12 +4145,17 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                                 <div class="loop-editor-title"><i class="fa-solid fa-laptop-code"></i> Complete o Código em C</div>
                                 <span class="loop-lang-tag">Linguagem C / C++</span>
                             </div>
+                            <!-- Feedback inline de validação -->
+                            <div id="l2_inline_hint" style="background:#1E293B;border-left:3px solid #8B5CF6;padding:8px 14px;font-size:0.82rem;color:#A78BFA;font-family:'Fira Code',monospace;margin-bottom:10px;border-radius:0 8px 8px 0;min-height:24px;transition:0.3s;">
+                                💡 Escolha a quantidade e a direção de cada laço FOR para guiar o robô!
+                            </div>
                             <div class="scaffold-lines">
-                                <div style="color:#64748B;font-size:0.8rem;margin-bottom:8px;">// Missão: Andar 4 para Direita e 4 para Baixo</div>
-                                <div class="scaffold-line" id="sc_l1"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 0; i &lt; <input type="number" id="sc_num1" min="1" max="6" value="4" class="p-input-num">; i++ ) {</div>
+                                <div style="color:#64748B;font-size:0.8rem;margin-bottom:8px;">// Missão: Guie o robô até o tesouro!</div>
+                                <div class="scaffold-line" id="sc_l1"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 0; i &lt; <input type="number" id="sc_num1" min="1" max="6" placeholder="?" class="p-input-num" oninput="l2_validateScaffold()">; i++ ) {</div>
                                 <div class="scaffold-line" id="sc_l2" style="padding-left:24px;">
-                                    <select id="sc_cmd1" class="p-select-cmd">
-                                        <option value="RIGHT" selected>direita();</option>
+                                    <select id="sc_cmd1" class="p-select-cmd" onchange="l2_validateScaffold()">
+                                        <option value="" selected disabled>— escolha —</option>
+                                        <option value="RIGHT">direita();</option>
                                         <option value="DOWN">baixo();</option>
                                         <option value="LEFT">esquerda();</option>
                                         <option value="UP">cima();</option>
@@ -4054,10 +4163,11 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                                 </div>
                                 <div class="scaffold-line" id="sc_l3">}</div>
                                 
-                                <div class="scaffold-line" id="sc_l4" style="margin-top:10px;"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 0; i &lt; <input type="number" id="sc_num2" min="1" max="6" value="4" class="p-input-num">; i++ ) {</div>
+                                <div class="scaffold-line" id="sc_l4" style="margin-top:10px;"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 0; i &lt; <input type="number" id="sc_num2" min="1" max="6" placeholder="?" class="p-input-num" oninput="l2_validateScaffold()">; i++ ) {</div>
                                 <div class="scaffold-line" id="sc_l5" style="padding-left:24px;">
-                                    <select id="sc_cmd2" class="p-select-cmd">
-                                        <option value="DOWN" selected>baixo();</option>
+                                    <select id="sc_cmd2" class="p-select-cmd" onchange="l2_validateScaffold()">
+                                        <option value="" selected disabled>— escolha —</option>
+                                        <option value="DOWN">baixo();</option>
                                         <option value="RIGHT">direita();</option>
                                         <option value="LEFT">esquerda();</option>
                                         <option value="UP">cima();</option>
@@ -4084,6 +4194,14 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
 
                 <!-- CONTEÚDO NÍVEL 3: MINI-IDE COMPLETA C/C++ -->
                 <div id="l2_view_lvl3" style="display:none;">
+                    <!-- Card de Objetivo -->
+                    <div style="background:linear-gradient(135deg,#1E3A5F,#0F172A);border:2px solid #38BDF8;border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:2rem;">🗺️</span>
+                        <div>
+                            <div style="color:#38BDF8;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:2px;">Missão do Nível 3</div>
+                            <div style="color:#CBD5E1;font-size:0.95rem;">🪙 Colete as 3 moedas e leve o robô até o 🏆 Tesouro! Use laços <code style="background:#0F172A;color:#A78BFA;padding:1px 6px;border-radius:4px;">for</code> em C/C++.</div>
+                        </div>
+                    </div>
                     <div class="loop-ide-layout">
                         <!-- Mini-IDE Completa -->
                         <div class="loop-editor-card">
@@ -4094,7 +4212,7 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
 
                             <!-- Teclado Maker de Atalhos Rápidos -->
                             <div class="loop-shortcuts-bar">
-                                <button class="loop-shortcut-btn" onclick="l2_insertCode('for (int i = 0; i < 3; i++) {\n    direita();\n}\n')"><i class="fa-solid fa-arrows-rotate" style="color:#A78BFA;"></i> + for(int i=0; i&lt;N; i++)</button>
+                                <button class="loop-shortcut-btn" onclick="l2_insertCode('for (int i = 0; i < N; i++) {\n    \n}\n')"><i class="fa-solid fa-arrows-rotate" style="color:#A78BFA;"></i> + for()</button>
                                 <button class="loop-shortcut-btn" onclick="l2_insertCode('direita();\n')">➡️ direita();</button>
                                 <button class="loop-shortcut-btn" onclick="l2_insertCode('baixo();\n')">⬇️ baixo();</button>
                                 <button class="loop-shortcut-btn" onclick="l2_insertCode('esquerda();\n')">⬅️ esquerda();</button>
@@ -4102,18 +4220,25 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                                 <button class="loop-shortcut-btn clear" onclick="l2_clearEditor()"><i class="fa-solid fa-trash-can"></i> Limpar</button>
                             </div>
 
-                            <!-- Textarea com Numeração de Linhas -->
-                            <div class="loop-code-wrapper">
+                            <!-- Textarea com Numeração de Linhas e Autocomplete -->
+                            <div class="loop-code-wrapper" style="position:relative;">
                                 <div class="loop-line-numbers" id="l2_line_numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
-                                <textarea class="loop-code-input" id="l2_code_input" spellcheck="false" placeholder="// Digite seu código C/C++ aqui...
-for (int i = 0; i < 4; i++) {
-    baixo();
-}" oninput="l2_updateLineNumbers()"></textarea>
+                                <textarea class="loop-code-input" id="l2_code_input" spellcheck="false" placeholder="// 🤖 Escreva seu código aqui!
+// Comandos: direita(); baixo(); esquerda(); cima();
+// Laço: for (int i = 0; i < N; i++) { ... }
+" oninput="l2_updateLineNumbers(); l2_ideAutoComplete(this)"></textarea>
+                                <!-- Dropdown de Autocomplete -->
+                                <div id="l2_autocomplete_list" style="display:none;position:absolute;left:56px;top:0;background:#1E293B;border:2px solid #8B5CF6;border-radius:10px;z-index:100;min-width:220px;box-shadow:0 8px 24px rgba(0,0,0,0.5);overflow:hidden;"></div>
+                            </div>
+
+                            <!-- Feedback inline de sintaxe -->
+                            <div id="l2_ide_hint" style="background:#1E293B;border-left:3px solid #8B5CF6;padding:8px 14px;font-size:0.82rem;color:#A78BFA;font-family:'Fira Code',monospace;margin-top:8px;border-radius:0 8px 8px 0;min-height:24px;transition:0.3s;">
+                                ✏️ Comece a digitar <span style="color:#34D399;">for</span>, <span style="color:#34D399;">direita</span>, <span style="color:#34D399;">baixo</span>... ou clique nos botões acima!
                             </div>
 
                             <!-- Guia de Sintaxe -->
                             <div class="loop-syntax-card">
-                                <b>📖 Como escrever laços FOR em C / C++:</b><br>
+                                <b>📖 Sintaxe do laço FOR em C / C++:</b><br>
                                 <code>for (int i = 0; i &lt; 4; i++) { direita(); }</code>
                             </div>
 
@@ -4168,7 +4293,8 @@ for (int i = 0; i < 4; i++) {
             chest: { r:4, c:4 },
             walls: [ {r:1,c:1}, {r:1,c:2}, {r:2,c:1}, {r:2,c:2}, {r:3,c:2} ],
             coins: [ {r:0,c:4}, {r:4,c:0} ],
-            initialCode: "for (int i = 0; i < 4; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}"
+            objective: "🪙 Pegue as 2 moedas e chegue ao 🏆 Tesouro no canto inferior direito!",
+            initialCode: ""
         },
         3: {
             size: 6,
@@ -4176,7 +4302,8 @@ for (int i = 0; i < 4; i++) {
             chest: { r:5, c:5 },
             walls: [ {r:0,c:2}, {r:1,c:2}, {r:2,c:2}, {r:3,c:4}, {r:4,c:4}, {r:2,c:4} ],
             coins: [ {r:4,c:0}, {r:4,c:3}, {r:1,c:5} ],
-            initialCode: "// Nível 3: Programe os laços FOR do robô em C/C++!\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nfor (int i = 0; i < 3; i++) {\n    cima();\n}\nfor (int i = 0; i < 2; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}"
+            objective: "🪙 Colete as 3 moedas e leve o robô até o 🏆 Tesouro!",
+            initialCode: "// 🤖 Missão: Colete as moedas e chegue ao tesouro!\n// Comandos: direita(); baixo(); esquerda(); cima();\n// Laço: for (int i = 0; i < N; i++) { ... }\n\n"
         }
     };
 
@@ -4365,19 +4492,158 @@ for (int i = 0; i < 4; i++) {
         if(hud) hud.innerHTML = `🪙 ${l2_collectedCoins} / ${map.coins.length} Moedas`;
     }
 
+    // Validação inline do Scaffolding (Nível 2) — dá dicas enquanto o aluno preenche
+    function l2_validateScaffold() {
+        const hint = document.getElementById('l2_inline_hint');
+        if (!hint) return;
+        const num1 = document.getElementById('sc_num1').value;
+        const cmd1 = document.getElementById('sc_cmd1').value;
+        const num2 = document.getElementById('sc_num2').value;
+        const cmd2 = document.getElementById('sc_cmd2').value;
+
+        if (!num1 && !cmd1) {
+            hint.style.borderLeftColor = '#8B5CF6';
+            hint.style.color = '#A78BFA';
+            hint.innerHTML = '💡 Preencha a quantidade e a direção do 1º laço FOR!';
+        } else if (num1 && !cmd1) {
+            hint.style.borderLeftColor = '#F59E0B';
+            hint.style.color = '#FBBF24';
+            hint.innerHTML = `⚡ Quantos? <b>${num1}</b> — Agora escolha a <b>direção</b> do 1º laço!`;
+        } else if (!num1 && cmd1) {
+            hint.style.borderLeftColor = '#F59E0B';
+            hint.style.color = '#FBBF24';
+            hint.innerHTML = '⚡ Direção escolhida! Agora defina a <b>quantidade</b> do 1º laço!';
+        } else if (num1 && cmd1 && !num2 && !cmd2) {
+            hint.style.borderLeftColor = '#10B981';
+            hint.style.color = '#34D399';
+            hint.innerHTML = `✅ 1º laço OK: <code style="background:#0F172A;padding:2px 6px;border-radius:4px;">for(i=0; i&lt;${num1}; i++) { ${cmd1 === 'RIGHT' ? 'direita' : cmd1 === 'DOWN' ? 'baixo' : cmd1 === 'LEFT' ? 'esquerda' : 'cima'}(); }</code> — Agora complete o 2º laço!`;
+        } else if (num1 && cmd1 && num2 && cmd2) {
+            hint.style.borderLeftColor = '#10B981';
+            hint.style.color = '#34D399';
+            hint.innerHTML = '🚀 Código completo! Clique em <b>EXECUTAR</b> para ver o robô se mover!';
+        } else {
+            hint.style.borderLeftColor = '#F59E0B';
+            hint.style.color = '#FBBF24';
+            hint.innerHTML = '⚡ Quase lá! Complete os dois laços FOR para executar.';
+        }
+    }
+
+    // Autocomplete da Mini-IDE (Nível 3) — sugestões ao digitar
+    const L2_AUTOCOMPLETE_OPTIONS = [
+        { trigger: 'for',     label: 'for (int i = 0; i < N; i++) { ... }', insert: 'for (int i = 0; i < N; i++) {\n    \n}\n' },
+        { trigger: 'dir',     label: 'direita();',  insert: 'direita();\n' },
+        { trigger: 'bai',     label: 'baixo();',    insert: 'baixo();\n' },
+        { trigger: 'esq',     label: 'esquerda();', insert: 'esquerda();\n' },
+        { trigger: 'cim',     label: 'cima();',     insert: 'cima();\n' },
+        { trigger: 'int',     label: 'int i = 0;',  insert: 'int i = 0;\n' },
+    ];
+
+    function l2_ideAutoComplete(textarea) {
+        const hint = document.getElementById('l2_ide_hint');
+        const list = document.getElementById('l2_autocomplete_list');
+        const code = textarea.value;
+        const lines = code.split('\n');
+        const cursorPos = textarea.selectionStart;
+
+        // Encontra a palavra parcial antes do cursor
+        const beforeCursor = code.substring(0, cursorPos);
+        const lastWord = beforeCursor.split(/[\s\n{};()]+/).pop().toLowerCase();
+
+        // Feedback inline de validação de sintaxe
+        if (hint) {
+            const hasFor = /for\s*\(/.test(code);
+            const hasBrace = code.includes('{') && code.includes('}');
+            const hasCmd = /direita|baixo|esquerda|cima/.test(code);
+            const hasSemicolon = /;/.test(code);
+
+            if (!code.trim() || code.trim().startsWith('//')) {
+                hint.style.color = '#A78BFA';
+                hint.innerHTML = '✏️ Comece a digitar <span style="color:#34D399;">for</span>, <span style="color:#34D399;">direita</span>, <span style="color:#34D399;">baixo</span>... ou use os botões!';
+            } else if (hasFor && !hasBrace) {
+                hint.style.color = '#F59E0B';
+                hint.innerHTML = '⚡ Lembrou das chaves <code style="background:#0F172A;padding:2px 5px;border-radius:4px;">{ }</code> do laço FOR?';
+            } else if (hasFor && hasBrace && !hasCmd) {
+                hint.style.color = '#F59E0B';
+                hint.innerHTML = '⚡ Ótimo laço! Agora adicione um comando dentro: <code style="background:#0F172A;padding:2px 5px;border-radius:4px;">direita();</code>';
+            } else if (hasFor && hasBrace && hasCmd) {
+                hint.style.color = '#10B981';
+                hint.innerHTML = '✅ Ótimo! Código parece correto — clique em <b>EXECUTAR</b> para testar!';
+            } else if (hasCmd && !hasFor) {
+                hint.style.color = '#38BDF8';
+                hint.innerHTML = '💡 Você pode usar um laço <code style="background:#0F172A;padding:2px 5px;border-radius:4px;">for</code> para repetir comandos automaticamente!';
+            }
+        }
+
+        // Mostrar dropdown de autocomplete
+        if (!list) return;
+        if (!lastWord || lastWord.length < 2) {
+            list.style.display = 'none';
+            return;
+        }
+
+        const matches = L2_AUTOCOMPLETE_OPTIONS.filter(o => o.trigger.startsWith(lastWord) && lastWord !== o.trigger);
+        if (matches.length === 0) {
+            list.style.display = 'none';
+            return;
+        }
+
+        // Posicionar o dropdown próximo ao cursor
+        const lineIndex = lines.length - 1;
+        list.style.top = `${(lineIndex * 22) + 4}px`;
+        list.style.display = 'block';
+        list.innerHTML = matches.map((m, idx) =>
+            `<div onclick="l2_applyAutoComplete('${m.insert.replace(/'/g, "\\'").replace(/\n/g, '\\n')}')" 
+                  style="padding:9px 16px;color:#CBD5E1;font-family:'Fira Code',monospace;font-size:0.82rem;cursor:pointer;transition:0.15s;border-bottom:1px solid #334155;"
+                  onmouseenter="this.style.background='#334155'" 
+                  onmouseleave="this.style.background='transparent'">${m.label}</div>`
+        ).join('');
+    }
+
+    function l2_applyAutoComplete(insertText) {
+        const textarea = document.getElementById('l2_code_input');
+        const list = document.getElementById('l2_autocomplete_list');
+        if (!textarea) return;
+        const pos = textarea.selectionStart;
+        const before = textarea.value.substring(0, pos);
+        const after = textarea.value.substring(pos);
+        // Remove a palavra parcial antes do cursor
+        const cleanBefore = before.replace(/[\w]+$/, '');
+        textarea.value = cleanBefore + insertText + after;
+        const newPos = cleanBefore.length + insertText.length;
+        textarea.setSelectionRange(newPos, newPos);
+        textarea.focus();
+        if (list) list.style.display = 'none';
+        l2_updateLineNumbers();
+        l2_ideAutoComplete(textarea);
+    }
+
     // Execução do Nível 2 (Scaffolding C/C++)
     async function l2_runScaffold() {
         if(l2_isExecuting) return;
+        // Validação antes de executar
+        const valNum1 = document.getElementById('sc_num1').value;
+        const valCmd1 = document.getElementById('sc_cmd1').value;
+        const valNum2 = document.getElementById('sc_num2').value;
+        const valCmd2 = document.getElementById('sc_cmd2').value;
+        if (!valNum1 || !valCmd1 || !valNum2 || !valCmd2) {
+            const hint = document.getElementById('l2_inline_hint');
+            if (hint) {
+                hint.style.borderLeftColor = '#EF4444';
+                hint.style.color = '#FCA5A5';
+                hint.innerHTML = '❌ Preencha <b>todos os campos</b> antes de executar!';
+            }
+            return;
+        }
         l2_isExecuting = true;
         const btn = document.getElementById('l2_btn_run_scaffold');
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> RODANDO...';
         l2_buildBoard(2);
 
-        const num1 = parseInt(document.getElementById('sc_num1').value) || 0;
-        const cmd1 = document.getElementById('sc_cmd1').value;
-        const num2 = parseInt(document.getElementById('sc_num2').value) || 0;
-        const cmd2 = document.getElementById('sc_cmd2').value;
+        const num1 = parseInt(valNum1) || 0;
+        const cmd1 = valCmd1;
+        const num2 = parseInt(valNum2) || 0;
+        const cmd2 = valCmd2;
 
         const commands = [];
         for(let i=0; i<num1; i++) commands.push({ cmd: cmd1, lineId: 'sc_l2' });
@@ -4399,11 +4665,11 @@ for (int i = 0; i < 4; i++) {
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> RODANDO...';
         l2_buildBoard(3);
 
-        const code = document.getElementById('l2_code_input').value;
         const parseResult = l2_parseC(code);
 
         if(!parseResult.success) {
-            triggerErrorSplash(parseResult.title, parseResult.msg, parseResult.hint, '⚠️');
+            const sol3 = `// Solução em C/C++ para o Nível 3:\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nfor (int i = 0; i < 3; i++) {\n    cima();\n}\nfor (int i = 0; i < 2; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
+            triggerErrorSplash(parseResult.title, parseResult.msg, parseResult.hint, '⚠️', sol3, 'loop_lvl_3', 3);
             l2_isExecuting = false;
             btn.disabled = false;
             btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C';
@@ -4494,12 +4760,16 @@ for (int i = 0; i < 4; i++) {
     }
 
     // Executa a lista de passos com animação e verificação de colisões
-    async function l2_executeCommandList(commandList, lvl) {
+    async function l2_executeCommandList(commands, lvl) {
         const map = L2_MAPS[lvl];
         let crashed = false;
+        const solution2 = `// Solução C/C++ (Nível 2):\nfor (int i = 0; i < 4; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
+        const solution3 = `// Solução C/C++ (Nível 3):\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nfor (int i = 0; i < 3; i++) {\n    cima();\n}\nfor (int i = 0; i < 2; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
+        const solCode = (lvl === 2) ? solution2 : solution3;
+        const attemptKey = 'loop_lvl_' + lvl;
 
-        for(let i=0; i<commandList.length; i++) {
-            const item = commandList[i];
+        for(let i=0; i<commands.length; i++) {
+            const item = commands[i];
             const dir = item.cmd;
 
             // Highlight de linha (se aplicável)
@@ -4521,7 +4791,7 @@ for (int i = 0; i < 4; i++) {
                 playSound('error');
                 const cell = document.getElementById(`l${lvl}_cell_${l2_robotState.r}_${l2_robotState.c}`);
                 if(cell) cell.classList.add('crash');
-                triggerErrorSplash('Robô Saiu da Pista!', 'O robô tentou andar para fora do mapa.', 'Diminua o número de repetições no loop para não passar da borda!', '🤖💥');
+                triggerErrorSplash('Robô Saiu da Pista!', 'O robô tentou andar para fora do mapa.', 'Diminua o número de repetições no loop para não passar da borda!', '🤖💥', solCode, attemptKey, 3);
                 break;
             }
 
@@ -4532,7 +4802,7 @@ for (int i = 0; i < 4; i++) {
                 playSound('error');
                 const cell = document.getElementById(`l${lvl}_cell_${l2_robotState.r}_${l2_robotState.c}`);
                 if(cell) cell.classList.add('crash');
-                triggerErrorSplash('Ops! Bateu no Muro!', 'O robô colidiu com uma parede de tijolos 🧱.', 'Planeje a rota para desviar das paredes antes de avançar!', '💥');
+                triggerErrorSplash('Ops! Bateu no Muro!', 'O robô colidiu com uma parede de tijolos 🧱.', 'Planeje a rota para desviar das paredes antes de avançar!', '💥', solCode, attemptKey, 3);
                 break;
             }
 
@@ -4568,10 +4838,10 @@ for (int i = 0; i < 4; i++) {
                 if(lvl === 2) {
                     l2_showWinModal('🏆','Nível 2 Concluído!','Você completou as lacunas e levou o robô até o tesouro com loops perfeitos! Vamos para o Nível 3 escrever seu próprio código?');
                 } else if(lvl === 3) {
-                    l2_showWinModal('👑','Mestre Supremo dos Loops!','Incrível! Você programou o robô usando Portugol Maker na Mini-IDE e conquistou todas as 3 estrelas!');
+                    l2_showWinModal('👑','Mestre Supremo dos Loops!','Incrível! Você programou o robô em C/C++ na Mini-IDE e conquistou todas as 3 estrelas!');
                 }
             } else {
-                triggerErrorSplash('Não Chegou ao Tesouro!', 'O código terminou, mas o robô não alcançou o baú dourado 🏆.', 'Adicione mais passos ou loops para alcançar o objetivo!', '🗺️');
+                triggerErrorSplash('Não Chegou ao Tesouro!', 'O código terminou, mas o robô não alcançou o baú dourado 🏆.', 'Adicione mais passos ou loops para alcançar o objetivo!', '🗺️', solCode, attemptKey, 3);
             }
         }
     }
