@@ -34,10 +34,10 @@
                 #l_code_line_carimbar.active { background:rgba(236,72,153,0.35); color:#F472B6 !important; border-left:3px solid #EC4899; box-shadow:0 0 12px rgba(236,72,153,0.6); }
 
                 /* MINI-IDE & LAYOUT GRID */
-                .loop-ide-layout { display:grid; grid-template-columns:minmax(290px, 1fr) minmax(320px, 1.2fr); gap:18px; margin-bottom:15px; }
+                .loop-ide-layout { display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:18px; margin-bottom:15px; width:100%; max-width:100%; }
                 @media (max-width: 820px) { .loop-ide-layout { grid-template-columns:1fr; } }
                 
-                .loop-editor-card { background:#090D16; border:2px solid #8B5CF6; border-radius:20px; padding:16px; display:flex; flex-direction:column; box-shadow:0 10px 25px rgba(0,0,0,0.5); }
+                .loop-editor-card { background:#090D16; border:2px solid #8B5CF6; border-radius:20px; padding:16px; display:flex; flex-direction:column; box-shadow:0 10px 25px rgba(0,0,0,0.5); width:100%; max-width:100%; min-width:0; box-sizing:border-box; }
                 .loop-editor-topbar { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1E293B; padding-bottom:10px; margin-bottom:12px; }
                 .loop-editor-title { font-family:'Fredoka One'; color:#C4B5FD; font-size:1.05rem; display:flex; align-items:center; gap:8px; }
                 .loop-lang-tag { background:rgba(139,92,246,0.25); color:#A78BFA; padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:800; border:1px solid #8B5CF6; }
@@ -67,20 +67,23 @@
                 .loop-syntax-card code { background:#1E293B; color:#F59E0B; padding:2px 6px; border-radius:4px; font-family:'Fira Code', monospace; }
 
                 /* Simulação do Robô no Grid */
-                .loop-sim-card { background:#090D16; border:2px solid #334155; border-radius:20px; padding:16px; display:flex; flex-direction:column; align-items:center; box-shadow:0 10px 25px rgba(0,0,0,0.5); }
+                .loop-sim-card { background:#090D16; border:2px solid #334155; border-radius:20px; padding:16px; display:flex; flex-direction:column; align-items:center; box-shadow:0 10px 25px rgba(0,0,0,0.5); width:100%; max-width:100%; min-width:0; box-sizing:border-box; }
                 .loop-sim-topbar { width:100%; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1E293B; padding-bottom:8px; margin-bottom:12px; }
                 .loop-sim-title { font-family:'Fredoka One'; color:#38BDF8; font-size:1.05rem; }
                 .loop-sim-hud { font-weight:800; font-size:0.85rem; color:#F59E0B; background:#1E293B; padding:4px 10px; border-radius:12px; }
 
                 /* Tabuleiro Grid */
-                .loop-board { display:grid; gap:4px; padding:8px; border-radius:18px; background:linear-gradient(180deg,#1E293B,#0F172A); border:3px solid #334155; box-shadow:0 8px 30px rgba(0,0,0,0.6); max-width:380px; width:100%; aspect-ratio:1; }
-                .loop-cell { background:rgba(30,41,59,0.7); border-radius:8px; border:2px solid rgba(51,65,85,0.7); display:flex; align-items:center; justify-content:center; position:relative; aspect-ratio:1; transition:all 0.2s; }
+                .loop-board { display:grid; gap:4px; padding:8px; border-radius:18px; background:linear-gradient(180deg,#1E293B,#0F172A); border:3px solid #334155; box-shadow:0 8px 30px rgba(0,0,0,0.6); max-width:360px; width:100%; aspect-ratio:1; margin:0 auto; box-sizing:border-box; align-self:center; }
+                .loop-cell { background:rgba(30,41,59,0.7); border-radius:8px; border:2px solid rgba(51,65,85,0.7); display:flex; align-items:center; justify-content:center; position:relative; aspect-ratio:1; transition:all 0.2s; min-width:0; min-height:0; overflow:hidden; box-sizing:border-box; }
                 .loop-cell.wall { background:repeating-linear-gradient(45deg,#334155,#334155 4px,#1E293B 4px,#1E293B 8px); border-color:#475569; }
-                .loop-cell.wall::after { content:'🧱'; font-size:1.3rem; opacity:0.85; }
-                .loop-cell.coin::after { content:'🪙'; font-size:1.4rem; animation:coinSpin 1.5s infinite alternate; filter:drop-shadow(0 0 6px #F59E0B); }
-                .loop-cell.chest::after { content:'🏆'; font-size:1.6rem; animation:chestGlow 1.2s infinite alternate; filter:drop-shadow(0 0 8px #FBBF24); }
+                .loop-cell.wall::after { content:'🧱'; font-size:clamp(0.9rem, 3.5vw, 1.3rem); opacity:0.85; }
+                .loop-cell.coin::after { content:'🪙'; font-size:clamp(0.9rem, 3.5vw, 1.4rem); animation:coinSpin 1.5s infinite alternate; filter:drop-shadow(0 0 6px #F59E0B); }
+                .loop-cell.chest::after { content:'🏆'; font-size:clamp(1rem, 3.8vw, 1.6rem); animation:chestGlow 1.2s infinite alternate; filter:drop-shadow(0 0 8px #FBBF24); }
                 .loop-cell.robot { background:rgba(254,240,138,0.25); border-color:#F59E0B; box-shadow:0 0 16px rgba(245,158,11,0.5); z-index:10; }
-                .loop-cell.robot svg { filter:drop-shadow(0 0 6px rgba(245,158,11,0.7)); }
+                .loop-cell.robot svg { max-width:80%; max-height:80%; width:auto; height:auto; filter:drop-shadow(0 0 6px rgba(245,158,11,0.7)); }
+                .loop-cell.robot.moving svg { animation:robotWalk 0.3s ease-in-out; }
+                .loop-cell.robot.crash { background:rgba(239,68,68,0.35); border-color:#EF4444; box-shadow:0 0 25px rgba(239,68,68,0.8); animation:errorShake 0.4s; }
+                .loop-cell.robot.win { background:rgba(16,185,129,0.35); border-color:#10B981; box-shadow:0 0 25px rgba(16,185,129,0.8); }
                 .loop-cell.robot.moving svg { animation:robotWalk 0.3s ease-in-out; }
                 .loop-cell.robot.crash { background:rgba(239,68,68,0.35); border-color:#EF4444; box-shadow:0 0 25px rgba(239,68,68,0.8); animation:errorShake 0.4s; }
                 .loop-cell.robot.win { background:rgba(16,185,129,0.35); border-color:#10B981; box-shadow:0 0 25px rgba(16,185,129,0.8); }
