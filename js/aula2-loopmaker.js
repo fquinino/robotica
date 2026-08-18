@@ -116,43 +116,103 @@
                     <p id="loop-header-desc">Aprenda a criar laços <b>FOR</b> em C/C++ para automatizar comandos repetitivos do robô!</p>
                 </div>
 
-                <!-- CARD DE EXPLICAÇÃO AUTODIDÁTICA PARA CRIANÇAS -->
-                <div class="loop-explanation-card" style="background:#0F172A;border:2px dashed #8B5CF6;border-radius:20px;padding:16px 20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
-                    <div onclick="l2_toggleGuide()" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;">
-                        <div style="display:flex;align-items:center;gap:10px;font-family:'Fredoka One';color:#FBBF24;font-size:1.05rem;">
-                            <span>💡 O que é um Laço FOR? (Clique aqui para aprender brincando!)</span>
-                        </div>
-                        <span id="l2_guide_arrow" style="color:#A78BFA;font-weight:bold;font-size:1.2rem;">▼</span>
+                <!-- ========== SEÇÃO: APRENDA ANTES DE JOGAR ========== -->
+                <div style="margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                        <div style="flex:1;height:2px;background:linear-gradient(90deg,#8B5CF6,transparent);border-radius:2px;"></div>
+                        <span style="color:#A78BFA;font-family:'Fredoka One';font-size:1rem;white-space:nowrap;">📖 APRENDA ANTES DE JOGAR</span>
+                        <div style="flex:1;height:2px;background:linear-gradient(270deg,#8B5CF6,transparent);border-radius:2px;"></div>
                     </div>
-                    
-                    <div id="l2_guide_content" style="display:none;margin-top:14px;border-top:1px solid #1E293B;padding-top:14px;color:#CBD5E1;font-size:0.92rem;line-height:1.7;">
-                        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-bottom:14px;">
-                            <div style="background:#1E293B;border-radius:14px;padding:14px;border:1px solid #334155;">
-                                <div style="color:#38BDF8;font-weight:bold;font-size:0.98rem;margin-bottom:4px;">1️⃣ A Analogia dos Pulos 🪢</div>
-                                Imagine dar <b>5 pulos de corda</b>. Em vez de escrever no papel <i>"pular, pular, pular..."</i> 5 vezes, você conta: <b>"1, 2, 3, 4, 5!"</b> O <b>FOR</b> é o contador automático do robô!
+
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:14px;">
+
+                        <!-- CARD A: O QUE É REPETIÇÃO? -->
+                        <div style="background:linear-gradient(135deg,#1E1035,#0F172A);border:2px solid #8B5CF6;border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(139,92,246,0.25);">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                                <span style="font-size:2rem;background:#2D1B69;padding:8px;border-radius:12px;">🔄</span>
+                                <div>
+                                    <div style="color:#C4B5FD;font-family:'Fredoka One';font-size:1.1rem;">O que é Repetição?</div>
+                                    <div style="color:#64748B;font-size:0.78rem;">O superpoder do programador</div>
+                                </div>
                             </div>
-                            <div style="background:#1E293B;border-radius:14px;padding:14px;border:1px solid #334155;">
-                                <div style="color:#34D399;font-weight:bold;font-size:0.98rem;margin-bottom:4px;">2️⃣ As 3 Partes do FOR 🧩</div>
-                                <code>for (int i = 0; i &lt; 5; i++)</code><br>
-                                • 🎬 <b>int i = 0:</b> Começa no 0.<br>
-                                • 🛑 <b>i &lt; 5:</b> Repete 5 vezes.<br>
-                                • ➕ <b>i++:</b> Soma +1 a cada volta!
+                            <p style="color:#CBD5E1;font-size:0.88rem;line-height:1.6;margin:0 0 12px;">
+                                Imagina dar <b style="color:#FBBF24;">5 pulos de corda</b> 🪢. Em vez de escrever <i>"pular, pular, pular..."</i> 5 vezes, você conta até 5 e pronto! O <b style="color:#A78BFA;">Laço FOR</b> faz isso pra você no código:
+                            </p>
+                            <div style="background:#030712;border-radius:12px;padding:12px;font-family:'Fira Code',monospace;font-size:0.82rem;line-height:1.8;border:1px solid #2D1B69;">
+                                <span style="color:#F472B6;">for</span> (<span style="color:#38BDF8;">int</span> <span style="color:#FBBF24;">i</span> = <span style="color:#34D399;">0</span>; <span style="color:#FBBF24;">i</span> &lt; <span style="color:#34D399;">5</span>; <span style="color:#FBBF24;">i</span>++) {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#60A5FA;">pular</span>(); <span style="color:#475569;">// roda 5x!</span><br>
+                                }
                             </div>
-                            <div style="background:#1E293B;border-radius:14px;padding:14px;border:1px solid #334155;">
-                                <div style="color:#F472B6;font-weight:bold;font-size:0.98rem;margin-bottom:4px;">3️⃣ As Chaves { } são a Mochila 🎒</div>
-                                Tudo o que você coloca dentro das chaves <code>{ ... }</code> vai ser repetido! Pode ser 1 comando só (ex: <code>direita();</code>) ou 2 comandos juntos (ex: <code>direita(); baixo();</code>).
+                            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:12px;">
+                                <div style="background:#0F172A;border-radius:10px;padding:8px;text-align:center;border:1px solid #2D1B69;">
+                                    <div style="color:#FBBF24;font-size:1rem;">🎬</div>
+                                    <div style="color:#FBBF24;font-size:0.7rem;font-weight:900;">i = 0</div>
+                                    <div style="color:#64748B;font-size:0.65rem;">Começa aqui</div>
+                                </div>
+                                <div style="background:#0F172A;border-radius:10px;padding:8px;text-align:center;border:1px solid #2D1B69;">
+                                    <div style="color:#EF4444;font-size:1rem;">🛑</div>
+                                    <div style="color:#EF4444;font-size:0.7rem;font-weight:900;">i &lt; 5</div>
+                                    <div style="color:#64748B;font-size:0.65rem;">Para aqui</div>
+                                </div>
+                                <div style="background:#0F172A;border-radius:10px;padding:8px;text-align:center;border:1px solid #2D1B69;">
+                                    <div style="color:#34D399;font-size:1rem;">➕</div>
+                                    <div style="color:#34D399;font-size:0.7rem;font-weight:900;">i++</div>
+                                    <div style="color:#64748B;font-size:0.65rem;">+1 por volta</div>
+                                </div>
+                            </div>
+                            <div style="margin-top:12px;background:rgba(139,92,246,0.15);border-radius:10px;padding:8px 12px;font-size:0.8rem;color:#C4B5FD;font-weight:700;">
+                                🎒 As chaves <code style="color:#FBBF24;">{ }</code> são a mochila — tudo dentro é repetido!
                             </div>
                         </div>
-                        <div style="text-align:center;background:rgba(139,92,246,0.15);border:1px solid #8B5CF6;border-radius:12px;padding:10px;color:#A78BFA;font-weight:bold;font-size:0.88rem;">
-                            🎉 Escolha um Nível abaixo para ver seu código ganhando vida no simulador!
+
+                        <!-- CARD B: O QUE É UMA IDE? -->
+                        <div style="background:linear-gradient(135deg,#0C2340,#0F172A);border:2px solid #38BDF8;border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(56,189,248,0.2);">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                                <span style="font-size:2rem;background:#0C2340;padding:8px;border-radius:12px;">💻</span>
+                                <div>
+                                    <div style="color:#7DD3FC;font-family:'Fredoka One';font-size:1.1rem;">O que é uma IDE?</div>
+                                    <div style="color:#64748B;font-size:0.78rem;">Sua mesa de trabalho maker</div>
+                                </div>
+                            </div>
+                            <p style="color:#CBD5E1;font-size:0.88rem;line-height:1.6;margin:0 0 12px;">
+                                <b style="color:#38BDF8;">IDE</b> = <i>Integrated Development Environment</i>. É a <b>oficina completa</b> do programador — 3 ferramentas numa tela só!
+                            </p>
+                            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+                                <div style="display:flex;align-items:center;gap:10px;background:#0F172A;border-radius:12px;padding:10px;border-left:3px solid #FBBF24;">
+                                    <span style="font-size:1.3rem;">✏️</span>
+                                    <div>
+                                        <div style="color:#FBBF24;font-weight:900;font-size:0.82rem;">1. Editor de Código</div>
+                                        <div style="color:#94A3B8;font-size:0.75rem;">Você digita o código coloridinho com numeração nas linhas.</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:10px;background:#0F172A;border-radius:12px;padding:10px;border-left:3px solid #A78BFA;">
+                                    <span style="font-size:1.3rem;">🔍</span>
+                                    <div>
+                                        <div style="color:#A78BFA;font-weight:900;font-size:0.82rem;">2. Compilador</div>
+                                        <div style="color:#94A3B8;font-size:0.75rem;">Verifica erros e traduz para a linguagem do robô.</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:10px;background:#0F172A;border-radius:12px;padding:10px;border-left:3px solid #34D399;">
+                                    <span style="font-size:1.3rem;">▶️</span>
+                                    <div>
+                                        <div style="color:#34D399;font-weight:900;font-size:0.82rem;">3. Executor / Play</div>
+                                        <div style="color:#94A3B8;font-size:0.75rem;">Roda o código no simulador ou envia ao Arduino!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background:rgba(56,189,248,0.12);border:1px dashed #38BDF8;border-radius:10px;padding:8px 12px;font-size:0.8rem;color:#7DD3FC;font-weight:700;text-align:center;">
+                                🚀 No <b>Nível 4</b> você vai usar uma Mini-IDE de verdade!
+                            </div>
                         </div>
+
                     </div>
                 </div>
+                <!-- ========== FIM DA SEÇÃO APRENDA ANTES DE JOGAR ========== -->
 
                 <div class="loop-level-bar">
                     <button class="loop-level-btn active" data-level="1" onclick="l2_switchLevel(1)"><i class="fa-solid fa-industry"></i> Nível 1: Fábrica</button>
                     <button class="loop-level-btn" data-level="2" onclick="l2_switchLevel(2)"><i class="fa-solid fa-puzzle-piece"></i> Nível 2: 2 Loops</button>
-                    <button class="loop-level-btn" data-level="3" onclick="l2_switchLevel(3)"><i class="fa-solid fa-layer-group"></i> Nível 3: Múltiplos Comandos em 1 FOR</button>
+                    <button class="loop-level-btn" data-level="3" onclick="l2_switchLevel(3)"><i class="fa-solid fa-layer-group"></i> Nível 3: Múltiplos Comandos</button>
                     <button class="loop-level-btn" data-level="4" onclick="l2_switchLevel(4)"><i class="fa-solid fa-code"></i> Nível 4: Mini-IDE C/C++</button>
                 </div>
 
@@ -301,11 +361,33 @@
 
                 <!-- CONTEÚDO NÍVEL 4: MINI-IDE COMPLETA C/C++ -->
                 <div id="l2_view_lvl4" style="display:none;">
-                    <div style="background:linear-gradient(135deg,#1E3A5F,#0F172A);border:2px solid #38BDF8;border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
-                        <span style="font-size:2rem;">🗺️</span>
-                        <div>
-                            <div style="color:#38BDF8;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:2px;">Missão do Nível 4: Mestre dos Loops</div>
-                            <div style="color:#CBD5E1;font-size:0.95rem;">🪙 Colete as 3 moedas e leve o robô até o 🏆 Tesouro! Use laços <code style="background:#0F172A;color:#A78BFA;padding:1px 6px;border-radius:4px;">for</code> em C/C++ na Mini-IDE.</div>
+                    <!-- BANNER BOAS-VINDAS MINI-IDE -->
+                    <div style="background:linear-gradient(135deg,#0C2340,#1E1035);border:2px solid #38BDF8;border-radius:20px;padding:18px 22px;margin-bottom:16px;animation:ideBannerIn 0.4s ease;">
+                        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                            <span style="font-size:2.6rem;">🚀</span>
+                            <div style="flex:1;min-width:200px;">
+                                <div style="color:#7DD3FC;font-family:'Fredoka One';font-size:1.2rem;margin-bottom:4px;">Bem-vindo à Mini-IDE! Você agora é o programador!</div>
+                                <div style="color:#94A3B8;font-size:0.88rem;line-height:1.5;">Aqui você usa uma <b style="color:#38BDF8;">IDE real</b> para programar o robô. Lembra dos conceitos?</div>
+                            </div>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                                <div style="background:#0F172A;border:1px solid #FBBF24;border-radius:10px;padding:8px 12px;text-align:center;min-width:70px;">
+                                    <div style="font-size:1.2rem;">✏️</div>
+                                    <div style="color:#FBBF24;font-size:0.7rem;font-weight:900;">EDITOR</div>
+                                </div>
+                                <div style="color:#334155;font-size:1.5rem;align-self:center;">→</div>
+                                <div style="background:#0F172A;border:1px solid #A78BFA;border-radius:10px;padding:8px 12px;text-align:center;min-width:70px;">
+                                    <div style="font-size:1.2rem;">🔍</div>
+                                    <div style="color:#A78BFA;font-size:0.7rem;font-weight:900;">COMPILADOR</div>
+                                </div>
+                                <div style="color:#334155;font-size:1.5rem;align-self:center;">→</div>
+                                <div style="background:#0F172A;border:1px solid #34D399;border-radius:10px;padding:8px 12px;text-align:center;min-width:70px;">
+                                    <div style="font-size:1.2rem;">▶️</div>
+                                    <div style="color:#34D399;font-size:0.7rem;font-weight:900;">EXECUTAR</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:12px;background:rgba(56,189,248,0.1);border-left:3px solid #38BDF8;border-radius:8px;padding:8px 14px;color:#CBD5E1;font-size:0.85rem;">
+                            🗺️ <b>Missão:</b> 🪙 Colete as 3 moedas e leve o robô até o 🏆 Tesouro usando laços <code style="background:#0F172A;color:#A78BFA;padding:1px 6px;border-radius:4px;">for</code> em C/C++!
                         </div>
                     </div>
                     <div class="loop-ide-layout">

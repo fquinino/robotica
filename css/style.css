@@ -52,6 +52,8 @@ h1 {
 @keyframes chestGlow { 0%{transform:scale(1);} 100%{transform:scale(1.18);} }
 @keyframes beltMove { 100% { transform:translateX(-40px); } }
 @keyframes stampPop { 0% { transform:scale(3); opacity:0; } 100% { transform:scale(1); opacity:1; } }
+@keyframes robotFloat { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-10px);} }
+@keyframes ideBannerIn { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
 
 .footer { text-align:center; color:#64748B; margin-top:30px; font-weight:600; border-top:2px dashed #334155; padding-top:20px; }
 

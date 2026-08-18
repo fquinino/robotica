@@ -22,50 +22,14 @@
     <div class="game-panel active" id="tab-trail">
         <div class="trail-wrap">
             <div class="trail-title">
-                <h2>🗺️ Plano de Aulas — Lógica de Programação e Arduino</h2>
-                <p>Complete as aulas em ordem. Cada aula tem: 🎯 objetivo, 📖 teoria e 🎮 prática!</p>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <span style="color:#94A3B8;font-size:0.85rem;">Progresso Geral</span>
-                    <span id="trail-star-count" style="color:#F59E0B;font-weight:900;font-size:0.9rem;">0 / 18 ⭐</span>
+                <div style="font-size:3.5rem;margin-bottom:8px;animation:robotFloat 3s ease-in-out infinite;">🤖</div>
+                <h2>Sua Jornada Maker</h2>
+                <p>10 aulas do zero até o Arduino real. Cada aula tem 🎯 conceito + 🎮 jogo prático!</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 6px;">
+                    <span style="color:#94A3B8;font-size:0.85rem;font-weight:800;">Progresso Geral</span>
+                    <span id="trail-star-count" style="color:#F59E0B;font-weight:900;font-size:0.95rem;">0 / 18 ⭐</span>
                 </div>
                 <div class="trail-progress-bar-wrap"><div class="trail-progress-bar-inner" id="trail-progress-bar"></div></div>
-            </div>
-
-            <!-- CARD DE CONCEITO DESTACADO: O QUE É UMA IDE -->
-            <div class="trail-ide-intro-card" style="background:linear-gradient(135deg, rgba(56,189,248,0.12), rgba(139,92,246,0.12));border:2px solid #38BDF8;border-radius:20px;padding:18px 22px;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,0.4);">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;" onclick="toggleMainIdeConcept()">
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <span style="font-size:2.2rem;">💻</span>
-                        <div>
-                            <h3 style="color:#38BDF8;font-family:'Fredoka One';margin:0;font-size:1.2rem;">O que é uma IDE? (Aprenda antes de jogar!)</h3>
-                            <p style="color:#CBD5E1;margin:2px 0 0;font-size:0.88rem;">Clique para descobrir o que é a Mesa de Trabalho Maker de todo Programador!</p>
-                        </div>
-                    </div>
-                    <span id="main_ide_arrow" style="color:#38BDF8;font-weight:900;font-size:1.3rem;">▼</span>
-                </div>
-
-                <div id="main_ide_concept_box" style="display:none;border-top:1px solid #334155;padding-top:14px;margin-top:12px;color:#CBD5E1;font-size:0.92rem;line-height:1.7;">
-                    <p style="margin:0 0 12px;">
-                        <b>IDE</b> significa <i>Integrated Development Environment</i> (Ambiente de Desenvolvimento Integrado). É a <b>oficina completa do criador de código</b>! Em vez de usar 3 programas separados, a IDE junta 3 ferramentas essenciais na mesma tela:
-                    </p>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;margin-bottom:14px;">
-                        <div style="background:#0F172A;border-radius:14px;padding:14px;border-left:4px solid #FBBF24;">
-                            <div style="color:#FBBF24;font-weight:900;font-size:0.95rem;margin-bottom:4px;">1️⃣ ✏️ O Editor de Código</div>
-                            Onde você digita suas instruções em C/C++ coloridinhas, com numeração nas linhas e atalhos rápidos.
-                        </div>
-                        <div style="background:#0F172A;border-radius:14px;padding:14px;border-left:4px solid #A78BFA;">
-                            <div style="color:#A78BFA;font-weight:900;font-size:0.95rem;margin-bottom:4px;">2️⃣ 🔍 O Compilador / Verificador</div>
-                            O assistente que verifica se falta algum ponto e vírgula <code>;</code> e traduz o código para a linguagem dos robôs.
-                        </div>
-                        <div style="background:#0F172A;border-radius:14px;padding:14px;border-left:4px solid #10B981;">
-                            <div style="color:#10B981;font-weight:900;font-size:0.95rem;margin-bottom:4px;">3️⃣ 🚀 O Simulador / Uploader</div>
-                            O botão de Play ➔ que envia seu código para a tela do jogo ou para a placa Arduino real via cabo USB!
-                        </div>
-                    </div>
-                    <div style="text-align:center;background:rgba(56,189,248,0.15);border:1px solid #38BDF8;border-radius:12px;padding:10px;color:#38BDF8;font-weight:bold;font-size:0.9rem;">
-                        🎯 Agora que você conhece a IDE, escolha uma aula abaixo e coloque a mão na massa!
-                    </div>
-                </div>
             </div>
             <div class="trail-nodes" id="trail-nodes-list"></div>
             <div style="text-align:center;margin-top:24px;">
