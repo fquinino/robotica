@@ -151,26 +151,31 @@ Fonte (5V) ➔ Resistor (220 ohms) ➔ LED (Anodo + / Catodo -) ➔ GND (Terra)`
         jogo:'tab-labmaker', btntext:'🧪 Montar Circuito na Protoboard!'
     },
     8: {
-        emoji:'🤖', title:'Arduino e Linguagem C/C++', color:'#F87171',
-        objetivo:'🧠 <b>O que você vai aprender:</b> A anatomia do microcontrolador <b>Arduino UNO</b>, os pinos digitais/analógicos e as funções de base <code>setup()</code> e <code>loop()</code>!',
-        teoria:`<b>O Cérebro do seu Projeto 🧠</b>
+        emoji:'🤖', title:'Arduino & O que é uma IDE (C/C++)', color:'#F87171',
+        objetivo:'🧠 <b>O que você vai aprender:</b> O que é uma <b>IDE</b> (a mesa de trabalho do programador), a anatomia do <b>Arduino UNO</b> e as funções de base <code>setup()</code> e <code>loop()</code>!',
+        teoria:`<b>O que é uma IDE? 💻 (Mesa de Trabalho Maker)</b>
 
-O <b>Arduino UNO</b> é um pequeno computador dedicado que você programa em linguagem C/C++:
+IDE significa <i>Integrated Development Environment</i> (Ambiente de Desenvolvimento Integrado).
 
-- <b>Pinos Digitais (0 a 13):</b> Podem ser ENTRADAS ou SAÍDAS. Só entendem 2 estados: <code>HIGH</code> (5V / LIGADO) ou <code>LOW</code> (0V / DESLIGADO).
-- <b>Pinos Analógicos (A0 a A5):</b> Lêem sensores com valores graduados de 0 a 1023 (como sensores de luz e temperatura).
-- <b>Função <code>setup()</code>:</b> Roda UMA VEZ quando você liga o Arduino. Usada para configurar os pinos.
-- <b>Função <code>loop()</code>:</b> Roda REPETIDAMENTE sem parar enquanto o Arduino estiver ligado.`,
+Pense na IDE como a <b>Mesa do Super-Heroi da Programação</b>. Em vez de abrir 3 programas diferentes, a IDE junta 3 ferramentas essenciais numa única tela:
+1️⃣ ✏️ <b>O Editor de Código:</b> Onde você digita suas instruções em C/C++ coloridinhas.
+2️⃣ 🔍 <b>O Compilador:</b> O tradutor que verifica se há erros e transforma seu código C++ em 0s e 1s para o robô.
+3️⃣ 🚀 <b>O Uploader (Carregador):</b> O botão mágico que envia o programa via cabo USB para o cérebro do Arduino!
+
+<b>Anatomia do Arduino UNO 🧠</b>
+- <b>Pinos Digitais (0 a 13):</b> Entradas e saídas de 2 estados: <code>HIGH</code> (5V / Liga) ou <code>LOW</code> (0V / Desliga).
+- <b>Função <code>setup()</code>:</b> Roda 1 vez ao ligar para configurar os pinos.
+- <b>Função <code>loop()</code>:</b> Roda REPETIDAMENTE sem parar!`,
         exemplo:`void setup() {
-    pinMode(13, OUTPUT); // Configura pino 13 como saída
+    pinMode(13, OUTPUT); // Configura o pino 13 como saída
 }
 void loop() {
     digitalWrite(13, HIGH); // Liga o LED
-    delay(1000);            // Espera 1 seg
+    delay(1000);            // Espera 1 segundo
     digitalWrite(13, LOW);  // Desliga o LED
-    delay(1000);            // Espera 1 seg
+    delay(1000);            // Espera 1 segundo
 }`,
-        dica:'💡 Dica Maker: O pino 13 do Arduino UNO já vem com um LED minúsculo embutido na própria placa! Excelente para primeiros testes.',
+        dica:'💡 Dica Autodidacta: No Arduino IDE real, o botão ✔ VERIFICA erros no código e o botão ➔ CARREGA o código na placa!',
         jogo:'tab-arduino', btntext:'🎮 Ir para a Oficina do Arduino!'
     },
     9: {

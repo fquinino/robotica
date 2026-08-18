@@ -325,8 +325,36 @@
 
                 <!-- ================= ABA 5: CÓDIGO C++ & VARIÁVEIS ================= -->
                 <div class="panel" id="ard-tab-code">
-                    <h3 style="color:#F87171;margin-top:0;"><i class="fa-solid fa-code"></i> Estrutura do Código Arduino (C++)</h3>
+                    <h3 style="color:#F87171;margin-top:0;"><i class="fa-solid fa-code"></i> Estrutura do Código & O que é uma IDE?</h3>
                     
+                    <!-- CARD DIDÁTICO: O QUE É UMA IDE? -->
+                    <div style="background:#0F172A;border:2px solid #38BDF8;border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 8px 25px rgba(0,0,0,0.5);">
+                        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                            <span style="font-size:2rem;">💻</span>
+                            <div>
+                                <h4 style="color:#38BDF8;font-family:'Fredoka One';margin:0;font-size:1.2rem;">O que é uma IDE? (Integrated Development Environment)</h4>
+                                <p style="color:#94A3B8;margin:2px 0 0;font-size:0.88rem;">Pense na IDE como a <b>Oficina Completa do Super-Programador</b>!</p>
+                            </div>
+                        </div>
+                        <p style="color:#CBD5E1;font-size:0.92rem;line-height:1.6;margin-bottom:14px;">
+                            Em vez de você abrir 3 programas separados (um bloco de notas para digitar, um tradutor para conferir erros e um programa para enviar para a placa), a <b>IDE reúne tudo numa única mesa de trabalho</b>!
+                        </p>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;">
+                            <div style="background:#1E293B;border-radius:14px;padding:12px 16px;border-left:4px solid #FBBF24;">
+                                <div style="color:#FBBF24;font-weight:900;font-size:0.95rem;margin-bottom:4px;">1️⃣ ✏️ Editor de Código</div>
+                                Onde você escreve as instruções em C/C++ coloridinhas, com numeração de linhas e autocompletar.
+                            </div>
+                            <div style="background:#1E293B;border-radius:14px;padding:12px 16px;border-left:4px solid #A78BFA;">
+                                <div style="color:#A78BFA;font-weight:900;font-size:0.95rem;margin-bottom:4px;">2️⃣ 🔍 Compilador</div>
+                                O assistente inteligente que lê seu código, descobre se falta algum ponto e vírgula <code>;</code> e traduz tudo para o robô.
+                            </div>
+                            <div style="background:#1E293B;border-radius:14px;padding:12px 16px;border-left:4px solid #10B981;">
+                                <div style="color:#10B981;font-weight:900;font-size:0.95rem;margin-bottom:4px;">3️⃣ 🚀 Uploader / Play</div>
+                                O botão mágico (como o botão ➔ no Arduino IDE) que grava seu código na placa Arduino real via cabo USB!
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="ard-grid-3">
                         <div class="ard-card">
                             <h4 style="color:#F59E0B;margin-top:0;">1. void setup()</h4>
