@@ -3865,6 +3865,7 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
 
     // ================= LOOPMAKER (NOVA MINI-IDE DE PORTUGOL & ROBÔ DOS LOOPS) =================
     function loadLoopmaker() {
+        const l2_sleep = ms => new Promise(r => setTimeout(r, ms));
         const container = document.getElementById('loopmaker-container');
         container.innerHTML = `
             <style>
@@ -4587,6 +4588,17 @@ for (int i = 0; i < 4; i++) {
         }
         numbersDiv.innerHTML = numHtml;
     }
+
+    // Exporta handlers globais para inline onclicks
+    window.l_startFactory = l_startFactory;
+    window.l2_switchLevel = l2_switchLevel;
+    window.l2_runScaffold = l2_runScaffold;
+    window.l2_runIdeCode = l2_runIdeCode;
+    window.l2_resetBoard = l2_resetBoard;
+    window.l2_nextStep = l2_nextStep;
+    window.l2_insertCode = l2_insertCode;
+    window.l2_clearEditor = l2_clearEditor;
+    window.l2_updateLineNumbers = l2_updateLineNumbers;
 
     // ================= JARDIM DOS LOOPS =================
     function loadJardim() {
