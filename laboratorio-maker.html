@@ -4236,7 +4236,11 @@ for (int i = 0; i < 4; i++) {
     }
 
     async function l_startFactory() {
-        if(l2_isExecuting) return;
+        console.log('🏭 [Fábrica] Iniciando execução do laço FOR...');
+        if(l2_isExecuting) {
+            console.warn('⚠️ [Fábrica] Já está executando!');
+            return;
+        }
         l2_isExecuting = true;
         const btn = document.getElementById('l_btn_run1');
         btn.disabled = true;
@@ -4244,17 +4248,20 @@ for (int i = 0; i < 4; i++) {
         l2_resetFactory();
 
         const count = parseInt(document.getElementById('l_sel-loop').value);
+        console.log('📊 [Fábrica] Quantidade de iterações do loop:', count);
         let currentPos = 0;
         const boxWidth = 90;
         const codeLine = document.getElementById('l_code_line_carimbar');
 
         for(let i=1; i<=count; i++) {
+            console.log(`🔄 [Fábrica] Iteração i = ${i} de ${count}`);
             document.getElementById('l_hud-count').innerText = i;
             if(codeLine) codeLine.classList.add('active');
             playSound('step');
             await l2_sleep(250);
 
             // Carimba com o braço mecânico
+            console.log(`🔨 [Fábrica] Descendo braço de carimbo na caixa ${i}...`);
             document.getElementById('l_stamper-arm').classList.add('hitting');
             playSound('click');
             await l2_sleep(220);
@@ -4268,14 +4275,17 @@ for (int i = 0; i < 4; i++) {
                     stamp.className = 'loop-stamp';
                     stamp.innerHTML = '✅';
                     box.appendChild(stamp);
+                    console.log(`✅ [Fábrica] Carimbo aplicado na caixa ${i}`);
                 }
             }
 
             await l2_sleep(180);
             document.getElementById('l_stamper-arm').classList.remove('hitting');
             if(codeLine) codeLine.classList.remove('active');
+            console.log(`⬆️ [Fábrica] Subindo braço mecânico.`);
 
             if(i < count) {
+                console.log(`➡️ [Fábrica] Movendo esteira para a caixa ${i+1}...`);
                 document.getElementById('l_belt-stripes').classList.add('running');
                 currentPos -= boxWidth;
                 document.getElementById('l_boxes-track').style.transform = `translateX(${currentPos}px)`;
@@ -4288,6 +4298,7 @@ for (int i = 0; i < 4; i++) {
         l2_isExecuting = false;
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR LAÇO FOR';
+        console.log('🏁 [Fábrica] Fim da execução do laço.');
 
         if(count === 5) {
             playSound('success');
