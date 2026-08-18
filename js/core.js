@@ -252,6 +252,20 @@ function resetAllProgress() {
     }
 }
 
+function toggleMainIdeConcept() {
+    const box = document.getElementById('main_ide_concept_box');
+    const arrow = document.getElementById('main_ide_arrow');
+    if (!box || !arrow) return;
+    if (box.style.display === 'none') {
+        box.style.display = 'block';
+        arrow.innerText = '▲';
+        if (typeof playSound === 'function') playSound('click');
+    } else {
+        box.style.display = 'none';
+        arrow.innerText = '▼';
+    }
+}
+
 // Inicializador de eventos nos botões de aba principais
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.tab-btn').forEach(btn => {
