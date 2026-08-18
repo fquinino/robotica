@@ -503,30 +503,28 @@ No computador é a mesma coisa! Cada comando é um passo. Juntos na ordem certa,
             jogo:'tab-tesouro', btntext:'🎮 Jogar Caça ao Tesouro!'
         },
         2: {
-            emoji:'🔄', title:'Estruturas de Repetição (Loops & Portugol)', color:'#A78BFA',
-            objetivo:'🔁 <b>O que você vai aprender:</b> Como usar o comando <span style="color:#A78BFA;">repita(N) { ... }</span> em <b>Portugol Maker</b> para fazer o robô andar automaticamente sem precisar clicar 10 vezes na mesma seta!',
+            emoji:'🔄', title:'Estruturas de Repetição (Laço FOR em C/C++)', color:'#A78BFA',
+            objetivo:'🔁 <b>O que você vai aprender:</b> Como usar o laço <span style="color:#A78BFA;">for (int i=0; i&lt;N; i++) { ... }</span> na linguagem <b>C / C++</b> do Arduino para o robô repetir passos automaticamente!',
             teoria:`<b>Lembra do robô da Caça ao Tesouro? 🤖</b>
 
 Na Aula 1, para fazer o robô andar 5 casas você teve que clicar 5 vezes na seta ➡️. Imagina se fossem 100 casas... Seus dedos iam cansar! 😂
 
-Mas os programadores têm um superpoder: o <b>LOOP DE REPETIÇÃO</b>! 🦸
+Em <b>C / C++</b> (a mesma linguagem usada no Arduino!), usamos o laço <b>for</b> para repetir comandos:
+<code>for (int i = 0; i &lt; 5; i++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;direita();<br>}</code>
 
-Em vez de repetir o comando manualmente, você escreve em <b>Portugol</b>:
-<code>repita (5) { direita(); }</code>
-
-O computador entende e executa todos os 5 passos sozinho na velocidade da luz! Isso se chama <b>AUTOMAÇÃO</b>!`,
+O computador executa todos os passos sozinho na velocidade da luz! Isso se chama <b>AUTOMAÇÃO</b>!`,
             exemplo:`// Sem loop (cansativo):
 direita();
 direita();
 direita();
 direita();
 
-// Com loop em Portugol (rápido e profissional!):
-repita (4) {
+// Com laço FOR em C / C++ (profissional!):
+for (int i = 0; i < 4; i++) {
     direita();
 }`,
-            dica:'💡 <b>Dica de Maker:</b> Na Mini-IDE do robô, use o comando <code>repita(N) { comando(); }</code> para economizar linhas de código e ganhar 3 estrelas!',
-            jogo:'tab-loopmaker', btntext:'🎮 Abrir Mini-IDE de Loops!'
+            dica:'💡 <b>Dica de Maker:</b> Na Mini-IDE do robô, use o laço <code>for (int i = 0; i &lt; N; i++)</code> para economizar código e ganhar 3 estrelas!',
+            jogo:'tab-loopmaker', btntext:'🎮 Abrir Mini-IDE de C/C++!'
         },
         3: {
             emoji:'🌱', title:'Condicionais — Tomando Decisões', color:'#34D399',
@@ -873,11 +871,11 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
         },
         { 
             id:'tab-loopmaker', icon:'🔄', color:'#A78BFA', bg:'rgba(167,139,250,0.15)', 
-            label:'Aula 2: Estruturas de Repetição (Loops & Portugol)',
+            label:'Aula 2: Estruturas de Repetição (Laço FOR em C/C++)',
             day:1,
-            desc:'Loops e Portugol Maker! Programe o robô com repetições automáticas sem cansar os dedos.',
-            objetivo:'🔁 Aprender o conceito de repetição (repita / for) e programar o robô em Portugol Maker.',
-            pratica:'🔄 Mini-IDE de Loops (Níveis 1-3): esteira de fábrica ➔ preenchimento de lacunas ➔ código digitado.',
+            desc:'Laço FOR em C/C++! Programe o robô com laços de repetição profissionais em C/C++.',
+            objetivo:'🔁 Aprender a estrutura de laço for(int i=0; i<N; i++) em C/C++ para o Arduino.',
+            pratica:'🔄 Mini-IDE C/C++ (Níveis 1-3): esteira de fábrica ➔ lacunas em C ➔ código digitado em C.',
             key:'loopmaker_levels'
         },
         { 
@@ -3972,14 +3970,14 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
 
             <div class="loop-wrapper">
                 <div class="loop-header-card">
-                    <h2>🔄 Aula 2: Estruturas de Repetição & Portugol Maker</h2>
-                    <p id="loop-header-desc">Aprenda a criar <b>LOOPS</b> para automatizar comandos repetitivos do robô!</p>
+                    <h2>🔄 Aula 2: Estruturas de Repetição & Laço FOR em C/C++</h2>
+                    <p id="loop-header-desc">Aprenda a criar laços <b>FOR</b> em C/C++ para automatizar comandos repetitivos do robô!</p>
                 </div>
 
                 <div class="loop-level-bar">
                     <button class="loop-level-btn active" data-level="1" onclick="l2_switchLevel(1)"><i class="fa-solid fa-industry"></i> ⭐ Nível 1: Fábrica</button>
-                    <button class="loop-level-btn" data-level="2" onclick="l2_switchLevel(2)"><i class="fa-solid fa-puzzle-piece"></i> ⭐⭐ Nível 2: Lacunas</button>
-                    <button class="loop-level-btn" data-level="3" onclick="l2_switchLevel(3)"><i class="fa-solid fa-code"></i> ⭐⭐⭐ Nível 3: Mini-IDE</button>
+                    <button class="loop-level-btn" data-level="2" onclick="l2_switchLevel(2)"><i class="fa-solid fa-puzzle-piece"></i> ⭐⭐ Nível 2: Lacunas em C</button>
+                    <button class="loop-level-btn" data-level="3" onclick="l2_switchLevel(3)"><i class="fa-solid fa-code"></i> ⭐⭐⭐ Nível 3: Mini-IDE C/C++</button>
                 </div>
 
                 <!-- CONTEÚDO NÍVEL 1: FÁBRICA DE LOOPS -->
@@ -3993,31 +3991,31 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                     </div>
                     
                     <div style="background:#090D16;border:2px solid #8B5CF6;border-radius:18px;padding:18px;margin-bottom:15px;">
-                        <div style="color:#64748B;font-size:0.85rem;font-family:'Fira Code';margin-bottom:6px;">// Escolha a quantidade de repetições do loop</div>
+                        <div style="color:#64748B;font-size:0.85rem;font-family:'Fira Code';margin-bottom:6px;">// Laço FOR em Linguagem C / C++</div>
                         <div style="font-family:'Fira Code';font-size:1.05rem;line-height:2.2;">
-                            <span style="color:#F472B6;font-weight:bold;">repita</span> ( <select id="l_sel-loop" style="background:#1E293B;color:#34D399;border:2px solid #8B5CF6;padding:4px 12px;border-radius:8px;font-family:'Fredoka One';font-size:1.1rem;cursor:pointer;"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option></select> ) {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#60A5FA;font-weight:bold;">carimbar_caixa</span>();<br>
+                            <span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 1; i &lt;= <select id="l_sel-loop" style="background:#1E293B;color:#34D399;border:2px solid #8B5CF6;padding:4px 12px;border-radius:8px;font-family:'Fredoka One';font-size:1.1rem;cursor:pointer;"><option value="3">3</option><option value="5" selected>5</option><option value="8">8</option></select>; i++ ) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#60A5FA;font-weight:bold;">carimbarCaixa</span>();<br>
                             }
                         </div>
                     </div>
 
                     <div class="loop-actions">
-                        <button class="loop-btn-run" id="l_btn_run1" onclick="l_startFactory()"><i class="fa-solid fa-play"></i> EXECUTAR LOOP</button>
+                        <button class="loop-btn-run" id="l_btn_run1" onclick="l_startFactory()"><i class="fa-solid fa-play"></i> EXECUTAR LAÇO FOR</button>
                     </div>
                 </div>
 
-                <!-- CONTEÚDO NÍVEL 2: SCAFFOLDING COM O ROBÔ -->
+                <!-- CONTEÚDO NÍVEL 2: SCAFFOLDING COM O ROBÔ (C/C++) -->
                 <div id="l2_view_lvl2" style="display:none;">
                     <div class="loop-ide-layout">
                         <!-- Editor com Lacunas -->
                         <div class="loop-editor-card">
                             <div class="loop-editor-topbar">
-                                <div class="loop-editor-title"><i class="fa-solid fa-laptop-code"></i> Complete o Código</div>
-                                <span class="loop-lang-tag">Portugol Maker</span>
+                                <div class="loop-editor-title"><i class="fa-solid fa-laptop-code"></i> Complete o Código em C</div>
+                                <span class="loop-lang-tag">Linguagem C / C++</span>
                             </div>
                             <div class="scaffold-lines">
                                 <div style="color:#64748B;font-size:0.8rem;margin-bottom:8px;">// Missão: Andar 4 para Direita e 4 para Baixo</div>
-                                <div class="scaffold-line" id="sc_l1"><span style="color:#F472B6;font-weight:bold;">repita</span> ( <input type="number" id="sc_num1" min="1" max="6" value="4" class="p-input-num"> ) {</div>
+                                <div class="scaffold-line" id="sc_l1"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 0; i &lt; <input type="number" id="sc_num1" min="1" max="6" value="4" class="p-input-num">; i++ ) {</div>
                                 <div class="scaffold-line" id="sc_l2" style="padding-left:24px;">
                                     <select id="sc_cmd1" class="p-select-cmd">
                                         <option value="RIGHT" selected>direita();</option>
@@ -4028,7 +4026,7 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                                 </div>
                                 <div class="scaffold-line" id="sc_l3">}</div>
                                 
-                                <div class="scaffold-line" id="sc_l4" style="margin-top:10px;"><span style="color:#F472B6;font-weight:bold;">repita</span> ( <input type="number" id="sc_num2" min="1" max="6" value="4" class="p-input-num"> ) {</div>
+                                <div class="scaffold-line" id="sc_l4" style="margin-top:10px;"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 0; i &lt; <input type="number" id="sc_num2" min="1" max="6" value="4" class="p-input-num">; i++ ) {</div>
                                 <div class="scaffold-line" id="sc_l5" style="padding-left:24px;">
                                     <select id="sc_cmd2" class="p-select-cmd">
                                         <option value="DOWN" selected>baixo();</option>
@@ -4040,7 +4038,7 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                                 <div class="scaffold-line" id="sc_l6">}</div>
                             </div>
                             <div class="loop-actions">
-                                <button class="loop-btn-run" id="l2_btn_run_scaffold" onclick="l2_runScaffold()"><i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO</button>
+                                <button class="loop-btn-run" id="l2_btn_run_scaffold" onclick="l2_runScaffold()"><i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C</button>
                                 <button class="loop-btn-reset" onclick="l2_resetBoard()"><i class="fa-solid fa-rotate-left"></i></button>
                             </div>
                         </div>
@@ -4056,19 +4054,19 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                     </div>
                 </div>
 
-                <!-- CONTEÚDO NÍVEL 3: MINI-IDE COMPLETA COM DIGITAÇÃO -->
+                <!-- CONTEÚDO NÍVEL 3: MINI-IDE COMPLETA C/C++ -->
                 <div id="l2_view_lvl3" style="display:none;">
                     <div class="loop-ide-layout">
                         <!-- Mini-IDE Completa -->
                         <div class="loop-editor-card">
                             <div class="loop-editor-topbar">
-                                <div class="loop-editor-title"><i class="fa-solid fa-terminal"></i> Mini-IDE Portugol Maker</div>
-                                <span class="loop-lang-tag">Editor Livre</span>
+                                <div class="loop-editor-title"><i class="fa-solid fa-terminal"></i> Mini-IDE C / C++</div>
+                                <span class="loop-lang-tag">Linguagem C</span>
                             </div>
 
                             <!-- Teclado Maker de Atalhos Rápidos -->
                             <div class="loop-shortcuts-bar">
-                                <button class="loop-shortcut-btn" onclick="l2_insertCode('repita (3) {\n    direita();\n}\n')"><i class="fa-solid fa-arrows-rotate" style="color:#A78BFA;"></i> + repita(N)</button>
+                                <button class="loop-shortcut-btn" onclick="l2_insertCode('for (int i = 0; i < 3; i++) {\n    direita();\n}\n')"><i class="fa-solid fa-arrows-rotate" style="color:#A78BFA;"></i> + for(int i=0; i&lt;N; i++)</button>
                                 <button class="loop-shortcut-btn" onclick="l2_insertCode('direita();\n')">➡️ direita();</button>
                                 <button class="loop-shortcut-btn" onclick="l2_insertCode('baixo();\n')">⬇️ baixo();</button>
                                 <button class="loop-shortcut-btn" onclick="l2_insertCode('esquerda();\n')">⬅️ esquerda();</button>
@@ -4079,23 +4077,20 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
                             <!-- Textarea com Numeração de Linhas -->
                             <div class="loop-code-wrapper">
                                 <div class="loop-line-numbers" id="l2_line_numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
-                                <textarea class="loop-code-input" id="l2_code_input" spellcheck="false" placeholder="// Digite seu código aqui...
-repita (4) {
-    direita();
-}
-repita (3) {
+                                <textarea class="loop-code-input" id="l2_code_input" spellcheck="false" placeholder="// Digite seu código C/C++ aqui...
+for (int i = 0; i < 4; i++) {
     baixo();
 }" oninput="l2_updateLineNumbers()"></textarea>
                             </div>
 
                             <!-- Guia de Sintaxe -->
                             <div class="loop-syntax-card">
-                                <b>📖 Como escrever loops em Portugol Maker:</b><br>
-                                <code>repita (4) { direita(); }</code> &nbsp;|&nbsp; <code>repita (2) { baixo(); }</code>
+                                <b>📖 Como escrever laços FOR em C / C++:</b><br>
+                                <code>for (int i = 0; i &lt; 4; i++) { direita(); }</code>
                             </div>
 
                             <div class="loop-actions">
-                                <button class="loop-btn-run" id="l2_btn_run_ide" onclick="l2_runIdeCode()"><i class="fa-solid fa-play"></i> EXECUTAR MEU CÓDIGO</button>
+                                <button class="loop-btn-run" id="l2_btn_run_ide" onclick="l2_runIdeCode()"><i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C</button>
                                 <button class="loop-btn-reset" onclick="l2_resetBoard()"><i class="fa-solid fa-rotate-left"></i></button>
                             </div>
                         </div>
@@ -4117,7 +4112,7 @@ repita (3) {
                 <div class="loop-modal-box">
                     <div class="loop-modal-icon" id="l_win_icon">🏆</div>
                     <h2 class="loop-modal-title" id="l_win_title">Parabéns!</h2>
-                    <p class="loop-modal-text" id="l_win_text">Você completou o desafio dos loops com maestria!</p>
+                    <p class="loop-modal-text" id="l_win_text">Você completou o desafio dos laços FOR em C/C++ com maestria!</p>
                     <button class="loop-btn-modal" onclick="l2_nextStep()">Próximo Desafio ➔</button>
                 </div>
             </div>
@@ -4136,7 +4131,7 @@ repita (3) {
     let l2_robotState = { r:0, c:0 };
     let l2_collectedCoins = 0;
 
-    // Configuração dos Grids dos Níveis 2 e 3
+    // Configuração dos Grids dos Níveis 2 e 3 (em C / C++)
     const L2_MAPS = {
         2: {
             size: 5,
@@ -4144,7 +4139,7 @@ repita (3) {
             chest: { r:4, c:4 },
             walls: [ {r:1,c:1}, {r:1,c:2}, {r:2,c:1}, {r:2,c:2}, {r:3,c:2} ],
             coins: [ {r:0,c:4}, {r:4,c:0} ],
-            initialCode: "repita (4) {\n    direita();\n}\nrepita (4) {\n    baixo();\n}"
+            initialCode: "for (int i = 0; i < 4; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}"
         },
         3: {
             size: 6,
@@ -4152,7 +4147,7 @@ repita (3) {
             chest: { r:5, c:5 },
             walls: [ {r:0,c:2}, {r:1,c:2}, {r:2,c:2}, {r:3,c:4}, {r:4,c:4}, {r:2,c:4} ],
             coins: [ {r:4,c:0}, {r:4,c:3}, {r:1,c:5} ],
-            initialCode: "// Nível 3: Programe o caminho do robô!\nrepita (4) {\n    baixo();\n}\nrepita (3) {\n    direita();\n}\nrepita (3) {\n    cima();\n}\nrepita (2) {\n    direita();\n}\nrepita (4) {\n    baixo();\n}"
+            initialCode: "// Nível 3: Programe os laços FOR do robô em C/C++!\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nfor (int i = 0; i < 3; i++) {\n    cima();\n}\nfor (int i = 0; i < 2; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}"
         }
     };
 
@@ -4175,13 +4170,13 @@ repita (3) {
 
         const descEl = document.getElementById('loop-header-desc');
         if(lvl === 1) {
-            descEl.innerHTML = '<b>Nível 1:</b> Entenda o conceito de loop! Veja como uma instrução <code>repita(5)</code> carimba 5 caixas na esteira sem repetir código.';
+            descEl.innerHTML = '<b>Nível 1:</b> Entenda o laço FOR em C/C++! Veja como <code>for (int i=1; i<=5; i++)</code> carimba 5 caixas na esteira sem repetir código.';
             l2_resetFactory();
         } else if(lvl === 2) {
-            descEl.innerHTML = '<b>Nível 2:</b> Preencha as lacunas do código em Portugol Maker para o robô andar no labirinto e pegar o tesouro!';
+            descEl.innerHTML = '<b>Nível 2:</b> Complete os laços <code>for</code> em C/C++ para o robô andar no labirinto e pegar o tesouro!';
             l2_buildBoard(2);
         } else if(lvl === 3) {
-            descEl.innerHTML = '<b>Nível 3:</b> Desafio do Mestre! Digite o código em Portugol Maker na Mini-IDE, use os botões de atalho e chegue ao tesouro!';
+            descEl.innerHTML = '<b>Nível 3:</b> Desafio do Mestre! Digite laços <code>for</code> em C/C++ na Mini-IDE, use os atalhos e chegue ao tesouro!';
             const input = document.getElementById('l2_code_input');
             if(input && !input.value.trim()) {
                 input.value = L2_MAPS[3].initialCode;
@@ -4255,17 +4250,17 @@ repita (3) {
 
         l2_isExecuting = false;
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR LOOP';
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR LAÇO FOR';
 
         if(count === 5) {
             playSound('success');
             triggerConfetti(3000);
             l2_saveProgress(1);
-            l2_showWinModal('🏭','Fábrica Automatizada!','Você carimbou todas as 5 caixas com apenas 1 loop! Agora vamos programar o robô no Nível 2!');
+            l2_showWinModal('🏭','Fábrica Automatizada!','Você carimbou todas as 5 caixas com apenas 1 laço FOR! Agora vamos programar o robô no Nível 2!');
         } else if(count < 5) {
-            triggerErrorSplash('Faltaram caixas!', `O loop rodou apenas ${count} vezes, mas a esteira tinha 5 caixas.`, 'Aumente o número no repita(5) para carimbar todas as caixas!', '📦');
+            triggerErrorSplash('Faltaram caixas!', `O laço for rodou apenas ${count} vezes, mas a esteira tinha 5 caixas.`, 'Aumente o limite no for (int i=1; i<=5; i++) para carimbar todas as caixas!', '📦');
         } else {
-            triggerErrorSplash('Passou do limite!', `O loop rodou ${count} vezes, mas só tínhamos 5 caixas.`, 'Ajuste o número do repita exatamente para 5.', '⚠️');
+            triggerErrorSplash('Passou do limite!', `O laço for rodou ${count} vezes, mas só tínhamos 5 caixas.`, 'Ajuste o limite do for exatamente para 5.', '⚠️');
         }
     }
 
@@ -4322,7 +4317,7 @@ repita (3) {
         if(hud) hud.innerHTML = `🪙 ${l2_collectedCoins} / ${map.coins.length} Moedas`;
     }
 
-    // Execução do Nível 2 (Scaffolding)
+    // Execução do Nível 2 (Scaffolding C/C++)
     async function l2_runScaffold() {
         if(l2_isExecuting) return;
         l2_isExecuting = true;
@@ -4344,10 +4339,10 @@ repita (3) {
 
         l2_isExecuting = false;
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO';
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C';
     }
 
-    // Execução do Nível 3 (Parser Portugol)
+    // Execução do Nível 3 (Parser C/C++)
     async function l2_runIdeCode() {
         if(l2_isExecuting) return;
         l2_isExecuting = true;
@@ -4357,13 +4352,13 @@ repita (3) {
         l2_buildBoard(3);
 
         const code = document.getElementById('l2_code_input').value;
-        const parseResult = l2_parsePortugol(code);
+        const parseResult = l2_parseC(code);
 
         if(!parseResult.success) {
             triggerErrorSplash(parseResult.title, parseResult.msg, parseResult.hint, '⚠️');
             l2_isExecuting = false;
             btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR MEU CÓDIGO';
+            btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C';
             return;
         }
 
@@ -4371,11 +4366,11 @@ repita (3) {
 
         l2_isExecuting = false;
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR MEU CÓDIGO';
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C';
     }
 
-    // Analisador Sintático de Portugol Maker
-    function l2_parsePortugol(rawCode) {
+    // Analisador Sintático da Linguagem C / C++
+    function l2_parseC(rawCode) {
         const lines = rawCode.split('\n');
         const commands = [];
         let openBrackets = 0;
@@ -4385,14 +4380,17 @@ repita (3) {
 
         for(let idx=0; idx<lines.length; idx++) {
             let line = lines[idx].trim();
-            if(!line || line.startsWith('//')) continue;
+            if(!line || line.startsWith('//') || line.startsWith('/*')) continue;
 
-            // Detecta repita (N) {
-            const repitaMatch = line.match(/^repita\s*\(\s*(\d+)\s*\)\s*\{?$/i) || line.match(/^repita\s+(\d+)\s*\{?$/i);
-            if(repitaMatch) {
-                const n = parseInt(repitaMatch[1]);
+            // Detecta laço for em C/C++: for(int i=0; i<N; i++) ou repita(N)
+            const forMatch = line.match(/^for\s*\(\s*(?:int\s+)?\w+\s*=\s*0;\s*\w+\s*<\s*(\d+);\s*\w+\+\+\s*\)\s*\{?$/i) ||
+                             line.match(/^for\s*\(\s*(?:int\s+)?\w+\s*=\s*1;\s*\w+\s*<=\s*(\d+);\s*\w+\+\+\s*\)\s*\{?$/i) ||
+                             line.match(/^repita\s*\(\s*(\d+)\s*\)\s*\{?$/i);
+
+            if(forMatch) {
+                const n = parseInt(forMatch[1]);
                 if(isNaN(n) || n <= 0) {
-                    return { success:false, title:'Número do Loop Inválido', msg:`Na linha ${idx+1}, o valor de repetição precisa ser maior que zero!`, hint:'Exemplo: repita (4) { direita(); }' };
+                    return { success:false, title:'Erro de Sintaxe no FOR', msg:`Na linha ${idx+1}, o valor limite do laço precisa ser maior que zero!`, hint:'Exemplo: for (int i = 0; i < 4; i++) { direita(); }' };
                 }
                 currentLoopCount = n;
                 inLoop = true;
@@ -4418,7 +4416,7 @@ repita (3) {
                 continue;
             }
 
-            // Comandos
+            // Comandos em C (ex: direita(); baixo(); esquerda(); cima();)
             let cmdStr = line.replace(/;|\(\)/g, '').trim().toLowerCase();
             let action = null;
             if(cmdStr === 'direita' || cmdStr === 'right' || cmdStr === 'd') action = 'RIGHT';
@@ -4426,7 +4424,7 @@ repita (3) {
             else if(cmdStr === 'esquerda' || cmdStr === 'left' || cmdStr === 'e') action = 'LEFT';
             else if(cmdStr === 'cima' || cmdStr === 'up' || cmdStr === 'c') action = 'UP';
             else {
-                return { success:false, title:'Comando Desconhecido', msg:`Não reconhecemos "${line}" na linha ${idx+1}.`, hint:'Comandos válidos: direita(); baixo(); esquerda(); cima(); repita(N) { }' };
+                return { success:false, title:'Comando Inválido em C', msg:`Não reconhecemos "${line}" na linha ${idx+1}.`, hint:'Comandos válidos: direita(); baixo(); esquerda(); cima(); e laços for (int i=0; i<N; i++) { }' };
             }
 
             if(inLoop) {
@@ -4437,11 +4435,11 @@ repita (3) {
         }
 
         if(openBrackets > 0 || inLoop) {
-            return { success:false, title:'Faltou Fechar Chave "}"', msg:'Você abriu um bloco com "{" mas esqueceu de fechar com "}".', hint:'Adicione "}" no final do seu loop!' };
+            return { success:false, title:'Faltou Fechar Chave "}"', msg:'Você abriu um bloco com "{" mas esqueceu de fechar com "}".', hint:'Todo laço for { precisa ser fechado com } no final!' };
         }
 
         if(commands.length === 0) {
-            return { success:false, title:'Código Vazio', msg:'Digite algum comando para o robô se mover!', hint:'Use os botões de atalho rápido acima do editor!' };
+            return { success:false, title:'Código Vazio', msg:'Digite algum comando em C/C++ para o robô se mover!', hint:'Use os botões de atalho rápido em C acima do editor!' };
         }
 
         return { success:true, commands: commands };

@@ -63,20 +63,20 @@ function completeLevel(levelNumber) {
 
 ---
 
-## 💻 3. Mini-IDE de Portugol Maker (`loadLoopmaker`)
+## 💻 3. Mini-IDE de C / C++ (`loadLoopmaker`)
 
-O módulo da Aula 2 ensina repetição utilizando **Portugol Maker** com andaimento pedagógico em 3 níveis (Scaffolding):
+O módulo da Aula 2 ensina repetição utilizando **Linguagem C / C++** (mesma do Arduino) com andaimento pedagógico em 3 níveis (Scaffolding):
 
-1. **Nível 1 (Fábrica):** Esteira com braço carimbador e visualização intuitiva de `repita (5) { carimbar(); }`.
-2. **Nível 2 (Lacunas):** O robô navega no grid e o aluno completa as lacunas numéricas e comandos (`repita ( [4] ) { [direita();] }`).
-3. **Nível 3 (Mini-IDE Livre):** Editor completo com numeração de linhas, teclado de atalhos rápidos (`+ repita`, `+ direita()`, `+ baixo()`), parser sintático amigável e simulação no grid.
+1. **Nível 1 (Fábrica):** Esteira com braço carimbador e visualização intuitiva de `for (int i = 1; i <= 5; i++) { carimbarCaixa(); }`.
+2. **Nível 2 (Lacunas em C):** O robô navega no grid e o aluno completa as lacunas numéricas e comandos (`for (int i = 0; i < [ 4 ]; i++) { [ direita(); ] }`).
+3. **Nível 3 (Mini-IDE Livre em C):** Editor completo com numeração de linhas, teclado de atalhos rápidos (`+ for(int i=0; i<N; i++)`, `+ direita()`, `+ baixo()`), parser sintático amigável de C e simulação no grid.
 
-### Sintaxe Suportada do Portugol Maker:
-```portugol
-repita (4) {
+### Sintaxe de C / C++ Suportada:
+```c
+for (int i = 0; i < 4; i++) {
     direita();
 }
-repita (3) {
+for (int i = 0; i < 3; i++) {
     baixo();
 }
 ```

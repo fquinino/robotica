@@ -36,7 +36,7 @@ A aplicação é construída como uma **Single-Page Application (SPA)** autocont
 ## 🗺️ 3. Estrutura Pedagógica (10 Aulas)
 
 1. **Aula 1 — Algoritmos e Sequências:** Introdução a comandos ordenados passo a passo (Módulo: *Caça ao Tesouro*).
-2. **Aula 2 — Estruturas de Repetição (Loops):** Laços `for`, automação de tarefas repetitivas (Módulo: *Máquina de Loops*).
+2. **Aula 2 — Estruturas de Repetição (Loops em C/C++):** Laços `for` em C/C++ (`for (int i=0; i<N; i++)`), automação de tarefas repetitivas (Módulo: *Mini-IDE C/C++*).
 3. **Aula 3 — Condicionais (Decisões):** Estruturas `if/else` com base em leituras e sensores (Módulo: *Jardim dos Loops*).
 4. **Aula 4 — Sequências Temporizadas:** Controle de tempo e `delay()` em milissegundos (Módulo: *Semáforo Digital*).
 5. **Aula 5 — Variáveis e Tipos de Dados:** Tipos `int`, `float`, `String`, `bool` e gerenciamento de estados (Módulo: *Caça ao Tesouro Nível 3*).
