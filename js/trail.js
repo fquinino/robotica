@@ -299,12 +299,12 @@ function closeLessonModal() {
 }
 
 // ================= ESTATÍSTICAS E CONQUISTAS DO HUB =================
-function setBadge(id, saved) {
+function setBadge(id, saved, maxLevels = 3) {
     const el = document.getElementById(id);
     if (!el) return;
     const count = saved.length;
-    el.innerText = `${count}/3 Níveis ⭐`;
-    if (count === 3) {
+    el.innerText = `${count}/${maxLevels} Níveis ⭐`;
+    if (count >= maxLevels) {
         el.style.background = '#064E3B';
         el.style.color = '#34D399';
     } else if (count > 0) {
@@ -324,7 +324,7 @@ function updateHubProgress() {
     setBadge('badge-semaforo', sem);
     setBadge('badge-tesouro', tes);
     setBadge('badge-labmaker', lab);
-    setBadge('badge-loopmaker', loo);
+    setBadge('badge-loopmaker', loo, 4);
     setBadge('badge-jardim', jar);
     setBadge('badge-arduino', ard);
 

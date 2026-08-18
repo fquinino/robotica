@@ -49,14 +49,14 @@
                 .loop-shortcut-btn.clear { background:#450A0A; border-color:#991B1B; color:#FCA5A5; }
                 .loop-shortcut-btn.clear:hover { background:#DC2626; color:white; }
 
-                /* Scaffolding Editor (Nível 2) */
+                /* Scaffolding Editor (Nível 2 e 3) */
                 .scaffold-lines { background:#030712; border-radius:14px; padding:16px; border:1px solid #1F2937; font-family:'Fira Code', monospace; font-size:0.95rem; line-height:2.2; color:#E2E8F0; }
                 .scaffold-line { padding:2px 8px; border-radius:6px; transition:background 0.2s; border-left:3px solid transparent; }
                 .scaffold-line.active { background:rgba(139,92,246,0.3); border-left-color:#EC4899; }
                 .p-input-num { background:#1E293B; border:2px solid #8B5CF6; color:#FBBF24; font-family:'Fredoka One'; font-size:1.1rem; width:55px; padding:4px 6px; border-radius:8px; text-align:center; outline:none; }
                 .p-select-cmd { background:#1E293B; border:2px solid #38BDF8; color:#38BDF8; font-family:'Fira Code', monospace; font-size:0.9rem; font-weight:bold; padding:4px 8px; border-radius:8px; outline:none; cursor:pointer; }
 
-                /* Textarea Editor (Nível 3) */
+                /* Textarea Editor (Nível 4) */
                 .loop-code-wrapper { position:relative; display:flex; background:#030712; border-radius:14px; border:1px solid #1F2937; overflow:hidden; min-height:180px; }
                 .loop-line-numbers { background:#0B0F19; color:#4B5563; padding:12px 8px; text-align:right; font-family:'Fira Code', monospace; font-size:0.88rem; line-height:1.7; user-select:none; border-right:1px solid #1F2937; min-width:32px; }
                 .loop-code-input { flex:1; background:transparent; border:none; color:#F3F4F6; padding:12px; font-family:'Fira Code', monospace; font-size:0.9rem; line-height:1.7; resize:none; outline:none; white-space:pre; tab-size:4; min-height:180px; }
@@ -114,9 +114,10 @@
                 </div>
 
                 <div class="loop-level-bar">
-                    <button class="loop-level-btn active" data-level="1" onclick="l2_switchLevel(1)"><i class="fa-solid fa-industry"></i> ⭐ Nível 1: Fábrica</button>
-                    <button class="loop-level-btn" data-level="2" onclick="l2_switchLevel(2)"><i class="fa-solid fa-puzzle-piece"></i> ⭐⭐ Nível 2: Lacunas em C</button>
-                    <button class="loop-level-btn" data-level="3" onclick="l2_switchLevel(3)"><i class="fa-solid fa-code"></i> ⭐⭐⭐ Nível 3: Mini-IDE C/C++</button>
+                    <button class="loop-level-btn active" data-level="1" onclick="l2_switchLevel(1)"><i class="fa-solid fa-industry"></i> Nível 1: Fábrica</button>
+                    <button class="loop-level-btn" data-level="2" onclick="l2_switchLevel(2)"><i class="fa-solid fa-puzzle-piece"></i> Nível 2: 2 Loops</button>
+                    <button class="loop-level-btn" data-level="3" onclick="l2_switchLevel(3)"><i class="fa-solid fa-layer-group"></i> Nível 3: Múltiplos Comandos em 1 FOR</button>
+                    <button class="loop-level-btn" data-level="4" onclick="l2_switchLevel(4)"><i class="fa-solid fa-code"></i> Nível 4: Mini-IDE C/C++</button>
                 </div>
 
                 <!-- CONTEÚDO NÍVEL 1: FÁBRICA DE LOOPS -->
@@ -143,29 +144,26 @@
                     </div>
                 </div>
 
-                <!-- CONTEÚDO NÍVEL 2: SCAFFOLDING COM O ROBÔ (C/C++) -->
+                <!-- CONTEÚDO NÍVEL 2: SCAFFOLDING COM 2 LOOPS -->
                 <div id="l2_view_lvl2" style="display:none;">
-                    <!-- Card de Objetivo -->
                     <div id="l2_objective_card" style="background:linear-gradient(135deg,#1E3A5F,#0F172A);border:2px solid #38BDF8;border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
                         <span style="font-size:2rem;">🗺️</span>
                         <div>
                             <div style="color:#38BDF8;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:2px;">Missão do Nível 2</div>
-                            <div id="l2_obj_text" style="color:#CBD5E1;font-size:0.95rem;">🪙 Colete as 2 moedas no caminho e leve o robô até o 🏆 Tesouro!</div>
+                            <div id="l2_obj_text" style="color:#CBD5E1;font-size:0.95rem;">🪙 Colete as 2 moedas no caminho e leve o robô até o 🏆 Tesouro com 2 laços FOR!</div>
                         </div>
                     </div>
                     <div class="loop-ide-layout">
-                        <!-- Editor com Lacunas -->
                         <div class="loop-editor-card">
                             <div class="loop-editor-topbar">
-                                <div class="loop-editor-title"><i class="fa-solid fa-laptop-code"></i> Complete o Código em C</div>
+                                <div class="loop-editor-title"><i class="fa-solid fa-laptop-code"></i> 2 Laços FOR em Sequência</div>
                                 <span class="loop-lang-tag">Linguagem C / C++</span>
                             </div>
-                            <!-- Feedback inline de validação -->
                             <div id="l2_inline_hint" style="background:#1E293B;border-left:3px solid #8B5CF6;padding:8px 14px;font-size:0.82rem;color:#A78BFA;font-family:'Fira Code',monospace;margin-bottom:10px;border-radius:0 8px 8px 0;min-height:24px;transition:0.3s;">
                                 💡 Escolha a quantidade e a direção de cada laço FOR para guiar o robô!
                             </div>
                             <div class="scaffold-lines">
-                                <div style="color:#64748B;font-size:0.8rem;margin-bottom:8px;">// Missão: Guie o robô até o tesouro!</div>
+                                <div style="color:#64748B;font-size:0.8rem;margin-bottom:8px;">// Missão: Guie o robô com 2 laços FOR separados</div>
                                 <div class="scaffold-line" id="sc_l1"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 0; i &lt; <input type="number" id="sc_num1" min="1" max="6" placeholder="?" class="p-input-num" oninput="l2_validateScaffold()">; i++ ) {</div>
                                 <div class="scaffold-line" id="sc_l2" style="padding-left:24px;">
                                     <select id="sc_cmd1" class="p-select-cmd" onchange="l2_validateScaffold()">
@@ -196,7 +194,6 @@
                             </div>
                         </div>
 
-                        <!-- Simulador do Robô -->
                         <div class="loop-sim-card">
                             <div class="loop-sim-topbar">
                                 <div class="loop-sim-title"><i class="fa-solid fa-robot"></i> Simulador do Robô</div>
@@ -207,25 +204,81 @@
                     </div>
                 </div>
 
-                <!-- CONTEÚDO NÍVEL 3: MINI-IDE COMPLETA C/C++ -->
+                <!-- CONTEÚDO NÍVEL 3 [NOVO]: MÚLTIPLOS COMANDOS EM 1 ÚNICO FOR -->
                 <div id="l2_view_lvl3" style="display:none;">
-                    <!-- Card de Objetivo -->
-                    <div style="background:linear-gradient(135deg,#1E3A5F,#0F172A);border:2px solid #38BDF8;border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
-                        <span style="font-size:2rem;">🗺️</span>
+                    <div style="background:linear-gradient(135deg,#1E3A5F,#0F172A);border:2px solid #8B5CF6;border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:2rem;">🪜</span>
                         <div>
-                            <div style="color:#38BDF8;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:2px;">Missão do Nível 3</div>
-                            <div style="color:#CBD5E1;font-size:0.95rem;">🪙 Colete as 3 moedas e leve o robô até o 🏆 Tesouro! Use laços <code style="background:#0F172A;color:#A78BFA;padding:1px 6px;border-radius:4px;">for</code> em C/C++.</div>
+                            <div style="color:#A78BFA;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:2px;">Missão do Nível 3: Múltiplos Comandos em 1 FOR</div>
+                            <div style="color:#CBD5E1;font-size:0.95rem;">💡 <b>Conceito Maker:</b> Um único laço FOR pode executar 2 ou mais comandos dentro das chaves <code style="background:#0F172A;color:#38BDF8;padding:1px 6px;border-radius:4px;">{ }</code> a cada repetição!</div>
                         </div>
                     </div>
                     <div class="loop-ide-layout">
-                        <!-- Mini-IDE Completa -->
+                        <div class="loop-editor-card">
+                            <div class="loop-editor-topbar">
+                                <div class="loop-editor-title"><i class="fa-solid fa-layer-group"></i> 1 FOR com 2 Comandos Dentro</div>
+                                <span class="loop-lang-tag">Linguagem C / C++</span>
+                            </div>
+                            <div id="l3_inline_hint" style="background:#1E293B;border-left:3px solid #8B5CF6;padding:8px 14px;font-size:0.82rem;color:#A78BFA;font-family:'Fira Code',monospace;margin-bottom:10px;border-radius:0 8px 8px 0;min-height:24px;transition:0.3s;">
+                                💡 Escolha quantas vezes repetir e os 2 comandos internos para andar em escada!
+                            </div>
+                            <div class="scaffold-lines">
+                                <div style="color:#64748B;font-size:0.8rem;margin-bottom:8px;">// Um único FOR repetindo 2 comandos juntos em cada iteração:</div>
+                                <div class="scaffold-line"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#38BDF8;">int</span> i = 0; i &lt; <input type="number" id="sc3_num" min="1" max="6" placeholder="?" class="p-input-num" oninput="l2_validateMultiScaffold()">; i++ ) {</div>
+                                <div class="scaffold-line" style="padding-left:24px;color:#64748B;">// 1º comando da iteração:</div>
+                                <div class="scaffold-line" style="padding-left:24px;">
+                                    <select id="sc3_cmd1" class="p-select-cmd" onchange="l2_validateMultiScaffold()">
+                                        <option value="" selected disabled>— 1º comando —</option>
+                                        <option value="RIGHT">direita();</option>
+                                        <option value="DOWN">baixo();</option>
+                                        <option value="LEFT">esquerda();</option>
+                                        <option value="UP">cima();</option>
+                                    </select>
+                                </div>
+                                <div class="scaffold-line" style="padding-left:24px;color:#64748B;">// 2º comando na MESMA iteração:</div>
+                                <div class="scaffold-line" style="padding-left:24px;">
+                                    <select id="sc3_cmd2" class="p-select-cmd" onchange="l2_validateMultiScaffold()">
+                                        <option value="" selected disabled>— 2º comando —</option>
+                                        <option value="DOWN">baixo();</option>
+                                        <option value="RIGHT">direita();</option>
+                                        <option value="LEFT">esquerda();</option>
+                                        <option value="UP">cima();</option>
+                                    </select>
+                                </div>
+                                <div class="scaffold-line">}</div>
+                            </div>
+                            <div class="loop-actions">
+                                <button class="loop-btn-run" id="l3_btn_run_scaffold" onclick="l2_runMultiScaffold()"><i class="fa-solid fa-play"></i> EXECUTAR 1 FOR COMPOSIÇÃO</button>
+                                <button class="loop-btn-reset" onclick="l2_resetBoard()"><i class="fa-solid fa-rotate-left"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="loop-sim-card">
+                            <div class="loop-sim-topbar">
+                                <div class="loop-sim-title"><i class="fa-solid fa-robot"></i> Robô no Zigue-Zague</div>
+                                <div class="loop-sim-hud" id="l3_multi_hud_coins">🪙 0 / 3 Moedas</div>
+                            </div>
+                            <div class="loop-board" id="loop-board-lvl3" style="grid-template-columns:repeat(5, 1fr);"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTEÚDO NÍVEL 4: MINI-IDE COMPLETA C/C++ -->
+                <div id="l2_view_lvl4" style="display:none;">
+                    <div style="background:linear-gradient(135deg,#1E3A5F,#0F172A);border:2px solid #38BDF8;border-radius:16px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:2rem;">🗺️</span>
+                        <div>
+                            <div style="color:#38BDF8;font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:2px;">Missão do Nível 4: Mestre dos Loops</div>
+                            <div style="color:#CBD5E1;font-size:0.95rem;">🪙 Colete as 3 moedas e leve o robô até o 🏆 Tesouro! Use laços <code style="background:#0F172A;color:#A78BFA;padding:1px 6px;border-radius:4px;">for</code> em C/C++ na Mini-IDE.</div>
+                        </div>
+                    </div>
+                    <div class="loop-ide-layout">
                         <div class="loop-editor-card">
                             <div class="loop-editor-topbar">
                                 <div class="loop-editor-title"><i class="fa-solid fa-terminal"></i> Mini-IDE C / C++</div>
                                 <span class="loop-lang-tag">Linguagem C</span>
                             </div>
 
-                            <!-- Teclado Maker de Atalhos Rápidos -->
                             <div class="loop-shortcuts-bar">
                                 <button class="loop-shortcut-btn" onclick="l2_insertCode('for (int i = 0; i < N; i++) {\n    \n}\n')"><i class="fa-solid fa-arrows-rotate" style="color:#A78BFA;"></i> + for()</button>
                                 <button class="loop-shortcut-btn" onclick="l2_insertCode('direita();\n')">➡️ direita();</button>
@@ -235,23 +288,19 @@
                                 <button class="loop-shortcut-btn clear" onclick="l2_clearEditor()"><i class="fa-solid fa-trash-can"></i> Limpar</button>
                             </div>
 
-                            <!-- Textarea com Numeração de Linhas e Autocomplete -->
                             <div class="loop-code-wrapper" style="position:relative;">
                                 <div class="loop-line-numbers" id="l2_line_numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
                                 <textarea class="loop-code-input" id="l2_code_input" spellcheck="false" placeholder="// 🤖 Escreva seu código aqui!
 // Comandos: direita(); baixo(); esquerda(); cima();
 // Laço: for (int i = 0; i < N; i++) { ... }
 " oninput="l2_updateLineNumbers(); l2_ideAutoComplete(this)"></textarea>
-                                <!-- Dropdown de Autocomplete -->
                                 <div id="l2_autocomplete_list" style="display:none;position:absolute;left:56px;top:0;background:#1E293B;border:2px solid #8B5CF6;border-radius:10px;z-index:100;min-width:220px;box-shadow:0 8px 24px rgba(0,0,0,0.5);overflow:hidden;"></div>
                             </div>
 
-                            <!-- Feedback inline de sintaxe -->
                             <div id="l2_ide_hint" style="background:#1E293B;border-left:3px solid #8B5CF6;padding:8px 14px;font-size:0.82rem;color:#A78BFA;font-family:'Fira Code',monospace;margin-top:8px;border-radius:0 8px 8px 0;min-height:24px;transition:0.3s;">
                                 ✏️ Comece a digitar <span style="color:#34D399;">for</span>, <span style="color:#34D399;">direita</span>, <span style="color:#34D399;">baixo</span>... ou clique nos botões acima!
                             </div>
 
-                            <!-- Guia de Sintaxe -->
                             <div class="loop-syntax-card">
                                 <b>📖 Sintaxe do laço FOR em C / C++:</b><br>
                                 <code>for (int i = 0; i &lt; 4; i++) { direita(); }</code>
@@ -263,13 +312,12 @@
                             </div>
                         </div>
 
-                        <!-- Simulador do Robô Nível 3 -->
                         <div class="loop-sim-card">
                             <div class="loop-sim-topbar">
                                 <div class="loop-sim-title"><i class="fa-solid fa-robot"></i> Labirinto Maker 6x6</div>
-                                <div class="loop-sim-hud" id="l3_hud_coins">🪙 0 / 3 Moedas</div>
+                                <div class="loop-sim-hud" id="l4_hud_coins">🪙 0 / 3 Moedas</div>
                             </div>
-                            <div class="loop-board" id="loop-board-lvl3" style="grid-template-columns:repeat(6, 1fr);"></div>
+                            <div class="loop-board" id="loop-board-lvl4" style="grid-template-columns:repeat(6, 1fr);"></div>
                         </div>
                     </div>
                 </div>
@@ -300,7 +348,7 @@
     let l2_robotState = { r:0, c:0 };
     let l2_collectedCoins = 0;
 
-    // Configuração dos Grids dos Níveis 2 e 3 (em C / C++)
+    // Configuração dos Grids dos Níveis 2, 3 e 4 (em C / C++)
     const L2_MAPS = {
         2: {
             size: 5,
@@ -308,10 +356,19 @@
             chest: { r:4, c:4 },
             walls: [ {r:1,c:1}, {r:1,c:2}, {r:2,c:1}, {r:2,c:2}, {r:3,c:2} ],
             coins: [ {r:0,c:4}, {r:2,c:4} ],
-            objective: "🪙 Coletar as 2 moedas no caminho e chegar ao 🏆 Tesouro no canto inferior direito!",
+            objective: "🪙 Coletar as 2 moedas no caminho e chegar ao 🏆 Tesouro!",
             initialCode: ""
         },
         3: {
+            size: 5,
+            start: { r:0, c:0 },
+            chest: { r:4, c:4 },
+            walls: [ {r:0,c:1}, {r:0,c:2}, {r:0,c:3}, {r:1,c:0}, {r:2,c:0}, {r:3,c:0}, {r:2,c:1}, {r:3,c:2} ],
+            coins: [ {r:1,c:1}, {r:2,c:2}, {r:3,c:3} ],
+            objective: "🪙 Colete as 3 moedas em escada usando 1 único laço FOR com 2 comandos internos!",
+            initialCode: ""
+        },
+        4: {
             size: 6,
             start: { r:0, c:0 },
             chest: { r:5, c:5 },
@@ -338,22 +395,26 @@
         document.getElementById('l2_view_lvl1').style.display = (lvl === 1) ? 'block' : 'none';
         document.getElementById('l2_view_lvl2').style.display = (lvl === 2) ? 'block' : 'none';
         document.getElementById('l2_view_lvl3').style.display = (lvl === 3) ? 'block' : 'none';
+        document.getElementById('l2_view_lvl4').style.display = (lvl === 4) ? 'block' : 'none';
 
         const descEl = document.getElementById('loop-header-desc');
         if(lvl === 1) {
             descEl.innerHTML = '<b>Nível 1:</b> Entenda o laço FOR em C/C++! Veja como <code>for (int i=1; i<=5; i++)</code> carimba 5 caixas na esteira sem repetir código.';
             l2_resetFactory();
         } else if(lvl === 2) {
-            descEl.innerHTML = '<b>Nível 2:</b> Complete os laços <code>for</code> em C/C++ para o robô andar no labirinto e pegar o tesouro!';
+            descEl.innerHTML = '<b>Nível 2:</b> Complete os laços <code>for</code> em C/C++ para o robô andar em reta no labirinto e pegar o tesouro!';
             l2_buildBoard(2);
         } else if(lvl === 3) {
-            descEl.innerHTML = '<b>Nível 3:</b> Desafio do Mestre! Digite laços <code>for</code> em C/C++ na Mini-IDE, use os atalhos e chegue ao tesouro!';
+            descEl.innerHTML = '<b>Nível 3 [NOVO]:</b> Aprenda que um único laço <code>for</code> pode executar 2 ou mais comandos dentro das chaves <code>{ }</code> a cada repetição!';
+            l2_buildBoard(3);
+        } else if(lvl === 4) {
+            descEl.innerHTML = '<b>Nível 4:</b> Desafio do Mestre! Digite laços <code>for</code> em C/C++ na Mini-IDE, use os atalhos e chegue ao tesouro!';
             const input = document.getElementById('l2_code_input');
             if(input && !input.value.trim()) {
-                input.value = L2_MAPS[3].initialCode;
+                input.value = L2_MAPS[4].initialCode;
             }
             l2_updateLineNumbers();
-            l2_buildBoard(3);
+            l2_buildBoard(4);
         }
     }
 
@@ -378,59 +439,47 @@
     }
 
     async function l_startFactory() {
-        console.log('🏭 [Fábrica] Iniciando execução do laço FOR...');
-        if(l2_isExecuting) {
-            console.warn('⚠️ [Fábrica] Já está executando!');
-            return;
-        }
+        if(l2_isExecuting) return;
         l2_isExecuting = true;
         const btn = document.getElementById('l_btn_run1');
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> EXECUTANDO...';
-        l2_resetFactory();
 
-        const count = parseInt(document.getElementById('l_sel-loop').value);
-        console.log('📊 [Fábrica] Quantidade de iterações do loop:', count);
-        let currentPos = 0;
+        l2_resetFactory();
+        await l2_sleep(300);
+
+        const count = parseInt(document.getElementById('l_sel-loop').value) || 5;
+        const track = document.getElementById('l_boxes-track');
         const boxWidth = 90;
-        const codeLine = document.getElementById('l_code_line_carimbar');
+        let currentPos = 0;
 
         for(let i=1; i<=count; i++) {
-            console.log(`🔄 [Fábrica] Iteração i = ${i} de ${count}`);
             document.getElementById('l_hud-count').innerText = i;
+            const codeLine = document.getElementById('l_code_line_carimbar');
             if(codeLine) codeLine.classList.add('active');
+
+            const arm = document.getElementById('l_stamper-arm');
+            arm.classList.add('hitting');
             playSound('step');
-            await l2_sleep(250);
+            await l2_sleep(200);
 
-            // Carimba com o braço mecânico
-            console.log(`🔨 [Fábrica] Descendo braço de carimbo na caixa ${i}...`);
-            document.getElementById('l_stamper-arm').classList.add('hitting');
-            playSound('click');
-            await l2_sleep(220);
-
-            if(i <= 5) {
-                const box = document.getElementById('lbox-'+i);
-                if(box && !box.querySelector('.loop-stamp')) {
-                    box.style.borderColor = '#10B981';
-                    box.style.boxShadow = '0 0 16px rgba(16,185,129,0.7)';
-                    const stamp = document.createElement('div');
-                    stamp.className = 'loop-stamp';
-                    stamp.innerHTML = '✅';
-                    box.appendChild(stamp);
-                    console.log(`✅ [Fábrica] Carimbo aplicado na caixa ${i}`);
-                }
+            const targetBox = document.getElementById('lbox-'+i);
+            if(targetBox && !targetBox.querySelector('.loop-stamp')) {
+                const stamp = document.createElement('div');
+                stamp.className = 'loop-stamp';
+                stamp.innerHTML = '✔';
+                targetBox.appendChild(stamp);
+                playSound('click');
             }
 
             await l2_sleep(180);
-            document.getElementById('l_stamper-arm').classList.remove('hitting');
+            arm.classList.remove('hitting');
             if(codeLine) codeLine.classList.remove('active');
-            console.log(`⬆️ [Fábrica] Subindo braço mecânico.`);
 
             if(i < count) {
-                console.log(`➡️ [Fábrica] Movendo esteira para a caixa ${i+1}...`);
                 document.getElementById('l_belt-stripes').classList.add('running');
                 currentPos -= boxWidth;
-                document.getElementById('l_boxes-track').style.transform = `translateX(${currentPos}px)`;
+                track.style.transform = `translateX(${currentPos}px)`;
                 await l2_sleep(450);
                 document.getElementById('l_belt-stripes').classList.remove('running');
                 await l2_sleep(150);
@@ -440,27 +489,33 @@
         l2_isExecuting = false;
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR LAÇO FOR';
-        console.log('🏁 [Fábrica] Fim da execução do laço.');
 
+        const solFactory = `// Solução para carimbar 5 caixas na esteira:\nfor (int i = 1; i <= 5; i++) {\n    carimbarCaixa();\n}`;
         if(count === 5) {
             playSound('success');
             triggerConfetti(3000);
             l2_saveProgress(1);
-            l2_showWinModal('🏭','Fábrica Automatizada!','Você carimbou todas as 5 caixas com apenas 1 laço FOR! Agora vamos programar o robô no Nível 2!');
+            l2_showWinModal('🏭','Fábrica Automatizada!','Você carimbou todas as 5 caixas com apenas 1 laço FOR! Agora vamos para o Nível 2!');
         } else if(count < 5) {
-            triggerErrorSplash('Faltaram caixas!', `O laço for rodou apenas ${count} vezes, mas a esteira tinha 5 caixas.`, 'Aumente o limite no for (int i=1; i<=5; i++) para carimbar todas as caixas!', '📦');
+            triggerErrorSplash('Faltaram caixas!', `O laço for rodou apenas ${count} vezes, mas a esteira tinha 5 caixas.`, 'Aumente o limite no for (int i=1; i<=5; i++) para carimbar todas as caixas!', '📦', solFactory, 'loop_lvl_1', 3);
         } else {
-            triggerErrorSplash('Passou do limite!', `O laço for rodou ${count} vezes, mas só tínhamos 5 caixas.`, 'Ajuste o limite do for exatamente para 5.', '⚠️');
+            triggerErrorSplash('Passou do limite!', `O laço for rodou ${count} vezes, mas só tínhamos 5 caixas.`, 'Ajuste o limite do for exatamente para 5.', '⚠️', solFactory, 'loop_lvl_1', 3);
         }
     }
 
-    // ================= FUNÇÕES NÍVEIS 2 E 3 (ROBÔ NO GRID) =================
+    // ================= FUNÇÕES NÍVEIS 2, 3 E 4 (ROBÔ NO GRID) =================
     function l2_buildBoard(lvl) {
         const map = L2_MAPS[lvl];
-        const boardEl = document.getElementById(lvl === 2 ? 'loop-board-lvl2' : 'loop-board-lvl3');
+        let boardId = 'loop-board-lvl2';
+        if(lvl === 3) boardId = 'loop-board-lvl3';
+        if(lvl === 4) boardId = 'loop-board-lvl4';
+
+        const boardEl = document.getElementById(boardId);
         if(!boardEl) return;
+        boardEl.style.gridTemplateColumns = `repeat(${map.size}, 1fr)`;
         boardEl.innerHTML = '';
-        l2_robotState = { r: map.start.r, c: map.start.c };
+
+        l2_robotState = { ...map.start };
         l2_collectedCoins = 0;
         l2_updateCoinsHud(lvl);
 
@@ -471,7 +526,7 @@
                 cell.id = `l${lvl}_cell_${r}_${c}`;
 
                 const isWall = map.walls.some(w => w.r === r && w.c === c);
-                const isCoin = map.coins.some(k => k.r === r && k.c === c);
+                const isCoin = map.coins.some(co => co.r === r && co.c === c);
                 const isChest = map.chest.r === r && map.chest.c === c;
 
                 if(isWall) cell.classList.add('wall');
@@ -484,30 +539,31 @@
         l2_renderRobot(lvl);
     }
 
-    function l2_resetBoard() {
-        if(l2_isExecuting) return;
-        l2_buildBoard(l2_currentLevel);
-    }
-
     function l2_renderRobot(lvl) {
-        document.querySelectorAll(`#loop-board-lvl${lvl} .loop-cell.robot`).forEach(c => {
-            c.classList.remove('robot', 'moving', 'crash', 'win');
-            c.innerHTML = '';
+        document.querySelectorAll(`[id^="l${lvl}_cell_"]`).forEach(el => {
+            el.classList.remove('robot');
+            const svg = el.querySelector('.robot-svg');
+            if(svg) svg.remove();
         });
-        const cell = document.getElementById(`l${lvl}_cell_${l2_robotState.r}_${l2_robotState.c}`);
-        if(cell) {
-            cell.classList.add('robot');
-            cell.innerHTML = L2_ROBOT_SVG;
+
+        const curCell = document.getElementById(`l${lvl}_cell_${l2_robotState.r}_${l2_robotState.c}`);
+        if(curCell) {
+            curCell.classList.add('robot');
+            curCell.innerHTML += L2_ROBOT_SVG;
         }
     }
 
     function l2_updateCoinsHud(lvl) {
         const map = L2_MAPS[lvl];
-        const hud = document.getElementById(lvl === 2 ? 'l2_hud_coins' : 'l3_hud_coins');
+        let hudId = 'l2_hud_coins';
+        if(lvl === 3) hudId = 'l3_multi_hud_coins';
+        if(lvl === 4) hudId = 'l4_hud_coins';
+
+        const hud = document.getElementById(hudId);
         if(hud) hud.innerHTML = `🪙 ${l2_collectedCoins} / ${map.coins.length} Moedas`;
     }
 
-    // Validação inline do Scaffolding (Nível 2) — dá dicas enquanto o aluno preenche
+    // Validação inline do Scaffolding (Nível 2)
     function l2_validateScaffold() {
         const hint = document.getElementById('l2_inline_hint');
         if (!hint) return;
@@ -517,33 +573,46 @@
         const cmd2 = document.getElementById('sc_cmd2').value;
 
         if (!num1 && !cmd1) {
-            hint.style.borderLeftColor = '#8B5CF6';
-            hint.style.color = '#A78BFA';
+            hint.style.borderLeftColor = '#8B5CF6'; hint.style.color = '#A78BFA';
             hint.innerHTML = '💡 Preencha a quantidade e a direção do 1º laço FOR!';
         } else if (num1 && !cmd1) {
-            hint.style.borderLeftColor = '#F59E0B';
-            hint.style.color = '#FBBF24';
+            hint.style.borderLeftColor = '#F59E0B'; hint.style.color = '#FBBF24';
             hint.innerHTML = `⚡ Quantos? <b>${num1}</b> — Agora escolha a <b>direção</b> do 1º laço!`;
         } else if (!num1 && cmd1) {
-            hint.style.borderLeftColor = '#F59E0B';
-            hint.style.color = '#FBBF24';
+            hint.style.borderLeftColor = '#F59E0B'; hint.style.color = '#FBBF24';
             hint.innerHTML = '⚡ Direção escolhida! Agora defina a <b>quantidade</b> do 1º laço!';
         } else if (num1 && cmd1 && !num2 && !cmd2) {
-            hint.style.borderLeftColor = '#10B981';
-            hint.style.color = '#34D399';
+            hint.style.borderLeftColor = '#10B981'; hint.style.color = '#34D399';
             hint.innerHTML = `✅ 1º laço OK: <code style="background:#0F172A;padding:2px 6px;border-radius:4px;">for(i=0; i&lt;${num1}; i++) { ${cmd1 === 'RIGHT' ? 'direita' : cmd1 === 'DOWN' ? 'baixo' : cmd1 === 'LEFT' ? 'esquerda' : 'cima'}(); }</code> — Agora complete o 2º laço!`;
         } else if (num1 && cmd1 && num2 && cmd2) {
-            hint.style.borderLeftColor = '#10B981';
-            hint.style.color = '#34D399';
+            hint.style.borderLeftColor = '#10B981'; hint.style.color = '#34D399';
             hint.innerHTML = '🚀 Código completo! Clique em <b>EXECUTAR</b> para ver o robô se mover!';
-        } else {
-            hint.style.borderLeftColor = '#F59E0B';
-            hint.style.color = '#FBBF24';
-            hint.innerHTML = '⚡ Quase lá! Complete os dois laços FOR para executar.';
         }
     }
 
-    // Autocomplete da Mini-IDE (Nível 3) — sugestões ao digitar
+    // Validação inline do Scaffolding de Múltiplos Comandos (Nível 3)
+    function l2_validateMultiScaffold() {
+        const hint = document.getElementById('l3_inline_hint');
+        if (!hint) return;
+        const num = document.getElementById('sc3_num').value;
+        const cmd1 = document.getElementById('sc3_cmd1').value;
+        const cmd2 = document.getElementById('sc3_cmd2').value;
+
+        const cmdName = c => c === 'RIGHT' ? 'direita' : c === 'DOWN' ? 'baixo' : c === 'LEFT' ? 'esquerda' : 'cima';
+
+        if (!num && !cmd1 && !cmd2) {
+            hint.style.borderLeftColor = '#8B5CF6'; hint.style.color = '#A78BFA';
+            hint.innerHTML = '💡 Escolha quantas vezes repetir e os 2 comandos internos para o mesmo laço FOR!';
+        } else if (num && cmd1 && cmd2) {
+            hint.style.borderLeftColor = '#10B981'; hint.style.color = '#34D399';
+            hint.innerHTML = `🚀 1 FOR Perfeito: <code style="background:#0F172A;padding:2px 6px;border-radius:4px;">for(i=0; i&lt;${num}; i++) { ${cmdName(cmd1)}(); ${cmdName(cmd2)}(); }</code> — Clique em EXECUTAR!`;
+        } else {
+            hint.style.borderLeftColor = '#F59E0B'; hint.style.color = '#FBBF24';
+            hint.innerHTML = '⚡ Preencha o limite do FOR e os dois comandos que rodam dentro das chaves { }!';
+        }
+    }
+
+    // Autocomplete da Mini-IDE (Nível 4)
     const L2_AUTOCOMPLETE_OPTIONS = [
         { trigger: 'for',     label: 'for (int i = 0; i < N; i++) { ... }', insert: 'for (int i = 0; i < N; i++) {\n    \n}\n' },
         { trigger: 'dir',     label: 'direita();',  insert: 'direita();\n' },
@@ -560,36 +629,26 @@
         const lines = code.split('\n');
         const cursorPos = textarea.selectionStart;
 
-        // Encontra a palavra parcial antes do cursor
         const beforeCursor = code.substring(0, cursorPos);
         const lastWord = beforeCursor.split(/[\s\n{};()]+/).pop().toLowerCase();
 
-        // Feedback inline de validação de sintaxe
         if (hint) {
             const hasFor = /for\s*\(/.test(code);
             const hasBrace = code.includes('{') && code.includes('}');
             const hasCmd = /direita|baixo|esquerda|cima/.test(code);
-            const hasSemicolon = /;/.test(code);
 
             if (!code.trim() || code.trim().startsWith('//')) {
                 hint.style.color = '#A78BFA';
-                hint.innerHTML = '✏️ Comece a digitar <span style="color:#34D399;">for</span>, <span style="color:#34D399;">direita</span>, <span style="color:#34D399;">baixo</span>... ou use os botões!';
+                hint.innerHTML = '✏️ Comece a digitar <span style="color:#34D399;">for</span>, <span style="color:#34D399;">direita</span>, <span style="color:#34D399;">baixo</span>... ou clique nos botões!';
             } else if (hasFor && !hasBrace) {
                 hint.style.color = '#F59E0B';
                 hint.innerHTML = '⚡ Lembrou das chaves <code style="background:#0F172A;padding:2px 5px;border-radius:4px;">{ }</code> do laço FOR?';
-            } else if (hasFor && hasBrace && !hasCmd) {
-                hint.style.color = '#F59E0B';
-                hint.innerHTML = '⚡ Ótimo laço! Agora adicione um comando dentro: <code style="background:#0F172A;padding:2px 5px;border-radius:4px;">direita();</code>';
             } else if (hasFor && hasBrace && hasCmd) {
                 hint.style.color = '#10B981';
                 hint.innerHTML = '✅ Ótimo! Código parece correto — clique em <b>EXECUTAR</b> para testar!';
-            } else if (hasCmd && !hasFor) {
-                hint.style.color = '#38BDF8';
-                hint.innerHTML = '💡 Você pode usar um laço <code style="background:#0F172A;padding:2px 5px;border-radius:4px;">for</code> para repetir comandos automaticamente!';
             }
         }
 
-        // Mostrar dropdown de autocomplete
         if (!list) return;
         if (!lastWord || lastWord.length < 2) {
             list.style.display = 'none';
@@ -602,11 +661,10 @@
             return;
         }
 
-        // Posicionar o dropdown próximo ao cursor
         const lineIndex = lines.length - 1;
         list.style.top = `${(lineIndex * 22) + 4}px`;
         list.style.display = 'block';
-        list.innerHTML = matches.map((m, idx) =>
+        list.innerHTML = matches.map((m) =>
             `<div onclick="l2_applyAutoComplete('${m.insert.replace(/'/g, "\\'").replace(/\n/g, '\\n')}')" 
                   style="padding:9px 16px;color:#CBD5E1;font-family:'Fira Code',monospace;font-size:0.82rem;cursor:pointer;transition:0.15s;border-bottom:1px solid #334155;"
                   onmouseenter="this.style.background='#334155'" 
@@ -621,7 +679,6 @@
         const pos = textarea.selectionStart;
         const before = textarea.value.substring(0, pos);
         const after = textarea.value.substring(pos);
-        // Remove a palavra parcial antes do cursor
         const cleanBefore = before.replace(/[\w]+$/, '');
         textarea.value = cleanBefore + insertText + after;
         const newPos = cleanBefore.length + insertText.length;
@@ -635,7 +692,6 @@
     // Execução do Nível 2 (Scaffolding C/C++)
     async function l2_runScaffold() {
         if(l2_isExecuting) return;
-        // Validação antes de executar
         const valNum1 = document.getElementById('sc_num1').value;
         const valCmd1 = document.getElementById('sc_cmd1').value;
         const valNum2 = document.getElementById('sc_num2').value;
@@ -643,8 +699,7 @@
         if (!valNum1 || !valCmd1 || !valNum2 || !valCmd2) {
             const hint = document.getElementById('l2_inline_hint');
             if (hint) {
-                hint.style.borderLeftColor = '#EF4444';
-                hint.style.color = '#FCA5A5';
+                hint.style.borderLeftColor = '#EF4444'; hint.style.color = '#FCA5A5';
                 hint.innerHTML = '❌ Preencha <b>todos os campos</b> antes de executar!';
             }
             return;
@@ -671,123 +726,89 @@
         btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C';
     }
 
-    // Execução do Nível 3 (Parser C/C++)
+    // Execução do Nível 3 [NOVO]: Múltiplos Comandos em 1 FOR
+    async function l2_runMultiScaffold() {
+        if(l2_isExecuting) return;
+        const valNum = document.getElementById('sc3_num').value;
+        const valCmd1 = document.getElementById('sc3_cmd1').value;
+        const valCmd2 = document.getElementById('sc3_cmd2').value;
+
+        if (!valNum || !valCmd1 || !valCmd2) {
+            const hint = document.getElementById('l3_inline_hint');
+            if (hint) {
+                hint.style.borderLeftColor = '#EF4444'; hint.style.color = '#FCA5A5';
+                hint.innerHTML = '❌ Preencha o limite do FOR e os dois comandos internos antes de executar!';
+            }
+            return;
+        }
+
+        l2_isExecuting = true;
+        const btn = document.getElementById('l3_btn_run_scaffold');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> RODANDO...';
+        l2_buildBoard(3);
+
+        const num = parseInt(valNum) || 0;
+        const commands = [];
+        for (let i = 0; i < num; i++) {
+            commands.push({ cmd: valCmd1 });
+            commands.push({ cmd: valCmd2 });
+        }
+
+        await l2_executeCommandList(commands, 3);
+
+        l2_isExecuting = false;
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR 1 FOR COMPOSIÇÃO';
+    }
+
+    // Execução do Nível 4 (Parser C/C++ na Mini-IDE)
     async function l2_runIdeCode() {
         if(l2_isExecuting) return;
         l2_isExecuting = true;
         const btn = document.getElementById('l2_btn_run_ide');
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> RODANDO...';
-        l2_buildBoard(3);
+        l2_buildBoard(4);
 
+        const code = document.getElementById('l2_code_input').value;
         const parseResult = l2_parseC(code);
 
         if(!parseResult.success) {
-            const sol3 = `// Solução em C/C++ para o Nível 3:\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nfor (int i = 0; i < 3; i++) {\n    cima();\n}\nfor (int i = 0; i < 2; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
-            triggerErrorSplash(parseResult.title, parseResult.msg, parseResult.hint, '⚠️', sol3, 'loop_lvl_3', 3);
+            const sol4 = `// Solução em C/C++ para o Nível 4:\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nfor (int i = 0; i < 3; i++) {\n    cima();\n}\nfor (int i = 0; i < 2; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
+            triggerErrorSplash(parseResult.title, parseResult.msg, parseResult.hint, '⚠️', sol4, 'loop_lvl_4', 3);
             l2_isExecuting = false;
             btn.disabled = false;
             btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C';
             return;
         }
 
-        await l2_executeCommandList(parseResult.commands, 3);
+        await l2_executeCommandList(parseResult.commands, 4);
 
         l2_isExecuting = false;
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-play"></i> EXECUTAR CÓDIGO C';
     }
 
-    // Analisador Sintático da Linguagem C / C++
-    function l2_parseC(rawCode) {
-        const lines = rawCode.split('\n');
-        const commands = [];
-        let openBrackets = 0;
-        let currentLoopCount = 1;
-        let inLoop = false;
-        let loopBody = [];
-
-        for(let idx=0; idx<lines.length; idx++) {
-            let line = lines[idx].trim();
-            if(!line || line.startsWith('//') || line.startsWith('/*')) continue;
-
-            // Detecta laço for em C/C++: for(int i=0; i<N; i++) ou repita(N)
-            const forMatch = line.match(/^for\s*\(\s*(?:int\s+)?\w+\s*=\s*0;\s*\w+\s*<\s*(\d+);\s*\w+\+\+\s*\)\s*\{?$/i) ||
-                             line.match(/^for\s*\(\s*(?:int\s+)?\w+\s*=\s*1;\s*\w+\s*<=\s*(\d+);\s*\w+\+\+\s*\)\s*\{?$/i) ||
-                             line.match(/^repita\s*\(\s*(\d+)\s*\)\s*\{?$/i);
-
-            if(forMatch) {
-                const n = parseInt(forMatch[1]);
-                if(isNaN(n) || n <= 0) {
-                    return { success:false, title:'Erro de Sintaxe no FOR', msg:`Na linha ${idx+1}, o valor limite do laço precisa ser maior que zero!`, hint:'Exemplo: for (int i = 0; i < 4; i++) { direita(); }' };
-                }
-                currentLoopCount = n;
-                inLoop = true;
-                loopBody = [];
-                if(line.includes('{')) openBrackets++;
-                continue;
-            }
-
-            if(line.includes('{')) {
-                openBrackets++;
-                continue;
-            }
-
-            if(line.includes('}')) {
-                openBrackets--;
-                if(inLoop) {
-                    for(let k=0; k<currentLoopCount; k++) {
-                        loopBody.forEach(item => commands.push(item));
-                    }
-                    inLoop = false;
-                    loopBody = [];
-                }
-                continue;
-            }
-
-            // Comandos em C (ex: direita(); baixo(); esquerda(); cima();)
-            let cmdStr = line.replace(/;|\(\)/g, '').trim().toLowerCase();
-            let action = null;
-            if(cmdStr === 'direita' || cmdStr === 'right' || cmdStr === 'd') action = 'RIGHT';
-            else if(cmdStr === 'baixo' || cmdStr === 'down' || cmdStr === 'b') action = 'DOWN';
-            else if(cmdStr === 'esquerda' || cmdStr === 'left' || cmdStr === 'e') action = 'LEFT';
-            else if(cmdStr === 'cima' || cmdStr === 'up' || cmdStr === 'c') action = 'UP';
-            else {
-                return { success:false, title:'Comando Inválido em C', msg:`Não reconhecemos "${line}" na linha ${idx+1}.`, hint:'Comandos válidos: direita(); baixo(); esquerda(); cima(); e laços for (int i=0; i<N; i++) { }' };
-            }
-
-            if(inLoop) {
-                loopBody.push({ cmd: action, lineNum: idx+1 });
-            } else {
-                commands.push({ cmd: action, lineNum: idx+1 });
-            }
-        }
-
-        if(openBrackets > 0 || inLoop) {
-            return { success:false, title:'Faltou Fechar Chave "}"', msg:'Você abriu um bloco com "{" mas esqueceu de fechar com "}".', hint:'Todo laço for { precisa ser fechado com } no final!' };
-        }
-
-        if(commands.length === 0) {
-            return { success:false, title:'Código Vazio', msg:'Digite algum comando em C/C++ para o robô se mover!', hint:'Use os botões de atalho rápido em C acima do editor!' };
-        }
-
-        return { success:true, commands: commands };
-    }
-
     // Executa a lista de passos com animação e verificação de colisões
     async function l2_executeCommandList(commands, lvl) {
         const map = L2_MAPS[lvl];
         let crashed = false;
+
         const solution2 = `// Solução C/C++ (Nível 2):\nfor (int i = 0; i < 4; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
-        const solution3 = `// Solução C/C++ (Nível 3):\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nfor (int i = 0; i < 3; i++) {\n    cima();\n}\nfor (int i = 0; i < 2; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
-        const solCode = (lvl === 2) ? solution2 : solution3;
+        const solution3 = `// Solução C/C++ (Nível 3 — Múltiplos Comandos em 1 FOR):\nfor (int i = 0; i < 4; i++) {\n    direita();\n    baixo();\n}`;
+        const solution4 = `// Solução C/C++ (Nível 4):\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}\nfor (int i = 0; i < 3; i++) {\n    direita();\n}\nfor (int i = 0; i < 3; i++) {\n    cima();\n}\nfor (int i = 0; i < 2; i++) {\n    direita();\n}\nfor (int i = 0; i < 4; i++) {\n    baixo();\n}`;
+
+        let solCode = solution2;
+        if (lvl === 3) solCode = solution3;
+        if (lvl === 4) solCode = solution4;
+
         const attemptKey = 'loop_lvl_' + lvl;
 
         for(let i=0; i<commands.length; i++) {
             const item = commands[i];
             const dir = item.cmd;
 
-            // Highlight de linha (se aplicável)
             if(item.lineId) {
                 document.querySelectorAll('.scaffold-line').forEach(el => el.classList.remove('active'));
                 document.getElementById(item.lineId)?.classList.add('active');
@@ -800,7 +821,6 @@
             else if(dir === 'LEFT') nextC--;
             else if(dir === 'UP') nextR--;
 
-            // Checa limites do grid
             if(nextR < 0 || nextR >= map.size || nextC < 0 || nextC >= map.size) {
                 crashed = true;
                 playSound('error');
@@ -810,24 +830,21 @@
                 break;
             }
 
-            // Checa parede
             const isWall = map.walls.some(w => w.r === nextR && w.c === nextC);
             if(isWall) {
                 crashed = true;
                 playSound('error');
                 const cell = document.getElementById(`l${lvl}_cell_${l2_robotState.r}_${l2_robotState.c}`);
                 if(cell) cell.classList.add('crash');
-                triggerErrorSplash('Ops! Bateu no Muro!', 'O robô colidiu com uma parede de tijolos 🧱.', 'Planeje a rota para desviar das paredes antes de avançar!', '💥', solCode, attemptKey, 3);
+                triggerErrorSplash('Ops! Bateu no Muro!', 'O robô colidiu com uma parede de tijolos 🧱.', 'Planeje a rota em escada para desviar das paredes!', '💥', solCode, attemptKey, 3);
                 break;
             }
 
-            // Move
             l2_robotState.r = nextR;
             l2_robotState.c = nextC;
             playSound('step');
             l2_renderRobot(lvl);
 
-            // Coleta moeda
             const curCell = document.getElementById(`l${lvl}_cell_${nextR}_${nextC}`);
             if(curCell && curCell.classList.contains('coin')) {
                 curCell.classList.remove('coin');
@@ -842,7 +859,6 @@
         document.querySelectorAll('.scaffold-line').forEach(el => el.classList.remove('active'));
 
         if(!crashed) {
-            // Checa se alcançou o baú
             if(l2_robotState.r === map.chest.r && l2_robotState.c === map.chest.c) {
                 const cell = document.getElementById(`l${lvl}_cell_${l2_robotState.r}_${l2_robotState.c}`);
                 if(cell) cell.classList.add('win');
@@ -851,9 +867,11 @@
                 l2_saveProgress(lvl);
 
                 if(lvl === 2) {
-                    l2_showWinModal('🏆','Nível 2 Concluído!','Você completou as lacunas e levou o robô até o tesouro com loops perfeitos! Vamos para o Nível 3 escrever seu próprio código?');
+                    l2_showWinModal('🏆','Nível 2 Concluído!','Você completou as lacunas e levou o robô até o tesouro com 2 laços FOR! Vamos para o Nível 3 testar múltiplos comandos em 1 único FOR?');
                 } else if(lvl === 3) {
-                    l2_showWinModal('👑','Mestre Supremo dos Loops!','Incrível! Você programou o robô em C/C++ na Mini-IDE e conquistou todas as 3 estrelas!');
+                    l2_showWinModal('🪜','Nível 3 Concluído!','Incrível! Você provou que 1 único laço FOR pode rodar múltiplos comandos a cada passo! Vamos para a Mini-IDE no Nível 4?');
+                } else if(lvl === 4) {
+                    l2_showWinModal('👑','Mestre Supremo dos Loops!','Incrível! Você programou o robô em C/C++ na Mini-IDE e conquistou todas as estrelas!');
                 }
             } else {
                 triggerErrorSplash('Não Chegou ao Tesouro!', 'O código terminou, mas o robô não alcançou o baú dourado 🏆.', 'Adicione mais passos ou loops para alcançar o objetivo!', '🗺️', solCode, attemptKey, 3);
@@ -880,56 +898,89 @@
 
     function l2_nextStep() {
         document.getElementById('l_modal_win').classList.remove('active');
-        if(l2_currentLevel < 3) {
+        if(l2_currentLevel < 4) {
             l2_switchLevel(l2_currentLevel + 1);
         } else {
-            openTab('tab-trail');
+            if(typeof openTrail === 'function') openTrail();
         }
     }
 
-    // Helpers do Editor Nível 3
-    function l2_insertCode(text) {
-        const textarea = document.getElementById('l2_code_input');
-        if(!textarea) return;
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const val = textarea.value;
-        textarea.value = val.substring(0, start) + text + val.substring(end);
-        textarea.selectionStart = textarea.selectionEnd = start + text.length;
-        textarea.focus();
+    function l2_resetBoard() {
+        l2_buildBoard(l2_currentLevel);
+    }
+
+    // Parser simples de Portugol/C++ para o Nível 4
+    function l2_parseC(code) {
+        const cleanLines = code.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('//'));
+        const commands = [];
+
+        for(let i=0; i<cleanLines.length; i++) {
+            const line = cleanLines[i];
+
+            const forMatch = line.match(/^for\s*\(\s*int\s+\w+\s*=\s*\d+\s*;\s*\w+\s*<\s*(\d+)\s*;\s*\w+\+\+\s*\)\s*\{?/);
+            if(forMatch) {
+                const count = parseInt(forMatch[1]);
+                let bodyCmd = null;
+
+                let nextLineIndex = i + 1;
+                while(nextLineIndex < cleanLines.length) {
+                    const subLine = cleanLines[nextLineIndex];
+                    if(subLine.includes('direita()')) bodyCmd = 'RIGHT';
+                    else if(subLine.includes('baixo()')) bodyCmd = 'DOWN';
+                    else if(subLine.includes('esquerda()')) bodyCmd = 'LEFT';
+                    else if(subLine.includes('cima()')) bodyCmd = 'UP';
+
+                    if(subLine.includes('}') || bodyCmd) break;
+                    nextLineIndex++;
+                }
+
+                if(!bodyCmd) {
+                    return { success: false, title: 'Laço FOR Vazio!', msg: 'O laço FOR não contém nenhum comando válido dentro.', hint: 'Coloque direita();, baixo();, etc. dentro do laço!' };
+                }
+
+                for(let k=0; k<count; k++) {
+                    commands.push({ cmd: bodyCmd });
+                }
+
+                while(i < cleanLines.length && !cleanLines[i].includes('}')) i++;
+                continue;
+            }
+
+            if(line.includes('direita()')) commands.push({ cmd: 'RIGHT' });
+            else if(line.includes('baixo()')) commands.push({ cmd: 'DOWN' });
+            else if(line.includes('esquerda()')) commands.push({ cmd: 'LEFT' });
+            else if(line.includes('cima()')) commands.push({ cmd: 'UP' });
+        }
+
+        if(commands.length === 0) {
+            return { success: false, title: 'Nenhum Comando Encontrado!', msg: 'Escreva comandos como direita(); ou laços FOR.', hint: 'Use os botões de atalho acima do editor para inserir código rapidamente!' };
+        }
+
+        return { success: true, commands };
+    }
+
+    function l2_updateLineNumbers() {
+        const input = document.getElementById('l2_code_input');
+        const numEl = document.getElementById('l2_line_numbers');
+        if(!input || !numEl) return;
+        const lineCount = input.value.split('\n').length;
+        numEl.innerHTML = Array.from({length: Math.max(8, lineCount)}, (_, i) => i + 1).join('<br>');
+    }
+
+    function l2_insertCode(snippet) {
+        const input = document.getElementById('l2_code_input');
+        if(!input) return;
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        const val = input.value;
+        input.value = val.substring(0, start) + snippet + val.substring(end);
+        input.selectionStart = input.selectionEnd = start + snippet.length;
+        input.focus();
         l2_updateLineNumbers();
     }
 
     function l2_clearEditor() {
-        const textarea = document.getElementById('l2_code_input');
-        if(textarea) {
-            textarea.value = '';
-            l2_updateLineNumbers();
-            textarea.focus();
-        }
+        const input = document.getElementById('l2_code_input');
+        if(input) input.value = '';
+        l2_updateLineNumbers();
     }
-
-    function l2_updateLineNumbers() {
-        const textarea = document.getElementById('l2_code_input');
-        const numbersDiv = document.getElementById('l2_line_numbers');
-        if(!textarea || !numbersDiv) return;
-        const count = textarea.value.split('\n').length;
-        let numHtml = '';
-        for(let i=1; i<=Math.max(count, 8); i++) {
-            numHtml += i + '<br>';
-        }
-        numbersDiv.innerHTML = numHtml;
-    }
-
-    // Exporta handlers globais para inline onclicks
-    window.l_startFactory = l_startFactory;
-    window.l2_switchLevel = l2_switchLevel;
-    window.l2_runScaffold = l2_runScaffold;
-    window.l2_runIdeCode = l2_runIdeCode;
-    window.l2_resetBoard = l2_resetBoard;
-    window.l2_nextStep = l2_nextStep;
-    window.l2_insertCode = l2_insertCode;
-    window.l2_clearEditor = l2_clearEditor;
-    window.l2_updateLineNumbers = l2_updateLineNumbers;
-
-    // ================= JARDIM DOS LOOPS =================
