@@ -3892,7 +3892,6 @@ Depois de escrever o código, você conecta o Arduino no computador, clica em <b
 
     // ================= LOOPMAKER (NOVA MINI-IDE DE PORTUGOL & ROBÔ DOS LOOPS) =================
     function loadLoopmaker() {
-        const l2_sleep = ms => new Promise(r => setTimeout(r, ms));
         const container = document.getElementById('loopmaker-container');
         container.innerHTML = `
             <style>
@@ -4155,6 +4154,7 @@ for (int i = 0; i < 4; i++) {
     // SVG do Robô
     const L2_ROBOT_SVG = `<svg class="robot-svg" width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="5" r="3" fill="#F59E0B"/><line x1="20" y1="8" x2="20" y2="12" stroke="#F59E0B" stroke-width="2"/><rect x="8" y="12" width="24" height="18" rx="5" fill="#3B82F6" stroke="#1D4ED8" stroke-width="2"/><circle cx="15" cy="18" r="3" fill="#38BDF8"/><circle cx="25" cy="18" r="3" fill="#38BDF8"/><circle cx="15" cy="18" r="1.2" fill="#0F172A"/><circle cx="25" cy="18" r="1.2" fill="#0F172A"/><path d="M14 24 Q20 28 26 24" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/><rect x="3" y="16" width="5" height="10" rx="2" fill="#60A5FA"/><rect x="32" y="16" width="5" height="10" rx="2" fill="#60A5FA"/><rect x="12" y="30" width="6" height="7" rx="2" fill="#1D4ED8"/><rect x="22" y="30" width="6" height="7" rx="2" fill="#1D4ED8"/></svg>`;
 
+    const l2_sleep = ms => new Promise(r => setTimeout(r, ms));
     let l2_currentLevel = 1;
     let l2_isExecuting = false;
     let l2_robotState = { r:0, c:0 };
