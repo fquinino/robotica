@@ -27,26 +27,36 @@ Se você colocar na forma <i>antes</i> de misturar... dá tudo errado! No comput
         jogo:'tab-tesouro', btntext:'🎮 Jogar Caça ao Tesouro!'
     },
     2: {
-        emoji:'🔄', title:'Estruturas de Repetição (Loops em C/C++)', color:'#A78BFA',
-        objetivo:'🧠 <b>O que você vai aprender:</b> Como fazer o computador repetir ações automaticamente usando o laço <span style="color:#A78BFA;">for</span> em linguagem C/C++ sem ter que escrever o mesmo comando 100 vezes!',
-        teoria:`<b>Cansado de digitar a mesma coisa?</b>
+        emoji:'🔄', title:'Estruturas de Repetição (Laço FOR em C/C++)', color:'#A78BFA',
+        objetivo:'🧠 <b>O que você vai aprender:</b> Como ensinar o robô a <b>repetir qualquer tarefa sozinho</b> usando o laço <span style="color:#A78BFA;">for</span> sem precisar digitar o mesmo comando 100 vezes!',
+        teoria:`<b>Superpoder da Automação 🚀</b>
 
-Imagine que o robô precisa dar <b>100 passos</b> para frente.
-Sem laços (loops), você teria que digitar:
-<code>moverFrente(); moverFrente(); moverFrente(); ... (100 vezes!)</code> 😫
+Imagine que você precisa dar <b>100 pulos de corda</b> 🪢 ou escovar os dentes 🦷.
+Em vez de escrever no papel <i>"pular, pular, pular..."</i> 100 vezes, você simplesmente conta: <b>"1, 2, 3... até 100!"</b>
 
-Com um <b>laço FOR em C/C++</b>, você resolve em 3 linhas:
-<code>for (int i = 0; i < 100; i++) {
-    moverFrente();
-}</code> 🎉
+No computador é exatamente a mesma coisa! Usamos o <b>Laço FOR em C/C++</b> para o robô contar e repetir comandos automaticamente:
 
-O computador conta de 0 até 99 e repete tudo que está dentro das chaves <code>{ }</code> automaticamente!`,
-        exemplo:`// Carimbar 5 caixas na esteira da fábrica:
-for (int i = 1; i <= 5; i++) {
-    carimbarCaixa();
+<code>for (int i = 0; i < 5; i++) {
+    carimbarCaixa(); // Isso roda 5 vezes sozinho!
+}</code>
+
+<b>Como funciona essa fórmula mágica?</b>
+1️⃣ <code>int i = 0</code> ➔ 🎬 <b>Início:</b> O contador começa no número 0.
+2️⃣ <code>i < 5</code> ➔ 🛑 <b>Limite:</b> Repete enquanto o contador for menor que 5 (5 vezes!).
+3️⃣ <code>i++</code> ➔ ➕ <b>Passo:</b> Soma +1 no contador a cada volta.
+4️⃣ <code>{ ... }</code> ➔ 🎒 <b>Mochila:</b> Tudo dentro das chaves é repetido!`,
+        exemplo:`// Exemplo 1: Repetir 1 comando (andar em linha reta)
+for (int i = 0; i < 4; i++) {
+    direita();
+}
+
+// Exemplo 2: Repetir 2 comandos juntos (caminho em escada)
+for (int i = 0; i < 4; i++) {
+    direita();
+    baixo();
 }`,
-        dica:'💡 Dica Maker: O laço FOR é super usado em robótica para piscar LEDs, mover motores e ler sensores várias vezes!',
-        jogo:'tab-loopmaker', btntext:'🎮 Jogar Máquina de Loops!'
+        dica:'💡 Dica Autodidacta: As chaves { } são a "mochila" do FOR. Tudo que fica dentro da mochila é repetido a cada volta!',
+        jogo:'tab-loopmaker', btntext:'🎮 Ir para a Máquina de Loops!'
     },
     3: {
         emoji:'🌱', title:'Condicionais (Tomada de Decisão)', color:'#34D399',

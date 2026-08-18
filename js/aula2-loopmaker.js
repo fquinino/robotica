@@ -116,6 +116,39 @@
                     <p id="loop-header-desc">Aprenda a criar laços <b>FOR</b> em C/C++ para automatizar comandos repetitivos do robô!</p>
                 </div>
 
+                <!-- CARD DE EXPLICAÇÃO AUTODIDÁTICA PARA CRIANÇAS -->
+                <div class="loop-explanation-card" style="background:#0F172A;border:2px dashed #8B5CF6;border-radius:20px;padding:16px 20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+                    <div onclick="l2_toggleGuide()" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;">
+                        <div style="display:flex;align-items:center;gap:10px;font-family:'Fredoka One';color:#FBBF24;font-size:1.05rem;">
+                            <span>💡 O que é um Laço FOR? (Clique aqui para aprender brincando!)</span>
+                        </div>
+                        <span id="l2_guide_arrow" style="color:#A78BFA;font-weight:bold;font-size:1.2rem;">▼</span>
+                    </div>
+                    
+                    <div id="l2_guide_content" style="display:none;margin-top:14px;border-top:1px solid #1E293B;padding-top:14px;color:#CBD5E1;font-size:0.92rem;line-height:1.7;">
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-bottom:14px;">
+                            <div style="background:#1E293B;border-radius:14px;padding:14px;border:1px solid #334155;">
+                                <div style="color:#38BDF8;font-weight:bold;font-size:0.98rem;margin-bottom:4px;">1️⃣ A Analogia dos Pulos 🪢</div>
+                                Imagine dar <b>5 pulos de corda</b>. Em vez de escrever no papel <i>"pular, pular, pular..."</i> 5 vezes, você conta: <b>"1, 2, 3, 4, 5!"</b> O <b>FOR</b> é o contador automático do robô!
+                            </div>
+                            <div style="background:#1E293B;border-radius:14px;padding:14px;border:1px solid #334155;">
+                                <div style="color:#34D399;font-weight:bold;font-size:0.98rem;margin-bottom:4px;">2️⃣ As 3 Partes do FOR 🧩</div>
+                                <code>for (int i = 0; i &lt; 5; i++)</code><br>
+                                • 🎬 <b>int i = 0:</b> Começa no 0.<br>
+                                • 🛑 <b>i &lt; 5:</b> Repete 5 vezes.<br>
+                                • ➕ <b>i++:</b> Soma +1 a cada volta!
+                            </div>
+                            <div style="background:#1E293B;border-radius:14px;padding:14px;border:1px solid #334155;">
+                                <div style="color:#F472B6;font-weight:bold;font-size:0.98rem;margin-bottom:4px;">3️⃣ As Chaves { } são a Mochila 🎒</div>
+                                Tudo o que você coloca dentro das chaves <code>{ ... }</code> vai ser repetido! Pode ser 1 comando só (ex: <code>direita();</code>) ou 2 comandos juntos (ex: <code>direita(); baixo();</code>).
+                            </div>
+                        </div>
+                        <div style="text-align:center;background:rgba(139,92,246,0.15);border:1px solid #8B5CF6;border-radius:12px;padding:10px;color:#A78BFA;font-weight:bold;font-size:0.88rem;">
+                            🎉 Escolha um Nível abaixo para ver seu código ganhando vida no simulador!
+                        </div>
+                    </div>
+                </div>
+
                 <div class="loop-level-bar">
                     <button class="loop-level-btn active" data-level="1" onclick="l2_switchLevel(1)"><i class="fa-solid fa-industry"></i> Nível 1: Fábrica</button>
                     <button class="loop-level-btn" data-level="2" onclick="l2_switchLevel(2)"><i class="fa-solid fa-puzzle-piece"></i> Nível 2: 2 Loops</button>
@@ -381,6 +414,20 @@
             initialCode: "// 🤖 Missão: Colete as moedas e chegue ao tesouro!\n// Comandos: direita(); baixo(); esquerda(); cima();\n// Laço: for (int i = 0; i < N; i++) { ... }\n\n"
         }
     };
+
+    function l2_toggleGuide() {
+        const content = document.getElementById('l2_guide_content');
+        const arrow = document.getElementById('l2_guide_arrow');
+        if (!content || !arrow) return;
+        if (content.style.display === 'none') {
+            content.style.display = 'block';
+            arrow.innerText = '▲';
+            if (typeof playSound === 'function') playSound('click');
+        } else {
+            content.style.display = 'none';
+            arrow.innerText = '▼';
+        }
+    }
 
     function l2_init() {
         l2_switchLevel(1);
