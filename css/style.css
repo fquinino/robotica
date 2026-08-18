@@ -1,0 +1,111 @@
+/* ==========================================================================
+   CRIADORES DE CÓDIGO — ESTILOS GLOBAIS DA SPA
+   ========================================================================== */
+
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Nunito',sans-serif; }
+body { background:#0F172A; color:white; min-height:100vh; padding:clamp(10px, 2vw, 20px); overflow-x:hidden; }
+
+.container { 
+    max-width:1100px; 
+    width:100%; 
+    margin:0 auto; 
+    background:rgba(30,41,59,0.85); 
+    backdrop-filter:blur(12px); 
+    border-radius:clamp(20px, 3.5vw, 40px); 
+    padding:clamp(15px, 2.5vw, 25px); 
+    border:1px solid #334155; 
+    box-shadow:0 20px 40px rgba(0,0,0,0.6); 
+}
+
+h1 { 
+    font-family:'Fredoka One'; 
+    text-align:center; 
+    font-size:clamp(1.8rem, 4.5vw, 2.8rem); 
+    background:linear-gradient(135deg,#38BDF8,#A78BFA); 
+    -webkit-background-clip:text; 
+    -webkit-text-fill-color:transparent; 
+    margin-bottom:5px; 
+}
+
+.subtitle { 
+    text-align:center; 
+    color:#94A3B8; 
+    font-weight:800; 
+    font-size:clamp(0.85rem, 1.8vw, 1.05rem); 
+    margin-bottom:25px; 
+    border-bottom:2px dashed #334155; 
+    padding-bottom:15px; 
+}
+
+.tabs { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:25px; }
+.tab-btn { background:#334155; border:none; color:#94A3B8; padding:12px 22px; border-radius:30px; font-weight:900; cursor:pointer; transition:0.2s; font-size:1rem; }
+.tab-btn.active { background:#38BDF8; color:#0F172A; box-shadow:0 0 25px #38BDF8; }
+.tab-btn i { margin-right:8px; }
+
+.game-panel { display:none; animation:fadeIn 0.4s ease; }
+.game-panel.active { display:block; }
+
+@keyframes fadeIn { 0%{opacity:0;transform:translateY(15px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes errorShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
+@keyframes errorPop { 0%{transform:scale(0.8);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+@keyframes coinSpin { 0%{transform:scale(0.9) rotate(0deg);} 100%{transform:scale(1.1) rotate(15deg);} }
+@keyframes chestGlow { 0%{transform:scale(1);} 100%{transform:scale(1.18);} }
+@keyframes beltMove { 100% { transform:translateX(-40px); } }
+@keyframes stampPop { 0% { transform:scale(3); opacity:0; } 100% { transform:scale(1); opacity:1; } }
+
+.footer { text-align:center; color:#64748B; margin-top:30px; font-weight:600; border-top:2px dashed #334155; padding-top:20px; }
+
+/* TRILHA DE APRENDIZAGEM */
+.trail-wrap { max-width:700px; margin:0 auto; padding:10px; }
+.trail-title { text-align:center; margin-bottom:8px; }
+.trail-title h2 { font-family:'Fredoka One'; font-size:1.8rem; background:linear-gradient(135deg,#38BDF8,#A78BFA); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0; }
+.trail-title p { color:#94A3B8; font-size:0.9rem; margin:4px 0 16px; }
+.trail-progress-bar-wrap { background:#1E293B; border-radius:12px; height:14px; border:1px solid #334155; overflow:hidden; margin-bottom:20px; }
+.trail-progress-bar-inner { height:100%; background:linear-gradient(90deg,#38BDF8,#10B981); border-radius:12px; transition:width 0.6s ease; width:0%; }
+.trail-nodes { display:flex; flex-direction:column; gap:0; position:relative; }
+.trail-connector { width:4px; height:30px; background:#334155; margin:0 auto; border-radius:2px; }
+.trail-connector.done { background:linear-gradient(180deg,#10B981,#38BDF8); }
+.trail-node { display:flex; align-items:flex-start; gap:18px; padding:16px 20px; border-radius:22px; border:2px solid #334155; background:#1E293B; cursor:pointer; transition:all 0.25s; position:relative; }
+.trail-node:hover { transform:translateX(6px); border-color:#38BDF8; box-shadow:0 0 20px rgba(56,189,248,0.2); }
+.trail-node.locked { opacity:0.45; cursor:not-allowed; }
+.trail-node.locked:hover { transform:none; border-color:#334155; box-shadow:none; }
+.trail-node.done { border-color:#10B981; background:rgba(16,185,129,0.08); }
+.trail-node.current { border-color:#38BDF8; background:rgba(56,189,248,0.1); box-shadow:0 0 25px rgba(56,189,248,0.25); animation:trailPulse 2s infinite; }
+@keyframes trailPulse { 0%,100%{box-shadow:0 0 20px rgba(56,189,248,0.2)} 50%{box-shadow:0 0 40px rgba(56,189,248,0.45)} }
+
+.trail-node-icon { width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.7rem; flex-shrink:0; border:3px solid #334155; transition:0.2s; }
+.trail-node.done .trail-node-icon { border-color:#10B981; }
+.trail-node.current .trail-node-icon { border-color:#38BDF8; }
+.trail-node-info { flex:1; }
+.trail-node-info h3 { color:white; font-weight:900; font-size:1.05rem; margin:0 0 3px; }
+.trail-node-info p { color:#94A3B8; font-size:0.82rem; margin:0; }
+.trail-node-stars { font-size:1.1rem; flex-shrink:0; }
+.trail-node-badge { background:#334155; color:#94A3B8; font-size:0.75rem; font-weight:800; padding:3px 10px; border-radius:10px; }
+.trail-node.done .trail-node-badge { background:#064E3B; color:#34D399; }
+.trail-node.current .trail-node-badge { background:#0C4A6E; color:#38BDF8; }
+
+.pratica-scene { max-width:700px; margin:0 auto; }
+.pratica-card { background:#1E293B; border:2px solid #334155; border-radius:20px; padding:24px; margin-bottom:16px; }
+.pratica-card h3 { font-family:'Fredoka One'; color:#FBBF24; margin:0 0 8px; font-size:1.2rem; }
+.pratica-card p { color:#CBD5E1; line-height:1.7; font-size:0.95rem; }
+.pratica-step { display:flex; align-items:flex-start; gap:14px; padding:12px 0; border-bottom:1px solid #1E293B; }
+.pratica-step-num { background:#FBBF24; color:#0F172A; min-width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.9rem; flex-shrink:0; }
+.pratica-code { background:#0F172A; border:2px solid #38BDF8; border-radius:16px; padding:18px; font-family:'Courier New',monospace; color:#E2E8F0; font-size:0.88rem; line-height:1.8; overflow-x:auto; white-space:pre-wrap; }
+.pratica-highlight { color:#FBBF24; font-weight:900; }
+.pratica-check { color:#34D399; font-weight:900; }
+
+/* MODAL DE AULA */
+.lesson-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; z-index:1001; opacity:0; pointer-events:none; transition:0.3s; }
+.lesson-modal.active { opacity:1; pointer-events:all; }
+.lesson-modal-box { background:linear-gradient(180deg,#1E293B,#0F172A); border:4px solid #38BDF8; border-radius:28px; padding:24px 22px; max-width:520px; width:94%; max-height:85vh; overflow-y:auto; text-align:center; }
+.lesson-modal-emoji { font-size:4rem; margin-bottom:6px; }
+.lesson-modal h2 { font-family:'Fredoka One'; color:#FBBF24; margin:0 0 4px; font-size:1.4rem; }
+.lesson-modal .lesson-objetivo { color:#CBD5E1; font-size:0.9rem; line-height:1.7; margin:10px 0; text-align:left; }
+.lesson-modal .lesson-teoria { background:rgba(56,189,248,0.08); border-left:3px solid #38BDF8; border-radius:12px; padding:12px 16px; margin:12px 0; text-align:left; }
+.lesson-modal .lesson-teoria h4 { color:#38BDF8; font-family:'Fredoka One'; margin:0 0 6px; font-size:1rem; }
+.lesson-modal .lesson-teoria p { color:#CBD5E1; font-size:0.88rem; line-height:1.7; margin:0; }
+.lesson-modal .lesson-btn { background:linear-gradient(135deg,#10B981,#059669); border:none; color:white; padding:14px 30px; border-radius:50px; font-weight:900; cursor:pointer; font-size:1.1rem; border-bottom:5px solid #047857; margin-top:14px; width:100%; transition:0.15s; }
+.lesson-modal .lesson-btn:active { transform:translateY(4px); border-bottom-width:1px; }
+.lesson-modal .lesson-close { position:absolute; top:14px; right:18px; background:none; border:none; color:#64748B; font-size:1.4rem; cursor:pointer; }
+.lesson-exemplo { background:#0F172A; border-radius:12px; padding:10px 14px; margin:8px 0; font-family:'Courier New',monospace; font-size:0.82rem; color:#E2E8F0; text-align:left; white-space:pre-wrap; }
+.lesson-dica { background:rgba(251,191,36,0.1); border:1px dashed #FBBF24; border-radius:12px; padding:10px 14px; margin:8px 0; color:#FBBF24; font-size:0.85rem; font-weight:700; }
