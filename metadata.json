@@ -1,0 +1,8 @@
+{
+  "name": "Criadores de Código",
+  "description": "Plataforma educacional interativa de lógica de programação, circuitos e Arduino.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
