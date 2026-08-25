@@ -2,7 +2,7 @@
    CRIADORES DE CÓDIGO — TRILHA DE APRENDIZAGEM & HUB DE CONQUISTAS
    ========================================================================== */
 
-const UNLOCKED_LESSONS = 2; // Liberadas Aula 1 e Aula 2
+const UNLOCKED_LESSONS = 3; // Liberadas Aula 1, Aula 2 e Aula 3
 
 const getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
 
@@ -59,25 +59,25 @@ for (int i = 0; i < 4; i++) {
         jogo:'tab-loopmaker', btntext:'🎮 Ir para a Máquina de Loops!'
     },
     3: {
-        emoji:'🌱', title:'Condicionais (Tomada de Decisão)', color:'#34D399',
-        objetivo:'🧠 <b>O que você vai aprender:</b> Como ensinar o robô a <b>tomar decisões sozinho</b> usando <span style="color:#34D399;">IF / ELSE</span> (Se / Senão) baseado em sensores!',
-        teoria:`<b>E se chover?</b>
+        emoji:'🌱', title:'Condicionais & Robô Inteligente (IF / ELSE em C/C++)', color:'#34D399',
+        objetivo:'🧠 <b>O que você vai aprender:</b> Como ensinar o robô a <b>tomar decisões sozinho</b> usando <span style="color:#34D399;">IF / ELSE</span> (Se / Senão) para desviar de obstáculos e barreiras no caminho!',
+        teoria:`<b>E se tiver uma barreira no caminho? 🚧</b>
 
 No dia a dia, você toma decisões o tempo todo:
-<i>"<b>SE</b> estiver chovendo → pego o guarda-chuva. <b>SENÃO</b> → vou de boné."</i>
+<i>"<b>SE</b> tiver um buraco no chão → desvio. <b>SENÃO</b> → continuo andando reto."</i>
 
-Na robótica é exatamente igual! Usamos a estrutura <b>IF / ELSE</b>:
-- <b>SE (luz escurecer)</b> → Liga os faróis do carro.
-- <b>SENÃO</b> → Mantém os faróis desligados.
+Na robótica com Arduino usamos a estrutura <b>IF / ELSE</b> com sensores:
+- <b>SE (sensor detectar barreira)</b> → Desvia pelo lado!
+- <b>SENÃO</b> → Anda em linha reta livremente.
 
-Isso transforma um robô bobo em um robô <b>INTELIGENTE</b>!`,
-        exemplo:`if (sensorUmidade < 30) {
-    regarPlanta(); // Solo seco!
+Isso transforma um robô simples em um robô <b>AUTÔNOMO E INTELIGENTE</b>!`,
+        exemplo:`if (sensorObstaculo() == true) {
+    baixo();   // Detectou obstáculo: desvia para a linha de baixo!
 } else {
-    desligarBomba(); // Solo úmido!
+    direita(); // Caminho livre: segue para a direita!
 }`,
-        dica:'💡 Dica Maker: Sensores convertem o mundo físico (luz, calor, distância) em números para o IF comparar!',
-        jogo:'tab-jardim', btntext:'🎮 Ir para o Jardim dos Loops!'
+        dica:'💡 Dica Maker: O sensor ultrassônico envia ondas de som inaudíveis para calcular a distância e saber se há obstáculos à frente!',
+        jogo:'tab-jardim', btntext:'🎮 Ir para o Robô com IF/ELSE!'
     },
     4: {
         emoji:'🚦', title:'Sequências Temporizadas (Sinais)', color:'#FBBF24',
@@ -245,10 +245,10 @@ function updateTrail() {
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
                        getLevels('jardim_levels').length + getLevels('arduino_levels').length;
 
-    const percent = Math.min(100, Math.round((totalStars / 18) * 100));
+    const percent = Math.min(100, Math.round((totalStars / 20) * 100));
     const starCountEl = document.getElementById('trail-star-count');
     const progressBarEl = document.getElementById('trail-progress-bar');
-    if (starCountEl) starCountEl.innerText = `${totalStars} / 18 ⭐`;
+    if (starCountEl) starCountEl.innerText = `${totalStars} / 20 ⭐`;
     if (progressBarEl) progressBarEl.style.width = `${percent}%`;
 
     let html = '';
@@ -340,12 +340,12 @@ function updateHubProgress() {
     setBadge('badge-tesouro', tes);
     setBadge('badge-labmaker', lab);
     setBadge('badge-loopmaker', loo, 4);
-    setBadge('badge-jardim', jar);
+    setBadge('badge-jardim', jar, 4);
     setBadge('badge-arduino', ard);
 
     const totalStars = sem.length + tes.length + lab.length + loo.length + jar.length + ard.length;
     const countEl = document.getElementById('hub-star-count');
     const barEl = document.getElementById('hub-progress-bar');
-    if (countEl) countEl.innerText = `${totalStars} / 18 ⭐`;
-    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 18) * 100))}%`;
+    if (countEl) countEl.innerText = `${totalStars} / 20 ⭐`;
+    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 20) * 100))}%`;
 }

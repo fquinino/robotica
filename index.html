@@ -27,7 +27,7 @@
                 <p>10 aulas do zero até o Arduino real. Cada aula tem 🎯 conceito + 🎮 jogo prático!</p>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 6px;">
                     <span style="color:#94A3B8;font-size:0.85rem;font-weight:800;">Progresso Geral</span>
-                    <span id="trail-star-count" style="color:#F59E0B;font-weight:900;font-size:0.95rem;">0 / 18 ⭐</span>
+                    <span id="trail-star-count" style="color:#F59E0B;font-weight:900;font-size:0.95rem;">0 / 20 ⭐</span>
                 </div>
                 <div class="trail-progress-bar-wrap"><div class="trail-progress-bar-inner" id="trail-progress-bar"></div></div>
             </div>
@@ -46,7 +46,7 @@
             <div style="flex:1;min-width:260px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                     <span style="font-weight:900;color:#38BDF8;font-size:1.15rem;"><i class="fa-solid fa-trophy"></i> Progresso Maker Geral</span>
-                    <span id="hub-star-count" style="font-weight:900;color:#F59E0B;font-size:1.15rem;">0 / 18 ⭐</span>
+                    <span id="hub-star-count" style="font-weight:900;color:#F59E0B;font-size:1.15rem;">0 / 20 ⭐</span>
                 </div>
                 <div style="background:#1E293B;height:16px;border-radius:12px;overflow:hidden;border:1px solid #334155;padding:2px;">
                     <div id="hub-progress-bar" style="background:linear-gradient(90deg,#38BDF8,#10B981);height:100%;width:0%;border-radius:10px;transition:width 0.5s ease;"></div>
@@ -85,9 +85,9 @@
             </div>
             <div class="hub-card" onclick="openTab('tab-jardim')" style="background:#1E293B;padding:22px;border-radius:24px;border:2px solid #38BDF8;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
                 <i class="fa-solid fa-seedling" style="font-size:3rem;color:#34D399;margin-bottom:10px;"></i>
-                <h3 style="color:white;font-family:'Fredoka One';">Jardim dos Loops</h3>
-                <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Condicionais IF/ELSE e funções em robótica agrícola</p>
-                <div id="badge-jardim" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F59E0B;font-size:0.9rem;">0/3 Níveis ⭐</div>
+                <h3 style="color:white;font-family:'Fredoka One';">Decisões IF/ELSE</h3>
+                <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Condicionais IF/ELSE e desvio autônomo com sensor</p>
+                <div id="badge-jardim" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F59E0B;font-size:0.9rem;">0/4 Níveis ⭐</div>
             </div>
             <div class="hub-card" onclick="openTab('tab-arduino')" style="background:#1E293B;padding:22px;border-radius:24px;border:2px solid #38BDF8;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
                 <i class="fa-solid fa-microchip" style="font-size:3rem;color:#F87171;margin-bottom:10px;"></i>
@@ -163,7 +163,7 @@
     <div class="error-splash-modal" id="error-splash-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.92);backdrop-filter:blur(10px);display:flex;justify-content:center;align-items:center;z-index:99998;opacity:0;pointer-events:none;transition:opacity 0.25s ease;">
         <div class="error-splash-box" style="background:linear-gradient(180deg,#1E293B,#0F172A);border:4px solid #EF4444;border-radius:28px;padding:28px 24px;max-width:500px;width:92%;text-align:center;box-shadow:0 0 50px rgba(239,68,68,0.45);max-height:90vh;overflow-y:auto;">
             <div id="error-splash-attempts" style="background:rgba(239,68,68,0.15);border:1px solid #EF4444;color:#FCA5A5;font-size:0.85rem;font-weight:800;padding:4px 14px;border-radius:20px;display:inline-block;margin-bottom:10px;">
-                ❤️ Tentativa 1 de 3
+                ❤️ Tente Novamente
             </div>
 
             <div id="error-splash-icon" style="font-size:4.2rem;margin-bottom:6px;animation:errorShake 0.4s ease-in-out;">💥</div>
@@ -173,8 +173,8 @@
             <div id="error-splash-hint" style="background:rgba(251,191,36,0.12);border:1px dashed #FBBF24;border-radius:14px;padding:12px;color:#FBBF24;font-size:0.9rem;font-weight:700;margin-bottom:14px;text-align:left;line-height:1.5;">💡 <b>Dica de Maker:</b> Verifique o número de repetições!</div>
 
             <div id="error-splash-solution-wrapper" style="display:none;margin-bottom:18px;text-align:left;">
-                <button onclick="toggleErrorSolution()" style="background:#334155;color:#A78BFA;border:1px solid #8B5CF6;padding:10px 16px;border-radius:12px;font-weight:800;font-size:0.85rem;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:space-between;transition:0.2s;">
-                    <span>💻 Ver Resolução do Código em C/C++</span>
+                <button id="error-solution-btn" onclick="toggleErrorSolution()" style="display:none;background:#334155;color:#A78BFA;border:1px solid #8B5CF6;padding:10px 16px;border-radius:12px;font-weight:800;font-size:0.85rem;cursor:pointer;width:100%;align-items:center;justify-content:space-between;transition:0.2s;">
+                    <span>💡 Ver Resolução do Código em C/C++</span>
                     <span id="error-solution-arrow">▼</span>
                 </button>
                 <div id="error-splash-solution-box" style="display:none;background:#0F172A;border:1px solid #8B5CF6;border-radius:12px;padding:14px;margin-top:8px;">
@@ -195,6 +195,7 @@
 <script src="js/trail.js"></script>
 <script src="js/aula1-tesouro.js"></script>
 <script src="js/aula2-loopmaker.js"></script>
+<script src="js/aula3-ifelse.js"></script>
 <script src="js/aula4-semaforo.js"></script>
 <script src="js/aula67-labmaker.js"></script>
 <script src="js/aula8-arduino.js"></script>

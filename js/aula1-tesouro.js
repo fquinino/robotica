@@ -343,7 +343,7 @@
                         <button class="t-demo-reveal" style="margin-top:10px;" id="t_tut_skip" onclick="t_skipTutorial()">⏭ Pular tutorial — já sei jogar!</button>
                     </div>
                 </div>
-                <button class="t-hint-btn t-jogar-content" id="t_hint_btn" onclick="t_showSolution()">💡 Ver Solução (após 3 erros)</button>
+                <button class="t-hint-btn t-jogar-content" id="t_hint_btn" onclick="t_showSolution()">💡 Precisa de Ajuda? Ver Solução</button>
                 <div class="t-solution-box t-guia-content" id="t_solution_box">
                     <div style="color:#A78BFA;font-weight:900;margin-bottom:8px;">🗺️ Caminho Correto:</div>
                     <div id="t_solution_steps"></div>
@@ -933,23 +933,17 @@
     function t_updateErrorCounter() {
         const el = document.getElementById('t_err_counter');
         const hintBtn = document.getElementById('t_hint_btn');
-        if(!el) return;
-        const remaining = Math.max(0, 3 - t_errors);
-        if(t_errors === 0) {
-            el.innerText = '💡 Erre 3 vezes para desbloquear a solução';
-        } else if(t_errors < 3) {
-            el.innerText = `❌ ${t_errors} erro(s) — mais ${remaining} para ver a solução`;
-            el.style.borderColor = '#F59E0B';
-            el.style.color = '#F59E0B';
-        } else {
-            el.innerText = '💡 Solução disponível!';
-            el.style.borderColor = '#A78BFA';
-            el.style.color = '#A78BFA';
+        if (el) el.style.display = 'none'; // Não exibe texto que induza o aluno a errar de propósito
+        if (hintBtn) {
+            hintBtn.classList.toggle('visible', t_errors >= 3);
         }
-        if(hintBtn) hintBtn.classList.toggle('visible', t_errors >= 3);
     }
 
     function t_showSolution() {
+        if(t_errors < 3) {
+            playSound('error');
+            return;
+        }
         t_switchSubtab('guia');
         const solutionData = {
             1: { steps: ['RIGHT','RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN'], text: 'Vá 4x para a Direita e depois 4x para Baixo. Evite os bloqueios indo pelo lado direito!' },
@@ -1091,6 +1085,7 @@
     }
     
     function t_revealSteps() {
+        if(t_errors < 3) return;
         const box = document.getElementById('t_solution_box');
         const stepsEl = document.getElementById('t_solution_steps');
         const textEl = document.getElementById('t_solution_text');

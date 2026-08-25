@@ -119,6 +119,8 @@ function triggerConfetti(durationMs = 3000) {
 
 // ================= SPLASH DE ERRO LÚDICO =================
 const currentAttemptsMap = {};
+let lastErrorAttemptKey = 'default';
+let lastErrorMaxAttempts = 3;
 
 function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCode = '', attemptKey = 'default', maxAttempts = 3) {
     playSound('error');
@@ -128,6 +130,12 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
     if (!currentAttemptsMap[attemptKey]) currentAttemptsMap[attemptKey] = 0;
     currentAttemptsMap[attemptKey]++;
     const attempts = currentAttemptsMap[attemptKey];
+    lastErrorAttemptKey = attemptKey;
+    lastErrorMaxAttempts = maxAttempts;
+
+    if (typeof if_updateSolutionButtonState === 'function') {
+        if_updateSolutionButtonState();
+    }
 
     document.getElementById('error-splash-icon').innerText = icon;
     document.getElementById('error-splash-title').innerText = title;
@@ -136,12 +144,12 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
     const attemptsEl = document.getElementById('error-splash-attempts');
     if (attemptsEl) {
         if (attempts >= maxAttempts) {
-            attemptsEl.innerHTML = `⚠️ ${attempts}ª Tentativa — 💡 <b>Resolução C/C++ Liberada!</b>`;
+            attemptsEl.innerHTML = `💡 <b>Precisa de Ajuda? Resolução Disponível</b>`;
             attemptsEl.style.borderColor = '#F59E0B';
             attemptsEl.style.color = '#FBBF24';
             attemptsEl.style.background = 'rgba(245,158,11,0.15)';
         } else {
-            attemptsEl.innerHTML = `❤️ Tentativa ${attempts} de ${maxAttempts}`;
+            attemptsEl.innerHTML = `❤️ Ops! Vamos tentar de novo!`;
             attemptsEl.style.borderColor = '#EF4444';
             attemptsEl.style.color = '#FCA5A5';
             attemptsEl.style.background = 'rgba(239,68,68,0.15)';
@@ -160,20 +168,21 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
     const solCodeEl = document.getElementById('error-splash-solution-code');
     const solBox = document.getElementById('error-splash-solution-box');
     const solArrow = document.getElementById('error-solution-arrow');
+    const solBtn = document.getElementById('error-solution-btn');
 
-    if (solutionCode) {
+    if (solutionCode && attempts >= maxAttempts) {
         if (solCodeEl) solCodeEl.innerText = solutionCode;
         if (solWrapper) solWrapper.style.display = 'block';
-
-        if (attempts >= maxAttempts) {
-            if (solBox) solBox.style.display = 'block';
-            if (solArrow) solArrow.textContent = '▲';
-        } else {
-            if (solBox) solBox.style.display = 'none';
-            if (solArrow) solArrow.textContent = '▼';
+        if (solBtn) {
+            solBtn.style.display = 'flex';
+            solBtn.disabled = false;
         }
+        if (solBox) solBox.style.display = 'none';
+        if (solArrow) solArrow.textContent = '▼';
     } else {
         if (solWrapper) solWrapper.style.display = 'none';
+        if (solBtn) solBtn.style.display = 'none';
+        if (solBox) solBox.style.display = 'none';
     }
 
     modal.style.opacity = '1';
@@ -181,6 +190,10 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
 }
 
 function toggleErrorSolution() {
+    const attempts = currentAttemptsMap[lastErrorAttemptKey] || 0;
+    if (attempts < lastErrorMaxAttempts) {
+        return; // Bloqueado até 3 erros
+    }
     const box = document.getElementById('error-splash-solution-box');
     const arrow = document.getElementById('error-solution-arrow');
     if (!box) return;
@@ -195,6 +208,9 @@ function closeErrorSplash() {
         modal.style.opacity = '0';
         modal.style.pointerEvents = 'none';
     }
+    if (typeof if_updateSolutionButtonState === 'function') {
+        if_updateSolutionButtonState();
+    }
 }
 
 // ================= CERTIFICADO MAKER =================
@@ -205,7 +221,7 @@ function showCertificateModal() {
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
                        getLevels('jardim_levels').length + getLevels('arduino_levels').length;
     const detail = document.getElementById('cert_stars_detail');
-    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 18 Estrelas Maker!`;
+    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 20 Estrelas Maker!`;
     modal.style.display = 'flex';
 }
 
