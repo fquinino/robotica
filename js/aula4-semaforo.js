@@ -1654,6 +1654,8 @@ function sem_extractCommands() {
     } else {
         // Níveis 4 e 5: Mini-IDE C/C++
         const rawText = document.getElementById('sem_code_input')?.value || '';
+        if (!rawText.trim()) return [];
+
         let codeToParse = rawText;
 
         // Se o aluno colou o sketch completo (com void loop), extrai somente o miolo do loop:
@@ -1677,32 +1679,39 @@ function sem_extractCommands() {
             }
         }
 
-        const lines = codeToParse.split('\n');
+        // Remove comentários de linha e de bloco
+        const clean = codeToParse.replace(/\/\/[^\n]*/g, '').replace(/\/\*[\s\S]*?\*\//g, '');
 
-        lines.forEach(rawLine => {
-            const line = rawLine.split('//')[0].trim();
-            if (!line) return;
+        // Divide instruções por ponto e vírgula ou por quebras de linha
+        const tokens = clean.split(/[;\n]+/).map(t => t.trim()).filter(t => t.length > 0);
 
-            // Ignora protótipos de função residuais, pinModes, constantes e includes
-            if (/^\s*(void\s+\w+|int\s+|const\s+int|pinMode|#include)/i.test(line)) return;
+        tokens.forEach(token => {
+            // Ignora estruturas padrão, cabeçalhos e chaves isoladas
+            if (/^(void\s+\w+|int\s+|const\s+int|pinMode|#include|[{}])$/i.test(token)) return;
+            if (/^(void\s+setup|void\s+loop)\s*\(\s*\)/i.test(token)) return;
 
-            if (/carro1_avancar/i.test(line)) cmds.push({ type: 'carro1_avancar' });
-            else if (/carro1_parar/i.test(line)) cmds.push({ type: 'carro1_parar' });
-            else if (/carro2_avancar/i.test(line)) cmds.push({ type: 'carro2_avancar' });
-            else if (/carro2_parar/i.test(line)) cmds.push({ type: 'carro2_parar' });
-            else if (/pedestre_atravessar/i.test(line)) cmds.push({ type: 'pedestre_atravessar' });
-            else if (/pedestre_parar/i.test(line)) cmds.push({ type: 'pedestre_parar' });
-            else if (/PIN_SEM1_VERDE.*HIGH|semaforo1_verde|semaforoA_verde/i.test(line)) cmds.push({ type: 'semaforo1_verde' });
-            else if (/PIN_SEM1_AMARELO.*HIGH|semaforo1_amarelo|semaforoA_amarelo/i.test(line)) cmds.push({ type: 'semaforo1_amarelo' });
-            else if (/PIN_SEM1_VERMELHO.*HIGH|semaforo1_vermelho|semaforoA_vermelho/i.test(line)) cmds.push({ type: 'semaforo1_vermelho' });
-            else if (/PIN_SEM2_VERDE.*HIGH|semaforo2_verde|semaforoB_verde/i.test(line)) cmds.push({ type: 'semaforo2_verde' });
-            else if (/PIN_SEM2_AMARELO.*HIGH|semaforo2_amarelo|semaforoB_amarelo/i.test(line)) cmds.push({ type: 'semaforo2_amarelo' });
-            else if (/PIN_SEM2_VERMELHO.*HIGH|semaforo2_vermelho|semaforoB_vermelho/i.test(line)) cmds.push({ type: 'semaforo2_vermelho' });
-            else if (/PIN_PEDESTRE_VERDE.*HIGH|pedestre_verde/i.test(line)) cmds.push({ type: 'pedestre_verde' });
-            else if (/PIN_PEDESTRE_VERMELHO.*HIGH|pedestre_vermelho/i.test(line)) cmds.push({ type: 'pedestre_vermelho' });
+            if (/carro1_avancar/i.test(token)) cmds.push({ type: 'carro1_avancar' });
+            else if (/carro1_parar/i.test(token)) cmds.push({ type: 'carro1_parar' });
+            else if (/carro2_avancar/i.test(token)) cmds.push({ type: 'carro2_avancar' });
+            else if (/carro2_parar/i.test(token)) cmds.push({ type: 'carro2_parar' });
+            else if (/pedestre_atravessar/i.test(token)) cmds.push({ type: 'pedestre_atravessar' });
+            else if (/pedestre_parar/i.test(token)) cmds.push({ type: 'pedestre_parar' });
+            else if (/digitalWrite\s*\(\s*PIN_SEM1_VERDE\s*,\s*(HIGH|1)\s*\)|semaforo1_verde|semaforoA_verde/i.test(token)) cmds.push({ type: 'semaforo1_verde' });
+            else if (/digitalWrite\s*\(\s*PIN_SEM1_AMARELO\s*,\s*(HIGH|1)\s*\)|semaforo1_amarelo|semaforoA_amarelo/i.test(token)) cmds.push({ type: 'semaforo1_amarelo' });
+            else if (/digitalWrite\s*\(\s*PIN_SEM1_VERMELHO\s*,\s*(HIGH|1)\s*\)|semaforo1_vermelho|semaforoA_vermelho/i.test(token)) cmds.push({ type: 'semaforo1_vermelho' });
+            else if (/digitalWrite\s*\(\s*PIN_SEM2_VERDE\s*,\s*(HIGH|1)\s*\)|semaforo2_verde|semaforoB_verde/i.test(token)) cmds.push({ type: 'semaforo2_verde' });
+            else if (/digitalWrite\s*\(\s*PIN_SEM2_AMARELO\s*,\s*(HIGH|1)\s*\)|semaforo2_amarelo|semaforoB_amarelo/i.test(token)) cmds.push({ type: 'semaforo2_amarelo' });
+            else if (/digitalWrite\s*\(\s*PIN_SEM2_VERMELHO\s*,\s*(HIGH|1)\s*\)|semaforo2_vermelho|semaforoB_vermelho/i.test(token)) cmds.push({ type: 'semaforo2_vermelho' });
+            else if (/digitalWrite\s*\(\s*PIN_PEDESTRE_VERDE\s*,\s*(HIGH|1)\s*\)|pedestre_verde/i.test(token)) cmds.push({ type: 'pedestre_verde' });
+            else if (/digitalWrite\s*\(\s*PIN_PEDESTRE_VERMELHO\s*,\s*(HIGH|1)\s*\)|pedestre_vermelho/i.test(token)) cmds.push({ type: 'pedestre_vermelho' });
             else {
-                const matchDelay = line.match(/delay\s*\(\s*(\d+)\s*\)/i);
-                if (matchDelay) cmds.push({ type: 'delay', ms: parseInt(matchDelay[1]) });
+                const matchDelay = token.match(/delay\s*\(\s*(\d+)\s*\)/i);
+                if (matchDelay) {
+                    cmds.push({ type: 'delay', ms: parseInt(matchDelay[1]) });
+                } else {
+                    // Comando não suportado ou erro de digitação no C++
+                    cmds.push({ type: 'syntax_error', raw: token });
+                }
             }
         });
     }
@@ -1714,11 +1723,14 @@ function sem_extractCommands() {
 
 async function sem_runSimulation() {
     if (sem_running) return;
-    playSound('click');
+    if (typeof playSound === 'function') playSound('click');
 
     const cmds = sem_extractCommands();
     if (cmds.length === 0) {
-        alert('Por favor, selecione ou digite os comandos do semáforo antes de executar!');
+        sem_registerError('Mini-IDE Vazia! 📝', 
+            'Nenhum comando Arduino C++ foi encontrado para executar no cruzamento.',
+            'Digite comandos como digitalWrite(PIN_SEM1_VERDE, HIGH); ou use os botões rápidos e o autocompletar com Tab!',
+            '📝');
         return;
     }
 
@@ -1742,171 +1754,25 @@ async function sem_runSimulation() {
     for (let i = 0; i < cmds.length; i++) {
         const cmd = cmds[i];
 
+        // 1. ERRO DE COMPILAÇÃO / COMANDO NÃO RECONHECIDO NO C++
+        if (cmd.type === 'syntax_error') {
+            if (typeof playSound === 'function') playSound('error');
+            sem_registerError('Erro de Compilação C++ ⚠️', 
+                `O compilador não reconheceu o comando: "<code>${cmd.raw}</code>". Verifique se há erros de digitação, parênteses ou parâmetros!`, 
+                'Exemplo correto: digitalWrite(PIN_SEM1_VERDE, HIGH); ou delay(2000); ou consulte os botões de atalho.', 
+                '⚠️');
+            crashed = true;
+            break;
+        }
+
         if (cmd.type === 'semaforo1_verde') {
             stateA = 'green';
             sem_setTrafficLights({ a: 'green' });
             hasHadYellowA = false;
-            playSound('step');
+            if (typeof playSound === 'function') playSound('step');
 
-            if (sem_carRed_state === 'start' || sem_carRed_state === 'stop') {
-                if (stateB === 'green') {
-                    sem_carRed_state = 'cross';
-                    sem_carBlue_state = 'cross';
-                    if (sem_level === 5) {
-                        sem_carGreen_state = 'cross';
-                        sem_carYellow_state = 'cross';
-                    }
-                }
-            }
-        } else if (cmd.type === 'semaforo1_amarelo') {
-            stateA = 'yellow';
-            sem_setTrafficLights({ a: 'yellow' });
-            hasHadYellowA = true;
-            playSound('step');
-
-            // Carros da avenida na aproximação desaceleram para parar na linha de retenção
-            if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
-            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'semaforo1_vermelho') {
-            if (stateA === 'green' && !hasHadYellowA && sem_carRed_state === 'start') {
-                sem_registerError('Freagem Brusca no Semáforo 1!', 
-                    'O Semáforo 1 mudou direto do Verde para o Vermelho! Os carros da avenida derraparam na pista.', 
-                    'Sempre acione o pino Amarelo e delay(1000) antes de fechar no Vermelho!', 
-                    '⚠️');
-                crashed = true;
-                break;
-            }
-
-            stateA = 'red';
-            sem_setTrafficLights({ a: 'red' });
-            playSound('step');
-
-            if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
-            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'semaforo2_verde') {
-            stateB = 'green';
-            sem_setTrafficLights({ b: 'green' });
-            hasHadYellowB = false;
-            playSound('step');
-
-            if (stateA === 'green') {
-                sem_carRed_state = 'cross';
-                sem_carBlue_state = 'cross';
-                if (sem_level === 5) {
-                    sem_carGreen_state = 'cross';
-                    sem_carYellow_state = 'cross';
-                }
-            }
-        } else if (cmd.type === 'semaforo2_amarelo') {
-            stateB = 'yellow';
-            sem_setTrafficLights({ b: 'yellow' });
-            hasHadYellowB = true;
-            playSound('step');
-
-            if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
-            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'semaforo2_vermelho') {
-            if (stateB === 'green' && !hasHadYellowB && sem_carBlue_state === 'start') {
-                sem_registerError('Freagem Brusca no Semáforo 2!', 
-                    'O Semáforo 2 fechou direto sem o Amarelo de aviso!', 
-                    'Sempre use o Amarelo e delay() antes de fechar.', 
-                    '⚠️');
-                crashed = true;
-                break;
-            }
-
-            stateB = 'red';
-            sem_setTrafficLights({ b: 'red' });
-            playSound('step');
-
-            if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
-            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'pedestre_verde') {
-            statePed = 'green';
-            sem_setTrafficLights({ ped: 'green' });
-            playSound('step');
-
-            sem_ped_state = 'crossing';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'pedestre_vermelho') {
-            statePed = 'red';
-            sem_setTrafficLights({ ped: 'red' });
-            playSound('step');
-
-            if (sem_ped_state === 'crossing') sem_ped_state = 'sidewalk_north';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'carro1_avancar') {
-            // Validação de trânsito:
-            if (stateA === 'red') {
-                sem_carRed_state = 'cross';
-                if (sem_level === 5) sem_carGreen_state = 'cross';
-                sem_renderCarPositions(true);
-                playSound('error');
-                sem_registerError('Infração no Semáforo 1! 🚨', 
-                    'O fluxo da avenida avançou com o Semáforo 1 no VERMELHO! Os motoristas furaram o sinal vermelho.', 
-                    'Ligue o pino Verde (digitalWrite(PIN_SEM1_VERDE, HIGH)) antes de avançar!', 
-                    '🛑');
-                crashed = true;
-                break;
-            } else {
-                sem_carRed_state = 'cross';
-                // No Nível 5, carros na horizontal andam juntos em pistas paralelas!
-                if (sem_level === 5) sem_carGreen_state = 'cross';
-                sem_renderCarPositions(true);
-            }
-        } else if (cmd.type === 'carro1_parar') {
-            if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
-            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'carro2_avancar') {
-            if (stateB === 'red') {
-                sem_carBlue_state = 'cross';
-                if (sem_level === 5) sem_carYellow_state = 'cross';
-                sem_renderCarPositions(true);
-                playSound('error');
-                sem_registerError('Infração no Semáforo 2! 🚨', 
-                    'O fluxo transversal avançou com o Semáforo 2 no VERMELHO!', 
-                    'Ligue o pino Verde (digitalWrite(PIN_SEM2_VERDE, HIGH)) antes de ordenar o avanço!', 
-                    '🛑');
-                crashed = true;
-                break;
-            } else {
-                sem_carBlue_state = 'cross';
-                // No Nível 5, carros na vertical andam juntos em pistas paralelas!
-                if (sem_level === 5) sem_carYellow_state = 'cross';
-                sem_renderCarPositions(true);
-            }
-        } else if (cmd.type === 'carro2_parar') {
-            if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
-            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'pedestre_atravessar') {
-            if (statePed === 'red') {
-                sem_ped_state = 'crossing';
-                sem_renderCarPositions(true);
-                playSound('error');
-                sem_registerError('Infração na Faixa de Pedestre! 🚸', 
-                    'O pedestre atravessou com o sinal de pedestre no VERMELHO (PARE)!', 
-                    'Ligue o pino verde com digitalWrite(PIN_PEDESTRE_VERDE, HIGH) antes de atravessar!', 
-                    '🚸');
-                crashed = true;
-                break;
-            } else {
-                sem_ped_state = 'crossing';
-                sem_renderCarPositions(true);
-            }
-        } else if (cmd.type === 'pedestre_parar') {
-            if (sem_ped_state === 'crossing') sem_ped_state = 'sidewalk_north';
-            sem_renderCarPositions(true);
-        } else if (cmd.type === 'delay') {
-            // ================= CHECAGEM DE TRÂNSITO DURANTE O DELAY =================
-
-            // 1. Colisão Perpendicular (Avenida e Rua abertas simultaneamente)
-            if (stateA === 'green' && stateB === 'green') {
+            // Colisão Imediata: Semáforo 1 e Semáforo 2 ambos no Verde!
+            if (stateB === 'green') {
                 if (statusHud) { 
                     statusHud.innerHTML = (sem_level === 5) ? '💥 COLISÃO QUÁDRUPLA NO CENTRO!' : '💥 COLISÃO NO CENTRO!'; 
                     statusHud.style.color = '#EF4444'; 
@@ -1918,9 +1784,8 @@ async function sem_runSimulation() {
                     sem_carYellow_state = 'cross';
                 }
                 sem_renderCarPositions(true);
-
                 if (crashFx) crashFx.classList.add('active');
-                playSound('error');
+                if (typeof playSound === 'function') playSound('error');
                 await sem_sleep(700);
 
                 const descError = (sem_level === 5)
@@ -1932,32 +1797,246 @@ async function sem_runSimulation() {
                 break;
             }
 
-            // 2. Colisão Carros vs Pedestre
-            if (statePed === 'green' && (stateA === 'green' || stateB === 'green')) {
+            // Perigo Imediato na Faixa: Pedestre atravessando e semáforo veicular abrindo
+            if (statePed === 'green') {
                 if (statusHud) { statusHud.innerHTML = '🚨 QUASE ATROPELOU O PEDESTRE!'; statusHud.style.color = '#EF4444'; }
                 const pedEl = document.getElementById('sem_ped_1');
                 if (pedEl) pedEl.innerText = '😱';
-                playSound('error');
+                if (typeof playSound === 'function') playSound('error');
                 await sem_sleep(600);
 
                 sem_registerError('Perigo na Faixa de Pedestres! 🚨', 
-                    'O pedestre estava atravessando na faixa e o semáforo dos veículos abriu!', 
-                    'Enquanto o pedestre atravessa (PIN_PEDESTRE_VERDE HIGH), TODOS os semáforos de carros (1 e 2) devem estar no VERMELHO!', 
+                    'O Semáforo 1 abriu no Verde enquanto o pedestre ainda atravessava a faixa zebrada!', 
+                    'Enquanto o pedestre atravessa, TODOS os semáforos de carros (1 e 2) devem estar no VERMELHO!', 
                     '🚨');
                 crashed = true;
                 break;
             }
 
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'semaforo1_amarelo') {
+            stateA = 'yellow';
+            sem_setTrafficLights({ a: 'yellow' });
+            hasHadYellowA = true;
+            if (typeof playSound === 'function') playSound('step');
+
+            if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
+            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
+            sem_renderCarPositions(true);
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'semaforo1_vermelho') {
+            if (stateA === 'green' && !hasHadYellowA && sem_carRed_state === 'start') {
+                sem_registerError('Freagem Brusca no Semáforo 1!', 
+                    'O Semáforo 1 mudou direto do Verde para o Vermelho sem passar pelo Amarelo! Os carros da avenida derraparam na pista.', 
+                    'Sempre acione o pino Amarelo e delay(1000) antes de fechar no Vermelho!', 
+                    '⚠️');
+                crashed = true;
+                break;
+            }
+
+            stateA = 'red';
+            sem_setTrafficLights({ a: 'red' });
+            if (typeof playSound === 'function') playSound('step');
+
+            if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
+            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
+            sem_renderCarPositions(true);
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'semaforo2_verde') {
+            stateB = 'green';
+            sem_setTrafficLights({ b: 'green' });
+            hasHadYellowB = false;
+            if (typeof playSound === 'function') playSound('step');
+
+            // Colisão com Semáforo 1 Verde
+            if (stateA === 'green') {
+                if (statusHud) { 
+                    statusHud.innerHTML = (sem_level === 5) ? '💥 COLISÃO QUÁDRUPLA NO CENTRO!' : '💥 COLISÃO NO CENTRO!'; 
+                    statusHud.style.color = '#EF4444'; 
+                }
+                sem_carRed_state = 'cross';
+                sem_carBlue_state = 'cross';
+                if (sem_level === 5) {
+                    sem_carGreen_state = 'cross';
+                    sem_carYellow_state = 'cross';
+                }
+                sem_renderCarPositions(true);
+                if (crashFx) crashFx.classList.add('active');
+                if (typeof playSound === 'function') playSound('error');
+                await sem_sleep(700);
+
+                sem_registerError('Batida no Centro! 💥', 
+                    'O Semáforo 2 abriu no Verde enquanto o Semáforo 1 ainda estava Verde! Os dois fluxos colidiram.', 
+                    'Enquanto o Semáforo 2 for Verde, o Semáforo 1 DEVE estar Vermelho!', '💥');
+                crashed = true;
+                break;
+            }
+
+            // Atropelamento de Pedestre
+            if (statePed === 'green') {
+                if (statusHud) { statusHud.innerHTML = '🚨 QUASE ATROPELOU O PEDESTRE!'; statusHud.style.color = '#EF4444'; }
+                const pedEl = document.getElementById('sem_ped_1');
+                if (pedEl) pedEl.innerText = '😱';
+                if (typeof playSound === 'function') playSound('error');
+                await sem_sleep(600);
+
+                sem_registerError('Perigo na Faixa de Pedestres! 🚨', 
+                    'O Semáforo 2 abriu no Verde enquanto o pedestre atravessava a faixa!', 
+                    'Enquanto o pedestre atravessa, TODOS os semáforos de veículos devem estar no VERMELHO!', 
+                    '🚨');
+                crashed = true;
+                break;
+            }
+
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'semaforo2_amarelo') {
+            stateB = 'yellow';
+            sem_setTrafficLights({ b: 'yellow' });
+            hasHadYellowB = true;
+            if (typeof playSound === 'function') playSound('step');
+
+            if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
+            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
+            sem_renderCarPositions(true);
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'semaforo2_vermelho') {
+            if (stateB === 'green' && !hasHadYellowB && sem_carBlue_state === 'start') {
+                sem_registerError('Freagem Brusca no Semáforo 2!', 
+                    'O Semáforo 2 fechou direto do Verde para o Vermelho sem o Amarelo de aviso!', 
+                    'Sempre use o Amarelo e delay() antes de fechar no Vermelho.', 
+                    '⚠️');
+                crashed = true;
+                break;
+            }
+
+            stateB = 'red';
+            sem_setTrafficLights({ b: 'red' });
+            if (typeof playSound === 'function') playSound('step');
+
+            if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
+            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
+            sem_renderCarPositions(true);
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'pedestre_verde') {
+            statePed = 'green';
+            sem_setTrafficLights({ ped: 'green' });
+            if (typeof playSound === 'function') playSound('step');
+
+            if (stateA === 'green' || stateB === 'green') {
+                if (statusHud) { statusHud.innerHTML = '🚨 QUASE ATROPELOU O PEDESTRE!'; statusHud.style.color = '#EF4444'; }
+                const pedEl = document.getElementById('sem_ped_1');
+                if (pedEl) pedEl.innerText = '😱';
+                if (typeof playSound === 'function') playSound('error');
+                await sem_sleep(600);
+
+                sem_registerError('Perigo na Faixa de Pedestres! 🚨', 
+                    'O semáforo de pedestre abriu com veículos em trânsito aberto (Verde)!', 
+                    'Trave todos os semáforos de veículos no Vermelho antes de abrir o sinal do pedestre!', 
+                    '🚨');
+                crashed = true;
+                break;
+            }
+
+            sem_ped_state = 'crossing';
+            sem_renderCarPositions(true);
+            await sem_sleep(200);
+
+        } else if (cmd.type === 'pedestre_vermelho') {
+            statePed = 'red';
+            sem_setTrafficLights({ ped: 'red' });
+            if (typeof playSound === 'function') playSound('step');
+
+            if (sem_ped_state === 'crossing') sem_ped_state = 'sidewalk_north';
+            sem_renderCarPositions(true);
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'carro1_avancar') {
+            if (stateA === 'red') {
+                sem_carRed_state = 'cross';
+                if (sem_level === 5) sem_carGreen_state = 'cross';
+                sem_renderCarPositions(true);
+                if (typeof playSound === 'function') playSound('error');
+                sem_registerError('Infração no Semáforo 1! 🚨', 
+                    'O fluxo da avenida avançou com o Semáforo 1 no VERMELHO! Os motoristas furaram o sinal vermelho.', 
+                    'Ligue o pino Verde (digitalWrite(PIN_SEM1_VERDE, HIGH)) antes de avançar!', 
+                    '🛑');
+                crashed = true;
+                break;
+            } else {
+                sem_carRed_state = 'cross';
+                if (sem_level === 5) sem_carGreen_state = 'cross';
+                sem_renderCarPositions(true);
+                await sem_sleep(200);
+            }
+
+        } else if (cmd.type === 'carro1_parar') {
+            if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
+            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
+            sem_renderCarPositions(true);
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'carro2_avancar') {
+            if (stateB === 'red') {
+                sem_carBlue_state = 'cross';
+                if (sem_level === 5) sem_carYellow_state = 'cross';
+                sem_renderCarPositions(true);
+                if (typeof playSound === 'function') playSound('error');
+                sem_registerError('Infração no Semáforo 2! 🚨', 
+                    'O fluxo transversal avançou com o Semáforo 2 no VERMELHO!', 
+                    'Ligue o pino Verde (digitalWrite(PIN_SEM2_VERDE, HIGH)) antes de ordenar o avanço!', 
+                    '🛑');
+                crashed = true;
+                break;
+            } else {
+                sem_carBlue_state = 'cross';
+                if (sem_level === 5) sem_carYellow_state = 'cross';
+                sem_renderCarPositions(true);
+                await sem_sleep(200);
+            }
+
+        } else if (cmd.type === 'carro2_parar') {
+            if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
+            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
+            sem_renderCarPositions(true);
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'pedestre_atravessar') {
+            if (statePed === 'red') {
+                sem_ped_state = 'crossing';
+                sem_renderCarPositions(true);
+                if (typeof playSound === 'function') playSound('error');
+                sem_registerError('Infração na Faixa de Pedestre! 🚸', 
+                    'O pedestre atravessou com o sinal de pedestre no VERMELHO (PARE)!', 
+                    'Ligue o pino verde com digitalWrite(PIN_PEDESTRE_VERDE, HIGH) antes de atravessar!', 
+                    '🚸');
+                crashed = true;
+                break;
+            } else {
+                sem_ped_state = 'crossing';
+                sem_renderCarPositions(true);
+                await sem_sleep(200);
+            }
+
+        } else if (cmd.type === 'pedestre_parar') {
+            if (sem_ped_state === 'crossing') sem_ped_state = 'sidewalk_north';
+            sem_renderCarPositions(true);
+            await sem_sleep(150);
+
+        } else if (cmd.type === 'delay') {
             const waitTime = Math.min(2500, Math.max(700, Math.round(cmd.ms * 0.85)));
 
-            // 3. Movimento dos fluxos no Verde
+            // Movimento dos veículos durante o período de delay no verde
             if (stateA === 'green' && stateB === 'red' && statePed === 'red') {
-                // Carros da avenida cruzam para frente em sentidos opostos (NUNCA DE RÉ!)
                 if (sem_carRed_state !== 'exit') sem_carRed_state = 'exit';
                 if (sem_level === 5 && sem_carGreen_state !== 'exit') sem_carGreen_state = 'exit';
                 sem_renderCarPositions(true);
             } else if (stateB === 'green' && stateA === 'red' && statePed === 'red') {
-                // Carros da rua transversal cruzam para frente em sentidos opostos
                 if (sem_carBlue_state !== 'exit') sem_carBlue_state = 'exit';
                 if (sem_level === 5 && sem_carYellow_state !== 'exit') sem_carYellow_state = 'exit';
                 sem_renderCarPositions(true);
@@ -1971,10 +2050,10 @@ async function sem_runSimulation() {
     }
 
     if (!crashed) {
-        const isSuccess = sem_validateLevelSuccess(cmds);
+        const errorDetail = sem_checkLevelCompletion(cmds);
 
-        if (isSuccess) {
-            playSound('success');
+        if (!errorDetail) {
+            if (typeof playSound === 'function') playSound('success');
             if (typeof triggerConfetti === 'function') triggerConfetti(3500);
 
             let saved = JSON.parse(localStorage.getItem('semaforo_levels') || '[]');
@@ -1987,7 +2066,7 @@ async function sem_runSimulation() {
 
             sem_showWinModal();
         } else {
-            sem_registerError('Quase lá!', 'A sequência de semáforos não cumpriu todos os passos deste nível.', 'Verifique os requisitos da missão!', '❌');
+            sem_registerError('Sequência Incompleta! 🚦', errorDetail, 'Consulte a descrição dos requisitos da missão acima.', '🔄');
         }
     }
 
@@ -1995,35 +2074,37 @@ async function sem_runSimulation() {
     if (runBtn) runBtn.disabled = false;
 }
 
-function sem_validateLevelSuccess(cmds) {
+function sem_checkLevelCompletion(cmds) {
     if (sem_level === 1) {
-        const hasGreen1 = cmds.some(c => c.type === 'semaforo1_verde');
-        const hasYellow1 = cmds.some(c => c.type === 'semaforo1_amarelo');
-        const hasRed1 = cmds.some(c => c.type === 'semaforo1_vermelho');
-        return hasGreen1 && hasYellow1 && hasRed1;
+        if (!cmds.some(c => c.type === 'semaforo1_verde')) return 'Abra o Semáforo 1 no Verde por 2 segundos!';
+        if (!cmds.some(c => c.type === 'semaforo1_amarelo')) return 'Acione a luz Amarela de aviso antes de fechar!';
+        if (!cmds.some(c => c.type === 'semaforo1_vermelho')) return 'Feche o Semáforo 1 no Vermelho para a parada completa antes da faixa!';
+        return null;
     } else if (sem_level === 2) {
-        const hasGreen1 = cmds.some(c => c.type === 'semaforo1_verde');
-        const hasGreen2 = cmds.some(c => c.type === 'semaforo2_verde');
-        const hasRed2 = cmds.some(c => c.type === 'semaforo2_vermelho');
-        return hasGreen1 && hasGreen2 && hasRed2;
+        if (!cmds.some(c => c.type === 'semaforo1_verde')) return 'Abra o Semáforo 1 no Verde para liberar o fluxo da avenida!';
+        if (!cmds.some(c => c.type === 'semaforo2_verde')) return 'Abra o Semáforo 2 no Verde para liberar a rua transversal!';
+        if (!cmds.some(c => c.type === 'semaforo2_vermelho')) return 'Certifique-se de travar a rua transversal enquanto a avenida passa!';
+        return null;
     } else if (sem_level === 3) {
-        const hasPedGreen = cmds.some(c => c.type === 'pedestre_verde');
-        const hasRed1 = cmds.some(c => c.type === 'semaforo1_vermelho');
-        const hasRed2 = cmds.some(c => c.type === 'semaforo2_vermelho');
-        return hasPedGreen && hasRed1 && hasRed2;
+        if (!cmds.some(c => c.type === 'pedestre_verde')) return 'Abra o Semáforo de Pedestres no Verde para a travessia na faixa zebrada!';
+        if (!cmds.some(c => c.type === 'pedestre_vermelho')) return 'Feche o sinal de pedestres após a travessia!';
+        return null;
     } else if (sem_level === 4) {
-        const hasGreen1 = cmds.some(c => c.type === 'semaforo1_verde');
-        const hasGreen2 = cmds.some(c => c.type === 'semaforo2_verde');
-        const hasPedGreen = cmds.some(c => c.type === 'pedestre_verde');
-        return hasGreen1 && hasGreen2 && hasPedGreen;
+        const hasS1 = cmds.some(c => c.type === 'semaforo1_verde');
+        const hasS2 = cmds.some(c => c.type === 'semaforo2_verde');
+        const hasPed = cmds.some(c => c.type === 'pedestre_verde');
+        if (!hasS1) return 'Faltou abrir o Semáforo 1 no Verde para a Avenida!';
+        if (!hasS2) return 'Faltou abrir o Semáforo 2 no Verde para a Rua Transversal!';
+        if (!hasPed) return 'Faltou liberar a travessia no Semáforo de Pedestres 🚸!';
+        return null;
     } else if (sem_level === 5) {
-        // Nível 5: Grande Metrópole Maker (ambos os eixos acionados e pedestres)
-        const hasGreen1 = cmds.some(c => c.type === 'semaforo1_verde');
-        const hasGreen2 = cmds.some(c => c.type === 'semaforo2_verde');
-        const hasPedGreen = cmds.some(c => c.type === 'pedestre_verde');
-        return hasGreen1 && hasGreen2 && hasPedGreen;
+        const hasS1 = cmds.some(c => c.type === 'semaforo1_verde');
+        const hasS2 = cmds.some(c => c.type === 'semaforo2_verde');
+        const hasPed = cmds.some(c => c.type === 'pedestre_verde');
+        if (!hasS1 || !hasS2 || !hasPed) return 'Na Grande Metrópole Maker, você deve sincronizar todos os 4 fluxos e a faixa de pedestres!';
+        return null;
     }
-    return true;
+    return null;
 }
 
 function sem_registerError(title, msg, hint, icon) {
