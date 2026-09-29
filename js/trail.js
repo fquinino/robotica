@@ -80,22 +80,32 @@ Isso transforma um robô simples em um robô <b>AUTÔNOMO E INTELIGENTE</b>!`,
         jogo:'tab-jardim', btntext:'🎮 Ir para o Robô com IF/ELSE!'
     },
     4: {
-        emoji:'🚦', title:'Sequências Temporizadas (Sinais)', color:'#FBBF24',
-        objetivo:'🧠 <b>O que você vai aprender:</b> Como controlar o <b>tempo</b> das coisas no Arduino usando a função <span style="color:#FBBF24;">delay()</span> em milissegundos!',
-        teoria:`<b>O tempo na programação</b>
+        emoji:'🚦', title:'Sequências Temporizadas (Sinais & Cruzamento)', color:'#FBBF24',
+        objetivo:'🧠 <b>O que você vai aprender:</b> Como temporizar semáforos no Arduino com a função <span style="color:#FBBF24;">delay()</span> em milissegundos para organizar o trânsito da Cidade Maker sem colisões!',
+        teoria:`<b>Operação Trânsito Seguro na Cidade Maker 🏙️🚦</b>
 
-Um semáforo de trânsito precisa ficar <b>5 segundos</b> no VERDE, <b>2 segundos</b> no AMARELO e <b>5 segundos</b> no VERMELHO.
+Dois carros chegam ao mesmo tempo em vias que se cruzam perpendicularmente! Se ambos passarem juntos... <b>BOOM! 💥 Batida na certa!</b>
+Além disso, temos pedestres querendo atravessar a faixa com segurança.
 
-No Arduino, medimos tempo em <b>milissegundos</b>:
-- 1 segundo = <b>1000 ms</b>
-- 5 segundos = <b>5000 ms</b>
+Para resolver o caos urbano, usamos o Arduino em C para controlar a ordem e o tempo de cada fase:
+1️⃣ <b>1 segundo = 1000 milissegundos (ms)</b>.
+2️⃣ Usamos <code>delay(2000);</code> para manter o sinal verde aberto por 2 segundos.
+3️⃣ Usamos o sinal <b>Amarelo</b> de transição para os carros desacelerarem antes do <b>Vermelho</b>.
+4️⃣ Quando os pedestres atravessam, <b>todos os carros devem esperar no sinal vermelho!</b>`,
+        exemplo:`// Fase 1: Avenida Verde por 3 segundos
+semaforoA_verde();
+delay(3000);
 
-Usamos a função <code>delay(5000);</code> para fazer o Arduino "esperar" antes de passar para o próximo comando.`,
-        exemplo:`digitalWrite(ledVerde, HIGH); // Liga o verde
-delay(5000);                   // Espera 5 segundos
-digitalWrite(ledVerde, LOW);  // Desliga o verde`,
-        dica:'💡 Dica Maker: Enquanto o delay() está rodando, o Arduino fica "congelado" esperando. Nas aulas avançadas você aprenderá a fazer multitarefas!',
-        jogo:'tab-semaforo', btntext:'🎮 Jogar Semáforo Digital!'
+// Fase 2: Atenção Amarelo por 1 segundo
+semaforoA_amarelo();
+delay(1000);
+
+// Fase 3: Avenida fecha no Vermelho e Rua abre no Verde
+semaforoA_vermelho();
+semaforoB_verde();
+delay(3000);`,
+        dica:'💡 Dica Maker: Nunca mude direto do Verde para o Vermelho sem passar pelo Amarelo! O sinal amarelo e o delay() dão o tempo para os motoristas frearem com segurança.',
+        jogo:'tab-semaforo', btntext:'🎮 Ir para o Cruzamento & Mini-IDE!'
     },
     5: {
         emoji:'🧮', title:'Variáveis e Tipos de Dados', color:'#38BDF8',
@@ -245,10 +255,10 @@ function updateTrail() {
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
                        getLevels('jardim_levels').length + getLevels('arduino_levels').length;
 
-    const percent = Math.min(100, Math.round((totalStars / 20) * 100));
+    const percent = Math.min(100, Math.round((totalStars / 21) * 100));
     const starCountEl = document.getElementById('trail-star-count');
     const progressBarEl = document.getElementById('trail-progress-bar');
-    if (starCountEl) starCountEl.innerText = `${totalStars} / 20 ⭐`;
+    if (starCountEl) starCountEl.innerText = `${totalStars} / 21 ⭐`;
     if (progressBarEl) progressBarEl.style.width = `${percent}%`;
 
     let html = '';
@@ -336,7 +346,7 @@ function updateHubProgress() {
     const jar = getLevels('jardim_levels');
     const ard = getLevels('arduino_levels');
 
-    setBadge('badge-semaforo', sem);
+    setBadge('badge-semaforo', sem, 4);
     setBadge('badge-tesouro', tes);
     setBadge('badge-labmaker', lab);
     setBadge('badge-loopmaker', loo, 4);
@@ -346,6 +356,6 @@ function updateHubProgress() {
     const totalStars = sem.length + tes.length + lab.length + loo.length + jar.length + ard.length;
     const countEl = document.getElementById('hub-star-count');
     const barEl = document.getElementById('hub-progress-bar');
-    if (countEl) countEl.innerText = `${totalStars} / 20 ⭐`;
-    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 20) * 100))}%`;
+    if (countEl) countEl.innerText = `${totalStars} / 21 ⭐`;
+    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 21) * 100))}%`;
 }
