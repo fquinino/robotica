@@ -36,8 +36,8 @@ function loadSemaforo() {
             .sem-dot { width:8px; height:8px; border-radius:50%; background:#334155; transition:0.2s all; }
             .sem-dot.active { width:22px; border-radius:10px; background:#F59E0B; }
 
-            /* NAVEGAÇÃO DOS NÍVEIS (BARRA SEGMENTADA) */
-            .sem-level-bar { display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; margin-bottom:18px; width:100%; }
+            /* NAVEGAÇÃO DOS NÍVEIS (BARRA SEGMENTADA DE 5 NÍVEIS) */
+            .sem-level-bar { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:10px; margin-bottom:18px; width:100%; }
             .sem-level-btn { background:#1E293B; border:2px solid #334155; color:#94A3B8; padding:12px 14px; border-radius:18px; font-weight:800; cursor:pointer; font-size:0.88rem; transition:0.2s all; display:flex; align-items:center; justify-content:space-between; text-align:left; }
             .sem-level-btn:hover { border-color:#F59E0B; color:white; transform:translateY(-2px); box-shadow:0 6px 15px rgba(0,0,0,0.3); }
             .sem-level-btn.active { background:linear-gradient(135deg, #1E293B, #0F172A); color:white; border-color:#FBBF24; box-shadow:0 0 20px rgba(245,158,11,0.35); }
@@ -58,7 +58,7 @@ function loadSemaforo() {
             .sem-story-badge { font-family:'Fira Code', monospace; font-size:0.8rem; background:rgba(245,158,11,0.15); color:#FBBF24; padding:3px 10px; border-radius:8px; border:1px dashed #F59E0B; }
             .sem-story-text { color:#CBD5E1; font-size:0.9rem; line-height:1.5; margin:0; }
 
-            /* CENÁRIO GRÁFICO DO CRUZAMENTO DE 2 FLUXOS */
+            /* CENÁRIO GRÁFICO DO CRUZAMENTO DE 2/4 FLUXOS */
             .sem-stage-card { background:#090D16; border:2px solid #334155; border-radius:24px; padding:16px; margin-bottom:18px; box-shadow:0 12px 35px rgba(0,0,0,0.6); position:relative; overflow:hidden; }
             .sem-stage-hud { display:flex; justify-content:space-between; align-items:center; background:#0F172A; border:1px solid #1E293B; border-radius:14px; padding:10px 16px; margin-bottom:14px; flex-wrap:wrap; gap:10px; }
             .sem-hud-item { display:flex; align-items:center; gap:8px; font-size:0.85rem; font-weight:800; }
@@ -69,7 +69,7 @@ function loadSemaforo() {
 
             .sem-crossroad-box { position:relative; width:100%; height:440px; min-height:440px; background:#0B1120; border-radius:18px; border:2px solid #334155; overflow:hidden; box-shadow:inset 0 0 40px rgba(0,0,0,0.8); }
             
-            /* PISTAS DE ASFALTO */
+            /* PISTAS DE ASFALTO (MÃO DUPLA) */
             .sem-road-h { position:absolute; top:50%; left:0; width:100%; height:110px; transform:translateY(-50%); background:#1E293B; border-top:3px solid #475569; border-bottom:3px solid #475569; }
             .sem-road-h-line { position:absolute; top:50%; left:0; width:100%; height:2px; transform:translateY(-50%); border-top:3px dashed #F59E0B; opacity:0.85; }
             
@@ -81,8 +81,12 @@ function loadSemaforo() {
             
             /* FAIXA DE PEDESTRES ZEBRADA NA ENTRADA OESTE */
             .sem-zebra-west { position:absolute; top:50%; left:calc(50% - 95px); width:32px; height:110px; transform:translateY(-50%); background:repeating-linear-gradient(180deg, #FFFFFF, #FFFFFF 10px, transparent 10px, transparent 20px); opacity:0.9; z-index:6; }
+            
+            /* LINHAS BRANCAS DE PARADA (STOP LINES NAS 4 ENTRADAS) */
             .sem-stop-line-west { position:absolute; top:calc(50% + 3px); left:calc(50% - 105px); width:4px; height:50px; background:#FFFFFF; z-index:7; box-shadow:0 0 8px white; }
+            .sem-stop-line-east { position:absolute; top:calc(50% - 53px); left:calc(50% + 101px); width:4px; height:50px; background:#FFFFFF; z-index:7; box-shadow:0 0 8px white; }
             .sem-stop-line-north { position:absolute; top:calc(50% - 105px); left:calc(50% - 53px); width:50px; height:4px; background:#FFFFFF; z-index:7; box-shadow:0 0 8px white; }
+            .sem-stop-line-south { position:absolute; top:calc(50% + 101px); left:calc(50% + 3px); width:50px; height:4px; background:#FFFFFF; z-index:7; box-shadow:0 0 8px white; }
 
             /* ================= POSTES DE SEMÁFORO VEICULAR (NUMERADOS 1 E 2) ================= */
             .sem-traffic-post { position:absolute; background:#0B0F19; border:2px solid #475569; border-radius:12px; padding:6px 6px 8px; display:flex; flex-direction:column; align-items:center; gap:5px; z-index:30; box-shadow:0 8px 20px rgba(0,0,0,0.85); min-width:40px; }
@@ -95,12 +99,12 @@ function loadSemaforo() {
             .sem-bulb.yellow.on { background:#F59E0B; opacity:1; box-shadow:0 0 16px #F59E0B, 0 0 25px #D97706; }
             .sem-bulb.green.on { background:#10B981; opacity:1; box-shadow:0 0 16px #10B981, 0 0 25px #059669; }
 
-            /* Posição Semáforo 1 (Fluxo 1 - Carro Vermelho 🚗) */
+            /* Posição Semáforo 1 (Fluxo 1 - Avenida Horizontal) */
             .sem-post-1 { top:calc(50% - 110px); left:calc(50% - 150px); border-color:#EF4444; }
-            /* Posição Semáforo 2 (Fluxo 2 - Carro Azul 🚙) */
+            /* Posição Semáforo 2 (Fluxo 2 - Rua Vertical) */
             .sem-post-2 { top:calc(50% - 145px); left:calc(50% + 65px); border-color:#38BDF8; }
 
-            /* ================= SEMÁFORO DE PEDESTRES 🚸 (DESENHO TOTALMENTE DIFERENCIADO) ================= */
+            /* ================= SEMÁFORO DE PEDESTRES 🚸 ================= */
             .sem-ped-post { position:absolute; top:calc(50% + 60px); left:calc(50% - 145px); background:#0F172A; border:2px solid #FBBF24; border-radius:14px; padding:6px 6px 8px; display:flex; flex-direction:column; align-items:center; gap:6px; z-index:30; box-shadow:0 8px 20px rgba(0,0,0,0.85); width:46px; }
             .sem-ped-sign { background:#FBBF24; color:#0F172A; font-size:0.75rem; font-weight:900; padding:1px 5px; border-radius:4px; margin-bottom:2px; font-family:'Fredoka One'; display:flex; align-items:center; gap:2px; }
             .sem-ped-lens { width:30px; height:30px; background:#0B0F19; border-radius:8px; border:2px solid #334155; display:flex; align-items:center; justify-content:center; opacity:0.3; transition:all 0.25s ease; }
@@ -111,10 +115,14 @@ function loadSemaforo() {
             .sem-vehicle { position:absolute; width:54px; height:30px; z-index:20; transition:all 1.1s cubic-bezier(0.25, 1, 0.5, 1); filter:drop-shadow(0 4px 6px rgba(0,0,0,0.7)); }
             .sem-vehicle svg { width:100%; height:100%; display:block; }
             
-            /* Carro Vermelho 🚗 (Fluxo 1: Oeste -> Leste, virado para 0deg) */
+            /* 1. Carro Vermelho 🚗 (Fluxo 1: Oeste -> Leste, virado para 0deg) */
             #sem_car_red { top:calc(50% + 14px); left:25px; }
-            /* Carro Azul 🚙 (Fluxo 2: Norte -> Sul, virado para 90deg) */
-            #sem_car_blue { top:20px; left:calc(50% - 42px); transform:rotate(90deg); transform-origin:center; }
+            /* 2. Carro Verde 🏎️ (Fluxo 1 Oposto: Leste -> Oeste, virado para 180deg) */
+            #sem_car_green { top:calc(50% - 44px); left:calc(100% - 80px); transform:rotate(180deg); transform-origin:center; display:none; }
+            /* 3. Carro Azul 🚙 (Fluxo 2: Norte -> Sul, virado para 90deg) */
+            #sem_car_blue { top:25px; left:calc(50% - 42px); transform:rotate(90deg); transform-origin:center; }
+            /* 4. Carro Amarelo 🚖 (Fluxo 2 Oposto: Sul -> Norte, virado para -90deg) */
+            #sem_car_yellow { top:calc(100% - 55px); left:calc(50% + 16px); transform:rotate(-90deg); transform-origin:center; display:none; }
 
             /* PEDESTRE 🚶 NA CALÇADA DA FAIXA */
             .sem-pedestrian { position:absolute; font-size:1.8rem; z-index:22; filter:drop-shadow(0 4px 4px rgba(0,0,0,0.8)); transition:all 1.4s ease-in-out; }
@@ -199,9 +207,10 @@ function loadSemaforo() {
             <div class="sem-guide-card" id="sem_guide_card">
                 <div class="sem-guide-tabs">
                     <button class="sem-guide-tab active" id="sem_tab_g1" onclick="sem_switchGuideTab(1)"><i class="fa-solid fa-city"></i> 1. A Missão Maker</button>
-                    <button class="sem-guide-tab" id="sem_tab_g2" onclick="sem_switchGuideTab(2)"><i class="fa-solid fa-stopwatch"></i> 2. O delay() em ms</button>
-                    <button class="sem-guide-tab" id="sem_tab_g3" onclick="sem_switchGuideTab(3)"><i class="fa-solid fa-traffic-light"></i> 3. Cruzamento Seguro</button>
-                    <button class="sem-guide-tab" id="sem_tab_g4" onclick="sem_switchGuideTab(4)"><i class="fa-solid fa-person-walking"></i> 4. Travessia Pedestre</button>
+                    <button class="sem-guide-tab" id="sem_tab_g2" onclick="sem_switchGuideTab(2)"><i class="fa-solid fa-bolt"></i> 2. Pinos & digitalWrite()</button>
+                    <button class="sem-guide-tab" id="sem_tab_g3" onclick="sem_switchGuideTab(3)"><i class="fa-solid fa-stopwatch"></i> 3. O delay() em ms</button>
+                    <button class="sem-guide-tab" id="sem_tab_g4" onclick="sem_switchGuideTab(4)"><i class="fa-solid fa-traffic-light"></i> 4. Cruzamento Seguro</button>
+                    <button class="sem-guide-tab" id="sem_tab_g5" onclick="sem_switchGuideTab(5)"><i class="fa-solid fa-person-walking"></i> 5. Travessia Pedestre</button>
                 </div>
 
                 <!-- SLIDE 1: A MISSÃO DA CIDADE MAKER -->
@@ -210,99 +219,129 @@ function loadSemaforo() {
                         <span>🏙️ 1. O Desafio dos Semáforos Numerados!</span>
                     </div>
                     <p style="margin:0 0 10px;color:#CBD5E1;font-size:0.92rem;line-height:1.6;">
-                        O cruzamento central tem <b>2 fluxos de trânsito perpendiculares</b>, cada um com seu semáforo próprio numerado:
+                        O cruzamento central tem <b>fluxos de trânsito em sentidos coordenados</b>, cada um com seu semáforo próprio numerado:
                     </p>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:12px 0;">
                         <div style="background:#090D16;border:2px solid #EF4444;border-radius:14px;padding:12px;text-align:center;">
                             <div style="display:inline-block;background:#EF4444;color:white;font-weight:900;padding:2px 8px;border-radius:6px;font-size:0.8rem;margin-bottom:4px;">SEMÁFORO 1</div>
-                            <div style="font-size:2rem;">🚗</div>
-                            <b style="color:#F87171;">Fluxo 1: Carro Vermelho</b>
-                            <div style="font-size:0.78rem;color:#94A3B8;margin-top:4px;">Avenida (Oeste ➔ Leste)</div>
+                            <div style="font-size:2rem;">🚗 🏎️</div>
+                            <b style="color:#F87171;">Avenida Principal (Horizontal)</b>
+                            <div style="font-size:0.78rem;color:#94A3B8;margin-top:4px;">Pistas paralelas em sentidos opostos</div>
                         </div>
                         <div style="background:#090D16;border:2px solid #38BDF8;border-radius:14px;padding:12px;text-align:center;">
                             <div style="display:inline-block;background:#38BDF8;color:#0F172A;font-weight:900;padding:2px 8px;border-radius:6px;font-size:0.8rem;margin-bottom:4px;">SEMÁFORO 2</div>
-                            <div style="font-size:2rem;">🚙</div>
-                            <b style="color:#38BDF8;">Fluxo 2: Carro Azul</b>
-                            <div style="font-size:0.78rem;color:#94A3B8;margin-top:4px;">Rua (Norte ➔ Sul)</div>
+                            <div style="font-size:2rem;">🚙 🚖</div>
+                            <b style="color:#38BDF8;">Rua Transversal (Vertical)</b>
+                            <div style="font-size:0.78rem;color:#94A3B8;margin-top:4px;">Cruza perpendicularmente a avenida</div>
                         </div>
                         <div style="background:#090D16;border:2px solid #10B981;border-radius:14px;padding:12px;text-align:center;">
                             <div style="display:inline-block;background:#10B981;color:#0F172A;font-weight:900;padding:2px 8px;border-radius:6px;font-size:0.8rem;margin-bottom:4px;">SEMÁFORO 🚸</div>
                             <div style="font-size:2rem;">🚶</div>
                             <b style="color:#34D399;">Semáforo de Pedestre</b>
-                            <div style="font-size:0.78rem;color:#94A3B8;margin-top:4px;">Com boneco Pare e Siga!</div>
+                            <div style="font-size:0.78rem;color:#94A3B8;margin-top:4px;">Com sinal exclusivo Pare e Siga!</div>
                         </div>
                     </div>
                     <div style="background:rgba(245,158,11,0.1);border:1px solid #F59E0B;border-radius:12px;padding:10px 14px;color:#FDE68A;font-size:0.85rem;">
-                        ⚠️ <b>Regra de Ouro:</b> Se o <b>Semáforo 1</b> e o <b>Semáforo 2</b> ficarem verdes juntos, o Carro Vermelho e o Carro Azul <b>colidem de frente no meio do cruzamento</b>!
+                        ⚠️ <b>Regra de Trânsito:</b> Carros que andam na mesma avenida em pistas opostas <b>não se cruzam</b> e podem andar juntos! Mas se a avenida e a rua transversal abrirem ao mesmo tempo, ocorre colisão catastrófica!
                     </div>
                 </div>
 
-                <!-- SLIDE 2: O COMANDO DELAY() -->
+                <!-- SLIDE 2: COMO O ARDUINO LIGA LUZES (digitalWrite) -->
                 <div class="sem-slide-content" id="sem_slide_2">
-                    <div style="font-size:1.05rem;font-weight:900;color:#38BDF8;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
-                        <span>⏱️ 2. Como o Arduino mede o Tempo? (<code style="color:#FBBF24;">delay</code>)</span>
+                    <div style="font-size:1.05rem;font-weight:900;color:#F59E0B;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+                        <span>⚡ 2. O Comando <code style="color:#FDE68A;">digitalWrite(pino, ESTADO)</code></span>
                     </div>
                     <p style="margin:0 0 10px;color:#CBD5E1;font-size:0.92rem;line-height:1.6;">
-                        O microcontrolador do Arduino é extremamente veloz. Sem pausas, ele mudaria as luzes num piscar de olhos e os carros não teriam tempo de parar! Usamos a função <code>delay(milissegundos)</code> para manter cada fase aberta:
+                        No Arduino, cada lâmpada do semáforo é conectada a um <b>pino digital</b>. O microcontrolador envia pulsos elétricos com o comando <code>digitalWrite()</code>:
+                    </p>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin:10px 0;">
+                        <div style="background:#090D16;padding:12px;border-radius:12px;border-left:4px solid #10B981;">
+                            <div style="color:#34D399;font-weight:900;font-size:0.95rem;">HIGH (5 Volts — LIGADO)</div>
+                            <div style="color:#CBD5E1;font-size:0.84rem;margin:6px 0;">Envia corrente elétrica para acender a luz do LED:</div>
+                            <code style="color:#FDE68A;background:#1E293B;padding:3px 6px;border-radius:4px;font-size:0.82rem;">digitalWrite(PIN_SEM1_VERDE, HIGH);</code>
+                        </div>
+                        <div style="background:#090D16;padding:12px;border-radius:12px;border-left:4px solid #EF4444;">
+                            <div style="color:#F87171;font-weight:900;font-size:0.95rem;">LOW (0 Volts — DESLIGADO)</div>
+                            <div style="color:#CBD5E1;font-size:0.84rem;margin:6px 0;">Corta a eletricidade, apagando a luz imediatamente:</div>
+                            <code style="color:#FDE68A;background:#1E293B;padding:3px 6px;border-radius:4px;font-size:0.82rem;">digitalWrite(PIN_SEM1_VERDE, LOW);</code>
+                        </div>
+                    </div>
+                    <div style="background:rgba(56,189,248,0.1);border:1px solid #38BDF8;border-radius:12px;padding:8px 12px;color:#BAE6FD;font-size:0.84rem;">
+                        💡 <b>Conceito Maker:</b> Para trocar uma luz, desligamos a anterior com <code>LOW</code> e acendemos a próxima com <code>HIGH</code>!
+                    </div>
+                </div>
+
+                <!-- SLIDE 3: O COMANDO DELAY() -->
+                <div class="sem-slide-content" id="sem_slide_3">
+                    <div style="font-size:1.05rem;font-weight:900;color:#38BDF8;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+                        <span>⏱️ 3. Como o Arduino mede o Tempo? (<code style="color:#FBBF24;">delay</code>)</span>
+                    </div>
+                    <p style="margin:0 0 10px;color:#CBD5E1;font-size:0.92rem;line-height:1.6;">
+                        O microcontrolador do Arduino é extremamente veloz. Sem pausas, ele mudaria as luzes num piscar de olhos e os motoristas não conseguiriam reagir! Usamos <code>delay(milissegundos)</code> para manter o estado ligado pelo tempo necessário:
                     </p>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0;">
                         <div style="background:#090D16;padding:10px 12px;border-radius:12px;border-left:4px solid #10B981;">
                             <b style="color:#34D399;">1 segundo = 1000 ms</b>
-                            <div style="color:#E2E8F0;font-size:0.82rem;margin-top:4px;"><code>delay(1000);</code> // Espera 1s</div>
+                            <div style="color:#E2E8F0;font-size:0.82rem;margin-top:4px;"><code>delay(1000);</code> // Alerta amarelo</div>
                         </div>
                         <div style="background:#090D16;padding:10px 12px;border-radius:12px;border-left:4px solid #F59E0B;">
                             <b style="color:#FBBF24;">2 segundos = 2000 ms</b>
-                            <div style="color:#E2E8F0;font-size:0.82rem;margin-top:4px;"><code>delay(2000);</code> // Espera 2s</div>
+                            <div style="color:#E2E8F0;font-size:0.82rem;margin-top:4px;"><code>delay(2000);</code> // Passagem veicular</div>
                         </div>
                         <div style="background:#090D16;padding:10px 12px;border-radius:12px;border-left:4px solid #EC4899;">
-                            <b style="color:#F472B6;">Meio segundo = 500 ms</b>
-                            <div style="color:#E2E8F0;font-size:0.82rem;margin-top:4px;"><code>delay(500);</code> // Piscar rápido</div>
+                            <b style="color:#F472B6;">2.5 segundos = 2500 ms</b>
+                            <div style="color:#E2E8F0;font-size:0.82rem;margin-top:4px;"><code>delay(2500);</code> // Faixa de pedestres</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 3: O CRUZAMENTO SEGURO -->
-                <div class="sem-slide-content" id="sem_slide_3">
+                <!-- SLIDE 4: O CRUZAMENTO SEGURO -->
+                <div class="sem-slide-content" id="sem_slide_4">
                     <div style="font-size:1.05rem;font-weight:900;color:#10B981;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
-                        <span>⚖️ 3. A Lógica da Alternância de Pistas</span>
+                        <span>⚖️ 4. A Lógica de Trânsito e Alternância</span>
                     </div>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
-                        <div style="background:#090D16;border:1px solid #334155;border-radius:12px;padding:12px;font-family:'Fira Code',monospace;font-size:0.85rem;line-height:1.7;">
-                            <div style="color:#34D399;">// 1. Semáforo 1 Verde (Carro Vermelho passa):</div>
-                            semaforo1_verde(); semaforo2_vermelho();
-                            <div style="color:#64748B;">delay(2000);</div>
+                        <div style="background:#090D16;border:1px solid #334155;border-radius:12px;padding:12px;font-family:'Fira Code',monospace;font-size:0.82rem;line-height:1.7;">
+                            <div style="color:#34D399;">// 1. Avenida Verde (Carros da horizontal passam):</div>
+                            digitalWrite(PIN_SEM1_VERDE, HIGH);<br>
+                            digitalWrite(PIN_SEM2_VERMELHO, HIGH);<br>
+                            <span style="color:#64748B;">delay(2000);</span><br>
                             <div style="color:#FBBF24;margin-top:6px;">// 2. Alerta amarelo de desaceleração:</div>
-                            semaforo1_amarelo();
-                            <div style="color:#64748B;">delay(1000);</div>
-                            <div style="color:#38BDF8;margin-top:6px;">// 3. Semáforo 1 fecha e Semáforo 2 abre:</div>
-                            semaforo1_vermelho(); semaforo2_verde();
-                            <div style="color:#64748B;">delay(2000);</div>
+                            digitalWrite(PIN_SEM1_VERDE, LOW);<br>
+                            digitalWrite(PIN_SEM1_AMARELO, HIGH);<br>
+                            <span style="color:#64748B;">delay(1000);</span><br>
+                            <div style="color:#38BDF8;margin-top:6px;">// 3. Fecha Avenida e abre Rua Transversal:</div>
+                            digitalWrite(PIN_SEM1_AMARELO, LOW);<br>
+                            digitalWrite(PIN_SEM1_VERMELHO, HIGH);<br>
+                            digitalWrite(PIN_SEM2_VERMELHO, LOW);<br>
+                            digitalWrite(PIN_SEM2_VERDE, HIGH);
                         </div>
                         <div style="background:rgba(30,41,59,0.7);border-radius:12px;padding:12px;font-size:0.85rem;color:#CBD5E1;line-height:1.6;">
                             <b style="color:#6EE7B7;">🚨 Leis de Trânsito:</b>
                             <ul style="margin:4px 0 0;padding-left:18px;">
-                                <li>Carros nunca dão ré no cruzamento! Eles avançam para frente ou param na linha branca.</li>
-                                <li>Nunca feche de Verde direto para Vermelho sem o sinal Amarelo de freio!</li>
-                                <li>Enquanto o Semáforo 1 for Verde, o Semáforo 2 deve ficar Vermelho!</li>
+                                <li>Carros nunca dão ré no cruzamento! Eles avançam para frente ou param na linha de retenção.</li>
+                                <li>Nunca passe do Verde direto para o Vermelho sem o sinal Amarelo de freio!</li>
+                                <li>Enquanto a Avenida estiver Aberta, a Rua Transversal DEVE ficar Travada no Vermelho!</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 4: TRAVESSIA SEGURA DOS PEDESTRES -->
-                <div class="sem-slide-content" id="sem_slide_4">
+                <!-- SLIDE 5: TRAVESSIA SEGURA DOS PEDESTRES -->
+                <div class="sem-slide-content" id="sem_slide_5">
                     <div style="font-size:1.05rem;font-weight:900;color:#A78BFA;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
-                        <span>🚶 4. Fase Exclusiva de Pedestres</span>
+                        <span>🚶 5. Fase Exclusiva de Pedestres</span>
                     </div>
                     <p style="margin:0 0 10px;color:#CBD5E1;font-size:0.92rem;line-height:1.6;">
-                        Quando o semáforo de pedestre fica verde (<code>pedestre_verde()</code>), <b>todos os semáforos veiculares (1 e 2) devem estar travados no Vermelho</b>! Se qualquer carro avançar enquanto há pedestres na faixa, ocorre perigo imediato!
+                        Quando o semáforo de pedestre acende verde (<code>digitalWrite(PIN_PED_VERDE, HIGH)</code>), <b>todos os semáforos veiculares devem estar travados no Vermelho</b>! Se qualquer carro avançar enquanto há pedestres na faixa, ocorre perigo imediato de acidente!
                     </p>
-                    <div style="background:#090D16;border:1px solid #8B5CF6;border-radius:12px;padding:12px;font-family:'Fira Code',monospace;font-size:0.85rem;">
-                        semaforo1_vermelho();<br>
-                        semaforo2_vermelho();<br>
-                        pedestre_verde(); <span style="color:#34D399;">// 🚶 Pedestres atravessam em segurança!</span><br>
+                    <div style="background:#090D16;border:1px solid #8B5CF6;border-radius:12px;padding:12px;font-family:'Fira Code',monospace;font-size:0.82rem;line-height:1.6;">
+                        digitalWrite(PIN_SEM1_VERMELHO, HIGH);<br>
+                        digitalWrite(PIN_SEM2_VERMELHO, HIGH);<br>
+                        digitalWrite(PIN_PED_VERDE, HIGH); <span style="color:#34D399;">// 🚶 Travessia liberada!</span><br>
                         delay(2500);<br>
-                        pedestre_vermelho();
+                        digitalWrite(PIN_PED_VERDE, LOW);<br>
+                        digitalWrite(PIN_PED_VERMELHO, HIGH);
                     </div>
                 </div>
 
@@ -316,6 +355,7 @@ function loadSemaforo() {
                         <div class="sem-dot" id="sem_dot_2"></div>
                         <div class="sem-dot" id="sem_dot_3"></div>
                         <div class="sem-dot" id="sem_dot_4"></div>
+                        <div class="sem-dot" id="sem_dot_5"></div>
                     </div>
                     <button class="sem-guide-nav-btn primary" id="sem_guide_next_btn" onclick="sem_nextGuideSlide()">
                         Próximo <i class="fa-solid fa-arrow-right"></i>
@@ -323,7 +363,7 @@ function loadSemaforo() {
                 </div>
             </div>
 
-            <!-- BARRA DE SELEÇÃO DOS 4 NÍVEIS -->
+            <!-- BARRA DE SELEÇÃO DOS 5 NÍVEIS -->
             <div class="sem-level-bar">
                 <button class="sem-level-btn active" id="sem_btn_lvl_1" onclick="sem_switchLevel(1)">
                     <div class="sem-lvl-left">
@@ -361,6 +401,16 @@ function loadSemaforo() {
                         <div class="sem-lvl-info">
                             <span class="sem-lvl-title">Mini-IDE C/C++</span>
                             <span class="sem-lvl-sub">Código Livre Digitado</span>
+                        </div>
+                    </div>
+                    <div class="sem-lvl-status"><i class="fa-solid fa-star"></i></div>
+                </button>
+                <button class="sem-level-btn" id="sem_btn_lvl_5" onclick="sem_switchLevel(5)">
+                    <div class="sem-lvl-left">
+                        <div class="sem-lvl-num">5</div>
+                        <div class="sem-lvl-info">
+                            <span class="sem-lvl-title">Metrópole Maker 🌆</span>
+                            <span class="sem-lvl-sub">4 Fluxos Paralelos 🚗🏎️🚙🚖</span>
                         </div>
                     </div>
                     <div class="sem-lvl-status"><i class="fa-solid fa-star"></i></div>
@@ -415,23 +465,25 @@ function loadSemaforo() {
                     <!-- FAIXA DE PEDESTRES ZEBRADA NA ENTRADA OESTE -->
                     <div class="sem-zebra-west" title="Faixa Zebrada de Pedestres"></div>
 
-                    <!-- LINHAS BRANCAS DE PARADA (STOP LINES ANTES DAS FAIXAS) -->
-                    <div class="sem-stop-line-west" title="Linha de Retenção do Semáforo 1"></div>
-                    <div class="sem-stop-line-north" title="Linha de Retenção do Semáforo 2"></div>
+                    <!-- LINHAS BRANCAS DE PARADA (STOP LINES NAS 4 ENTRADAS) -->
+                    <div class="sem-stop-line-west" title="Linha de Retenção Oeste (Avenida ➔ Leste)"></div>
+                    <div class="sem-stop-line-east" title="Linha de Retenção Leste (Avenida ➔ Oeste)"></div>
+                    <div class="sem-stop-line-north" title="Linha de Retenção Norte (Rua ➔ Sul)"></div>
+                    <div class="sem-stop-line-south" title="Linha de Retenção Sul (Rua ➔ Norte)"></div>
 
                     <!-- ÁREA CENTRAL DO CRUZAMENTO -->
                     <div class="sem-junction-box"></div>
 
-                    <!-- ================= SEMÁFORO 1 (FLUXO 1 - CARRO VERMELHO 🚗) ================= -->
-                    <div class="sem-traffic-post sem-post-1" title="Semáforo 1 (Controla o Carro Vermelho)">
+                    <!-- ================= SEMÁFORO 1 (FLUXO 1 - AVENIDA PRINCIPAL) ================= -->
+                    <div class="sem-traffic-post sem-post-1" title="Semáforo 1 (Controla o Fluxo da Avenida)">
                         <div class="sem-num-badge n1">1</div>
                         <div class="sem-bulb red" id="sem_a_red"></div>
                         <div class="sem-bulb yellow" id="sem_a_yellow"></div>
                         <div class="sem-bulb green on" id="sem_a_green"></div>
                     </div>
 
-                    <!-- ================= SEMÁFORO 2 (FLUXO 2 - CARRO AZUL 🚙) ================= -->
-                    <div class="sem-traffic-post sem-post-2" title="Semáforo 2 (Controla o Carro Azul)">
+                    <!-- ================= SEMÁFORO 2 (FLUXO 2 - RUA TRANSVERSAL) ================= -->
+                    <div class="sem-traffic-post sem-post-2" title="Semáforo 2 (Controla o Fluxo da Rua Transversal)">
                         <div class="sem-num-badge n2">2</div>
                         <div class="sem-bulb red on" id="sem_b_red"></div>
                         <div class="sem-bulb yellow" id="sem_b_yellow"></div>
@@ -458,8 +510,8 @@ function loadSemaforo() {
                     </div>
 
                     <!-- VEÍCULOS (FRENTE SEMPRE APONTADA PARA O SENTIDO DO MOVIMENTO!) -->
-                    <!-- 1. Carro Vermelho 🚗 (Fluxo 1: Oeste -> Leste, obedece ao Semáforo 1) -->
-                    <div class="sem-vehicle" id="sem_car_red" title="Carro Vermelho (Fluxo 1)">
+                    <!-- 1. Carro Vermelho 🚗 (Avenida Sul: Oeste -> Leste) -->
+                    <div class="sem-vehicle" id="sem_car_red" title="Carro Vermelho (Avenida Sul ➔ Leste)">
                         <svg viewBox="0 0 100 50">
                             <rect x="5" y="10" width="85" height="30" rx="8" fill="#EF4444" stroke="#B91C1C" stroke-width="2"/>
                             <rect x="25" y="14" width="45" height="22" rx="5" fill="#1E293B" stroke="#991B1B" stroke-width="1.5"/>
@@ -473,14 +525,44 @@ function loadSemaforo() {
                         </svg>
                     </div>
 
-                    <!-- 2. Carro Azul 🚙 (Fluxo 2: Norte -> Sul, obedece ao Semáforo 2) -->
-                    <div class="sem-vehicle" id="sem_car_blue" title="Carro Azul (Fluxo 2)">
+                    <!-- 2. Carro Azul 🚙 (Rua Oeste: Norte -> Sul) -->
+                    <div class="sem-vehicle" id="sem_car_blue" title="Carro Azul (Rua Oeste ➔ Sul)">
                         <svg viewBox="0 0 100 50">
                             <rect x="5" y="10" width="85" height="30" rx="8" fill="#38BDF8" stroke="#0284C7" stroke-width="2"/>
                             <rect x="25" y="14" width="45" height="22" rx="5" fill="#0F172A" stroke="#0369A1" stroke-width="1.5"/>
                             <rect x="42" y="17" width="24" height="16" rx="3" fill="#E0F2FE" opacity="0.9"/>
                             <circle cx="88" cy="14" r="3.5" fill="#FEF08A"/>
                             <circle cx="88" cy="36" r="3.5" fill="#FEF08A"/>
+                            <rect x="18" y="5" width="16" height="6" rx="2" fill="#0F172A"/>
+                            <rect x="18" y="39" width="16" height="6" rx="2" fill="#0F172A"/>
+                            <rect x="62" y="5" width="16" height="6" rx="2" fill="#0F172A"/>
+                            <rect x="62" y="39" width="16" height="6" rx="2" fill="#0F172A"/>
+                        </svg>
+                    </div>
+
+                    <!-- 3. Carro Verde 🏎️ (Avenida Norte: Leste -> Oeste, pista paralela oposta) -->
+                    <div class="sem-vehicle" id="sem_car_green" title="Carro Verde (Avenida Norte ➔ Oeste)">
+                        <svg viewBox="0 0 100 50">
+                            <rect x="5" y="10" width="85" height="30" rx="8" fill="#10B981" stroke="#047857" stroke-width="2"/>
+                            <rect x="25" y="14" width="45" height="22" rx="5" fill="#064E3B" stroke="#047857" stroke-width="1.5"/>
+                            <rect x="42" y="17" width="24" height="16" rx="3" fill="#A7F3D0" opacity="0.9"/>
+                            <circle cx="88" cy="14" r="3.5" fill="#FEF08A"/>
+                            <circle cx="88" cy="36" r="3.5" fill="#FEF08A"/>
+                            <rect x="18" y="5" width="16" height="6" rx="2" fill="#0F172A"/>
+                            <rect x="18" y="39" width="16" height="6" rx="2" fill="#0F172A"/>
+                            <rect x="62" y="5" width="16" height="6" rx="2" fill="#0F172A"/>
+                            <rect x="62" y="39" width="16" height="6" rx="2" fill="#0F172A"/>
+                        </svg>
+                    </div>
+
+                    <!-- 4. Carro Amarelo 🚖 (Rua Leste: Sul -> Norte, pista paralela oposta) -->
+                    <div class="sem-vehicle" id="sem_car_yellow" title="Carro Amarelo (Rua Leste ➔ Norte)">
+                        <svg viewBox="0 0 100 50">
+                            <rect x="5" y="10" width="85" height="30" rx="8" fill="#FBBF24" stroke="#D97706" stroke-width="2"/>
+                            <rect x="25" y="14" width="45" height="22" rx="5" fill="#78350F" stroke="#D97706" stroke-width="1.5"/>
+                            <rect x="42" y="17" width="24" height="16" rx="3" fill="#FEF08A" opacity="0.9"/>
+                            <circle cx="88" cy="14" r="3.5" fill="#FFFFFF"/>
+                            <circle cx="88" cy="36" r="3.5" fill="#FFFFFF"/>
                             <rect x="18" y="5" width="16" height="6" rx="2" fill="#0F172A"/>
                             <rect x="18" y="39" width="16" height="6" rx="2" fill="#0F172A"/>
                             <rect x="62" y="5" width="16" height="6" rx="2" fill="#0F172A"/>
@@ -501,51 +583,51 @@ function loadSemaforo() {
                 <!-- COLUNA DO EDITOR -->
                 <div class="sem-editor-card">
                     <div class="sem-editor-topbar">
-                        <div class="sem-editor-title" id="sem_editor_title"><i class="fa-solid fa-code"></i> Temporização em C/C++</div>
+                        <div class="sem-editor-title" id="sem_editor_title"><i class="fa-solid fa-code"></i> Temporização & digitalWrite() em C/C++</div>
                         <div class="sem-lang-tag">Arduino C++</div>
                     </div>
 
                     <!-- SCAFFOLDING NÍVEL 1 (Parada Segura no Semáforo 1) -->
                     <div id="sem_scaffold_n1" class="sem-scaffold-lines">
                         <div style="background:#1E293B;border-left:3px solid #F59E0B;padding:8px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;color:#FBBF24;font-size:0.82rem;font-weight:700;">
-                            💡 Escolha os comandos para fazer o <b>Carro Vermelho 🚗 (Semáforo 1)</b> avançar no Verde, desacelerar no <b>Amarelo</b> e parar no <b>Vermelho</b> na linha de retenção:
+                            ⚡ <b>digitalWrite(pino, ESTADO):</b> Selecione o comando correto para enviar 5V (HIGH) ao LED Verde do Semáforo 1, depois acione o alerta Amarelo e termine com o Vermelho de parada antes da linha branca:
                         </div>
-                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Fase 1: Semáforo 1 e avanço do veículo</span></div>
+                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Fase 1: Enviar sinal elétrico HIGH para liberar o fluxo</span></div>
                         <div class="sem-scaffold-line">
                             <select class="sem-select-cmd" id="sem_n1_cmd1" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— comando do Semáforo 1 —</option>
-                                <option value="semaforo1_verde">semaforo1_verde();</option>
-                                <option value="semaforo1_amarelo">semaforo1_amarelo();</option>
-                                <option value="semaforo1_vermelho">semaforo1_vermelho();</option>
+                                <option value="" selected disabled>— acionar pino digital —</option>
+                                <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
                             </select>
                         </div>
                         <div class="sem-scaffold-line">
-                            <span style="color:#38BDF8;font-weight:bold;">carro1_avancar();</span> <span style="color:#64748B;">// Despacha o Carro Vermelho 🚗</span>
+                            <span style="color:#38BDF8;font-weight:bold;">carro1_avancar();</span> <span style="color:#64748B;">// Fluxo da avenida se desloca</span>
                         </div>
                         <div class="sem-scaffold-line" style="margin-top:6px;">
-                            delay( <input type="number" class="sem-input-num" id="sem_n1_delay1" min="500" max="5000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// ms</span>
+                            delay( <input type="number" class="sem-input-num" id="sem_n1_delay1" min="500" max="5000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// ms na abertura</span>
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Fase 2: Alerta de transição</span></div>
+                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Fase 2: Alerta obrigatório de desaceleração</span></div>
                         <div class="sem-scaffold-line">
                             <select class="sem-select-cmd" id="sem_n1_cmd2" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— comando de transição —</option>
-                                <option value="semaforo1_amarelo">semaforo1_amarelo();</option>
-                                <option value="semaforo1_vermelho">semaforo1_vermelho();</option>
-                                <option value="semaforo1_verde">semaforo1_verde();</option>
+                                <option value="" selected disabled>— sinal de transição —</option>
+                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
                             </select>
                         </div>
                         <div class="sem-scaffold-line" style="margin-top:6px;">
-                            delay( <input type="number" class="sem-input-num" id="sem_n1_delay2" min="500" max="3000" step="500" value="1000" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// ms</span>
+                            delay( <input type="number" class="sem-input-num" id="sem_n1_delay2" min="500" max="3000" step="500" value="1000" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// ms no amarelo</span>
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Fase 3: Fechamento e parada segura</span></div>
+                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Fase 3: Fechamento com retenção na linha branca</span></div>
                         <div class="sem-scaffold-line">
                             <select class="sem-select-cmd" id="sem_n1_cmd3" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— comando de retenção —</option>
-                                <option value="semaforo1_vermelho">semaforo1_vermelho();</option>
-                                <option value="semaforo1_verde">semaforo1_verde();</option>
-                                <option value="semaforo1_amarelo">semaforo1_amarelo();</option>
+                                <option value="" selected disabled>— retenção veicular —</option>
+                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
                             </select>
                         </div>
                         <div class="sem-scaffold-line">
@@ -556,48 +638,48 @@ function loadSemaforo() {
                     <!-- SCAFFOLDING NÍVEL 2 (Semáforo 1 vs Semáforo 2 sem colisão) -->
                     <div id="sem_scaffold_n2" class="sem-scaffold-lines" style="display:none;">
                         <div style="background:#1E293B;border-left:3px solid #38BDF8;padding:8px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;color:#38BDF8;font-size:0.82rem;font-weight:700;">
-                            💡 <b>Ordem Segura:</b> Deixe o <b>Semáforo 1 (Carro Vermelho 🚗)</b> cruzar enquanto o <b>Semáforo 2 (Carro Azul 🚙)</b> espera no Vermelho; depois faça a transição e abra para o Carro Azul!
+                            💡 <b>Regras de Trânsito:</b> Enquanto o fluxo da avenida cruzar no verde, a rua transversal deve estar fechada no vermelho; após o alerta amarelo, feche a avenida e abra a transversal!
                         </div>
-                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Fase da Avenida: Semáforo 2 fechado e Carro 1 liberado</span></div>
-                        <div class="sem-scaffold-line">semaforo2_vermelho();</div>
+                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Fase da Avenida: Semáforo 2 fechado e Avenida liberada</span></div>
+                        <div class="sem-scaffold-line">digitalWrite(PIN_SEM2_VERMELHO, HIGH);</div>
                         <div class="sem-scaffold-line">carro2_parar();</div>
                         <div class="sem-scaffold-line">
                             <select class="sem-select-cmd" id="sem_n2_cmd1" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— comando Semáforo 1 —</option>
-                                <option value="semaforo1_verde">semaforo1_verde();</option>
-                                <option value="semaforo1_amarelo">semaforo1_amarelo();</option>
-                                <option value="semaforo1_vermelho">semaforo1_vermelho();</option>
+                                <option value="" selected disabled>— acionar pino digital —</option>
+                                <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
                             </select>
                         </div>
                         <div class="sem-scaffold-line">
-                            <span style="color:#38BDF8;font-weight:bold;">carro1_avancar();</span> <span style="color:#64748B;">// Carro Vermelho passa pelo centro</span>
+                            <span style="color:#38BDF8;font-weight:bold;">carro1_avancar();</span> <span style="color:#64748B;">// Carro Vermelho cruza a avenida</span>
                         </div>
                         <div class="sem-scaffold-line">
                             delay( <input type="number" class="sem-input-num" id="sem_n2_delay1" min="1000" max="4000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> );
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Transição: Alerta no Semáforo 1</span></div>
+                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Transição: Alerta de desaceleração na avenida</span></div>
                         <div class="sem-scaffold-line">
                             <select class="sem-select-cmd" id="sem_n2_cmd2" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— comando de aviso —</option>
-                                <option value="semaforo1_amarelo">semaforo1_amarelo();</option>
-                                <option value="semaforo1_vermelho">semaforo1_vermelho();</option>
-                                <option value="semaforo2_verde">semaforo2_verde();</option>
+                                <option value="" selected disabled>— sinal de desaceleração —</option>
+                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM2_VERDE, HIGH)">digitalWrite(PIN_SEM2_VERDE, HIGH);</option>
                             </select>
                         </div>
                         <div class="sem-scaffold-line">
                             delay( 1000 );
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Fase da Rua: Fecha Avenida e abre Rua</span></div>
-                        <div class="sem-scaffold-line">semaforo1_vermelho();</div>
+                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Fase da Rua Transversal: Fecha avenida e abre rua</span></div>
+                        <div class="sem-scaffold-line">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</div>
                         <div class="sem-scaffold-line">carro1_parar();</div>
                         <div class="sem-scaffold-line">
                             <select class="sem-select-cmd" id="sem_n2_cmd3" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— comando Semáforo 2 —</option>
-                                <option value="semaforo2_verde">semaforo2_verde();</option>
-                                <option value="semaforo2_amarelo">semaforo2_amarelo();</option>
-                                <option value="semaforo2_vermelho">semaforo2_vermelho();</option>
+                                <option value="" selected disabled>— abrir transversal —</option>
+                                <option value="digitalWrite(PIN_SEM2_VERDE, HIGH)">digitalWrite(PIN_SEM2_VERDE, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM2_AMARELO, HIGH)">digitalWrite(PIN_SEM2_AMARELO, HIGH);</option>
+                                <option value="digitalWrite(PIN_SEM2_VERMELHO, HIGH)">digitalWrite(PIN_SEM2_VERMELHO, HIGH);</option>
                             </select>
                         </div>
                         <div class="sem-scaffold-line">
@@ -611,36 +693,36 @@ function loadSemaforo() {
                     <!-- SCAFFOLDING NÍVEL 3 (Travessia de Pedestres) -->
                     <div id="sem_scaffold_n3" class="sem-scaffold-lines" style="display:none;">
                         <div style="background:#1E293B;border-left:3px solid #10B981;padding:8px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;color:#34D399;font-size:0.82rem;font-weight:700;">
-                            💡 <b>Segurança Máxima:</b> Feche o Semáforo 1 e o Semáforo 2 no Vermelho antes de liberar o Pedestre 🚶 no Semáforo 🚸!
+                            🚶 <b>Proteção aos Pedestres:</b> Antes de liberar os pedestres com sinal verde, trave todos os semáforos veiculares no vermelho com parada total nas linhas brancas!
                         </div>
-                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Pare todos os veículos nas linhas brancas</span></div>
-                        <div class="sem-scaffold-line">semaforo1_vermelho();</div>
+                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Bloqueio geral dos veículos nas linhas de retenção</span></div>
+                        <div class="sem-scaffold-line">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</div>
                         <div class="sem-scaffold-line">carro1_parar();</div>
-                        <div class="sem-scaffold-line">semaforo2_vermelho();</div>
+                        <div class="sem-scaffold-line">digitalWrite(PIN_SEM2_VERMELHO, HIGH);</div>
                         <div class="sem-scaffold-line">carro2_parar();</div>
-                        <div class="sem-scaffold-line">delay( 800 ); // Aguarda parada total</div>
+                        <div class="sem-scaffold-line">delay( 800 ); // Margem de segurança de parada</div>
 
                         <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Libere a faixa no Semáforo de Pedestre 🚸</span></div>
                         <div class="sem-scaffold-line">
                             <select class="sem-select-cmd" id="sem_n3_cmd1" onchange="sem_updateLiveCpp()">
                                 <option value="" selected disabled>— sinal de pedestres —</option>
-                                <option value="pedestre_verde">pedestre_verde();</option>
-                                <option value="pedestre_vermelho">pedestre_vermelho();</option>
+                                <option value="digitalWrite(PIN_PEDESTRE_VERDE, HIGH)">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</option>
+                                <option value="digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH)">digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);</option>
                             </select>
                         </div>
                         <div class="sem-scaffold-line">
                             <span style="color:#10B981;font-weight:bold;">pedestre_atravessar();</span> <span style="color:#64748B;">// Pedestre cruza a faixa zebrada</span>
                         </div>
                         <div class="sem-scaffold-line">
-                            delay( <input type="number" class="sem-input-num" id="sem_n3_delay1" min="1500" max="4000" step="500" value="2500" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// Tempo para atravessar</span>
+                            delay( <input type="number" class="sem-input-num" id="sem_n3_delay1" min="1500" max="4000" step="500" value="2500" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// ms para atravessar</span>
                         </div>
 
                         <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Encerre a travessia com segurança</span></div>
                         <div class="sem-scaffold-line">
                             <select class="sem-select-cmd" id="sem_n3_cmd2" onchange="sem_updateLiveCpp()">
                                 <option value="" selected disabled>— fechar faixa —</option>
-                                <option value="pedestre_vermelho">pedestre_vermelho();</option>
-                                <option value="pedestre_verde">pedestre_verde();</option>
+                                <option value="digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH)">digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);</option>
+                                <option value="digitalWrite(PIN_PEDESTRE_VERDE, HIGH)">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</option>
                             </select>
                         </div>
                         <div class="sem-scaffold-line">
@@ -648,21 +730,21 @@ function loadSemaforo() {
                         </div>
                     </div>
 
-                    <!-- NÍVEL 4 (MINI-IDE LIVRE EM C/C++) -->
+                    <!-- NÍVEL 4 & 5 (MINI-IDE LIVRE EM C/C++) -->
                     <div id="sem_ide_n4" style="display:none;">
-                        <!-- Teclado de Atalhos Rápidos Numerados -->
+                        <!-- Teclado de Atalhos Rápidos com digitalWrite e Funções de Trânsito -->
                         <div class="sem-shortcuts-bar">
-                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('semaforo1_verde();\n')">🟢 S1_verde()</button>
-                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('semaforo1_amarelo();\n')">🟡 S1_amarelo()</button>
-                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('semaforo1_vermelho();\n')">🔴 S1_vermelho()</button>
-                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('carro1_avancar();\n')">🚗 carro1_avancar()</button>
-                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('semaforo2_verde();\n')">🟢 S2_verde()</button>
-                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('semaforo2_amarelo();\n')">🟡 S2_amarelo()</button>
-                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('semaforo2_vermelho();\n')">🔴 S2_vermelho()</button>
-                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('carro2_avancar();\n')">🚙 carro2_avancar()</button>
-                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('pedestre_verde();\n')">🚶 ped_verde()</button>
-                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('pedestre_vermelho();\n')">🛑 ped_vermelho()</button>
-                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('pedestre_atravessar();\n')">🚸 ped_atravessar()</button>
+                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_VERDE, HIGH);\n')">🟢 S1 VERDE HIGH</button>
+                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_AMARELO, HIGH);\n')">🟡 S1 AMARELO HIGH</button>
+                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_VERMELHO, HIGH);\n')">🔴 S1 VERMELHO HIGH</button>
+                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_VERDE, HIGH);\n')">🟢 S2 VERDE HIGH</button>
+                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_AMARELO, HIGH);\n')">🟡 S2 AMARELO HIGH</button>
+                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_VERMELHO, HIGH);\n')">🔴 S2 VERMELHO HIGH</button>
+                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('digitalWrite(PIN_PEDESTRE_VERDE, HIGH);\n')">🚶 PED VERDE HIGH</button>
+                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);\n')">🛑 PED VERM HIGH</button>
+                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('carro1_avancar();\n')">🚗 Fluxo 1 Avançar</button>
+                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('carro2_avancar();\n')">🚙 Fluxo 2 Avançar</button>
+                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('pedestre_atravessar();\n')">🚸 Pedestre Atravessar</button>
                             <button class="sem-shortcut-btn" onclick="sem_insertText('delay(2000);\n')">⏱️ delay(2000)</button>
                             <button class="sem-shortcut-btn" onclick="sem_insertText('delay(1000);\n')">⏱️ delay(1000)</button>
                             <button class="sem-shortcut-btn clear" onclick="sem_clearIde()"><i class="fa-solid fa-trash"></i> Limpar</button>
@@ -671,19 +753,21 @@ function loadSemaforo() {
                         <!-- Editor Textarea com Numeração de Linhas -->
                         <div class="sem-code-wrapper">
                             <div class="sem-line-numbers" id="sem_line_numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
-                            <textarea class="sem-code-input" id="sem_code_input" spellcheck="false" placeholder="// 🚦 Digite seu código C/C++ do cruzamento aqui!
+                            <textarea class="sem-code-input" id="sem_code_input" spellcheck="false" placeholder="// 🚦 Digite seu código Arduino C/C++ aqui!
 // Exemplo:
-// semaforo1_verde(); delay(2000);
-// semaforo1_amarelo(); delay(1000);
-// semaforo1_vermelho(); semaforo2_verde(); delay(2000);" oninput="sem_handleIdeInput()" onscroll="document.getElementById('sem_line_numbers').scrollTop = this.scrollTop;"></textarea>
+// digitalWrite(PIN_SEM1_VERDE, HIGH); carro1_avancar(); delay(2000);
+// digitalWrite(PIN_SEM1_AMARELO, HIGH); delay(1000);
+// digitalWrite(PIN_SEM1_VERMELHO, HIGH); digitalWrite(PIN_SEM2_VERDE, HIGH); carro2_avancar(); delay(2000);" oninput="sem_handleIdeInput()" onscroll="document.getElementById('sem_line_numbers').scrollTop = this.scrollTop;"></textarea>
                         </div>
 
                         <div style="background:#0F172A;border:1px dashed #F59E0B;border-radius:12px;padding:10px 14px;margin-top:10px;font-size:0.82rem;color:#CBD5E1;">
                             <b>📖 Comandos Suportados:</b>
-                            <code style="background:#1E293B;color:#EF4444;padding:2px 5px;border-radius:4px;">semaforo1_verde();</code>, 
-                            <code style="background:#1E293B;color:#38BDF8;padding:2px 5px;border-radius:4px;">semaforo2_verde();</code>, 
-                            <code style="background:#1E293B;color:#10B981;padding:2px 5px;border-radius:4px;">pedestre_verde();</code>, 
-                            <code style="background:#1E293B;color:#FBBF24;padding:2px 5px;border-radius:4px;">delay(ms);</code>
+                            <code style="background:#1E293B;color:#EF4444;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_SEM1_VERDE, HIGH);</code>, 
+                            <code style="background:#1E293B;color:#38BDF8;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_SEM2_VERDE, HIGH);</code>, 
+                            <code style="background:#1E293B;color:#10B981;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</code>, 
+                            <code style="background:#1E293B;color:#FBBF24;padding:2px 5px;border-radius:4px;">delay(ms);</code>,
+                            <code style="background:#1E293B;color:#CBD5E1;padding:2px 5px;border-radius:4px;">carro1_avancar();</code>,
+                            <code style="background:#1E293B;color:#CBD5E1;padding:2px 5px;border-radius:4px;">carro2_avancar();</code>
                         </div>
                     </div>
 
@@ -737,90 +821,119 @@ function loadSemaforo() {
 let sem_level = 1;
 let sem_guide_slide = 1;
 let sem_running = false;
-let sem_errors_count = { 1: 0, 2: 0, 3: 0, 4: 0 };
+let sem_errors_count = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
-// Posições físicas dos veículos:
-// 'start'   -> aproximação
-// 'stop'    -> parado na linha branca de retenção antes da faixa
-// 'cross'   -> no centro da interseção (usado para colisão)
-// 'exit'    -> cruzou e seguiu caminho para frente (NUNCA DE RÉ!)
-let sem_carRed_state = 'start';
-let sem_carBlue_state = 'start';
+// Posições físicas dos 4 veículos:
+// 'start'   -> aproximação pela via
+// 'stop'    -> parado na linha branca de retenção
+// 'cross'   -> na interseção central
+// 'exit'    -> seguiu em frente no seu sentido (NUNCA DE RÉ!)
+let sem_carRed_state = 'start';     // Avenida Sul: Oeste ➔ Leste
+let sem_carBlue_state = 'start';    // Rua Oeste: Norte ➔ Sul
+let sem_carGreen_state = 'start';   // Avenida Norte: Leste ➔ Oeste (Pista paralela oposta)
+let sem_carYellow_state = 'start';  // Rua Leste: Sul ➔ Norte (Pista paralela oposta)
 let sem_ped_state = 'sidewalk_south';
 
 const sem_levels_data = {
     1: {
-        title: 'Missão 1: Controle do Semáforo 1 (Carro Vermelho 🚗)',
-        badge: 'Fluxo 1 (Avenida)',
-        desc: 'O <b>Carro Vermelho 🚗</b> vem acelerando pelo <b>Fluxo 1</b>! Abra o <b>Semáforo 1</b> no Verde e comande o carro para avançar (<code>carro1_avancar()</code>). Em seguida, use o alerta <b>Amarelo</b> com <code>delay(1000)</code> para que ele desacelere suavemente e feche no <b>Vermelho</b> com <code>carro1_parar()</code> para que pare antes da linha branca de retenção!',
-        solution: `// Solução Nível 1:
-semaforo1_verde();
+        title: 'Missão 1: Engenharia de Tráfego da Avenida (Semáforo 1 🚗)',
+        badge: 'Fluxo 1 (Avenida Principal)',
+        desc: 'O fluxo de veículos da <b>Avenida Principal</b> precisa de controle automatizado em Arduino C++!<br><br><b>Requisitos Técnicos da Engenharia de Tráfego:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>Nesta avenida, o sinal <b>Verde</b> deve sempre abrir primeiro para dar partida no tráfego veicular.</li><li>O sinal verde deve permanecer liberado por exatamente <b>2 segundos (2000 ms)</b>.</li><li>Antes de fechar totalmente, é <b>obrigatório</b> emitir um alerta com a luz <b>Amarela</b> por <b>1 segundo (1000 ms)</b> para que os motoristas desacelerem com segurança sem freagens bruscas.</li><li>Por fim, feche o semáforo com a luz <b>Vermelha</b> com parada total dos veículos antes da linha branca de retenção!</li></ul>Selecione os comandos usando <code>digitalWrite(pino, HIGH/LOW)</code> e ajuste os tempos de espera.',
+        solution: `// Solução Nível 1 (Arduino C++):
+digitalWrite(PIN_SEM1_VERDE, HIGH);
 carro1_avancar();
 delay(2000);
-semaforo1_amarelo();
+digitalWrite(PIN_SEM1_AMARELO, HIGH);
 delay(1000);
-semaforo1_vermelho();
+digitalWrite(PIN_SEM1_VERMELHO, HIGH);
 carro1_parar();`
     },
     2: {
-        title: 'Missão 2: O Grande Cruzamento (Semáforo 1 vs Semáforo 2)',
-        badge: 'Semáforo 1 ⚡ Semáforo 2',
-        desc: 'Atenção na central! O <b>Carro Vermelho 🚗 (Semáforo 1)</b> e o <b>Carro Azul 🚙 (Semáforo 2)</b> chegam ao mesmo tempo! Se ambos avançarem juntos, ELES BATEM no centro! Programe a ordem certa: feche o Semáforo 2 no Vermelho com o Carro 2 parado, deixe o Carro Vermelho avançar no Verde do Semáforo 1; depois alerte no Amarelo, feche o Semáforo 1 e abra o Semáforo 2 no Verde para o Carro Azul descer!',
-        solution: `// Solução Nível 2:
-semaforo2_vermelho();
+        title: 'Missão 2: O Cruzamento Crítico (Semáforo 1 vs Semáforo 2)',
+        badge: 'Avenida ⚡ Rua Transversal',
+        desc: 'Dois fluxos perpendiculares se encontram no cruzamento central!<br><br><b>Requisitos de Segurança Viária:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>Pela lei universal de trânsito, enquanto a <b>Avenida (Semáforo 1)</b> estiver liberada no verde, a <b>Rua Transversal (Semáforo 2)</b> deve estar obrigatoriamente travada no <b>Vermelho</b> com seus veículos retidos!</li><li>Mantenha a avenida fluindo por <b>2 segundos</b>.</li><li>Acione o sinal de aviso <b>Amarelo</b> da avenida por <b>1 segundo</b>.</li><li>Feche a avenida no <b>Vermelho</b> e abra a <b>Rua Transversal (Semáforo 2)</b> no <b>Verde</b> por <b>2 segundos</b> para que o Carro Azul possa descer com segurança!</li></ul>',
+        solution: `// Solução Nível 2 (Arduino C++):
+digitalWrite(PIN_SEM2_VERMELHO, HIGH);
 carro2_parar();
-semaforo1_verde();
+digitalWrite(PIN_SEM1_VERDE, HIGH);
 carro1_avancar();
 delay(2000);
-semaforo1_amarelo();
+digitalWrite(PIN_SEM1_AMARELO, HIGH);
 delay(1000);
-semaforo1_vermelho();
+digitalWrite(PIN_SEM1_VERMELHO, HIGH);
 carro1_parar();
-semaforo2_verde();
+digitalWrite(PIN_SEM2_VERDE, HIGH);
 carro2_avancar();
 delay(2000);`
     },
     3: {
-        title: 'Missão 3: Semáforo de Pedestre 🚸 (Travessia na Faixa)',
-        badge: 'Proteção Máxima 🚶',
-        desc: 'O <b>Pedestre 🚶</b> precisa atravessar a faixa zebrada! Feche o <b>Semáforo 1</b> e o <b>Semáforo 2</b> no Vermelho com todos os carros parados, abra o <b>Semáforo de Pedestre 🚸</b> no Verde para a travessia (<code>pedestre_atravessar()</code>) por 2.5 segundos e encerre fechando a faixa com <code>pedestre_parar()</code>!',
-        solution: `// Solução Nível 3:
-semaforo1_vermelho();
+        title: 'Missão 3: Travessia Segura de Pedestres (Semáforo 🚸)',
+        badge: 'Área Escolar 🚶',
+        desc: 'Área com grande circulação de estudantes na faixa zebrada!<br><br><b>Requisitos de Proteção ao Pedestre:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>Para que o pedestre atravesse a rua em segurança, <b>AMBOS os semáforos veiculares (1 e 2) devem estar fechados no Vermelho</b> com margem de segurança de <b>800 ms</b> para parada completa dos motores.</li><li>Acione o sinal de pedestre no <b>Verde</b> com <code>digitalWrite(PIN_PEDESTRE_VERDE, HIGH)</code> e mantenha a travessia aberta por exatamente <b>2.5 segundos (2500 ms)</b>.</li><li>Ao final, feche a faixa com <code>digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH)</code> antes de qualquer reabertura para os carros!</li></ul>',
+        solution: `// Solução Nível 3 (Arduino C++):
+digitalWrite(PIN_SEM1_VERMELHO, HIGH);
 carro1_parar();
-semaforo2_vermelho();
+digitalWrite(PIN_SEM2_VERMELHO, HIGH);
 carro2_parar();
 delay(800);
-pedestre_verde();
+digitalWrite(PIN_PEDESTRE_VERDE, HIGH);
 pedestre_atravessar();
 delay(2500);
-pedestre_vermelho();
+digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);
 pedestre_parar();`
     },
     4: {
-        title: 'Missão 4: Programador-Chefe de Trânsito (Mini-IDE)',
-        badge: 'Ciclo Completo em C/C++',
-        desc: 'Escreva livremente na <b>Mini-IDE</b> o ciclo perpétuo do cruzamento inteligente: Semáforo 1 abre no Verde e Carro 1 avança, transiciona no Amarelo, fecha no Vermelho; Semáforo 2 abre no Verde e Carro 2 avança, fecha; e finalmente os Pedestres atravessam em segurança no Semáforo 🚸!',
-        solution: `// Solução Nível 4 (Ciclo Completo):
-semaforo2_vermelho();
+        title: 'Missão 4: Programador de Tráfego Urbano (Mini-IDE Livre)',
+        badge: 'Ciclo Completo em Arduino C++',
+        desc: 'Assuma o console central e programe o ciclo contínuo na <b>Mini-IDE</b>!<br><br><b>Requisitos da Operação de Trânsito:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>Abra a Avenida (Semáforo 1) no Verde por <b>2000 ms</b> com a Rua Transversal fechada.</li><li>Transicione a Avenida no Amarelo por <b>1000 ms</b> e feche no Vermelho.</li><li>Abra a Rua Transversal (Semáforo 2) no Verde por <b>2000 ms</b>, alerte no Amarelo por <b>1000 ms</b> e feche no Vermelho.</li><li>Com todos os carros parados nas faixas brancas, libere os Pedestres no Semáforo 🚸 por <b>2000 ms</b> e encerre a travessia no Vermelho.</li></ul>',
+        solution: `// Solução Nível 4 (Arduino C++):
+digitalWrite(PIN_SEM2_VERMELHO, HIGH);
 carro2_parar();
-semaforo1_verde();
+digitalWrite(PIN_SEM1_VERDE, HIGH);
 carro1_avancar();
 delay(2000);
-semaforo1_amarelo();
+digitalWrite(PIN_SEM1_AMARELO, HIGH);
 delay(1000);
-semaforo1_vermelho();
+digitalWrite(PIN_SEM1_VERMELHO, HIGH);
 carro1_parar();
-semaforo2_verde();
+digitalWrite(PIN_SEM2_VERDE, HIGH);
 carro2_avancar();
 delay(2000);
-semaforo2_amarelo();
+digitalWrite(PIN_SEM2_AMARELO, HIGH);
 delay(1000);
-semaforo2_vermelho();
+digitalWrite(PIN_SEM2_VERMELHO, HIGH);
 carro2_parar();
-pedestre_verde();
+digitalWrite(PIN_PEDESTRE_VERDE, HIGH);
 pedestre_atravessar();
 delay(2000);
-pedestre_vermelho();
+digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);
+pedestre_parar();`
+    },
+    5: {
+        title: 'Missão 5: Grande Metrópole Maker (4 Fluxos em Mão Dupla)',
+        badge: '4 Fluxos Simultâneos 🚗🏎️🚙🚖',
+        desc: 'O tráfego aumentou e a metrópole agora conta com <b>4 carros simultâneos em vias de mão dupla</b>!<br><br><b>Regras Físicas e Leis de Trânsito:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li><b>Carros na Horizontal (Vermelho 🚗 e Verde 🏎️):</b> Trafegam na mesma avenida em pistas paralelas e sentidos opostos. Como <b>não se cruzam</b>, eles <b>devem e podem avançar JUNTOS</b> quando o Semáforo 1 for Verde!</li><li><b>Carros na Vertical (Azul 🚙 e Amarelo 🚖):</b> Trafegam na rua transversal em pistas paralelas opostas. Eles também <b>avançam JUNTOS</b> quando o Semáforo 2 for Verde!</li><li><b>Colisão Quádrupla:</b> Se o Semáforo 1 e o Semáforo 2 abrirem simultaneamente, os 4 carros batem no centro da interseção!</li><li><b>Segurança dos Pedestres:</b> Quando o sinal de pedestre abrir, os 4 veículos devem estar rigorosamente parados antes de suas linhas brancas!</li></ul>Programe na <b>Mini-IDE</b> a coordenação completa dos 4 fluxos!',
+        solution: `// Solução Nível 5 (Grande Metrópole Maker - 4 Fluxos):
+digitalWrite(PIN_SEM2_VERMELHO, HIGH);
+carro2_parar();
+digitalWrite(PIN_SEM1_VERDE, HIGH);
+carro1_avancar(); // Carros Vermelho 🚗 e Verde 🏎️ andam juntos na avenida!
+delay(2000);
+digitalWrite(PIN_SEM1_AMARELO, HIGH);
+delay(1000);
+digitalWrite(PIN_SEM1_VERMELHO, HIGH);
+carro1_parar();
+digitalWrite(PIN_SEM2_VERDE, HIGH);
+carro2_avancar(); // Carros Azul 🚙 e Amarelo 🚖 andam juntos na transversal!
+delay(2000);
+digitalWrite(PIN_SEM2_AMARELO, HIGH);
+delay(1000);
+digitalWrite(PIN_SEM2_VERMELHO, HIGH);
+carro2_parar();
+digitalWrite(PIN_PEDESTRE_VERDE, HIGH);
+pedestre_atravessar();
+delay(2500);
+digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);
 pedestre_parar();`
     }
 };
@@ -845,7 +958,7 @@ function sem_toggleGuide() {
 
 function sem_switchGuideTab(slideNum) {
     sem_guide_slide = slideNum;
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 5; i++) {
         document.getElementById(`sem_slide_${i}`)?.classList.toggle('active', i === slideNum);
         document.getElementById(`sem_tab_g${i}`)?.classList.toggle('active', i === slideNum);
         document.getElementById(`sem_dot_${i}`)?.classList.toggle('active', i === slideNum);
@@ -853,13 +966,13 @@ function sem_switchGuideTab(slideNum) {
 }
 
 function sem_nextGuideSlide() {
-    if (sem_guide_slide < 4) sem_switchGuideTab(sem_guide_slide + 1);
+    if (sem_guide_slide < 5) sem_switchGuideTab(sem_guide_slide + 1);
     else sem_switchGuideTab(1);
 }
 
 function sem_prevGuideSlide() {
     if (sem_guide_slide > 1) sem_switchGuideTab(sem_guide_slide - 1);
-    else sem_switchGuideTab(4);
+    else sem_switchGuideTab(5);
 }
 
 /* ================= NAVEGAÇÃO DE NÍVEIS ================= */
@@ -868,7 +981,7 @@ function sem_switchLevel(lvl) {
     if (sem_running) return;
     sem_level = lvl;
 
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 5; i++) {
         document.getElementById(`sem_btn_lvl_${i}`)?.classList.toggle('active', i === lvl);
     }
 
@@ -880,7 +993,7 @@ function sem_switchLevel(lvl) {
     if (scafN1) scafN1.style.display = lvl === 1 ? 'block' : 'none';
     if (scafN2) scafN2.style.display = lvl === 2 ? 'block' : 'none';
     if (scafN3) scafN3.style.display = lvl === 3 ? 'block' : 'none';
-    if (ideN4) ideN4.style.display = lvl === 4 ? 'block' : 'none';
+    if (ideN4) ideN4.style.display = (lvl === 4 || lvl === 5) ? 'block' : 'none';
 
     const data = sem_levels_data[lvl];
     if (data) {
@@ -899,7 +1012,7 @@ function sem_switchLevel(lvl) {
     if (solBox) solBox.style.display = 'none';
     if (solBtn) solBtn.style.display = (sem_errors_count[lvl] >= 3) ? 'flex' : 'none';
 
-    if (lvl === 4) {
+    if (lvl === 4 || lvl === 5) {
         sem_handleIdeInput();
     }
 
@@ -909,7 +1022,7 @@ function sem_switchLevel(lvl) {
 
 function sem_updateLevelButtons() {
     const saved = JSON.parse(localStorage.getItem('semaforo_levels') || '[]');
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 5; i++) {
         const btn = document.getElementById(`sem_btn_lvl_${i}`);
         if (!btn) continue;
         const isDone = saved.includes(i);
@@ -928,24 +1041,40 @@ function sem_resetScene() {
         // Nível 1: Carro Vermelho está na aproximação do Semáforo 1
         sem_carRed_state = 'start';
         sem_carBlue_state = 'stop';
+        sem_carGreen_state = 'stop';
+        sem_carYellow_state = 'stop';
         sem_ped_state = 'sidewalk_south';
         sem_setTrafficLights({ a: 'green', b: 'red', ped: 'red' });
     } else if (sem_level === 2) {
         // Nível 2: Carro Vermelho na aproximação. Carro Azul esperando no Semáforo 2 (linha Norte)
         sem_carRed_state = 'start';
         sem_carBlue_state = 'stop';
+        sem_carGreen_state = 'stop';
+        sem_carYellow_state = 'stop';
         sem_ped_state = 'sidewalk_south';
         sem_setTrafficLights({ a: 'green', b: 'red', ped: 'red' });
     } else if (sem_level === 3) {
         // Nível 3: Todos os carros na linha de parada. Pedestre pronto para atravessar
         sem_carRed_state = 'stop';
         sem_carBlue_state = 'stop';
+        sem_carGreen_state = 'stop';
+        sem_carYellow_state = 'stop';
         sem_ped_state = 'sidewalk_south';
         sem_setTrafficLights({ a: 'red', b: 'red', ped: 'red' });
-    } else {
-        // Nível 4: Posições padrão para ciclo livre
+    } else if (sem_level === 4) {
+        // Nível 4: Ciclo livre de cruzamento padrão
         sem_carRed_state = 'start';
         sem_carBlue_state = 'stop';
+        sem_carGreen_state = 'stop';
+        sem_carYellow_state = 'stop';
+        sem_ped_state = 'sidewalk_south';
+        sem_setTrafficLights({ a: 'green', b: 'red', ped: 'red' });
+    } else {
+        // Nível 5: Grande Metrópole Maker (4 Fluxos simultâneos em mão dupla)
+        sem_carRed_state = 'start';
+        sem_carGreen_state = 'start';
+        sem_carBlue_state = 'stop';
+        sem_carYellow_state = 'stop';
         sem_ped_state = 'sidewalk_south';
         sem_setTrafficLights({ a: 'green', b: 'red', ped: 'red' });
     }
@@ -965,11 +1094,13 @@ function sem_resetScene() {
 function sem_renderCarPositions(animated = true) {
     const carRed = document.getElementById('sem_car_red');
     const carBlue = document.getElementById('sem_car_blue');
+    const carGreen = document.getElementById('sem_car_green');
+    const carYellow = document.getElementById('sem_car_yellow');
     const ped = document.getElementById('sem_ped_1');
 
     const transitionStyle = animated ? 'all 1.1s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
 
-    // 1. Carro Vermelho 🚗 (Fluxo 1 - Semáforo 1: Oeste -> Leste)
+    // 1. Carro Vermelho 🚗 (Avenida Sul: Oeste -> Leste)
     if (carRed) {
         carRed.style.transition = transitionStyle;
         if (sem_carRed_state === 'start') carRed.style.left = '25px';
@@ -978,7 +1109,7 @@ function sem_renderCarPositions(animated = true) {
         else if (sem_carRed_state === 'exit') carRed.style.left = 'calc(100% - 75px)'; // cruzou para a direita
     }
 
-    // 2. Carro Azul 🚙 (Fluxo 2 - Semáforo 2: Norte -> Sul)
+    // 2. Carro Azul 🚙 (Rua Oeste: Norte -> Sul)
     if (carBlue) {
         carBlue.style.transition = transitionStyle;
         if (sem_carBlue_state === 'start') carBlue.style.top = '20px';
@@ -987,7 +1118,27 @@ function sem_renderCarPositions(animated = true) {
         else if (sem_carBlue_state === 'exit') carBlue.style.top = 'calc(100% - 50px)'; // cruzou descendo
     }
 
-    // 3. Pedestre 🚶 (Faixa Zebrada Oeste)
+    // 3. Carro Verde 🏎️ (Avenida Norte: Leste -> Oeste, pista paralela oposta)
+    if (carGreen) {
+        carGreen.style.transition = transitionStyle;
+        carGreen.style.display = (sem_level === 5) ? 'block' : 'none';
+        if (sem_carGreen_state === 'start') carGreen.style.left = 'calc(100% - 75px)';
+        else if (sem_carGreen_state === 'stop') carGreen.style.left = 'calc(50% + 115px)'; // antes da linha leste
+        else if (sem_carGreen_state === 'cross') carGreen.style.left = 'calc(50% - 27px)'; // no centro
+        else if (sem_carGreen_state === 'exit') carGreen.style.left = '25px'; // cruzou para a esquerda
+    }
+
+    // 4. Carro Amarelo 🚖 (Rua Leste: Sul -> Norte, pista paralela oposta)
+    if (carYellow) {
+        carYellow.style.transition = transitionStyle;
+        carYellow.style.display = (sem_level === 5) ? 'block' : 'none';
+        if (sem_carYellow_state === 'start') carYellow.style.top = 'calc(100% - 50px)';
+        else if (sem_carYellow_state === 'stop') carYellow.style.top = 'calc(50% + 115px)'; // antes da linha sul
+        else if (sem_carYellow_state === 'cross') carYellow.style.top = 'calc(50% - 27px)'; // no centro
+        else if (sem_carYellow_state === 'exit') carYellow.style.top = '20px'; // cruzou subindo
+    }
+
+    // 5. Pedestre 🚶 (Faixa Zebrada Oeste)
     if (ped) {
         ped.style.transition = animated ? 'all 1.4s ease-in-out' : 'none';
         if (sem_ped_state === 'sidewalk_south') {
@@ -1005,7 +1156,7 @@ function sem_renderCarPositions(animated = true) {
 }
 
 function sem_setTrafficLights({ a, b, ped }) {
-    // Semáforo 1 (Fluxo 1)
+    // Semáforo 1 (Fluxo da Avenida Principal)
     if (a) {
         document.getElementById('sem_a_red')?.classList.toggle('on', a === 'red');
         document.getElementById('sem_a_yellow')?.classList.toggle('on', a === 'yellow');
@@ -1020,7 +1171,7 @@ function sem_setTrafficLights({ a, b, ped }) {
         }
     }
 
-    // Semáforo 2 (Fluxo 2)
+    // Semáforo 2 (Fluxo da Rua Transversal)
     if (b) {
         document.getElementById('sem_b_red')?.classList.toggle('on', b === 'red');
         document.getElementById('sem_b_yellow')?.classList.toggle('on', b === 'yellow');
@@ -1057,34 +1208,34 @@ function sem_updateLiveCpp() {
     let loopBody = '';
 
     if (sem_level === 1) {
-        const c1 = document.getElementById('sem_n1_cmd1')?.value || 'semaforo1_verde';
+        const c1 = document.getElementById('sem_n1_cmd1')?.value || 'digitalWrite(PIN_SEM1_VERDE, HIGH)';
         const d1 = document.getElementById('sem_n1_delay1')?.value || '2000';
-        const c2 = document.getElementById('sem_n1_cmd2')?.value || 'semaforo1_amarelo';
+        const c2 = document.getElementById('sem_n1_cmd2')?.value || 'digitalWrite(PIN_SEM1_AMARELO, HIGH)';
         const d2 = document.getElementById('sem_n1_delay2')?.value || '1000';
-        const c3 = document.getElementById('sem_n1_cmd3')?.value || 'semaforo1_vermelho';
+        const c3 = document.getElementById('sem_n1_cmd3')?.value || 'digitalWrite(PIN_SEM1_VERMELHO, HIGH)';
 
-        loopBody = `  // 1️⃣ Fase 1: Semáforo 1 e avanço do veículo:\n  ${c1}();\n  carro1_avancar();\n  delay(${d1});\n\n` +
-                   `  // 2️⃣ Fase 2: Alerta de transição:\n  ${c2}();\n  delay(${d2});\n\n` +
-                   `  // 3️⃣ Fase 3: Fechamento e parada segura:\n  ${c3}();\n  carro1_parar();`;
+        loopBody = `  // 1️⃣ Fase 1: Liberar o fluxo na avenida:\n  ${c1};\n  carro1_avancar();\n  delay(${d1});\n\n` +
+                   `  // 2️⃣ Fase 2: Alerta obrigatório de desaceleração:\n  ${c2};\n  delay(${d2});\n\n` +
+                   `  // 3️⃣ Fase 3: Fechamento e retenção na linha branca:\n  ${c3};\n  carro1_parar();`;
     } else if (sem_level === 2) {
-        const c1 = document.getElementById('sem_n2_cmd1')?.value || 'semaforo1_verde';
+        const c1 = document.getElementById('sem_n2_cmd1')?.value || 'digitalWrite(PIN_SEM1_VERDE, HIGH)';
         const d1 = document.getElementById('sem_n2_delay1')?.value || '2000';
-        const c2 = document.getElementById('sem_n2_cmd2')?.value || 'semaforo1_amarelo';
-        const c3 = document.getElementById('sem_n2_cmd3')?.value || 'semaforo2_verde';
+        const c2 = document.getElementById('sem_n2_cmd2')?.value || 'digitalWrite(PIN_SEM1_AMARELO, HIGH)';
+        const c3 = document.getElementById('sem_n2_cmd3')?.value || 'digitalWrite(PIN_SEM2_VERDE, HIGH)';
         const d2 = document.getElementById('sem_n2_delay2')?.value || '2000';
 
-        loopBody = `  // Fase 1: Semáforo 2 fechado e Semáforo 1 liberado:\n  semaforo2_vermelho();\n  carro2_parar();\n  ${c1}();\n  carro1_avancar();\n  delay(${d1});\n\n` +
-                   `  // Fase 2: Transição no Semáforo 1:\n  ${c2}();\n  delay(1000);\n\n` +
-                   `  // Fase 3: Fecha Semáforo 1 e abre Semáforo 2:\n  semaforo1_vermelho();\n  carro1_parar();\n  ${c3}();\n  carro2_avancar();\n  delay(${d2});`;
+        loopBody = `  // Fase 1: Rua transversal travada e avenida liberada:\n  digitalWrite(PIN_SEM2_VERMELHO, HIGH);\n  carro2_parar();\n  ${c1};\n  carro1_avancar();\n  delay(${d1});\n\n` +
+                   `  // Fase 2: Alerta de desaceleração na avenida:\n  ${c2};\n  delay(1000);\n\n` +
+                   `  // Fase 3: Fecha avenida e abre rua transversal:\n  digitalWrite(PIN_SEM1_VERMELHO, HIGH);\n  carro1_parar();\n  ${c3};\n  carro2_avancar();\n  delay(${d2});`;
     } else if (sem_level === 3) {
-        const c1 = document.getElementById('sem_n3_cmd1')?.value || 'pedestre_verde';
+        const c1 = document.getElementById('sem_n3_cmd1')?.value || 'digitalWrite(PIN_PEDESTRE_VERDE, HIGH)';
         const d1 = document.getElementById('sem_n3_delay1')?.value || '2500';
-        const c2 = document.getElementById('sem_n3_cmd2')?.value || 'pedestre_vermelho';
+        const c2 = document.getElementById('sem_n3_cmd2')?.value || 'digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH)';
 
-        loopBody = `  // Fase 1: Parada total dos carros nas linhas brancas:\n  semaforo1_vermelho();\n  carro1_parar();\n  semaforo2_vermelho();\n  carro2_parar();\n  delay(800);\n\n` +
-                   `  // Fase 2: Abertura da faixa e travessia:\n  ${c1}();\n  pedestre_atravessar();\n  delay(${d1});\n\n` +
-                   `  // Fase 3: Fechamento da faixa e fim da travessia:\n  ${c2}();\n  pedestre_parar();`;
-    } else if (sem_level === 4) {
+        loopBody = `  // Fase 1: Bloqueio veicular total com parada nas linhas:\n  digitalWrite(PIN_SEM1_VERMELHO, HIGH);\n  carro1_parar();\n  digitalWrite(PIN_SEM2_VERMELHO, HIGH);\n  carro2_parar();\n  delay(800);\n\n` +
+                   `  // Fase 2: Semáforo de pedestre verde e travessia:\n  ${c1};\n  pedestre_atravessar();\n  delay(${d1});\n\n` +
+                   `  // Fase 3: Fechamento da faixa e fim da travessia:\n  ${c2};\n  pedestre_parar();`;
+    } else {
         const userCode = document.getElementById('sem_code_input')?.value.trim();
         if (userCode) {
             loopBody = `  // Código digitado na Mini-IDE:\n  ` + userCode.replace(/\n/g, '\n  ');
@@ -1094,34 +1245,26 @@ function sem_updateLiveCpp() {
     }
 
     const fullCode = `// --- Cruzamento Inteligente da Cidade Maker (Arduino C++) ---\n` +
-                     `// Semáforo 1 (Fluxo 1 - Carro Vermelho 🚗):\n` +
+                     `// Pinos Digitais do Semáforo 1 (Avenida Principal):\n` +
                      `const int PIN_SEM1_VERMELHO = 12;\n` +
                      `const int PIN_SEM1_AMARELO  = 11;\n` +
                      `const int PIN_SEM1_VERDE    = 10;\n\n` +
-                     `// Semáforo 2 (Fluxo 2 - Carro Azul 🚙):\n` +
+                     `// Pinos Digitais do Semáforo 2 (Rua Transversal):\n` +
                      `const int PIN_SEM2_VERMELHO = 9;\n` +
                      `const int PIN_SEM2_AMARELO  = 8;\n` +
                      `const int PIN_SEM2_VERDE    = 7;\n\n` +
-                     `// Semáforo de Pedestre 🚸:\n` +
+                     `// Pinos Digitais do Semáforo de Pedestre 🚸:\n` +
                      `const int PIN_PEDESTRE_VERMELHO = 6;\n` +
                      `const int PIN_PEDESTRE_VERDE    = 5;\n\n` +
-                     `// Funções de Controle dos Semáforos:\n` +
-                     `void semaforo1_verde()    { digitalWrite(PIN_SEM1_VERMELHO, LOW);  digitalWrite(PIN_SEM1_AMARELO, LOW);  digitalWrite(PIN_SEM1_VERDE, HIGH); }\n` +
-                     `void semaforo1_amarelo()  { digitalWrite(PIN_SEM1_VERDE, LOW);     digitalWrite(PIN_SEM1_AMARELO, HIGH); }\n` +
-                     `void semaforo1_vermelho() { digitalWrite(PIN_SEM1_AMARELO, LOW);  digitalWrite(PIN_SEM1_VERMELHO, HIGH); }\n` +
-                     `void semaforo2_verde()    { digitalWrite(PIN_SEM2_VERMELHO, LOW);  digitalWrite(PIN_SEM2_AMARELO, LOW);  digitalWrite(PIN_SEM2_VERDE, HIGH); }\n` +
-                     `void semaforo2_amarelo()  { digitalWrite(PIN_SEM2_VERDE, LOW);     digitalWrite(PIN_SEM2_AMARELO, HIGH); }\n` +
-                     `void semaforo2_vermelho() { digitalWrite(PIN_SEM2_AMARELO, LOW);  digitalWrite(PIN_SEM2_VERMELHO, HIGH); }\n` +
-                     `void pedestre_verde()     { digitalWrite(PIN_PEDESTRE_VERMELHO, LOW); digitalWrite(PIN_PEDESTRE_VERDE, HIGH); }\n` +
-                     `void pedestre_vermelho()  { digitalWrite(PIN_PEDESTRE_VERDE, LOW);    digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH); }\n\n` +
-                     `// Funções de Ação dos Veículos e Pedestres:\n` +
-                     `void carro1_avancar()      { /* Despacha o Carro Vermelho 🚗 */ }\n` +
+                     `// Funções de Controle dos Veículos e Pedestres:\n` +
+                     `void carro1_avancar()      { /* Despacha o fluxo da avenida (Carros Vermelho e Verde) */ }\n` +
                      `void carro1_parar()        { /* Aciona retenção na linha branca */ }\n` +
-                     `void carro2_avancar()      { /* Despacha o Carro Azul 🚙 */ }\n` +
+                     `void carro2_avancar()      { /* Despacha o fluxo da rua transversal (Carros Azul e Amarelo) */ }\n` +
                      `void carro2_parar()        { /* Aciona retenção na linha branca */ }\n` +
-                     `void pedestre_atravessar() { /* Inicia travessia na faixa 🚶 */ }\n` +
+                     `void pedestre_atravessar() { /* Inicia travessia na faixa zebrada 🚶 */ }\n` +
                      `void pedestre_parar()      { /* Encerra travessia na calçada */ }\n\n` +
                      `void setup() {\n` +
+                     `  // Configuração dos Pinos como Saída (OUTPUT):\n` +
                      `  pinMode(PIN_SEM1_VERMELHO, OUTPUT);\n` +
                      `  pinMode(PIN_SEM1_AMARELO, OUTPUT);\n` +
                      `  pinMode(PIN_SEM1_VERDE, OUTPUT);\n` +
@@ -1192,15 +1335,28 @@ function sem_sleep(ms) {
 
 /* ================= PARSER DE COMANDOS ================= */
 
+function sem_parsePinOrFunc(str) {
+    if (!str) return null;
+    if (/PIN_SEM1_VERDE.*HIGH|semaforo1_verde/i.test(str)) return 'semaforo1_verde';
+    if (/PIN_SEM1_AMARELO.*HIGH|semaforo1_amarelo/i.test(str)) return 'semaforo1_amarelo';
+    if (/PIN_SEM1_VERMELHO.*HIGH|semaforo1_vermelho/i.test(str)) return 'semaforo1_vermelho';
+    if (/PIN_SEM2_VERDE.*HIGH|semaforo2_verde/i.test(str)) return 'semaforo2_verde';
+    if (/PIN_SEM2_AMARELO.*HIGH|semaforo2_amarelo/i.test(str)) return 'semaforo2_amarelo';
+    if (/PIN_SEM2_VERMELHO.*HIGH|semaforo2_vermelho/i.test(str)) return 'semaforo2_vermelho';
+    if (/PIN_PEDESTRE_VERDE.*HIGH|pedestre_verde/i.test(str)) return 'pedestre_verde';
+    if (/PIN_PEDESTRE_VERMELHO.*HIGH|pedestre_vermelho/i.test(str)) return 'pedestre_vermelho';
+    return null;
+}
+
 function sem_extractCommands() {
     const cmds = [];
 
     if (sem_level === 1) {
-        const c1 = document.getElementById('sem_n1_cmd1')?.value;
+        const c1 = sem_parsePinOrFunc(document.getElementById('sem_n1_cmd1')?.value);
         const d1 = parseInt(document.getElementById('sem_n1_delay1')?.value || '2000');
-        const c2 = document.getElementById('sem_n1_cmd2')?.value;
+        const c2 = sem_parsePinOrFunc(document.getElementById('sem_n1_cmd2')?.value);
         const d2 = parseInt(document.getElementById('sem_n1_delay2')?.value || '1000');
-        const c3 = document.getElementById('sem_n1_cmd3')?.value;
+        const c3 = sem_parsePinOrFunc(document.getElementById('sem_n1_cmd3')?.value);
 
         if (c1) cmds.push({ type: c1 });
         cmds.push({ type: 'carro1_avancar' });
@@ -1210,10 +1366,10 @@ function sem_extractCommands() {
         if (c3) cmds.push({ type: c3 });
         cmds.push({ type: 'carro1_parar' });
     } else if (sem_level === 2) {
-        const c1 = document.getElementById('sem_n2_cmd1')?.value;
+        const c1 = sem_parsePinOrFunc(document.getElementById('sem_n2_cmd1')?.value);
         const d1 = parseInt(document.getElementById('sem_n2_delay1')?.value || '2000');
-        const c2 = document.getElementById('sem_n2_cmd2')?.value;
-        const c3 = document.getElementById('sem_n2_cmd3')?.value;
+        const c2 = sem_parsePinOrFunc(document.getElementById('sem_n2_cmd2')?.value);
+        const c3 = sem_parsePinOrFunc(document.getElementById('sem_n2_cmd3')?.value);
         const d2 = parseInt(document.getElementById('sem_n2_delay2')?.value || '2000');
 
         cmds.push({ type: 'semaforo2_vermelho' });
@@ -1229,9 +1385,9 @@ function sem_extractCommands() {
         cmds.push({ type: 'carro2_avancar' });
         cmds.push({ type: 'delay', ms: d2 });
     } else if (sem_level === 3) {
-        const c1 = document.getElementById('sem_n3_cmd1')?.value;
+        const c1 = sem_parsePinOrFunc(document.getElementById('sem_n3_cmd1')?.value);
         const d1 = parseInt(document.getElementById('sem_n3_delay1')?.value || '2500');
-        const c2 = document.getElementById('sem_n3_cmd2')?.value;
+        const c2 = sem_parsePinOrFunc(document.getElementById('sem_n3_cmd2')?.value);
 
         cmds.push({ type: 'semaforo1_vermelho' });
         cmds.push({ type: 'carro1_parar' });
@@ -1243,7 +1399,8 @@ function sem_extractCommands() {
         cmds.push({ type: 'delay', ms: d1 });
         if (c2) cmds.push({ type: c2 });
         cmds.push({ type: 'pedestre_parar' });
-    } else if (sem_level === 4) {
+    } else {
+        // Níveis 4 e 5: Mini-IDE C/C++
         const text = document.getElementById('sem_code_input')?.value || '';
         const lines = text.split('\n');
 
@@ -1257,14 +1414,14 @@ function sem_extractCommands() {
             else if (/carro2_parar/i.test(line)) cmds.push({ type: 'carro2_parar' });
             else if (/pedestre_atravessar/i.test(line)) cmds.push({ type: 'pedestre_atravessar' });
             else if (/pedestre_parar/i.test(line)) cmds.push({ type: 'pedestre_parar' });
-            else if (/semaforo1_verde|semaforoA_verde|PIN_SEM1_VERDE.*HIGH/i.test(line)) cmds.push({ type: 'semaforo1_verde' });
-            else if (/semaforo1_amarelo|semaforoA_amarelo|PIN_SEM1_AMARELO.*HIGH/i.test(line)) cmds.push({ type: 'semaforo1_amarelo' });
-            else if (/semaforo1_vermelho|semaforoA_vermelho|PIN_SEM1_VERMELHO.*HIGH/i.test(line)) cmds.push({ type: 'semaforo1_vermelho' });
-            else if (/semaforo2_verde|semaforoB_verde|PIN_SEM2_VERDE.*HIGH/i.test(line)) cmds.push({ type: 'semaforo2_verde' });
-            else if (/semaforo2_amarelo|semaforoB_amarelo|PIN_SEM2_AMARELO.*HIGH/i.test(line)) cmds.push({ type: 'semaforo2_amarelo' });
-            else if (/semaforo2_vermelho|semaforoB_vermelho|PIN_SEM2_VERMELHO.*HIGH/i.test(line)) cmds.push({ type: 'semaforo2_vermelho' });
-            else if (/pedestre_verde|PIN_PEDESTRE.*HIGH/i.test(line)) cmds.push({ type: 'pedestre_verde' });
-            else if (/pedestre_vermelho|PIN_PEDESTRE.*LOW/i.test(line)) cmds.push({ type: 'pedestre_vermelho' });
+            else if (/PIN_SEM1_VERDE.*HIGH|semaforo1_verde|semaforoA_verde/i.test(line)) cmds.push({ type: 'semaforo1_verde' });
+            else if (/PIN_SEM1_AMARELO.*HIGH|semaforo1_amarelo|semaforoA_amarelo/i.test(line)) cmds.push({ type: 'semaforo1_amarelo' });
+            else if (/PIN_SEM1_VERMELHO.*HIGH|semaforo1_vermelho|semaforoA_vermelho/i.test(line)) cmds.push({ type: 'semaforo1_vermelho' });
+            else if (/PIN_SEM2_VERDE.*HIGH|semaforo2_verde|semaforoB_verde/i.test(line)) cmds.push({ type: 'semaforo2_verde' });
+            else if (/PIN_SEM2_AMARELO.*HIGH|semaforo2_amarelo|semaforoB_amarelo/i.test(line)) cmds.push({ type: 'semaforo2_amarelo' });
+            else if (/PIN_SEM2_VERMELHO.*HIGH|semaforo2_vermelho|semaforoB_vermelho/i.test(line)) cmds.push({ type: 'semaforo2_vermelho' });
+            else if (/PIN_PEDESTRE_VERDE.*HIGH|pedestre_verde/i.test(line)) cmds.push({ type: 'pedestre_verde' });
+            else if (/PIN_PEDESTRE_VERMELHO.*HIGH|pedestre_vermelho/i.test(line)) cmds.push({ type: 'pedestre_vermelho' });
             else {
                 const matchDelay = line.match(/delay\s*\(\s*(\d+)\s*\)/i);
                 if (matchDelay) cmds.push({ type: 'delay', ms: parseInt(matchDelay[1]) });
@@ -1275,7 +1432,7 @@ function sem_extractCommands() {
     return cmds;
 }
 
-/* ================= MOTOR DE SIMULAÇÃO INTELIGENTE (SEM MANOBRAS DE RÉ) ================= */
+/* ================= MOTOR DE SIMULAÇÃO INTELIGENTE (4 FLUXOS & REGRAS DE TRÂNSITO) ================= */
 
 async function sem_runSimulation() {
     if (sem_running) return;
@@ -1317,6 +1474,10 @@ async function sem_runSimulation() {
                 if (stateB === 'green') {
                     sem_carRed_state = 'cross';
                     sem_carBlue_state = 'cross';
+                    if (sem_level === 5) {
+                        sem_carGreen_state = 'cross';
+                        sem_carYellow_state = 'cross';
+                    }
                 }
             }
         } else if (cmd.type === 'semaforo1_amarelo') {
@@ -1325,17 +1486,15 @@ async function sem_runSimulation() {
             hasHadYellowA = true;
             playSound('step');
 
-            // Regra: Carro Vermelho na aproximação desacelera e para na linha branca!
-            // Se já cruzou ('exit'), CONTINUA EM 'exit' (NUNCA VOLTA DE RÉ!)
-            if (sem_carRed_state === 'start') {
-                sem_carRed_state = 'stop';
-            }
+            // Carros da avenida na aproximação desaceleram para parar na linha de retenção
+            if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
+            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
             sem_renderCarPositions(true);
         } else if (cmd.type === 'semaforo1_vermelho') {
             if (stateA === 'green' && !hasHadYellowA && sem_carRed_state === 'start') {
                 sem_registerError('Freagem Brusca no Semáforo 1!', 
-                    'O Semáforo 1 mudou direto do Verde para o Vermelho! O Carro Vermelho derrapou na pista.', 
-                    'Sempre use semaforo1_amarelo() e delay(1000) antes de fechar no Vermelho!', 
+                    'O Semáforo 1 mudou direto do Verde para o Vermelho! Os carros da avenida derraparam na pista.', 
+                    'Sempre acione o pino Amarelo e delay(1000) antes de fechar no Vermelho!', 
                     '⚠️');
                 crashed = true;
                 break;
@@ -1346,6 +1505,7 @@ async function sem_runSimulation() {
             playSound('step');
 
             if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
+            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
             sem_renderCarPositions(true);
         } else if (cmd.type === 'semaforo2_verde') {
             stateB = 'green';
@@ -1356,6 +1516,10 @@ async function sem_runSimulation() {
             if (stateA === 'green') {
                 sem_carRed_state = 'cross';
                 sem_carBlue_state = 'cross';
+                if (sem_level === 5) {
+                    sem_carGreen_state = 'cross';
+                    sem_carYellow_state = 'cross';
+                }
             }
         } else if (cmd.type === 'semaforo2_amarelo') {
             stateB = 'yellow';
@@ -1364,12 +1528,13 @@ async function sem_runSimulation() {
             playSound('step');
 
             if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
+            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
             sem_renderCarPositions(true);
         } else if (cmd.type === 'semaforo2_vermelho') {
             if (stateB === 'green' && !hasHadYellowB && sem_carBlue_state === 'start') {
                 sem_registerError('Freagem Brusca no Semáforo 2!', 
                     'O Semáforo 2 fechou direto sem o Amarelo de aviso!', 
-                    'Sempre use Amarelo e delay() antes de fechar.', 
+                    'Sempre use o Amarelo e delay() antes de fechar.', 
                     '⚠️');
                 crashed = true;
                 break;
@@ -1380,6 +1545,7 @@ async function sem_runSimulation() {
             playSound('step');
 
             if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
+            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
             sem_renderCarPositions(true);
         } else if (cmd.type === 'pedestre_verde') {
             statePed = 'green';
@@ -1396,41 +1562,49 @@ async function sem_runSimulation() {
             if (sem_ped_state === 'crossing') sem_ped_state = 'sidewalk_north';
             sem_renderCarPositions(true);
         } else if (cmd.type === 'carro1_avancar') {
-            // Validação de regra de trânsito:
+            // Validação de trânsito:
             if (stateA === 'red') {
                 sem_carRed_state = 'cross';
+                if (sem_level === 5) sem_carGreen_state = 'cross';
                 sem_renderCarPositions(true);
                 playSound('error');
                 sem_registerError('Infração no Semáforo 1! 🚨', 
-                    'O comando carro1_avancar() foi chamado com o Semáforo 1 no VERMELHO! O carro furou o sinal vermelho.', 
-                    'Abra o Semáforo 1 no Verde (semaforo1_verde()) antes de ordenar o avanço!', 
+                    'O fluxo da avenida avançou com o Semáforo 1 no VERMELHO! Os motoristas furaram o sinal vermelho.', 
+                    'Ligue o pino Verde (digitalWrite(PIN_SEM1_VERDE, HIGH)) antes de avançar!', 
                     '🛑');
                 crashed = true;
                 break;
             } else {
                 sem_carRed_state = 'cross';
+                // No Nível 5, carros na horizontal andam juntos em pistas paralelas!
+                if (sem_level === 5) sem_carGreen_state = 'cross';
                 sem_renderCarPositions(true);
             }
         } else if (cmd.type === 'carro1_parar') {
             if (sem_carRed_state === 'start') sem_carRed_state = 'stop';
+            if (sem_level === 5 && sem_carGreen_state === 'start') sem_carGreen_state = 'stop';
             sem_renderCarPositions(true);
         } else if (cmd.type === 'carro2_avancar') {
             if (stateB === 'red') {
                 sem_carBlue_state = 'cross';
+                if (sem_level === 5) sem_carYellow_state = 'cross';
                 sem_renderCarPositions(true);
                 playSound('error');
                 sem_registerError('Infração no Semáforo 2! 🚨', 
-                    'O comando carro2_avancar() foi chamado com o Semáforo 2 no VERMELHO! O carro furou o sinal vermelho.', 
-                    'Abra o Semáforo 2 no Verde (semaforo2_verde()) antes de ordenar o avanço!', 
+                    'O fluxo transversal avançou com o Semáforo 2 no VERMELHO!', 
+                    'Ligue o pino Verde (digitalWrite(PIN_SEM2_VERDE, HIGH)) antes de ordenar o avanço!', 
                     '🛑');
                 crashed = true;
                 break;
             } else {
                 sem_carBlue_state = 'cross';
+                // No Nível 5, carros na vertical andam juntos em pistas paralelas!
+                if (sem_level === 5) sem_carYellow_state = 'cross';
                 sem_renderCarPositions(true);
             }
         } else if (cmd.type === 'carro2_parar') {
             if (sem_carBlue_state === 'start') sem_carBlue_state = 'stop';
+            if (sem_level === 5 && sem_carYellow_state === 'start') sem_carYellow_state = 'stop';
             sem_renderCarPositions(true);
         } else if (cmd.type === 'pedestre_atravessar') {
             if (statePed === 'red') {
@@ -1438,8 +1612,8 @@ async function sem_runSimulation() {
                 sem_renderCarPositions(true);
                 playSound('error');
                 sem_registerError('Infração na Faixa de Pedestre! 🚸', 
-                    'O comando pedestre_atravessar() foi executado com o sinal de pedestre no VERMELHO (PARE)!', 
-                    'Abra o sinal do pedestre com pedestre_verde() antes de atravessar!', 
+                    'O pedestre atravessou com o sinal de pedestre no VERMELHO (PARE)!', 
+                    'Ligue o pino verde com digitalWrite(PIN_PEDESTRE_VERDE, HIGH) antes de atravessar!', 
                     '🚸');
                 crashed = true;
                 break;
@@ -1453,26 +1627,34 @@ async function sem_runSimulation() {
         } else if (cmd.type === 'delay') {
             // ================= CHECAGEM DE TRÂNSITO DURANTE O DELAY =================
 
-            // 1. Colisão Carro vs Carro (Semáforo 1 e Semáforo 2 verdes juntos)
+            // 1. Colisão Perpendicular (Avenida e Rua abertas simultaneamente)
             if (stateA === 'green' && stateB === 'green') {
-                if (statusHud) { statusHud.innerHTML = '💥 COLISÃO NO CENTRO!'; statusHud.style.color = '#EF4444'; }
+                if (statusHud) { 
+                    statusHud.innerHTML = (sem_level === 5) ? '💥 COLISÃO QUÁDRUPLA NO CENTRO!' : '💥 COLISÃO NO CENTRO!'; 
+                    statusHud.style.color = '#EF4444'; 
+                }
                 sem_carRed_state = 'cross';
                 sem_carBlue_state = 'cross';
+                if (sem_level === 5) {
+                    sem_carGreen_state = 'cross';
+                    sem_carYellow_state = 'cross';
+                }
                 sem_renderCarPositions(true);
 
                 if (crashFx) crashFx.classList.add('active');
                 playSound('error');
                 await sem_sleep(700);
 
-                sem_registerError('Eita! Batida no Centro! 💥', 
-                    'O Carro Vermelho 🚗 (Semáforo 1) e o Carro Azul 🚙 (Semáforo 2) colidiram no cruzamento! Ambos os semáforos ficaram verdes juntos!', 
-                    'Quando o Semáforo 1 estiver Verde, o Semáforo 2 DEVE estar Vermelho!', 
-                    '💥');
+                const descError = (sem_level === 5)
+                    ? 'Os 4 carros colidiram no meio do cruzamento! Os semáforos 1 e 2 ficaram verdes ao mesmo tempo!'
+                    : 'O Carro Vermelho 🚗 (Semáforo 1) e o Carro Azul 🚙 (Semáforo 2) colidiram no cruzamento! Ambos os semáforos ficaram verdes juntos!';
+
+                sem_registerError('Batida no Centro! 💥', descError, 'Enquanto o Semáforo 1 for Verde, o Semáforo 2 DEVE estar Vermelho!', '💥');
                 crashed = true;
                 break;
             }
 
-            // 2. Colisão Carro vs Pedestre
+            // 2. Colisão Carros vs Pedestre
             if (statePed === 'green' && (stateA === 'green' || stateB === 'green')) {
                 if (statusHud) { statusHud.innerHTML = '🚨 QUASE ATROPELOU O PEDESTRE!'; statusHud.style.color = '#EF4444'; }
                 const pedEl = document.getElementById('sem_ped_1');
@@ -1481,27 +1663,27 @@ async function sem_runSimulation() {
                 await sem_sleep(600);
 
                 sem_registerError('Perigo na Faixa de Pedestres! 🚨', 
-                    'O pedestre estava atravessando na faixa e o semáforo dos carros abriu!', 
-                    'Enquanto o pedestre atravessa (pedestre_verde), TODOS os semáforos de carros (1 e 2) devem estar no VERMELHO!', 
+                    'O pedestre estava atravessando na faixa e o semáforo dos veículos abriu!', 
+                    'Enquanto o pedestre atravessa (PIN_PEDESTRE_VERDE HIGH), TODOS os semáforos de carros (1 e 2) devem estar no VERMELHO!', 
                     '🚨');
                 crashed = true;
                 break;
             }
 
-            // Animação suave e proporcional ao delay
             const waitTime = Math.min(2500, Math.max(700, Math.round(cmd.ms * 0.85)));
 
-            // 3. Movimento para frente no verde
+            // 3. Movimento dos fluxos no Verde
             if (stateA === 'green' && stateB === 'red' && statePed === 'red') {
-                // Carro Vermelho cruza a avenida para a direita até o final
+                // Carros da avenida cruzam para frente em sentidos opostos (NUNCA DE RÉ!)
                 if (sem_carRed_state !== 'exit') sem_carRed_state = 'exit';
+                if (sem_level === 5 && sem_carGreen_state !== 'exit') sem_carGreen_state = 'exit';
                 sem_renderCarPositions(true);
             } else if (stateB === 'green' && stateA === 'red' && statePed === 'red') {
-                // Carro Azul desce cruzando a rua para o sul até o final
+                // Carros da rua transversal cruzam para frente em sentidos opostos
                 if (sem_carBlue_state !== 'exit') sem_carBlue_state = 'exit';
+                if (sem_level === 5 && sem_carYellow_state !== 'exit') sem_carYellow_state = 'exit';
                 sem_renderCarPositions(true);
             } else if (statePed === 'green' && stateA === 'red' && stateB === 'red') {
-                // Pedestre cruza a faixa até a calçada norte
                 sem_ped_state = 'sidewalk_north';
                 sem_renderCarPositions(true);
             }
@@ -1527,7 +1709,7 @@ async function sem_runSimulation() {
 
             sem_showWinModal();
         } else {
-            sem_registerError('Quase lá!', 'A sequência de semáforos não cumpriu todos os passos deste nível.', 'Verifique a ordem recomendada na história da missão!', '❌');
+            sem_registerError('Quase lá!', 'A sequência de semáforos não cumpriu todos os passos deste nível.', 'Verifique os requisitos da missão!', '❌');
         }
     }
 
@@ -1537,25 +1719,27 @@ async function sem_runSimulation() {
 
 function sem_validateLevelSuccess(cmds) {
     if (sem_level === 1) {
-        // Nível 1: Semáforo 1 Verde -> Amarelo -> Vermelho
         const hasGreen1 = cmds.some(c => c.type === 'semaforo1_verde');
         const hasYellow1 = cmds.some(c => c.type === 'semaforo1_amarelo');
         const hasRed1 = cmds.some(c => c.type === 'semaforo1_vermelho');
         return hasGreen1 && hasYellow1 && hasRed1;
     } else if (sem_level === 2) {
-        // Nível 2: Verde 1, depois Amarelo 1, Vermelho 1, e Verde 2 com segurança
         const hasGreen1 = cmds.some(c => c.type === 'semaforo1_verde');
         const hasGreen2 = cmds.some(c => c.type === 'semaforo2_verde');
         const hasRed2 = cmds.some(c => c.type === 'semaforo2_vermelho');
         return hasGreen1 && hasGreen2 && hasRed2;
     } else if (sem_level === 3) {
-        // Nível 3: Pedestre Verde com carros em Vermelho
         const hasPedGreen = cmds.some(c => c.type === 'pedestre_verde');
         const hasRed1 = cmds.some(c => c.type === 'semaforo1_vermelho');
         const hasRed2 = cmds.some(c => c.type === 'semaforo2_vermelho');
         return hasPedGreen && hasRed1 && hasRed2;
     } else if (sem_level === 4) {
-        // Nível 4: Ciclo Completo com ambos os semáforos e pedestre
+        const hasGreen1 = cmds.some(c => c.type === 'semaforo1_verde');
+        const hasGreen2 = cmds.some(c => c.type === 'semaforo2_verde');
+        const hasPedGreen = cmds.some(c => c.type === 'pedestre_verde');
+        return hasGreen1 && hasGreen2 && hasPedGreen;
+    } else if (sem_level === 5) {
+        // Nível 5: Grande Metrópole Maker (ambos os eixos acionados e pedestres)
         const hasGreen1 = cmds.some(c => c.type === 'semaforo1_verde');
         const hasGreen2 = cmds.some(c => c.type === 'semaforo2_verde');
         const hasPedGreen = cmds.some(c => c.type === 'pedestre_verde');
@@ -1591,9 +1775,10 @@ function sem_showWinModal() {
     if (titleEl) titleEl.innerText = `Nível ${sem_level} Concluído! 🏆`;
     if (textEl) {
         if (sem_level === 1) textEl.innerText = 'Você programou a parada perfeita do Carro Vermelho 🚗 na linha branca do Semáforo 1!';
-        else if (sem_level === 2) textEl.innerText = 'Excelente! O Carro Vermelho 🚗 (Semáforo 1) e o Carro Azul 🚙 (Semáforo 2) cruzaram com segurança máxima sem nenhuma colisão!';
-        else if (sem_level === 3) textEl.innerText = 'Perfeito! O Pedestre 🚶 atravessou a faixa zebrada em segurança total no Semáforo 🚸 enquanto os carros esperaram!';
-        else textEl.innerText = 'Você domina completamente a lógica de Semáforos e Temporização em C/C++! Você é o Diretor de Tráfego Maker!';
+        else if (sem_level === 2) textEl.innerText = 'Excelente! O Semáforo 1 (Avenida) e o Semáforo 2 (Rua Transversal) alternaram com segurança total sem nenhuma colisão!';
+        else if (sem_level === 3) textEl.innerText = 'Perfeito! O Pedestre 🚶 atravessou a faixa zebrada em segurança total enquanto todos os carros aguardaram!';
+        else if (sem_level === 4) textEl.innerText = 'Você domina completamente a lógica de Semáforos e Temporização em Arduino C++! Excelente trabalho na Mini-IDE!';
+        else textEl.innerText = 'Extraordinário! Você coordenou os 4 fluxos simultâneos em mão dupla da Grande Metrópole Maker! Carros paralelos avançaram juntos e o trânsito fluiu em sincronia perfeita! 🚀🌆';
     }
 
     modal.classList.add('active');
@@ -1603,7 +1788,8 @@ function sem_closeWinModal() {
     const modal = document.getElementById('sem_win_modal');
     if (modal) modal.classList.remove('active');
 
-    if (sem_level < 4) {
+    if (sem_level < 5) {
         sem_switchLevel(sem_level + 1);
     }
 }
+

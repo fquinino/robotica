@@ -221,7 +221,7 @@ function showCertificateModal() {
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
                        getLevels('jardim_levels').length + getLevels('arduino_levels').length;
     const detail = document.getElementById('cert_stars_detail');
-    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 21 Estrelas Maker!`;
+    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 22 Estrelas Maker!`;
     modal.style.display = 'flex';
 }
 

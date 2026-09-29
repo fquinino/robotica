@@ -81,33 +81,38 @@ Isso transforma um robô simples em um robô <b>AUTÔNOMO E INTELIGENTE</b>!`,
     },
     4: {
         emoji:'🚦', title:'Sequências Temporizadas (Sinais & Cruzamento)', color:'#FBBF24',
-        objetivo:'🧠 <b>O que você vai aprender:</b> Como temporizar semáforos no Arduino com a função <span style="color:#FBBF24;">delay()</span> em milissegundos para organizar o trânsito da Cidade Maker sem colisões!',
+        objetivo:'🧠 <b>O que você vai aprender:</b> Como controlar pinos digitais do Arduino com <span style="color:#38BDF8;">digitalWrite(PINO, HIGH/LOW)</span> e temporizar com <span style="color:#FBBF24;">delay(ms)</span> para gerenciar os semáforos da metrópole sem acidentes!',
         teoria:`<b>Operação Trânsito Seguro na Cidade Maker 🏙️🚦</b>
 
-Dois carros chegam ao mesmo tempo em vias que se cruzam perpendicularmente! Se ambos passarem juntos... <b>BOOM! 💥 Batida na certa!</b>
-Além disso, temos pedestres querendo atravessar a faixa com segurança.
+No Arduino real, conectamos cada lâmpada do semáforo a um <b>pino digital</b>.
+Para acender ou apagar um LED, usamos a função essencial do Arduino:
+• <code>digitalWrite(PINO, HIGH);</code> ➔ Envia <b>5 Volts</b> (LIGA a energia e acende a luz do semáforo!).
+• <code>digitalWrite(PINO, LOW);</code> ➔ Corta para <b>0 Volts</b> (DESLIGA a energia e apaga o LED!).
 
-Para resolver o caos urbano, usamos o Arduino em C para controlar a ordem e o tempo de cada fase:
-1️⃣ <b>1 segundo = 1000 milissegundos (ms)</b>.
-2️⃣ Usamos <code>delay(2000);</code> para manter o sinal verde aberto por 2 segundos.
-3️⃣ Usamos o sinal <b>Amarelo</b> de transição para os carros desacelerarem antes do <b>Vermelho</b>.
-4️⃣ Quando os pedestres atravessam, <b>todos os carros devem esperar no sinal vermelho!</b>`,
-        exemplo:`// Fase 1: Semáforo 1 Verde e avanço do Carro Vermelho 🚗 por 3s
-semaforo1_verde();
+<b>Regras de Tráfego e Temporização:</b>
+1️⃣ <b>1 segundo = 1000 milissegundos (ms)</b>: Usamos <code>delay(2000);</code> para manter a pista verde aberta por 2 segundos.
+2️⃣ <b>Transição Amarela Obrigatória:</b> Antes de fechar o sinal, acendemos o Amarelo por 1000 ms para os carros desacelerarem.
+3️⃣ <b>Fluxos Paralelos:</b> Veículos na mesma avenida em faixas opostas podem andar juntos sem colidir!
+4️⃣ <b>Faixa de Pedestres:</b> Quando pedestres atravessam, todos os carros devem esperar no Vermelho!`,
+        exemplo:`// 1️⃣ Liga o Verde do Semáforo 1 e avança o Carro Vermelho 🚗
+digitalWrite(PIN_SEM1_VERDE, HIGH);
 carro1_avancar();
-delay(3000);
+delay(2000);
 
-// Fase 2: Atenção Amarelo no Semáforo 1 por 1s
-semaforo1_amarelo();
+// 2️⃣ Desliga o Verde e liga o Amarelo de alerta por 1s
+digitalWrite(PIN_SEM1_VERDE, LOW);
+digitalWrite(PIN_SEM1_AMARELO, HIGH);
 delay(1000);
 
-// Fase 3: Semáforo 1 fecha e Semáforo 2 abre para o Carro Azul 🚙
-semaforo1_vermelho();
+// 3️⃣ Fecha a Avenida no Vermelho e abre a Rua (Semáforo 2)
+digitalWrite(PIN_SEM1_AMARELO, LOW);
+digitalWrite(PIN_SEM1_VERMELHO, HIGH);
 carro1_parar();
-semaforo2_verde();
+digitalWrite(PIN_SEM2_VERMELHO, LOW);
+digitalWrite(PIN_SEM2_VERDE, HIGH);
 carro2_avancar();
-delay(3000);`,
-        dica:'💡 Dica Maker: Nunca mude direto do Verde para o Vermelho sem passar pelo Amarelo! O sinal amarelo e o delay() dão o tempo para os motoristas frearem com segurança.',
+delay(2000);`,
+        dica:'💡 Dica Maker: O comando digitalWrite() controla a eletricidade dos pinos! HIGH = 5V (Ligado), LOW = 0V (Desligado). Lembre-se sempre de apagar o LED anterior antes de acender o próximo!',
         jogo:'tab-semaforo', btntext:'🎮 Ir para o Cruzamento & Mini-IDE!'
     },
     5: {
@@ -258,10 +263,10 @@ function updateTrail() {
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
                        getLevels('jardim_levels').length + getLevels('arduino_levels').length;
 
-    const percent = Math.min(100, Math.round((totalStars / 21) * 100));
+    const percent = Math.min(100, Math.round((totalStars / 22) * 100));
     const starCountEl = document.getElementById('trail-star-count');
     const progressBarEl = document.getElementById('trail-progress-bar');
-    if (starCountEl) starCountEl.innerText = `${totalStars} / 21 ⭐`;
+    if (starCountEl) starCountEl.innerText = `${totalStars} / 22 ⭐`;
     if (progressBarEl) progressBarEl.style.width = `${percent}%`;
 
     let html = '';
@@ -349,7 +354,7 @@ function updateHubProgress() {
     const jar = getLevels('jardim_levels');
     const ard = getLevels('arduino_levels');
 
-    setBadge('badge-semaforo', sem, 4);
+    setBadge('badge-semaforo', sem, 5);
     setBadge('badge-tesouro', tes);
     setBadge('badge-labmaker', lab);
     setBadge('badge-loopmaker', loo, 4);
@@ -359,6 +364,6 @@ function updateHubProgress() {
     const totalStars = sem.length + tes.length + lab.length + loo.length + jar.length + ard.length;
     const countEl = document.getElementById('hub-star-count');
     const barEl = document.getElementById('hub-progress-bar');
-    if (countEl) countEl.innerText = `${totalStars} / 21 ⭐`;
-    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 21) * 100))}%`;
+    if (countEl) countEl.innerText = `${totalStars} / 22 ⭐`;
+    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 22) * 100))}%`;
 }
