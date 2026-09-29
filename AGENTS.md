@@ -53,5 +53,5 @@ A aplicação é construída como uma **Single-Page Application (SPA)** autocont
 Ao estender ou modificar o projeto:
 * **Manter o padrão autocontido:** Evitar adicionar dependências de NPM ou frameworks pesados caso o objetivo seja manter a facilidade de distribuição em arquivo único.
 * **Carregamento Sob Demanda (*Lazy Loading*):** Os módulos de jogos são inicializados apenas quando sua respectiva aba é aberta (`loadSemaforo()`, `loadTesouro()`, `loadLabmaker()`, etc.), marcando elementos com id `[nome]-loaded` para evitar re-renderizações desnecessárias.
-* **Controle de Acesso da Trilha:** A constante `UNLOCKED_LESSONS` (linha 740 de `laboratorio-maker.html`) define quantas aulas estão liberadas para o usuário.
+* **Controle de Acesso da Trilha:** A constante `UNLOCKED_LESSONS` (em [`js/trail.js`](./js/trail.js)) define quantas aulas estão liberadas para o usuário.
 * **Acessibilidade e Feedback Lúdico:** Todas as interações devem ter feedback sonoro (`playSound`) e visual claro (cores `#38BDF8`, `#10B981`, `#FBBF24`, `#EF4444`).

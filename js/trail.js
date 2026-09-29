@@ -2,7 +2,7 @@
    CRIADORES DE CÓDIGO — TRILHA DE APRENDIZAGEM & HUB DE CONQUISTAS
    ========================================================================== */
 
-const UNLOCKED_LESSONS = 3; // Liberadas Aula 1, Aula 2 e Aula 3
+const UNLOCKED_LESSONS = 4; // Liberadas Aulas 1, 2, 3 e 4
 
 const getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
 
