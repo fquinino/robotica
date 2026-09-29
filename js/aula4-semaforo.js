@@ -824,6 +824,8 @@ function loadSemaforo() {
                             <button type="button" class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_VERMELHO, HIGH);\n')">🔴 S2 VERMELHO (Parar)</button>
                             <button type="button" class="sem-shortcut-btn btn-ped" onclick="sem_insertText('digitalWrite(PIN_PEDESTRE_VERDE, HIGH);\n')">🚶 PED VERDE (Atravessar)</button>
                             <button type="button" class="sem-shortcut-btn btn-ped" onclick="sem_insertText('digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);\n')">🛑 PED VERMELHO (Parar)</button>
+                            <button type="button" class="sem-shortcut-btn" style="border-color:#F59E0B;color:#FDE68A;" onclick="sem_insertText('HIGH')">💡 HIGH</button>
+                            <button type="button" class="sem-shortcut-btn" style="border-color:#64748B;color:#CBD5E1;" onclick="sem_insertText('LOW')">🌑 LOW</button>
                             <button type="button" class="sem-shortcut-btn btn-s1" onclick="sem_insertText('carro1_avancar();\n')">🚗 Carro 1 Avançar</button>
                             <button type="button" class="sem-shortcut-btn btn-s2" onclick="sem_insertText('carro2_avancar();\n')">🚙 Carro 2 Avançar</button>
                             <button type="button" class="sem-shortcut-btn btn-ped" onclick="sem_insertText('pedestre_atravessar();\n')">🚸 Pedestre Atravessar</button>
@@ -1383,11 +1385,19 @@ const SEM_AUTOCOMPLETE_OPTIONS = [
     { trigger: 's1v',   label: 'digitalWrite(PIN_SEM1_VERDE, HIGH);',  insert: 'digitalWrite(PIN_SEM1_VERDE, HIGH);\n' },
     { trigger: 's1a',   label: 'digitalWrite(PIN_SEM1_AMARELO, HIGH);',insert: 'digitalWrite(PIN_SEM1_AMARELO, HIGH);\n' },
     { trigger: 's1r',   label: 'digitalWrite(PIN_SEM1_VERMELHO, HIGH);',insert: 'digitalWrite(PIN_SEM1_VERMELHO, HIGH);\n' },
+    { trigger: 's1v0',  label: 'digitalWrite(PIN_SEM1_VERDE, LOW);',   insert: 'digitalWrite(PIN_SEM1_VERDE, LOW);\n' },
+    { trigger: 's1a0',  label: 'digitalWrite(PIN_SEM1_AMARELO, LOW);', insert: 'digitalWrite(PIN_SEM1_AMARELO, LOW);\n' },
+    { trigger: 's1r0',  label: 'digitalWrite(PIN_SEM1_VERMELHO, LOW);', insert: 'digitalWrite(PIN_SEM1_VERMELHO, LOW);\n' },
     { trigger: 's2v',   label: 'digitalWrite(PIN_SEM2_VERDE, HIGH);',  insert: 'digitalWrite(PIN_SEM2_VERDE, HIGH);\n' },
     { trigger: 's2a',   label: 'digitalWrite(PIN_SEM2_AMARELO, HIGH);',insert: 'digitalWrite(PIN_SEM2_AMARELO, HIGH);\n' },
     { trigger: 's2r',   label: 'digitalWrite(PIN_SEM2_VERMELHO, HIGH);',insert: 'digitalWrite(PIN_SEM2_VERMELHO, HIGH);\n' },
+    { trigger: 's2v0',  label: 'digitalWrite(PIN_SEM2_VERDE, LOW);',   insert: 'digitalWrite(PIN_SEM2_VERDE, LOW);\n' },
+    { trigger: 's2a0',  label: 'digitalWrite(PIN_SEM2_AMARELO, LOW);', insert: 'digitalWrite(PIN_SEM2_AMARELO, LOW);\n' },
+    { trigger: 's2r0',  label: 'digitalWrite(PIN_SEM2_VERMELHO, LOW);', insert: 'digitalWrite(PIN_SEM2_VERMELHO, LOW);\n' },
     { trigger: 'pedv',  label: 'digitalWrite(PIN_PEDESTRE_VERDE, HIGH);', insert: 'digitalWrite(PIN_PEDESTRE_VERDE, HIGH);\n' },
     { trigger: 'pedr',  label: 'digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);', insert: 'digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);\n' },
+    { trigger: 'pedv0', label: 'digitalWrite(PIN_PEDESTRE_VERDE, LOW);',  insert: 'digitalWrite(PIN_PEDESTRE_VERDE, LOW);\n' },
+    { trigger: 'pedr0', label: 'digitalWrite(PIN_PEDESTRE_VERMELHO, LOW);', insert: 'digitalWrite(PIN_PEDESTRE_VERMELHO, LOW);\n' },
     { trigger: 'ped',   label: 'pedestre_atravessar();',               insert: 'pedestre_atravessar();\n' },
     { trigger: 'car1',  label: 'carro1_avancar();',                    insert: 'carro1_avancar();\n' },
     { trigger: 'car2',  label: 'carro2_avancar();',                    insert: 'carro2_avancar();\n' },
@@ -1597,14 +1607,14 @@ function sem_sleep(ms) {
 
 function sem_parsePinOrFunc(str) {
     if (!str) return null;
-    if (/PIN_SEM1_VERDE.*HIGH|semaforo1_verde/i.test(str)) return 'semaforo1_verde';
-    if (/PIN_SEM1_AMARELO.*HIGH|semaforo1_amarelo/i.test(str)) return 'semaforo1_amarelo';
-    if (/PIN_SEM1_VERMELHO.*HIGH|semaforo1_vermelho/i.test(str)) return 'semaforo1_vermelho';
-    if (/PIN_SEM2_VERDE.*HIGH|semaforo2_verde/i.test(str)) return 'semaforo2_verde';
-    if (/PIN_SEM2_AMARELO.*HIGH|semaforo2_amarelo/i.test(str)) return 'semaforo2_amarelo';
-    if (/PIN_SEM2_VERMELHO.*HIGH|semaforo2_vermelho/i.test(str)) return 'semaforo2_vermelho';
-    if (/PIN_PEDESTRE_VERDE.*HIGH|pedestre_verde/i.test(str)) return 'pedestre_verde';
-    if (/PIN_PEDESTRE_VERMELHO.*HIGH|pedestre_vermelho/i.test(str)) return 'pedestre_vermelho';
+    if (/(PIN_SEM1_VERDE|SEM1_VERDE|10|LED_VERDE_1|PIN_VERDE_1).*HIGH/i.test(str) || /semaforo1_verde/i.test(str)) return 'semaforo1_verde';
+    if (/(PIN_SEM1_AMARELO|SEM1_AMARELO|11|LED_AMARELO_1|PIN_AMARELO_1).*HIGH/i.test(str) || /semaforo1_amarelo/i.test(str)) return 'semaforo1_amarelo';
+    if (/(PIN_SEM1_VERMELHO|SEM1_VERMELHO|12|LED_VERMELHO_1|PIN_VERMELHO_1).*HIGH/i.test(str) || /semaforo1_vermelho/i.test(str)) return 'semaforo1_vermelho';
+    if (/(PIN_SEM2_VERDE|SEM2_VERDE|7|LED_VERDE_2|PIN_VERDE_2).*HIGH/i.test(str) || /semaforo2_verde/i.test(str)) return 'semaforo2_verde';
+    if (/(PIN_SEM2_AMARELO|SEM2_AMARELO|8|LED_AMARELO_2|PIN_AMARELO_2).*HIGH/i.test(str) || /semaforo2_amarelo/i.test(str)) return 'semaforo2_amarelo';
+    if (/(PIN_SEM2_VERMELHO|SEM2_VERMELHO|9|LED_VERMELHO_2|PIN_VERMELHO_2).*HIGH/i.test(str) || /semaforo2_vermelho/i.test(str)) return 'semaforo2_vermelho';
+    if (/(PIN_PEDESTRE_VERDE|PEDESTRE_VERDE|PIN_PED_VERDE|5).*HIGH/i.test(str) || /pedestre_verde/i.test(str)) return 'pedestre_verde';
+    if (/(PIN_PEDESTRE_VERMELHO|PEDESTRE_VERMELHO|PIN_PED_VERMELHO|6).*HIGH/i.test(str) || /pedestre_vermelho/i.test(str)) return 'pedestre_vermelho';
     return null;
 }
 
@@ -1694,24 +1704,50 @@ function sem_extractCommands() {
         const tokens = clean.split(/[;\n]+/).map(t => t.trim()).filter(t => t.length > 0);
 
         tokens.forEach(token => {
-            // Ignora estruturas padrão, cabeçalhos e chaves isoladas
-            if (/^(void\s+\w+|int\s+|const\s+int|pinMode|#include|[{}])$/i.test(token)) return;
+            // Ignora com segurança estruturas padrão do Arduino, declarações e configurações de pinMode
+            if (/^(void\s+\w+|pinMode\s*\([^)]*\)|(const\s+)?(int|bool|float|String)\s+\w+\s*=\s*[^;]+|#define\s+\w+\s+.*|#include\s*<.*?>|Serial\.\w+\([^)]*\)|[{}])$/i.test(token)) return;
             if (/^(void\s+setup|void\s+loop)\s*\(\s*\)/i.test(token)) return;
 
+            // Funções de veículos e pedestres
             if (/carro1_avancar/i.test(token)) cmds.push({ type: 'carro1_avancar' });
             else if (/carro1_parar/i.test(token)) cmds.push({ type: 'carro1_parar' });
             else if (/carro2_avancar/i.test(token)) cmds.push({ type: 'carro2_avancar' });
             else if (/carro2_parar/i.test(token)) cmds.push({ type: 'carro2_parar' });
             else if (/pedestre_atravessar/i.test(token)) cmds.push({ type: 'pedestre_atravessar' });
             else if (/pedestre_parar/i.test(token)) cmds.push({ type: 'pedestre_parar' });
-            else if (/digitalWrite\s*\(\s*PIN_SEM1_VERDE\s*,\s*(HIGH|1)\s*\)|semaforo1_verde|semaforoA_verde/i.test(token)) cmds.push({ type: 'semaforo1_verde' });
-            else if (/digitalWrite\s*\(\s*PIN_SEM1_AMARELO\s*,\s*(HIGH|1)\s*\)|semaforo1_amarelo|semaforoA_amarelo/i.test(token)) cmds.push({ type: 'semaforo1_amarelo' });
-            else if (/digitalWrite\s*\(\s*PIN_SEM1_VERMELHO\s*,\s*(HIGH|1)\s*\)|semaforo1_vermelho|semaforoA_vermelho/i.test(token)) cmds.push({ type: 'semaforo1_vermelho' });
-            else if (/digitalWrite\s*\(\s*PIN_SEM2_VERDE\s*,\s*(HIGH|1)\s*\)|semaforo2_verde|semaforoB_verde/i.test(token)) cmds.push({ type: 'semaforo2_verde' });
-            else if (/digitalWrite\s*\(\s*PIN_SEM2_AMARELO\s*,\s*(HIGH|1)\s*\)|semaforo2_amarelo|semaforoB_amarelo/i.test(token)) cmds.push({ type: 'semaforo2_amarelo' });
-            else if (/digitalWrite\s*\(\s*PIN_SEM2_VERMELHO\s*,\s*(HIGH|1)\s*\)|semaforo2_vermelho|semaforoB_vermelho/i.test(token)) cmds.push({ type: 'semaforo2_vermelho' });
-            else if (/digitalWrite\s*\(\s*PIN_PEDESTRE_VERDE\s*,\s*(HIGH|1)\s*\)|pedestre_verde/i.test(token)) cmds.push({ type: 'pedestre_verde' });
-            else if (/digitalWrite\s*\(\s*PIN_PEDESTRE_VERMELHO\s*,\s*(HIGH|1)\s*\)|pedestre_vermelho/i.test(token)) cmds.push({ type: 'pedestre_vermelho' });
+
+            // Semáforo 1 - Verde (HIGH / LOW)
+            else if (/digitalWrite\s*\(\s*(PIN_SEM1_VERDE|SEM1_VERDE|10|LED_VERDE_1|PIN_VERDE_1)\s*,\s*(HIGH|1|true)\s*\)|semaforo1_verde|semaforoA_verde/i.test(token)) cmds.push({ type: 'semaforo1_verde' });
+            else if (/digitalWrite\s*\(\s*(PIN_SEM1_VERDE|SEM1_VERDE|10|LED_VERDE_1|PIN_VERDE_1)\s*,\s*(LOW|0|false)\s*\)/i.test(token)) cmds.push({ type: 'semaforo1_verde_off' });
+
+            // Semáforo 1 - Amarelo (HIGH / LOW)
+            else if (/digitalWrite\s*\(\s*(PIN_SEM1_AMARELO|SEM1_AMARELO|11|LED_AMARELO_1|PIN_AMARELO_1)\s*,\s*(HIGH|1|true)\s*\)|semaforo1_amarelo|semaforoA_amarelo/i.test(token)) cmds.push({ type: 'semaforo1_amarelo' });
+            else if (/digitalWrite\s*\(\s*(PIN_SEM1_AMARELO|SEM1_AMARELO|11|LED_AMARELO_1|PIN_AMARELO_1)\s*,\s*(LOW|0|false)\s*\)/i.test(token)) cmds.push({ type: 'semaforo1_amarelo_off' });
+
+            // Semáforo 1 - Vermelho (HIGH / LOW)
+            else if (/digitalWrite\s*\(\s*(PIN_SEM1_VERMELHO|SEM1_VERMELHO|12|LED_VERMELHO_1|PIN_VERMELHO_1)\s*,\s*(HIGH|1|true)\s*\)|semaforo1_vermelho|semaforoA_vermelho/i.test(token)) cmds.push({ type: 'semaforo1_vermelho' });
+            else if (/digitalWrite\s*\(\s*(PIN_SEM1_VERMELHO|SEM1_VERMELHO|12|LED_VERMELHO_1|PIN_VERMELHO_1)\s*,\s*(LOW|0|false)\s*\)/i.test(token)) cmds.push({ type: 'semaforo1_vermelho_off' });
+
+            // Semáforo 2 - Verde (HIGH / LOW)
+            else if (/digitalWrite\s*\(\s*(PIN_SEM2_VERDE|SEM2_VERDE|7|LED_VERDE_2|PIN_VERDE_2)\s*,\s*(HIGH|1|true)\s*\)|semaforo2_verde|semaforoB_verde/i.test(token)) cmds.push({ type: 'semaforo2_verde' });
+            else if (/digitalWrite\s*\(\s*(PIN_SEM2_VERDE|SEM2_VERDE|7|LED_VERDE_2|PIN_VERDE_2)\s*,\s*(LOW|0|false)\s*\)/i.test(token)) cmds.push({ type: 'semaforo2_verde_off' });
+
+            // Semáforo 2 - Amarelo (HIGH / LOW)
+            else if (/digitalWrite\s*\(\s*(PIN_SEM2_AMARELO|SEM2_AMARELO|8|LED_AMARELO_2|PIN_AMARELO_2)\s*,\s*(HIGH|1|true)\s*\)|semaforo2_amarelo|semaforoB_amarelo/i.test(token)) cmds.push({ type: 'semaforo2_amarelo' });
+            else if (/digitalWrite\s*\(\s*(PIN_SEM2_AMARELO|SEM2_AMARELO|8|LED_AMARELO_2|PIN_AMARELO_2)\s*,\s*(LOW|0|false)\s*\)/i.test(token)) cmds.push({ type: 'semaforo2_amarelo_off' });
+
+            // Semáforo 2 - Vermelho (HIGH / LOW)
+            else if (/digitalWrite\s*\(\s*(PIN_SEM2_VERMELHO|SEM2_VERMELHO|9|LED_VERMELHO_2|PIN_VERMELHO_2)\s*,\s*(HIGH|1|true)\s*\)|semaforo2_vermelho|semaforoB_vermelho/i.test(token)) cmds.push({ type: 'semaforo2_vermelho' });
+            else if (/digitalWrite\s*\(\s*(PIN_SEM2_VERMELHO|SEM2_VERMELHO|9|LED_VERMELHO_2|PIN_VERMELHO_2)\s*,\s*(LOW|0|false)\s*\)/i.test(token)) cmds.push({ type: 'semaforo2_vermelho_off' });
+
+            // Semáforo Pedestre - Verde (HIGH / LOW)
+            else if (/digitalWrite\s*\(\s*(PIN_PEDESTRE_VERDE|PEDESTRE_VERDE|PIN_PED_VERDE|5)\s*,\s*(HIGH|1|true)\s*\)|pedestre_verde/i.test(token)) cmds.push({ type: 'pedestre_verde' });
+            else if (/digitalWrite\s*\(\s*(PIN_PEDESTRE_VERDE|PEDESTRE_VERDE|PIN_PED_VERDE|5)\s*,\s*(LOW|0|false)\s*\)/i.test(token)) cmds.push({ type: 'pedestre_verde_off' });
+
+            // Semáforo Pedestre - Vermelho (HIGH / LOW)
+            else if (/digitalWrite\s*\(\s*(PIN_PEDESTRE_VERMELHO|PEDESTRE_VERMELHO|PIN_PED_VERMELHO|6)\s*,\s*(HIGH|1|true)\s*\)|pedestre_vermelho/i.test(token)) cmds.push({ type: 'pedestre_vermelho' });
+            else if (/digitalWrite\s*\(\s*(PIN_PEDESTRE_VERMELHO|PEDESTRE_VERMELHO|PIN_PED_VERMELHO|6)\s*,\s*(LOW|0|false)\s*\)/i.test(token)) cmds.push({ type: 'pedestre_vermelho_off' });
+
             else {
                 const matchDelay = token.match(/delay\s*\(\s*(\d+)\s*\)/i);
                 if (matchDelay) {
@@ -1963,6 +1999,46 @@ async function sem_runSimulation() {
             if (sem_ped_state === 'crossing') sem_ped_state = 'sidewalk_north';
             sem_renderCarPositions(true);
             await sem_sleep(150);
+
+        } else if (cmd.type === 'semaforo1_verde_off') {
+            document.getElementById('sem_a_green')?.classList.remove('on');
+            if (stateA === 'green') stateA = 'off';
+            await sem_sleep(100);
+
+        } else if (cmd.type === 'semaforo1_amarelo_off') {
+            document.getElementById('sem_a_yellow')?.classList.remove('on');
+            if (stateA === 'yellow') stateA = 'off';
+            await sem_sleep(100);
+
+        } else if (cmd.type === 'semaforo1_vermelho_off') {
+            document.getElementById('sem_a_red')?.classList.remove('on');
+            if (stateA === 'red') stateA = 'off';
+            await sem_sleep(100);
+
+        } else if (cmd.type === 'semaforo2_verde_off') {
+            document.getElementById('sem_b_green')?.classList.remove('on');
+            if (stateB === 'green') stateB = 'off';
+            await sem_sleep(100);
+
+        } else if (cmd.type === 'semaforo2_amarelo_off') {
+            document.getElementById('sem_b_yellow')?.classList.remove('on');
+            if (stateB === 'yellow') stateB = 'off';
+            await sem_sleep(100);
+
+        } else if (cmd.type === 'semaforo2_vermelho_off') {
+            document.getElementById('sem_b_red')?.classList.remove('on');
+            if (stateB === 'red') stateB = 'off';
+            await sem_sleep(100);
+
+        } else if (cmd.type === 'pedestre_verde_off') {
+            document.getElementById('sem_ped_green')?.classList.remove('on');
+            if (statePed === 'green') statePed = 'off';
+            await sem_sleep(100);
+
+        } else if (cmd.type === 'pedestre_vermelho_off') {
+            document.getElementById('sem_ped_red')?.classList.remove('on');
+            if (statePed === 'red') statePed = 'off';
+            await sem_sleep(100);
 
         } else if (cmd.type === 'carro1_avancar') {
             if (stateA === 'red') {
