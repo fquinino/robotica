@@ -67,7 +67,7 @@ function loadSemaforo() {
             .sem-status-pill.yellow { background:rgba(245,158,11,0.2); color:#FBBF24; border:1px solid #F59E0B; }
             .sem-status-pill.red { background:rgba(239,68,68,0.2); color:#F87171; border:1px solid #EF4444; }
 
-            .sem-crossroad-box { position:relative; width:100%; height:360px; background:#0B1120; border-radius:18px; border:2px solid #334155; overflow:hidden; box-shadow:inset 0 0 40px rgba(0,0,0,0.8); }
+            .sem-crossroad-box { position:relative; width:100%; height:440px; min-height:440px; background:#0B1120; border-radius:18px; border:2px solid #334155; overflow:hidden; box-shadow:inset 0 0 40px rgba(0,0,0,0.8); }
             
             /* PISTAS DE ASFALTO */
             .sem-road-h { position:absolute; top:50%; left:0; width:100%; height:110px; transform:translateY(-50%); background:#1E293B; border-top:3px solid #475569; border-bottom:3px solid #475569; }
@@ -101,7 +101,7 @@ function loadSemaforo() {
             .sem-post-2 { top:calc(50% - 145px); left:calc(50% + 65px); border-color:#38BDF8; }
 
             /* ================= SEMÁFORO DE PEDESTRES 🚸 (DESENHO TOTALMENTE DIFERENCIADO) ================= */
-            .sem-ped-post { position:absolute; top:calc(50% + 65px); left:calc(50% - 145px); background:#0F172A; border:2px solid #FBBF24; border-radius:14px; padding:6px 6px 8px; display:flex; flex-direction:column; align-items:center; gap:6px; z-index:30; box-shadow:0 8px 20px rgba(0,0,0,0.85); width:46px; }
+            .sem-ped-post { position:absolute; top:calc(50% + 60px); left:calc(50% - 145px); background:#0F172A; border:2px solid #FBBF24; border-radius:14px; padding:6px 6px 8px; display:flex; flex-direction:column; align-items:center; gap:6px; z-index:30; box-shadow:0 8px 20px rgba(0,0,0,0.85); width:46px; }
             .sem-ped-sign { background:#FBBF24; color:#0F172A; font-size:0.75rem; font-weight:900; padding:1px 5px; border-radius:4px; margin-bottom:2px; font-family:'Fredoka One'; display:flex; align-items:center; gap:2px; }
             .sem-ped-lens { width:30px; height:30px; background:#0B0F19; border-radius:8px; border:2px solid #334155; display:flex; align-items:center; justify-content:center; opacity:0.3; transition:all 0.25s ease; }
             .sem-ped-lens.red.on { opacity:1; background:rgba(239,68,68,0.25); border-color:#EF4444; box-shadow:0 0 16px #EF4444; }
