@@ -136,6 +136,9 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
     if (typeof if_updateSolutionButtonState === 'function') {
         if_updateSolutionButtonState();
     }
+    if (typeof sem_updateSolutionButtonState === 'function') {
+        sem_updateSolutionButtonState();
+    }
 
     document.getElementById('error-splash-icon').innerText = icon;
     document.getElementById('error-splash-title').innerText = title;
@@ -210,6 +213,9 @@ function closeErrorSplash() {
     }
     if (typeof if_updateSolutionButtonState === 'function') {
         if_updateSolutionButtonState();
+    }
+    if (typeof sem_updateSolutionButtonState === 'function') {
+        sem_updateSolutionButtonState();
     }
 }
 

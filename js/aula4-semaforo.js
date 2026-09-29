@@ -132,18 +132,17 @@ function loadSemaforo() {
             .sem-crash-fx { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%) scale(0); font-size:4rem; z-index:40; pointer-events:none; transition:transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
             .sem-crash-fx.active { transform:translate(-50%, -50%) scale(1.3); animation:errorShake 0.4s ease-in-out infinite alternate; }
 
-            /* MINI-IDE E EDITORES */
-            .sem-ide-layout { display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:18px; margin-bottom:15px; width:100%; }
-            @media (max-width: 820px) { .sem-ide-layout { grid-template-columns:1fr; } }
+            /* MINI-IDE E EDITORES (Layout Vertical Desafogado) */
+            .sem-ide-layout { display:flex; flex-direction:column; gap:20px; margin-bottom:20px; width:100%; }
             
-            .sem-editor-card { background:#090D16; border:2px solid #F59E0B; border-radius:20px; padding:16px; display:flex; flex-direction:column; box-shadow:0 10px 25px rgba(0,0,0,0.5); }
+            .sem-editor-card { background:#090D16; border:2px solid #F59E0B; border-radius:20px; padding:18px; display:flex; flex-direction:column; box-shadow:0 10px 25px rgba(0,0,0,0.5); width:100%; box-sizing:border-box; }
             .sem-editor-topbar { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1E293B; padding-bottom:10px; margin-bottom:12px; }
             .sem-editor-title { font-family:'Fredoka One'; color:#FBBF24; font-size:1.05rem; display:flex; align-items:center; gap:8px; }
             .sem-lang-tag { background:rgba(245,158,11,0.2); color:#FBBF24; padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:800; border:1px solid #F59E0B; }
 
             /* TECLADO MAKER DE ATALHOS RÁPIDOS */
             .sem-shortcuts-bar { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; background:#111827; padding:8px; border-radius:12px; border:1px solid #1F2937; }
-            .sem-shortcut-btn { background:#1F2937; border:1px solid #374151; color:#E5E7EB; padding:6px 10px; border-radius:8px; font-size:0.78rem; font-weight:800; cursor:pointer; transition:0.15s; font-family:'Nunito', sans-serif; display:flex; align-items:center; gap:4px; }
+            .sem-shortcut-btn { background:#1F2937; border:1px solid #374151; color:#E5E7EB; padding:6px 10px; border-radius:8px; font-size:0.78rem; font-weight:800; cursor:pointer; transition:0.15s; font-family:'Nunito', sans-serif; display:flex; align-items:center; gap:4px; user-select:none; }
             .sem-shortcut-btn:hover { transform:scale(1.03); }
             .sem-shortcut-btn.btn-s1 { border-color:#EF4444; color:#FCA5A5; }
             .sem-shortcut-btn.btn-s1:hover { background:#EF4444; color:white; }
@@ -153,6 +152,12 @@ function loadSemaforo() {
             .sem-shortcut-btn.btn-ped:hover { background:#10B981; color:#0F172A; }
             .sem-shortcut-btn.clear { background:#450A0A; border-color:#991B1B; color:#FCA5A5; }
             .sem-shortcut-btn.clear:hover { background:#DC2626; color:white; }
+
+            /* AUTOCOMPLETE FLUTUANTE DA MINI-IDE */
+            .sem-autocomplete-box { position:absolute; left:46px; background:#0B0F19; border:2px solid #38BDF8; border-radius:12px; z-index:100; box-shadow:0 12px 30px rgba(0,0,0,0.85); max-height:220px; overflow-y:auto; display:none; min-width:320px; width:max-content; max-width:92%; }
+            .sem-ac-item { padding:8px 14px; color:#CBD5E1; font-family:'Fira Code', monospace; font-size:0.83rem; cursor:pointer; border-bottom:1px solid #1E293B; display:flex; justify-content:space-between; align-items:center; transition:0.12s; }
+            .sem-ac-item:hover, .sem-ac-item.active { background:rgba(56,189,248,0.2); color:#38BDF8; }
+            .sem-ac-shortcut { font-size:0.72rem; background:#1E293B; color:#38BDF8; padding:2px 6px; border-radius:4px; margin-left:12px; font-weight:700; border:1px solid #38BDF8; }
 
             /* SCAFFOLDING EDITOR (NÍVEIS 1, 2 E 3) */
             .sem-scaffold-lines { background:#030712; border-radius:14px; padding:16px; border:1px solid #1F2937; font-family:'Fira Code', monospace; font-size:0.88rem; line-height:1.9; color:#E2E8F0; }
@@ -170,9 +175,9 @@ function loadSemaforo() {
             .sem-input-num { background:#1E293B; border:2px solid #38BDF8; color:#38BDF8; font-family:'Fredoka One'; font-size:1.05rem; width:80px; padding:3px 6px; border-radius:8px; text-align:center; outline:none; }
             
             /* TEXTAREA LIVRE COM NÚMEROS DE LINHA (NÍVEL 4) */
-            .sem-code-wrapper { position:relative; display:flex; background:#030712; border-radius:14px; border:1px solid #1F2937; overflow:hidden; min-height:220px; }
+            .sem-code-wrapper { position:relative; display:flex; background:#030712; border-radius:14px; border:1px solid #1F2937; overflow:hidden; min-height:260px; }
             .sem-line-numbers { background:#0B0F19; color:#4B5563; padding:12px 8px; text-align:right; font-family:'Fira Code', monospace; font-size:0.88rem; line-height:1.7; user-select:none; border-right:1px solid #1F2937; min-width:32px; }
-            .sem-code-input { flex:1; background:transparent; border:none; color:#F3F4F6; padding:12px; font-family:'Fira Code', monospace; font-size:0.88rem; line-height:1.7; resize:none; outline:none; white-space:pre; tab-size:4; min-height:220px; }
+            .sem-code-input { flex:1; background:transparent; border:none; color:#F3F4F6; padding:12px; font-family:'Fira Code', monospace; font-size:0.88rem; line-height:1.7; resize:none; outline:none; white-space:pre; tab-size:4; min-height:260px; }
 
             /* BOTÕES DE AÇÃO */
             .sem-actions { display:flex; gap:10px; margin-top:14px; width:100%; }
@@ -183,7 +188,9 @@ function loadSemaforo() {
             .sem-btn-reset { background:#334155; color:#CBD5E1; border:none; padding:13px 18px; border-radius:16px; font-family:'Fredoka One', cursive; font-size:1rem; flex:1; border-bottom:5px solid #1E293B; cursor:pointer; transition:0.15s; }
 
             /* BOTÃO DE SOLUÇÃO E DICA APÓS 3 ERROS */
-            .sem-btn-solution { background:linear-gradient(135deg,#D97706,#B45309); border:none; color:white; padding:8px 14px; border-radius:10px; font-size:0.85rem; font-weight:900; cursor:pointer; transition:0.15s; margin-top:10px; width:100%; display:none; align-items:center; justify-content:center; gap:6px; }
+            .sem-btn-solution { background:linear-gradient(135deg,#D97706,#B45309); border:none; color:white; padding:10px 16px; border-radius:12px; font-size:0.88rem; font-weight:900; cursor:pointer; transition:0.15s; margin-top:10px; width:100%; display:none; align-items:center; justify-content:center; gap:8px; border-bottom:3px solid #78350F; }
+            .sem-btn-solution:hover { background:linear-gradient(135deg,#F59E0B,#D97706); }
+            .sem-solution-card { background:#0F172A; border:2px solid #F59E0B; border-radius:14px; padding:12px 16px; margin-top:10px; display:none; animation:semFadeIn 0.3s ease; }
             .sem-btn-solution:hover { background:linear-gradient(135deg,#F59E0B,#D97706); }
             .sem-solution-card { background:#0F172A; border:2px solid #F59E0B; border-radius:14px; padding:12px 16px; margin-top:10px; display:none; animation:semFadeIn 0.3s ease; }
 
@@ -802,46 +809,48 @@ function loadSemaforo() {
                     <div id="sem_ide_n4" style="display:none;">
                         <!-- Teclado de Atalhos Rápidos com digitalWrite e Funções de Trânsito -->
                         <div class="sem-shortcuts-bar">
-                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_VERDE, HIGH);\n')">🟢 S1 VERDE HIGH</button>
-                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_AMARELO, HIGH);\n')">🟡 S1 AMARELO HIGH</button>
-                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_VERMELHO, HIGH);\n')">🔴 S1 VERMELHO HIGH</button>
-                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_VERDE, HIGH);\n')">🟢 S2 VERDE HIGH</button>
-                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_AMARELO, HIGH);\n')">🟡 S2 AMARELO HIGH</button>
-                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_VERMELHO, HIGH);\n')">🔴 S2 VERMELHO HIGH</button>
-                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('digitalWrite(PIN_PEDESTRE_VERDE, HIGH);\n')">🚶 PED VERDE HIGH</button>
-                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);\n')">🛑 PED VERM HIGH</button>
-                            <button class="sem-shortcut-btn btn-s1" onclick="sem_insertText('carro1_avancar();\n')">🚗 Fluxo 1 Avançar</button>
-                            <button class="sem-shortcut-btn btn-s2" onclick="sem_insertText('carro2_avancar();\n')">🚙 Fluxo 2 Avançar</button>
-                            <button class="sem-shortcut-btn btn-ped" onclick="sem_insertText('pedestre_atravessar();\n')">🚸 Pedestre Atravessar</button>
-                            <button class="sem-shortcut-btn" onclick="sem_insertText('delay(2000);\n')">⏱️ delay(2000)</button>
-                            <button class="sem-shortcut-btn" onclick="sem_insertText('delay(1000);\n')">⏱️ delay(1000)</button>
-                            <button class="sem-shortcut-btn clear" onclick="sem_clearIde()"><i class="fa-solid fa-trash"></i> Limpar</button>
+                            <button type="button" class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_VERDE, HIGH);\n')">🟢 S1 VERDE HIGH</button>
+                            <button type="button" class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_AMARELO, HIGH);\n')">🟡 S1 AMARELO HIGH</button>
+                            <button type="button" class="sem-shortcut-btn btn-s1" onclick="sem_insertText('digitalWrite(PIN_SEM1_VERMELHO, HIGH);\n')">🔴 S1 VERMELHO HIGH</button>
+                            <button type="button" class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_VERDE, HIGH);\n')">🟢 S2 VERDE HIGH</button>
+                            <button type="button" class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_AMARELO, HIGH);\n')">🟡 S2 AMARELO HIGH</button>
+                            <button type="button" class="sem-shortcut-btn btn-s2" onclick="sem_insertText('digitalWrite(PIN_SEM2_VERMELHO, HIGH);\n')">🔴 S2 VERMELHO HIGH</button>
+                            <button type="button" class="sem-shortcut-btn btn-ped" onclick="sem_insertText('digitalWrite(PIN_PEDESTRE_VERDE, HIGH);\n')">🚶 PED VERDE HIGH</button>
+                            <button type="button" class="sem-shortcut-btn btn-ped" onclick="sem_insertText('digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);\n')">🛑 PED VERM HIGH</button>
+                            <button type="button" class="sem-shortcut-btn btn-s1" onclick="sem_insertText('carro1_avancar();\n')">🚗 Fluxo 1 Avançar</button>
+                            <button type="button" class="sem-shortcut-btn btn-s2" onclick="sem_insertText('carro2_avancar();\n')">🚙 Fluxo 2 Avançar</button>
+                            <button type="button" class="sem-shortcut-btn btn-ped" onclick="sem_insertText('pedestre_atravessar();\n')">🚸 Pedestre Atravessar</button>
+                            <button type="button" class="sem-shortcut-btn" onclick="sem_insertText('delay(2000);\n')">⏱️ delay(2000)</button>
+                            <button type="button" class="sem-shortcut-btn" onclick="sem_insertText('delay(1000);\n')">⏱️ delay(1000)</button>
+                            <button type="button" class="sem-shortcut-btn clear" onclick="sem_clearIde()"><i class="fa-solid fa-trash"></i> Limpar</button>
                         </div>
 
-                        <!-- Editor Textarea com Numeração de Linhas -->
+                        <!-- Editor Textarea com Numeração de Linhas e Autocomplete Flutuante -->
                         <div class="sem-code-wrapper">
                             <div class="sem-line-numbers" id="sem_line_numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
-                            <textarea class="sem-code-input" id="sem_code_input" spellcheck="false" placeholder="// 🚦 Digite seu código Arduino C/C++ aqui!
-// Exemplo:
-// digitalWrite(PIN_SEM1_VERDE, HIGH); carro1_avancar(); delay(2000);
-// digitalWrite(PIN_SEM1_AMARELO, HIGH); delay(1000);
-// digitalWrite(PIN_SEM1_VERMELHO, HIGH); digitalWrite(PIN_SEM2_VERDE, HIGH); carro2_avancar(); delay(2000);" oninput="sem_handleIdeInput()" onscroll="document.getElementById('sem_line_numbers').scrollTop = this.scrollTop;"></textarea>
+                            <textarea class="sem-code-input" id="sem_code_input" spellcheck="false" 
+                                      placeholder="// 🚦 Digite seu código Arduino C/C++ aqui! (Pressione Tab para auto-completar)&#10;// Exemplo:&#10;// digitalWrite(PIN_SEM1_VERDE, HIGH); carro1_avancar(); delay(2000);&#10;// digitalWrite(PIN_SEM1_AMARELO, HIGH); delay(1000);&#10;// digitalWrite(PIN_SEM1_VERMELHO, HIGH); digitalWrite(PIN_SEM2_VERDE, HIGH); carro2_avancar(); delay(2000);" 
+                                      oninput="sem_handleIdeInput(); sem_ideAutoComplete(this);" 
+                                      onkeydown="sem_handleIdeKeyDown(event, this);" 
+                                      onscroll="document.getElementById('sem_line_numbers').scrollTop = this.scrollTop;"></textarea>
+                            <div class="sem-autocomplete-box" id="sem_autocomplete_list"></div>
                         </div>
 
-                        <div style="background:#0F172A;border:1px dashed #F59E0B;border-radius:12px;padding:10px 14px;margin-top:10px;font-size:0.82rem;color:#CBD5E1;">
-                            <b>📖 Comandos Suportados:</b>
-                            <code style="background:#1E293B;color:#EF4444;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_SEM1_VERDE, HIGH);</code>, 
-                            <code style="background:#1E293B;color:#38BDF8;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_SEM2_VERDE, HIGH);</code>, 
-                            <code style="background:#1E293B;color:#10B981;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</code>, 
-                            <code style="background:#1E293B;color:#FBBF24;padding:2px 5px;border-radius:4px;">delay(ms);</code>,
-                            <code style="background:#1E293B;color:#CBD5E1;padding:2px 5px;border-radius:4px;">carro1_avancar();</code>,
-                            <code style="background:#1E293B;color:#CBD5E1;padding:2px 5px;border-radius:4px;">carro2_avancar();</code>
+                        <div style="background:#0F172A;border:1px dashed #F59E0B;border-radius:12px;padding:10px 14px;margin-top:10px;font-size:0.82rem;color:#CBD5E1;display:flex;flex-direction:column;gap:6px;">
+                            <div><b>⚡ Dica Maker:</b> Digite o início de um comando (ex: <code>dig</code>, <code>del</code>, <code>car</code>, <code>ped</code>, <code>s1</code>, <code>s2</code>) e pressione <b>Tab ⇥</b> para autocompletar!</div>
+                            <div style="font-size:0.78rem;color:#94A3B8;">
+                                <b>Comandos:</b> 
+                                <code style="background:#1E293B;color:#EF4444;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_SEM1_VERDE, HIGH);</code> 
+                                <code style="background:#1E293B;color:#38BDF8;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_SEM2_VERDE, HIGH);</code> 
+                                <code style="background:#1E293B;color:#10B981;padding:2px 5px;border-radius:4px;">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</code> 
+                                <code style="background:#1E293B;color:#FBBF24;padding:2px 5px;border-radius:4px;">delay(2000);</code>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Botão de Solução (Aparece após 3 erros) -->
-                    <button class="sem-btn-solution" id="sem_btn_solution" onclick="sem_toggleSolution()">
-                        <i class="fa-solid fa-lightbulb"></i> <span>💡 Ver Código C/C++ da Solução</span>
+                    <!-- Botão de Solução (Apenas liberado após 3 erros) -->
+                    <button type="button" class="sem-btn-solution" id="sem_btn_solution" onclick="sem_toggleSolution()" disabled>
+                        <i class="fa-solid fa-lightbulb"></i> <span>💡 Precisa de Ajuda? Ver Resolução C/C++</span>
                     </button>
                     <div class="sem-solution-card" id="sem_solution_box">
                         <div style="font-weight:900;color:#FBBF24;margin-bottom:6px;font-size:0.88rem;">📋 Resolução Recomendada em C/C++:</div>
@@ -1075,10 +1084,7 @@ function sem_switchLevel(lvl) {
         if (solT) solT.innerText = data.solution;
     }
 
-    const solBox = document.getElementById('sem_solution_box');
-    const solBtn = document.getElementById('sem_btn_solution');
-    if (solBox) solBox.style.display = 'none';
-    if (solBtn) solBtn.style.display = (sem_errors_count[lvl] >= 3) ? 'flex' : 'none';
+    sem_updateSolutionButtonState();
 
     if (lvl === 4 || lvl === 5) {
         sem_handleIdeInput();
@@ -1362,23 +1368,53 @@ function sem_copyCode() {
     }
 }
 
+/* ================= AUTOCOMPLETE & MINI-IDE ================= */
+
+const SEM_AUTOCOMPLETE_OPTIONS = [
+    { trigger: 'dig',   label: 'digitalWrite(PIN, VAL);',              insert: 'digitalWrite(' },
+    { trigger: 's1v',   label: 'digitalWrite(PIN_SEM1_VERDE, HIGH);',  insert: 'digitalWrite(PIN_SEM1_VERDE, HIGH);\n' },
+    { trigger: 's1a',   label: 'digitalWrite(PIN_SEM1_AMARELO, HIGH);',insert: 'digitalWrite(PIN_SEM1_AMARELO, HIGH);\n' },
+    { trigger: 's1r',   label: 'digitalWrite(PIN_SEM1_VERMELHO, HIGH);',insert: 'digitalWrite(PIN_SEM1_VERMELHO, HIGH);\n' },
+    { trigger: 's2v',   label: 'digitalWrite(PIN_SEM2_VERDE, HIGH);',  insert: 'digitalWrite(PIN_SEM2_VERDE, HIGH);\n' },
+    { trigger: 's2a',   label: 'digitalWrite(PIN_SEM2_AMARELO, HIGH);',insert: 'digitalWrite(PIN_SEM2_AMARELO, HIGH);\n' },
+    { trigger: 's2r',   label: 'digitalWrite(PIN_SEM2_VERMELHO, HIGH);',insert: 'digitalWrite(PIN_SEM2_VERMELHO, HIGH);\n' },
+    { trigger: 'pedv',  label: 'digitalWrite(PIN_PEDESTRE_VERDE, HIGH);', insert: 'digitalWrite(PIN_PEDESTRE_VERDE, HIGH);\n' },
+    { trigger: 'pedr',  label: 'digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);', insert: 'digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);\n' },
+    { trigger: 'ped',   label: 'pedestre_atravessar();',               insert: 'pedestre_atravessar();\n' },
+    { trigger: 'car1',  label: 'carro1_avancar();',                    insert: 'carro1_avancar();\n' },
+    { trigger: 'car2',  label: 'carro2_avancar();',                    insert: 'carro2_avancar();\n' },
+    { trigger: 'car',   label: 'carro1_avancar();',                    insert: 'carro1_avancar();\n' },
+    { trigger: 'del',   label: 'delay(2000);',                         insert: 'delay(2000);\n' },
+    { trigger: 'dela',  label: 'delay(1000);',                         insert: 'delay(1000);\n' },
+    { trigger: 'hig',   label: 'HIGH',                                 insert: 'HIGH' },
+    { trigger: 'low',   label: 'LOW',                                  insert: 'LOW' }
+];
+
+let sem_currentMatches = [];
+let sem_activeAcIndex = 0;
+
 function sem_insertText(txt) {
     const textarea = document.getElementById('sem_code_input');
     if (!textarea) return;
-    playSound('click');
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
+    if (typeof playSound === 'function') playSound('click');
+    const start = (typeof textarea.selectionStart === 'number') ? textarea.selectionStart : textarea.value.length;
+    const end = (typeof textarea.selectionEnd === 'number') ? textarea.selectionEnd : start;
     const val = textarea.value;
     textarea.value = val.substring(0, start) + txt + val.substring(end);
-    textarea.selectionStart = textarea.selectionEnd = start + txt.length;
+    const newPos = start + txt.length;
+    textarea.selectionStart = textarea.selectionEnd = newPos;
     textarea.focus();
+    const list = document.getElementById('sem_autocomplete_list');
+    if (list) list.style.display = 'none';
     sem_handleIdeInput();
 }
 
 function sem_clearIde() {
     const textarea = document.getElementById('sem_code_input');
     if (textarea) textarea.value = '';
-    playSound('click');
+    if (typeof playSound === 'function') playSound('click');
+    const list = document.getElementById('sem_autocomplete_list');
+    if (list) list.style.display = 'none';
     sem_handleIdeInput();
 }
 
@@ -1396,10 +1432,153 @@ function sem_handleIdeInput() {
     sem_updateLiveCpp();
 }
 
+function sem_ideAutoComplete(textarea) {
+    const list = document.getElementById('sem_autocomplete_list');
+    if (!list) return;
+
+    const code = textarea.value;
+    const cursorPos = (typeof textarea.selectionStart === 'number') ? textarea.selectionStart : code.length;
+    const beforeCursor = code.substring(0, cursorPos);
+    const lastWord = beforeCursor.split(/[\s\n{};(),]+/).pop();
+
+    if (!lastWord || lastWord.length < 2) {
+        list.style.display = 'none';
+        sem_currentMatches = [];
+        return;
+    }
+
+    const lowWord = lastWord.toLowerCase();
+    const matches = SEM_AUTOCOMPLETE_OPTIONS.filter(o => 
+        o.trigger.toLowerCase().startsWith(lowWord) || 
+        o.label.toLowerCase().includes(lowWord) ||
+        o.insert.toLowerCase().includes(lowWord)
+    );
+
+    if (matches.length === 0) {
+        list.style.display = 'none';
+        sem_currentMatches = [];
+        return;
+    }
+
+    sem_currentMatches = matches;
+    sem_activeAcIndex = 0;
+
+    const linesBefore = beforeCursor.split('\n');
+    const lineIndex = Math.min(linesBefore.length - 1, 8);
+    list.style.top = `${Math.min((lineIndex * 24) + 36, 200)}px`;
+    list.style.display = 'block';
+
+    sem_renderAutoCompleteList();
+}
+
+function sem_renderAutoCompleteList() {
+    const list = document.getElementById('sem_autocomplete_list');
+    if (!list) return;
+
+    list.innerHTML = sem_currentMatches.map((m, idx) => {
+        const isSel = idx === sem_activeAcIndex;
+        const escInsert = m.insert.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n');
+        return `<div class="sem-ac-item ${isSel ? 'active' : ''}" 
+                     onclick="sem_applyAutoComplete('${escInsert}')"
+                     onmouseenter="sem_activeAcIndex = ${idx}; sem_renderAutoCompleteList();">
+            <span>${m.label}</span>
+            <span class="sem-ac-shortcut">Tab ⇥</span>
+        </div>`;
+    }).join('');
+}
+
+function sem_applyAutoComplete(insertText) {
+    const textarea = document.getElementById('sem_code_input');
+    const list = document.getElementById('sem_autocomplete_list');
+    if (!textarea) return;
+
+    const pos = (typeof textarea.selectionStart === 'number') ? textarea.selectionStart : textarea.value.length;
+    const before = textarea.value.substring(0, pos);
+    const after = textarea.value.substring(pos);
+    const cleanBefore = before.replace(/[a-zA-Z0-9_]+$/, '');
+    textarea.value = cleanBefore + insertText + after;
+    const newPos = cleanBefore.length + insertText.length;
+    textarea.selectionStart = textarea.selectionEnd = newPos;
+    textarea.focus();
+    if (list) list.style.display = 'none';
+    sem_currentMatches = [];
+    sem_handleIdeInput();
+    if (typeof playSound === 'function') playSound('step');
+}
+
+function sem_handleIdeKeyDown(e, textarea) {
+    const list = document.getElementById('sem_autocomplete_list');
+    const isListOpen = list && list.style.display === 'block' && sem_currentMatches.length > 0;
+
+    if (isListOpen) {
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            sem_activeAcIndex = (sem_activeAcIndex + 1) % sem_currentMatches.length;
+            sem_renderAutoCompleteList();
+            return;
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            sem_activeAcIndex = (sem_activeAcIndex - 1 + sem_currentMatches.length) % sem_currentMatches.length;
+            sem_renderAutoCompleteList();
+            return;
+        } else if (e.key === 'Tab' || e.key === 'Enter') {
+            e.preventDefault();
+            const chosen = sem_currentMatches[sem_activeAcIndex];
+            if (chosen) {
+                sem_applyAutoComplete(chosen.insert);
+            }
+            return;
+        } else if (e.key === 'Escape') {
+            list.style.display = 'none';
+            sem_currentMatches = [];
+            return;
+        }
+    }
+
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = (typeof textarea.selectionStart === 'number') ? textarea.selectionStart : textarea.value.length;
+        const end = (typeof textarea.selectionEnd === 'number') ? textarea.selectionEnd : start;
+        const spaces = '    ';
+        textarea.value = textarea.value.substring(0, start) + spaces + textarea.value.substring(end);
+        textarea.selectionStart = textarea.selectionEnd = start + spaces.length;
+        sem_handleIdeInput();
+    }
+}
+
+function sem_updateSolutionButtonState() {
+    const btn = document.getElementById('sem_btn_solution');
+    const solBox = document.getElementById('sem_solution_box');
+    const attempts = (window.currentAttemptsMap && window.currentAttemptsMap['semaforo_lvl_' + sem_level]) || sem_errors_count[sem_level] || 0;
+    if (!btn) return;
+
+    if (attempts >= 3) {
+        btn.style.display = 'flex';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-lightbulb"></i> <span>💡 Precisa de Ajuda? Ver Resolução C/C++</span>';
+        btn.style.background = 'linear-gradient(135deg, #D97706, #B45309)';
+        btn.style.borderColor = '#F59E0B';
+        btn.style.color = '#FFFFFF';
+        btn.style.cursor = 'pointer';
+        btn.style.opacity = '1';
+    } else {
+        btn.style.display = 'none';
+        btn.disabled = true;
+        if (solBox) solBox.style.display = 'none';
+    }
+}
+
 function sem_toggleSolution() {
+    const attempts = (window.currentAttemptsMap && window.currentAttemptsMap['semaforo_lvl_' + sem_level]) || sem_errors_count[sem_level] || 0;
+    if (attempts < 3) {
+        if (typeof playSound === 'function') playSound('error');
+        return;
+    }
     const box = document.getElementById('sem_solution_box');
     if (!box) return;
-    box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+    const isVisible = (box.style.display === 'block');
+    box.style.display = isVisible ? 'none' : 'block';
+    if (typeof playSound === 'function') playSound(isVisible ? 'click' : 'success');
 }
 
 function sem_sleep(ms) {
@@ -1858,15 +2037,18 @@ function sem_registerError(title, msg, hint, icon) {
         alert(`${icon} ${title}\n${msg}\n${hint}`);
     }
 
-    if (sem_errors_count[sem_level] >= 3) {
-        const solBtn = document.getElementById('sem_btn_solution');
-        if (solBtn) solBtn.style.display = 'flex';
-    }
+    sem_updateSolutionButtonState();
 }
 
 function sem_showWinModal() {
     const modal = document.getElementById('sem_win_modal');
     if (!modal) return;
+
+    if (window.currentAttemptsMap) {
+        window.currentAttemptsMap[`semaforo_lvl_${sem_level}`] = 0;
+    }
+    sem_errors_count[sem_level] = 0;
+    sem_updateSolutionButtonState();
 
     const titleEl = document.getElementById('sem_modal_title');
     const textEl = document.getElementById('sem_modal_text');
@@ -1891,4 +2073,24 @@ function sem_closeWinModal() {
         sem_switchLevel(sem_level + 1);
     }
 }
+
+// Exportação global para garantir funcionamento em eventos HTML e SPA
+window.sem_insertText = sem_insertText;
+window.sem_clearIde = sem_clearIde;
+window.sem_ideAutoComplete = sem_ideAutoComplete;
+window.sem_applyAutoComplete = sem_applyAutoComplete;
+window.sem_handleIdeKeyDown = sem_handleIdeKeyDown;
+window.sem_updateSolutionButtonState = sem_updateSolutionButtonState;
+window.sem_toggleSolution = sem_toggleSolution;
+window.sem_switchLevel = sem_switchLevel;
+window.sem_runSimulation = sem_runSimulation;
+window.sem_resetScene = sem_resetScene;
+window.sem_toggleGuide = sem_toggleGuide;
+window.sem_switchGuideTab = sem_switchGuideTab;
+window.sem_nextGuideSlide = sem_nextGuideSlide;
+window.sem_prevGuideSlide = sem_prevGuideSlide;
+window.sem_closeWinModal = sem_closeWinModal;
+window.sem_updateLiveCpp = sem_updateLiveCpp;
+window.sem_copyCode = sem_copyCode;
+
 
