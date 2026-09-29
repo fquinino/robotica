@@ -92,17 +92,17 @@ Para resolver o caos urbano, usamos o Arduino em C para controlar a ordem e o te
 2️⃣ Usamos <code>delay(2000);</code> para manter o sinal verde aberto por 2 segundos.
 3️⃣ Usamos o sinal <b>Amarelo</b> de transição para os carros desacelerarem antes do <b>Vermelho</b>.
 4️⃣ Quando os pedestres atravessam, <b>todos os carros devem esperar no sinal vermelho!</b>`,
-        exemplo:`// Fase 1: Avenida Verde por 3 segundos
-semaforoA_verde();
+        exemplo:`// Fase 1: Semáforo 1 (Carro Vermelho 🚗) Verde por 3 segundos
+semaforo1_verde();
 delay(3000);
 
-// Fase 2: Atenção Amarelo por 1 segundo
-semaforoA_amarelo();
+// Fase 2: Atenção Amarelo no Semáforo 1 por 1 segundo
+semaforo1_amarelo();
 delay(1000);
 
-// Fase 3: Avenida fecha no Vermelho e Rua abre no Verde
-semaforoA_vermelho();
-semaforoB_verde();
+// Fase 3: Semáforo 1 fecha e Semáforo 2 (Carro Azul 🚙) abre no Verde
+semaforo1_vermelho();
+semaforo2_verde();
 delay(3000);`,
         dica:'💡 Dica Maker: Nunca mude direto do Verde para o Vermelho sem passar pelo Amarelo! O sinal amarelo e o delay() dão o tempo para os motoristas frearem com segurança.',
         jogo:'tab-semaforo', btntext:'🎮 Ir para o Cruzamento & Mini-IDE!'
