@@ -155,10 +155,18 @@ function loadSemaforo() {
             .sem-shortcut-btn.clear:hover { background:#DC2626; color:white; }
 
             /* SCAFFOLDING EDITOR (NÍVEIS 1, 2 E 3) */
-            .sem-scaffold-lines { background:#030712; border-radius:14px; padding:16px; border:1px solid #1F2937; font-family:'Fira Code', monospace; font-size:0.9rem; line-height:2.1; color:#E2E8F0; }
+            .sem-scaffold-lines { background:#030712; border-radius:14px; padding:16px; border:1px solid #1F2937; font-family:'Fira Code', monospace; font-size:0.88rem; line-height:1.9; color:#E2E8F0; }
+            .sem-sketch-setup { background:rgba(15,23,42,0.85); border:1px dashed #334155; border-radius:10px; padding:10px 14px; margin-bottom:14px; font-size:0.83rem; line-height:1.6; color:#94A3B8; }
+            .sem-sketch-loop-tag { color:#F8FAFC; font-weight:700; margin-bottom:6px; font-size:0.92rem; }
+            .sem-sketch-loop-body { border-left:2px solid rgba(56,189,248,0.45); margin-left:12px; padding-left:14px; display:flex; flex-direction:column; gap:6px; }
+            .sem-sketch-loop-close { color:#F8FAFC; font-weight:700; margin-top:8px; font-size:0.92rem; }
+            .c-kw { color:#A78BFA; font-weight:bold; }
+            .c-fn { color:#38BDF8; font-weight:bold; }
+            .c-cm { color:#64748B; font-style:italic; }
+            .c-cst { color:#F59E0B; font-weight:bold; }
             .sem-scaffold-line { padding:2px 8px; border-radius:6px; transition:background 0.2s; border-left:3px solid transparent; }
             .sem-scaffold-line.active { background:rgba(245,158,11,0.25); border-left-color:#F59E0B; }
-            .sem-select-cmd { background:#1E293B; border:2px solid #F59E0B; color:#FBBF24; font-family:'Fira Code', monospace; font-size:0.88rem; font-weight:bold; padding:4px 8px; border-radius:8px; outline:none; cursor:pointer; }
+            .sem-select-cmd { background:#1E293B; border:2px solid #F59E0B; color:#FBBF24; font-family:'Fira Code', monospace; font-size:0.86rem; font-weight:bold; padding:4px 8px; border-radius:8px; outline:none; cursor:pointer; }
             .sem-input-num { background:#1E293B; border:2px solid #38BDF8; color:#38BDF8; font-family:'Fredoka One'; font-size:1.05rem; width:80px; padding:3px 6px; border-radius:8px; text-align:center; outline:none; }
             
             /* TEXTAREA LIVRE COM NÚMEROS DE LINHA (NÍVEL 4) */
@@ -590,143 +598,203 @@ function loadSemaforo() {
                     <!-- SCAFFOLDING NÍVEL 1 (Parada Segura no Semáforo 1) -->
                     <div id="sem_scaffold_n1" class="sem-scaffold-lines">
                         <div style="background:#1E293B;border-left:3px solid #F59E0B;padding:8px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;color:#FBBF24;font-size:0.82rem;font-weight:700;">
-                            ⚡ <b>digitalWrite(pino, ESTADO):</b> Selecione o comando correto para enviar 5V (HIGH) ao LED Verde do Semáforo 1, depois acione o alerta Amarelo e termine com o Vermelho de parada antes da linha branca:
-                        </div>
-                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Fase 1: Enviar sinal elétrico HIGH para liberar o fluxo</span></div>
-                        <div class="sem-scaffold-line">
-                            <select class="sem-select-cmd" id="sem_n1_cmd1" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— acionar pino digital —</option>
-                                <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
-                            </select>
-                        </div>
-                        <div class="sem-scaffold-line">
-                            <span style="color:#38BDF8;font-weight:bold;">carro1_avancar();</span> <span style="color:#64748B;">// Fluxo da avenida se desloca</span>
-                        </div>
-                        <div class="sem-scaffold-line" style="margin-top:6px;">
-                            delay( <input type="number" class="sem-input-num" id="sem_n1_delay1" min="500" max="5000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// ms na abertura</span>
+                            ⚡ <b>digitalWrite(pino, ESTADO):</b> Complete a função <code>loop()</code> para enviar 5V (HIGH) ao LED Verde, depois o alerta Amarelo e termine com o Vermelho de parada antes da linha branca:
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Fase 2: Alerta obrigatório de desaceleração</span></div>
-                        <div class="sem-scaffold-line">
-                            <select class="sem-select-cmd" id="sem_n1_cmd2" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— sinal de transição —</option>
-                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
-                            </select>
-                        </div>
-                        <div class="sem-scaffold-line" style="margin-top:6px;">
-                            delay( <input type="number" class="sem-input-num" id="sem_n1_delay2" min="500" max="3000" step="500" value="1000" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// ms no amarelo</span>
+                        <!-- Configuração dos Pinos no Setup -->
+                        <div class="sem-sketch-setup">
+                            <span class="c-kw">void</span> <span class="c-fn">setup</span>() { <span class="c-cm">// 🔌 Configura os pinos como OUTPUT (Saída Digital)</span><br>
+                            &nbsp;&nbsp;<span class="c-fn">pinMode</span>(PIN_SEM1_VERDE, <span class="c-cst">OUTPUT</span>);<br>
+                            &nbsp;&nbsp;<span class="c-fn">pinMode</span>(PIN_SEM1_AMARELO, <span class="c-cst">OUTPUT</span>);<br>
+                            &nbsp;&nbsp;<span class="c-fn">pinMode</span>(PIN_SEM1_VERMELHO, <span class="c-cst">OUTPUT</span>);<br>
+                            }
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Fase 3: Fechamento com retenção na linha branca</span></div>
-                        <div class="sem-scaffold-line">
-                            <select class="sem-select-cmd" id="sem_n1_cmd3" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— retenção veicular —</option>
-                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
-                            </select>
+                        <!-- Função loop() principal contínua -->
+                        <div class="sem-sketch-loop-tag">
+                            <span class="c-kw">void</span> <span class="c-fn">loop</span>() { <span class="c-cm">// 🔁 Executa em ciclo contínuo:</span>
                         </div>
-                        <div class="sem-scaffold-line">
-                            <span style="color:#EF4444;font-weight:bold;">carro1_parar();</span> <span style="color:#64748B;">// Para antes da faixa zebrada</span>
+
+                        <div class="sem-sketch-loop-body">
+                            <div class="sem-scaffold-line"><span class="c-cm">// 1️⃣ Fase 1: Enviar sinal elétrico HIGH para liberar o fluxo</span></div>
+                            <div class="sem-scaffold-line">
+                                <select class="sem-select-cmd" id="sem_n1_cmd1" onchange="sem_updateLiveCpp()">
+                                    <option value="" selected disabled>— acionar pino digital —</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
+                                </select>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span style="color:#38BDF8;font-weight:bold;">carro1_avancar();</span> <span class="c-cm">// Fluxo da avenida se desloca</span>
+                            </div>
+                            <div class="sem-scaffold-line" style="margin-top:6px;">
+                                <span class="c-fn">delay</span>( <input type="number" class="sem-input-num" id="sem_n1_delay1" min="500" max="5000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> ); <span class="c-cm">// ms na abertura</span>
+                            </div>
+
+                            <div class="sem-scaffold-line" style="margin-top:8px;"><span class="c-cm">// 2️⃣ Fase 2: Alerta obrigatório de desaceleração</span></div>
+                            <div class="sem-scaffold-line">
+                                <select class="sem-select-cmd" id="sem_n1_cmd2" onchange="sem_updateLiveCpp()">
+                                    <option value="" selected disabled>— sinal de transição —</option>
+                                    <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
+                                </select>
+                            </div>
+                            <div class="sem-scaffold-line" style="margin-top:6px;">
+                                <span class="c-fn">delay</span>( <input type="number" class="sem-input-num" id="sem_n1_delay2" min="500" max="3000" step="500" value="1000" oninput="sem_updateLiveCpp()" /> ); <span class="c-cm">// ms no amarelo</span>
+                            </div>
+
+                            <div class="sem-scaffold-line" style="margin-top:8px;"><span class="c-cm">// 3️⃣ Fase 3: Fechamento com retenção na linha branca</span></div>
+                            <div class="sem-scaffold-line">
+                                <select class="sem-select-cmd" id="sem_n1_cmd3" onchange="sem_updateLiveCpp()">
+                                    <option value="" selected disabled>— retenção veicular —</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                </select>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span style="color:#EF4444;font-weight:bold;">carro1_parar();</span> <span class="c-cm">// Para antes da faixa zebrada</span>
+                            </div>
+                        </div>
+
+                        <div class="sem-sketch-loop-close">
+                            } <span class="c-cm">// Fim do void loop() — reinicia automaticamente!</span>
                         </div>
                     </div>
 
                     <!-- SCAFFOLDING NÍVEL 2 (Semáforo 1 vs Semáforo 2 sem colisão) -->
                     <div id="sem_scaffold_n2" class="sem-scaffold-lines" style="display:none;">
                         <div style="background:#1E293B;border-left:3px solid #38BDF8;padding:8px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;color:#38BDF8;font-size:0.82rem;font-weight:700;">
-                            💡 <b>Regras de Trânsito:</b> Enquanto o fluxo da avenida cruzar no verde, a rua transversal deve estar fechada no vermelho; após o alerta amarelo, feche a avenida e abra a transversal!
-                        </div>
-                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Fase da Avenida: Semáforo 2 fechado e Avenida liberada</span></div>
-                        <div class="sem-scaffold-line">digitalWrite(PIN_SEM2_VERMELHO, HIGH);</div>
-                        <div class="sem-scaffold-line">carro2_parar();</div>
-                        <div class="sem-scaffold-line">
-                            <select class="sem-select-cmd" id="sem_n2_cmd1" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— acionar pino digital —</option>
-                                <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
-                            </select>
-                        </div>
-                        <div class="sem-scaffold-line">
-                            <span style="color:#38BDF8;font-weight:bold;">carro1_avancar();</span> <span style="color:#64748B;">// Carro Vermelho cruza a avenida</span>
-                        </div>
-                        <div class="sem-scaffold-line">
-                            delay( <input type="number" class="sem-input-num" id="sem_n2_delay1" min="1000" max="4000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> );
+                            💡 <b>Regras de Trânsito:</b> Complete o <code>void loop()</code> garantindo que enquanto o fluxo da avenida cruzar no verde, a rua transversal fique no vermelho, evitando colisões!
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Transição: Alerta de desaceleração na avenida</span></div>
-                        <div class="sem-scaffold-line">
-                            <select class="sem-select-cmd" id="sem_n2_cmd2" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— sinal de desaceleração —</option>
-                                <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM2_VERDE, HIGH)">digitalWrite(PIN_SEM2_VERDE, HIGH);</option>
-                            </select>
-                        </div>
-                        <div class="sem-scaffold-line">
-                            delay( 1000 );
+                        <!-- Configuração dos Pinos no Setup -->
+                        <div class="sem-sketch-setup">
+                            <span class="c-kw">void</span> <span class="c-fn">setup</span>() { <span class="c-cm">// 🔌 Configura Semáforo 1 e Semáforo 2 como OUTPUT</span><br>
+                            &nbsp;&nbsp;<span class="c-fn">pinMode</span>(PIN_SEM1_VERDE, <span class="c-cst">OUTPUT</span>); &nbsp;<span class="c-fn">pinMode</span>(PIN_SEM2_VERDE, <span class="c-cst">OUTPUT</span>);<br>
+                            &nbsp;&nbsp;<span class="c-fn">pinMode</span>(PIN_SEM1_AMARELO, <span class="c-cst">OUTPUT</span>); <span class="c-fn">pinMode</span>(PIN_SEM2_AMARELO, <span class="c-cst">OUTPUT</span>);<br>
+                            &nbsp;&nbsp;<span class="c-fn">pinMode</span>(PIN_SEM1_VERMELHO, <span class="c-cst">OUTPUT</span>); <span class="c-fn">pinMode</span>(PIN_SEM2_VERMELHO, <span class="c-cst">OUTPUT</span>);<br>
+                            }
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Fase da Rua Transversal: Fecha avenida e abre rua</span></div>
-                        <div class="sem-scaffold-line">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</div>
-                        <div class="sem-scaffold-line">carro1_parar();</div>
-                        <div class="sem-scaffold-line">
-                            <select class="sem-select-cmd" id="sem_n2_cmd3" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— abrir transversal —</option>
-                                <option value="digitalWrite(PIN_SEM2_VERDE, HIGH)">digitalWrite(PIN_SEM2_VERDE, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM2_AMARELO, HIGH)">digitalWrite(PIN_SEM2_AMARELO, HIGH);</option>
-                                <option value="digitalWrite(PIN_SEM2_VERMELHO, HIGH)">digitalWrite(PIN_SEM2_VERMELHO, HIGH);</option>
-                            </select>
+                        <div class="sem-sketch-loop-tag">
+                            <span class="c-kw">void</span> <span class="c-fn">loop</span>() { <span class="c-cm">// 🔁 Alternância segura entre os cruzamentos:</span>
                         </div>
-                        <div class="sem-scaffold-line">
-                            <span style="color:#38BDF8;font-weight:bold;">carro2_avancar();</span> <span style="color:#64748B;">// Carro Azul desce para o sul</span>
+
+                        <div class="sem-sketch-loop-body">
+                            <div class="sem-scaffold-line"><span class="c-cm">// 1️⃣ Fase da Avenida: Semáforo 2 fechado e Avenida liberada</span></div>
+                            <div class="sem-scaffold-line"><span class="c-fn">digitalWrite</span>(PIN_SEM2_VERMELHO, <span class="c-cst">HIGH</span>);</div>
+                            <div class="sem-scaffold-line"><span class="c-fn">carro2_parar</span>();</div>
+                            <div class="sem-scaffold-line">
+                                <select class="sem-select-cmd" id="sem_n2_cmd1" onchange="sem_updateLiveCpp()">
+                                    <option value="" selected disabled>— acionar pino digital —</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERDE, HIGH)">digitalWrite(PIN_SEM1_VERDE, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
+                                </select>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span style="color:#38BDF8;font-weight:bold;">carro1_avancar();</span> <span class="c-cm">// Carro cruza a avenida</span>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span class="c-fn">delay</span>( <input type="number" class="sem-input-num" id="sem_n2_delay1" min="1000" max="4000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> );
+                            </div>
+
+                            <div class="sem-scaffold-line" style="margin-top:8px;"><span class="c-cm">// 2️⃣ Transição: Alerta de desaceleração na avenida</span></div>
+                            <div class="sem-scaffold-line">
+                                <select class="sem-select-cmd" id="sem_n2_cmd2" onchange="sem_updateLiveCpp()">
+                                    <option value="" selected disabled>— sinal de desaceleração —</option>
+                                    <option value="digitalWrite(PIN_SEM1_AMARELO, HIGH)">digitalWrite(PIN_SEM1_AMARELO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM1_VERMELHO, HIGH)">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM2_VERDE, HIGH)">digitalWrite(PIN_SEM2_VERDE, HIGH);</option>
+                                </select>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span class="c-fn">delay</span>( 1000 );
+                            </div>
+
+                            <div class="sem-scaffold-line" style="margin-top:8px;"><span class="c-cm">// 3️⃣ Fase da Rua Transversal: Fecha avenida e abre rua</span></div>
+                            <div class="sem-scaffold-line"><span class="c-fn">digitalWrite</span>(PIN_SEM1_VERMELHO, <span class="c-cst">HIGH</span>);</div>
+                            <div class="sem-scaffold-line"><span class="c-fn">carro1_parar</span>();</div>
+                            <div class="sem-scaffold-line">
+                                <select class="sem-select-cmd" id="sem_n2_cmd3" onchange="sem_updateLiveCpp()">
+                                    <option value="" selected disabled>— abrir transversal —</option>
+                                    <option value="digitalWrite(PIN_SEM2_VERDE, HIGH)">digitalWrite(PIN_SEM2_VERDE, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM2_AMARELO, HIGH)">digitalWrite(PIN_SEM2_AMARELO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_SEM2_VERMELHO, HIGH)">digitalWrite(PIN_SEM2_VERMELHO, HIGH);</option>
+                                </select>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span style="color:#38BDF8;font-weight:bold;">carro2_avancar();</span> <span class="c-cm">// Carro cruza transversal</span>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span class="c-fn">delay</span>( <input type="number" class="sem-input-num" id="sem_n2_delay2" min="1000" max="4000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> );
+                            </div>
                         </div>
-                        <div class="sem-scaffold-line">
-                            delay( <input type="number" class="sem-input-num" id="sem_n2_delay2" min="1000" max="4000" step="500" value="2000" oninput="sem_updateLiveCpp()" /> );
+
+                        <div class="sem-sketch-loop-close">
+                            } <span class="c-cm">// Fim do void loop() — ciclo repetitivo seguro</span>
                         </div>
                     </div>
 
                     <!-- SCAFFOLDING NÍVEL 3 (Travessia de Pedestres) -->
                     <div id="sem_scaffold_n3" class="sem-scaffold-lines" style="display:none;">
                         <div style="background:#1E293B;border-left:3px solid #10B981;padding:8px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;color:#34D399;font-size:0.82rem;font-weight:700;">
-                            🚶 <b>Proteção aos Pedestres:</b> Antes de liberar os pedestres com sinal verde, trave todos os semáforos veiculares no vermelho com parada total nas linhas brancas!
-                        </div>
-                        <div class="sem-scaffold-line"><span style="color:#64748B;">// 1️⃣ Bloqueio geral dos veículos nas linhas de retenção</span></div>
-                        <div class="sem-scaffold-line">digitalWrite(PIN_SEM1_VERMELHO, HIGH);</div>
-                        <div class="sem-scaffold-line">carro1_parar();</div>
-                        <div class="sem-scaffold-line">digitalWrite(PIN_SEM2_VERMELHO, HIGH);</div>
-                        <div class="sem-scaffold-line">carro2_parar();</div>
-                        <div class="sem-scaffold-line">delay( 800 ); // Margem de segurança de parada</div>
-
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Libere a faixa no Semáforo de Pedestre 🚸</span></div>
-                        <div class="sem-scaffold-line">
-                            <select class="sem-select-cmd" id="sem_n3_cmd1" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— sinal de pedestres —</option>
-                                <option value="digitalWrite(PIN_PEDESTRE_VERDE, HIGH)">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</option>
-                                <option value="digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH)">digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);</option>
-                            </select>
-                        </div>
-                        <div class="sem-scaffold-line">
-                            <span style="color:#10B981;font-weight:bold;">pedestre_atravessar();</span> <span style="color:#64748B;">// Pedestre cruza a faixa zebrada</span>
-                        </div>
-                        <div class="sem-scaffold-line">
-                            delay( <input type="number" class="sem-input-num" id="sem_n3_delay1" min="1500" max="4000" step="500" value="2500" oninput="sem_updateLiveCpp()" /> ); <span style="color:#64748B;">// ms para atravessar</span>
+                            🚶 <b>Proteção aos Pedestres:</b> Complete o <code>void loop()</code> para travar todos os carros no vermelho antes de abrir o semáforo de pedestres na faixa zebrada!
                         </div>
 
-                        <div class="sem-scaffold-line" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Encerre a travessia com segurança</span></div>
-                        <div class="sem-scaffold-line">
-                            <select class="sem-select-cmd" id="sem_n3_cmd2" onchange="sem_updateLiveCpp()">
-                                <option value="" selected disabled>— fechar faixa —</option>
-                                <option value="digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH)">digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);</option>
-                                <option value="digitalWrite(PIN_PEDESTRE_VERDE, HIGH)">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</option>
-                            </select>
+                        <!-- Configuração dos Pinos no Setup -->
+                        <div class="sem-sketch-setup">
+                            <span class="c-kw">void</span> <span class="c-fn">setup</span>() { <span class="c-cm">// 🔌 Semáforos Veiculares e de Pedestre como OUTPUT</span><br>
+                            &nbsp;&nbsp;<span class="c-fn">pinMode</span>(PIN_SEM1_VERMELHO, <span class="c-cst">OUTPUT</span>); &nbsp;<span class="c-fn">pinMode</span>(PIN_SEM2_VERMELHO, <span class="c-cst">OUTPUT</span>);<br>
+                            &nbsp;&nbsp;<span class="c-fn">pinMode</span>(PIN_PEDESTRE_VERDE, <span class="c-cst">OUTPUT</span>); &nbsp;<span class="c-fn">pinMode</span>(PIN_PEDESTRE_VERMELHO, <span class="c-cst">OUTPUT</span>);<br>
+                            }
                         </div>
-                        <div class="sem-scaffold-line">
-                            <span style="color:#EF4444;font-weight:bold;">pedestre_parar();</span> <span style="color:#64748B;">// Fim da travessia</span>
+
+                        <div class="sem-sketch-loop-tag">
+                            <span class="c-kw">void</span> <span class="c-fn">loop</span>() { <span class="c-cm">// 🔁 Ciclo com travessia protegida na faixa:</span>
+                        </div>
+
+                        <div class="sem-sketch-loop-body">
+                            <div class="sem-scaffold-line"><span class="c-cm">// 1️⃣ Bloqueio geral dos veículos nas linhas de retenção</span></div>
+                            <div class="sem-scaffold-line"><span class="c-fn">digitalWrite</span>(PIN_SEM1_VERMELHO, <span class="c-cst">HIGH</span>);</div>
+                            <div class="sem-scaffold-line"><span class="c-fn">carro1_parar</span>();</div>
+                            <div class="sem-scaffold-line"><span class="c-fn">digitalWrite</span>(PIN_SEM2_VERMELHO, <span class="c-cst">HIGH</span>);</div>
+                            <div class="sem-scaffold-line"><span class="c-fn">carro2_parar</span>();</div>
+                            <div class="sem-scaffold-line"><span class="c-fn">delay</span>( 800 ); <span class="c-cm">// Margem de segurança de parada</span></div>
+
+                            <div class="sem-scaffold-line" style="margin-top:8px;"><span class="c-cm">// 2️⃣ Libere a faixa no Semáforo de Pedestre 🚸</span></div>
+                            <div class="sem-scaffold-line">
+                                <select class="sem-select-cmd" id="sem_n3_cmd1" onchange="sem_updateLiveCpp()">
+                                    <option value="" selected disabled>— sinal de pedestres —</option>
+                                    <option value="digitalWrite(PIN_PEDESTRE_VERDE, HIGH)">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</option>
+                                    <option value="digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH)">digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);</option>
+                                </select>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span style="color:#10B981;font-weight:bold;">pedestre_atravessar();</span> <span class="c-cm">// Pedestre cruza a faixa zebrada</span>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span class="c-fn">delay</span>( <input type="number" class="sem-input-num" id="sem_n3_delay1" min="1500" max="4000" step="500" value="2500" oninput="sem_updateLiveCpp()" /> ); <span class="c-cm">// ms para atravessar</span>
+                            </div>
+
+                            <div class="sem-scaffold-line" style="margin-top:8px;"><span class="c-cm">// 3️⃣ Encerre a travessia com segurança</span></div>
+                            <div class="sem-scaffold-line">
+                                <select class="sem-select-cmd" id="sem_n3_cmd2" onchange="sem_updateLiveCpp()">
+                                    <option value="" selected disabled>— fechar faixa —</option>
+                                    <option value="digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH)">digitalWrite(PIN_PEDESTRE_VERMELHO, HIGH);</option>
+                                    <option value="digitalWrite(PIN_PEDESTRE_VERDE, HIGH)">digitalWrite(PIN_PEDESTRE_VERDE, HIGH);</option>
+                                </select>
+                            </div>
+                            <div class="sem-scaffold-line">
+                                <span style="color:#EF4444;font-weight:bold;">pedestre_parar();</span> <span class="c-cm">// Fim da travessia</span>
+                            </div>
+                        </div>
+
+                        <div class="sem-sketch-loop-close">
+                            } <span class="c-cm">// Fim do void loop() — ciclo repetitivo seguro</span>
                         </div>
                     </div>
 
@@ -1236,7 +1304,12 @@ function sem_updateLiveCpp() {
                    `  // Fase 2: Semáforo de pedestre verde e travessia:\n  ${c1};\n  pedestre_atravessar();\n  delay(${d1});\n\n` +
                    `  // Fase 3: Fechamento da faixa e fim da travessia:\n  ${c2};\n  pedestre_parar();`;
     } else {
-        const userCode = document.getElementById('sem_code_input')?.value.trim();
+        const userCode = document.getElementById('sem_code_input')?.value.trim() || '';
+        // Se o aluno colou o sketch completo (com void setup / void loop), exibe sem re-aninhamento:
+        if (/void\s+(setup|loop)\s*\(/i.test(userCode)) {
+            el.innerText = userCode;
+            return;
+        }
         if (userCode) {
             loopBody = `  // Código digitado na Mini-IDE:\n  ` + userCode.replace(/\n/g, '\n  ');
         } else {
@@ -1285,7 +1358,7 @@ function sem_copyCode() {
     const code = document.getElementById('sem_arduino_code')?.innerText;
     if (code) {
         navigator.clipboard.writeText(code);
-        alert('Código Arduino C++ copiado com sucesso! 📋 Cole no seu Arduino IDE!');
+        alert('Código Arduino C++ copiado com sucesso! 📋 Cole no seu Arduino IDE ou na Mini-IDE!');
     }
 }
 
@@ -1401,12 +1474,38 @@ function sem_extractCommands() {
         cmds.push({ type: 'pedestre_parar' });
     } else {
         // Níveis 4 e 5: Mini-IDE C/C++
-        const text = document.getElementById('sem_code_input')?.value || '';
-        const lines = text.split('\n');
+        const rawText = document.getElementById('sem_code_input')?.value || '';
+        let codeToParse = rawText;
+
+        // Se o aluno colou o sketch completo (com void loop), extrai somente o miolo do loop:
+        const loopMatch = rawText.match(/void\s+loop\s*\([^)]*\)\s*\{/i);
+        if (loopMatch) {
+            const startIdx = loopMatch.index + loopMatch[0].length;
+            let depth = 1;
+            let endIdx = -1;
+            for (let i = startIdx; i < rawText.length; i++) {
+                if (rawText[i] === '{') depth++;
+                else if (rawText[i] === '}') {
+                    depth--;
+                    if (depth === 0) {
+                        endIdx = i;
+                        break;
+                    }
+                }
+            }
+            if (endIdx !== -1) {
+                codeToParse = rawText.substring(startIdx, endIdx);
+            }
+        }
+
+        const lines = codeToParse.split('\n');
 
         lines.forEach(rawLine => {
             const line = rawLine.split('//')[0].trim();
             if (!line) return;
+
+            // Ignora protótipos de função residuais, pinModes, constantes e includes
+            if (/^\s*(void\s+\w+|int\s+|const\s+int|pinMode|#include)/i.test(line)) return;
 
             if (/carro1_avancar/i.test(line)) cmds.push({ type: 'carro1_avancar' });
             else if (/carro1_parar/i.test(line)) cmds.push({ type: 'carro1_parar' });

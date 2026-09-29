@@ -102,6 +102,12 @@ function loadJardim() {
 
             /* Scaffolding Editor */
             .if-scaffold-lines { background:#030712; border-radius:14px; padding:16px; border:1px solid #1F2937; font-family:'Fira Code', monospace; font-size:0.92rem; line-height:2; color:#E2E8F0; }
+            .if-func-tag { color:#F8FAFC; font-weight:700; margin-bottom:8px; font-size:0.92rem; }
+            .if-func-body { border-left:2px solid rgba(16,185,129,0.45); margin-left:12px; padding-left:14px; display:flex; flex-direction:column; gap:6px; }
+            .if-func-close { color:#F8FAFC; font-weight:700; margin-top:8px; font-size:0.92rem; }
+            .c-kw { color:#A78BFA; font-weight:bold; }
+            .c-fn { color:#38BDF8; font-weight:bold; }
+            .c-cm { color:#64748B; font-style:italic; }
             .if-scaffold-line { padding:3px 8px; border-radius:6px; transition:background 0.2s; border-left:3px solid transparent; }
             .if-scaffold-line.active { background:rgba(16,185,129,0.3); border-left-color:#34D399; }
             .if-select-cmd { background:#1E293B; border:2px solid #10B981; color:#34D399; font-family:'Fira Code', monospace; font-size:0.9rem; font-weight:bold; padding:4px 8px; border-radius:8px; outline:none; cursor:pointer; }
@@ -496,22 +502,26 @@ function loadJardim() {
                         </div>
 
                         <div class="if-scaffold-lines">
-                            <div class="if-scaffold-line" id="if_n1_line_1"><span style="color:#64748B;">// 🧠 1. Lê o sensor e guarda true (barreira) ou false (livre) na variável bool:</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_2"><span style="color:#F472B6;font-weight:bold;">bool</span> temObstaculo = <span style="color:#60A5FA;">sensorObstaculo</span>();</div>
-                            <div class="if-scaffold-line" id="if_n1_line_3"><span style="color:#64748B;">// ⚖️ 2. Operador '==' compara igualdade no if:</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_4"><span style="color:#F472B6;font-weight:bold;">if</span> ( temObstaculo == <span style="color:#FBBF24;">true</span> ) {</div>
-                            <div class="if-scaffold-line" id="if_n1_line_5" style="padding-left:22px;"><span style="color:#34D399;font-weight:bold;">baixo</span>();    <span style="color:#64748B;">// ⬇️ 1 passo para baixo (entra na faixa de desvio)</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_6" style="padding-left:22px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>();  <span style="color:#64748B;">// ➡️ 1 passo para frente</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_7" style="padding-left:22px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>();  <span style="color:#64748B;">// ➡️ 1 passo contornando a barreira (pega Estrela 🌟)</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_8" style="padding-left:22px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>();  <span style="color:#64748B;">// ➡️ 1 passo avançando no desvio</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_9" style="padding-left:22px;"><span style="color:#34D399;font-weight:bold;">cima</span>();     <span style="color:#64748B;">// ⬆️ 1 passo para cima (retorna à pista principal)</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_10" style="padding-left:22px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>(); <span style="color:#64748B;">// ➡️ 1 passo até o Troféu de Ouro 🏆!</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_11">} <span style="color:#F472B6;font-weight:bold;">else</span> {</div>
-                            <div class="if-scaffold-line" id="if_n1_line_12" style="padding-left:22px;"><span style="color:#64748B;">// 🔄 Pista 100% livre! O Laço FOR da Aula 2 repete 4 passos com direita():</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_13" style="padding-left:22px;"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#F472B6;font-weight:bold;">int</span> i = 0; i &lt; 4; i++ ) {</div>
-                            <div class="if-scaffold-line" id="if_n1_line_14" style="padding-left:44px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>(); <span style="color:#64748B;">// ➡️ Anda 1 passo em linha reta a cada ciclo</span></div>
-                            <div class="if-scaffold-line" id="if_n1_line_15" style="padding-left:22px;">}</div>
-                            <div class="if-scaffold-line" id="if_n1_line_16">}</div>
+                            <div class="if-func-tag"><span class="c-kw">void</span> <span class="c-fn">controlarRobo</span>() { <span class="c-cm">// Função C++ de navegação inteligente</span></div>
+                            <div class="if-func-body">
+                                <div class="if-scaffold-line" id="if_n1_line_1"><span style="color:#64748B;">// 🧠 1. Lê o sensor e guarda true (barreira) ou false (livre) na variável bool:</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_2"><span style="color:#F472B6;font-weight:bold;">bool</span> temObstaculo = <span style="color:#60A5FA;">sensorObstaculo</span>();</div>
+                                <div class="if-scaffold-line" id="if_n1_line_3"><span style="color:#64748B;">// ⚖️ 2. Operador '==' compara igualdade no if:</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_4"><span style="color:#F472B6;font-weight:bold;">if</span> ( temObstaculo == <span style="color:#FBBF24;">true</span> ) {</div>
+                                <div class="if-scaffold-line" id="if_n1_line_5" style="padding-left:22px;"><span style="color:#34D399;font-weight:bold;">baixo</span>();    <span style="color:#64748B;">// ⬇️ 1 passo para baixo (entra na faixa de desvio)</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_6" style="padding-left:22px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>();  <span style="color:#64748B;">// ➡️ 1 passo para frente</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_7" style="padding-left:22px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>();  <span style="color:#64748B;">// ➡️ 1 passo contornando a barreira (pega Estrela 🌟)</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_8" style="padding-left:22px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>();  <span style="color:#64748B;">// ➡️ 1 passo avançando no desvio</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_9" style="padding-left:22px;"><span style="color:#34D399;font-weight:bold;">cima</span>();     <span style="color:#64748B;">// ⬆️ 1 passo para cima (retorna à pista principal)</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_10" style="padding-left:22px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>(); <span style="color:#64748B;">// ➡️ 1 passo até o Troféu de Ouro 🏆!</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_11">} <span style="color:#F472B6;font-weight:bold;">else</span> {</div>
+                                <div class="if-scaffold-line" id="if_n1_line_12" style="padding-left:22px;"><span style="color:#64748B;">// 🔄 Pista 100% livre! O Laço FOR da Aula 2 repete 4 passos com direita():</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_13" style="padding-left:22px;"><span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#F472B6;font-weight:bold;">int</span> i = 0; i &lt; 4; i++ ) {</div>
+                                <div class="if-scaffold-line" id="if_n1_line_14" style="padding-left:44px;"><span style="color:#38BDF8;font-weight:bold;">direita</span>(); <span style="color:#64748B;">// ➡️ Anda 1 passo em linha reta a cada ciclo</span></div>
+                                <div class="if-scaffold-line" id="if_n1_line_15" style="padding-left:22px;">}</div>
+                                <div class="if-scaffold-line" id="if_n1_line_16">}</div>
+                            </div>
+                            <div class="if-func-close">} <span class="c-cm">// Fim da função controlarRobo()</span></div>
                         </div>
 
                         <div style="margin-top:14px;background:#0F172A;padding:12px;border-radius:12px;border:1px solid #1E293B;">
@@ -545,92 +555,104 @@ function loadJardim() {
                                 💡 Escolha os comandos da <b>sequência inteligente</b>: use <code>if/else</code> para desviar da barreira e chegar ao 🏆 Tesouro!
                             </div>
 
-                            <!-- 1. Trecho Inicial: Aproximação -->
-                            <div class="if-scaffold-line" id="if_n2_line_0"><span style="color:#64748B;">// 1️⃣ Aproximação: Qual comando andar antes do obstáculo?</span></div>
-                            <div class="if-scaffold-line" id="if_n2_line_1">
-                                <select class="if-select-cmd" id="if_n2_cmd1" onchange="if_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha ação 1 —</option>
-                                    <option value="direita">direita(); // Anda 1 bloco para direita</option>
-                                    <option value="baixo">baixo();</option>
-                                    <option value="esquerda">esquerda();</option>
-                                    <option value="cima">cima();</option>
-                                </select>
-                            </div>
+                            <div class="if-func-tag"><span class="c-kw">void</span> <span class="c-fn">controlarRobo</span>() { <span class="c-cm">// Função C++ do Robô com IF/ELSE</span></div>
+                            <div class="if-func-body">
+                                <!-- 1. Trecho Inicial: Aproximação -->
+                                <div class="if-scaffold-line" id="if_n2_line_0"><span style="color:#64748B;">// 1️⃣ Aproximação: Qual comando andar antes do obstáculo?</span></div>
+                                <div class="if-scaffold-line" id="if_n2_line_1">
+                                    <select class="if-select-cmd" id="if_n2_cmd1" onchange="if_updateLiveCpp()">
+                                        <option value="" selected disabled>— escolha ação 1 —</option>
+                                        <option value="direita">direita(); // Anda 1 bloco para direita</option>
+                                        <option value="baixo">baixo();</option>
+                                        <option value="esquerda">esquerda();</option>
+                                        <option value="cima">cima();</option>
+                                    </select>
+                                </div>
 
-                            <!-- 2. Bloco Condicional com IF/ELSE -->
-                            <div class="if-scaffold-line" id="if_n2_line_2" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Sensor & Decisão: O sensor detectou obstáculo à frente?</span></div>
-                            <div class="if-scaffold-line" id="if_n2_line_3">
-                                <span style="color:#F472B6;font-weight:bold;">if</span> ( <span style="color:#60A5FA;">sensorObstaculo</span>() ) { <span style="color:#64748B;">// ⚠️ Se TRUE (tem barreira):</span>
-                            </div>
-                            <div class="if-scaffold-line" id="if_n2_line_4" style="padding-left:24px;">
-                                <select class="if-select-cmd" id="if_n2_cmd_if" onchange="if_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha ação no IF —</option>
-                                    <option value="baixo">baixo(); // ⬇️ Desvia para linha livre</option>
-                                    <option value="direita">direita();</option>
-                                    <option value="esquerda">esquerda();</option>
-                                    <option value="cima">cima();</option>
-                                </select>
-                            </div>
-                            <div class="if-scaffold-line" id="if_n2_line_5">
-                                } <span style="color:#F472B6;font-weight:bold;">else</span> { <span style="color:#64748B;">// 🟢 Se FALSE (pista livre):</span>
-                            </div>
-                            <div class="if-scaffold-line" id="if_n2_line_6" style="padding-left:24px;">
-                                <select class="if-select-cmd" id="if_n2_cmd_else" onchange="if_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha ação no ELSE —</option>
-                                    <option value="direita">direita(); // ➡️ Segue reto</option>
-                                    <option value="baixo">baixo();</option>
-                                    <option value="esquerda">esquerda();</option>
-                                    <option value="cima">cima();</option>
-                                </select>
-                            </div>
-                            <div class="if-scaffold-line" id="if_n2_line_7">}</div>
+                                <!-- 2. Bloco Condicional com IF/ELSE -->
+                                <div class="if-scaffold-line" id="if_n2_line_2" style="margin-top:8px;"><span style="color:#64748B;">// 2️⃣ Sensor & Decisão: O sensor detectou obstáculo à frente?</span></div>
+                                <div class="if-scaffold-line" id="if_n2_line_3">
+                                    <span style="color:#F472B6;font-weight:bold;">if</span> ( <span style="color:#60A5FA;">sensorObstaculo</span>() ) { <span style="color:#64748B;">// ⚠️ Se TRUE (tem barreira):</span>
+                                </div>
+                                <div class="if-scaffold-line" id="if_n2_line_4" style="padding-left:24px;">
+                                    <select class="if-select-cmd" id="if_n2_cmd_if" onchange="if_updateLiveCpp()">
+                                        <option value="" selected disabled>— escolha ação no IF —</option>
+                                        <option value="baixo">baixo(); // ⬇️ Desvia para linha livre</option>
+                                        <option value="direita">direita();</option>
+                                        <option value="esquerda">esquerda();</option>
+                                        <option value="cima">cima();</option>
+                                    </select>
+                                </div>
+                                <div class="if-scaffold-line" id="if_n2_line_5">
+                                    } <span style="color:#F472B6;font-weight:bold;">else</span> { <span style="color:#64748B;">// 🟢 Se FALSE (pista livre):</span>
+                                </div>
+                                <div class="if-scaffold-line" id="if_n2_line_6" style="padding-left:24px;">
+                                    <select class="if-select-cmd" id="if_n2_cmd_else" onchange="if_updateLiveCpp()">
+                                        <option value="" selected disabled>— escolha ação no ELSE —</option>
+                                        <option value="direita">direita(); // ➡️ Segue reto</option>
+                                        <option value="baixo">baixo();</option>
+                                        <option value="esquerda">esquerda();</option>
+                                        <option value="cima">cima();</option>
+                                    </select>
+                                </div>
+                                <div class="if-scaffold-line" id="if_n2_line_7">}</div>
 
-                            <!-- 3. Trecho Final: Chegada ao Troféu -->
-                            <div class="if-scaffold-line" id="if_n2_line_8" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Reta Final: Qual comando para pegar o 🏆 Tesouro?</span></div>
-                            <div class="if-scaffold-line" id="if_n2_line_9">
-                                <select class="if-select-cmd" id="if_n2_cmd2" onchange="if_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha ação final —</option>
-                                    <option value="direita">direita(); // Pega o troféu 🏆</option>
-                                    <option value="baixo">baixo();</option>
-                                    <option value="esquerda">esquerda();</option>
-                                    <option value="cima">cima();</option>
-                                </select>
+                                <!-- 3. Trecho Final: Chegada ao Troféu -->
+                                <div class="if-scaffold-line" id="if_n2_line_8" style="margin-top:8px;"><span style="color:#64748B;">// 3️⃣ Reta Final: Qual comando para pegar o 🏆 Tesouro?</span></div>
+                                <div class="if-scaffold-line" id="if_n2_line_9">
+                                    <select class="if-select-cmd" id="if_n2_cmd2" onchange="if_updateLiveCpp()">
+                                        <option value="" selected disabled>— escolha ação final —</option>
+                                        <option value="direita">direita(); // Pega o troféu 🏆</option>
+                                        <option value="baixo">baixo();</option>
+                                        <option value="esquerda">esquerda();</option>
+                                        <option value="cima">cima();</option>
+                                    </select>
+                                </div>
                             </div>
+                            <div class="if-func-close">} <span class="c-cm">// Fim da função controlarRobo()</span></div>
                         </div>
 
                         <!-- Scaffolding Nível 3 (Mix FOR + IF/ELSE) -->
                         <div id="if_scaffold_n3" class="if-scaffold-lines" style="display:none;">
-                            <div class="if-scaffold-line" id="if_n3_line_1"><span style="color:#64748B;">// 🔄 Laço FOR repetindo a decisão inteligente a cada passo:</span></div>
-                            <div class="if-scaffold-line" id="if_n3_line_2">
-                                <span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#F472B6;font-weight:bold;">int</span> i = 0; i &lt; 
-                                <input type="number" class="if-input-num" id="if_n3_for_count" min="1" max="10" placeholder="?" value="" oninput="if_updateLiveCpp()" onchange="if_updateLiveCpp()" /> ; i++ ) {
+                            <div style="background:#1E293B;border-left:3px solid #A78BFA;padding:8px 12px;border-radius:0 8px 8px 0;margin-bottom:12px;color:#C4B5FD;font-size:0.82rem;font-weight:700;">
+                                🔄 <b>Laço FOR com Decisão:</b> Automatize as repetições e use <code>if/else</code> dentro do laço para responder aos obstáculos dinamicamente!
                             </div>
-                            <div class="if-scaffold-line" id="if_n3_line_3" style="padding-left:24px;">
-                                <span style="color:#F472B6;font-weight:bold;">if</span> ( <span style="color:#60A5FA;">sensorObstaculo</span>() ) {
+
+                            <div class="if-func-tag"><span class="c-kw">void</span> <span class="c-fn">controlarRobo</span>() { <span class="c-cm">// Função C++ com FOR e IF/ELSE</span></div>
+                            <div class="if-func-body">
+                                <div class="if-scaffold-line" id="if_n3_line_1"><span style="color:#64748B;">// 🔄 Laço FOR repetindo a decisão inteligente a cada passo:</span></div>
+                                <div class="if-scaffold-line" id="if_n3_line_2">
+                                    <span style="color:#F472B6;font-weight:bold;">for</span> ( <span style="color:#F472B6;font-weight:bold;">int</span> i = 0; i &lt; 
+                                    <input type="number" class="if-input-num" id="if_n3_for_count" min="1" max="10" placeholder="?" value="" oninput="if_updateLiveCpp()" onchange="if_updateLiveCpp()" /> ; i++ ) {
+                                </div>
+                                <div class="if-scaffold-line" id="if_n3_line_3" style="padding-left:24px;">
+                                    <span style="color:#F472B6;font-weight:bold;">if</span> ( <span style="color:#60A5FA;">sensorObstaculo</span>() ) {
+                                </div>
+                                <div class="if-scaffold-line" id="if_n3_line_4" style="padding-left:46px;">
+                                    <select class="if-select-cmd" id="if_n3_act_if" onchange="if_updateLiveCpp()">
+                                        <option value="" selected disabled>— escolha ação se barreira —</option>
+                                        <option value="baixo">baixo(); // Desvia para linha livre</option>
+                                        <option value="direita">direita();</option>
+                                        <option value="esquerda">esquerda();</option>
+                                        <option value="cima">cima();</option>
+                                    </select>
+                                </div>
+                                <div class="if-scaffold-line" id="if_n3_line_5" style="padding-left:24px;">
+                                    } <span style="color:#F472B6;font-weight:bold;">else</span> {
+                                </div>
+                                <div class="if-scaffold-line" id="if_n3_line_6" style="padding-left:46px;">
+                                    <select class="if-select-cmd" id="if_n3_act_else" onchange="if_updateLiveCpp()">
+                                        <option value="" selected disabled>— escolha ação se livre —</option>
+                                        <option value="direita">direita(); // Caminho livre</option>
+                                        <option value="baixo">baixo();</option>
+                                        <option value="esquerda">esquerda();</option>
+                                        <option value="cima">cima();</option>
+                                    </select>
+                                </div>
+                                <div class="if-scaffold-line" id="if_n3_line_7" style="padding-left:24px;">}</div>
+                                <div class="if-scaffold-line" id="if_n3_line_8">}</div>
                             </div>
-                            <div class="if-scaffold-line" id="if_n3_line_4" style="padding-left:46px;">
-                                <select class="if-select-cmd" id="if_n3_act_if" onchange="if_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha ação se barreira —</option>
-                                    <option value="baixo">baixo(); // Desvia para linha livre</option>
-                                    <option value="direita">direita();</option>
-                                    <option value="esquerda">esquerda();</option>
-                                    <option value="cima">cima();</option>
-                                </select>
-                            </div>
-                            <div class="if-scaffold-line" id="if_n3_line_5" style="padding-left:24px;">
-                                } <span style="color:#F472B6;font-weight:bold;">else</span> {
-                            </div>
-                            <div class="if-scaffold-line" id="if_n3_line_6" style="padding-left:46px;">
-                                <select class="if-select-cmd" id="if_n3_act_else" onchange="if_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha ação se livre —</option>
-                                    <option value="direita">direita(); // Caminho livre</option>
-                                    <option value="baixo">baixo();</option>
-                                    <option value="esquerda">esquerda();</option>
-                                    <option value="cima">cima();</option>
-                                </select>
-                            </div>
-                            <div class="if-scaffold-line" id="if_n3_line_7" style="padding-left:24px;">}</div>
-                            <div class="if-scaffold-line" id="if_n3_line_8">}</div>
+                            <div class="if-func-close">} <span class="c-cm">// Fim da função controlarRobo()</span></div>
                         </div>
 
                         <!-- Editor Textarea Nível 4 (Mini-IDE) -->
@@ -1623,8 +1645,30 @@ function if_parseAndExecuteCpp(raw) {
         };
     }
 
-    const openBraces = (raw.match(/{/g) || []).length;
-    const closeBraces = (raw.match(/}/g) || []).length;
+    // Se o aluno colou o código completo contendo void controlarRobo() { ... } ou void loop() { ... }:
+    let codeBody = raw;
+    const funcMatch = raw.match(/void\s+(controlarRobo|loop)\s*\([^)]*\)\s*\{/i);
+    if (funcMatch) {
+        const startIdx = funcMatch.index + funcMatch[0].length;
+        let depth = 1;
+        let endIdx = -1;
+        for (let i = startIdx; i < raw.length; i++) {
+            if (raw[i] === '{') depth++;
+            else if (raw[i] === '}') {
+                depth--;
+                if (depth === 0) {
+                    endIdx = i;
+                    break;
+                }
+            }
+        }
+        if (endIdx !== -1) {
+            codeBody = raw.substring(startIdx, endIdx);
+        }
+    }
+
+    const openBraces = (codeBody.match(/{/g) || []).length;
+    const closeBraces = (codeBody.match(/}/g) || []).length;
     if(openBraces !== closeBraces) {
         return { 
             success: false, 
@@ -1634,7 +1678,7 @@ function if_parseAndExecuteCpp(raw) {
     }
 
     // 1. Limpa comentários de linha (//) e bloco (/* */)
-    let cleanCode = raw
+    let cleanCode = codeBody
         .replace(/\/\*[\s\S]*?\*\//g, '')
         .replace(/\/\/.*/g, '')
         .trim();
@@ -1771,7 +1815,7 @@ function if_parseAndExecuteCpp(raw) {
                 if(closeParen === -1) { cursor++; continue; }
 
                 const ifCond = codeText.substring(openParen + 1, closeParen);
-                const isSensorCheck = /sensorObstaculo/i.test(ifCond);
+                const isSensorCheck = /(sensorObstaculo|temObstaculo)/i.test(ifCond);
 
                 // Localiza o bloco { ... } do IF
                 const openBrace = codeText.indexOf('{', closeParen);
@@ -1905,7 +1949,11 @@ function if_updateLiveCpp() {
                 `    }\n` +
                 `  }\n`;
     } else if(if_currentLevel === 4) {
-        const raw = document.getElementById('if_code_input')?.value;
+        const raw = document.getElementById('if_code_input')?.value.trim() || '';
+        if (/void\s+(controlarRobo|loop)\s*\(/i.test(raw)) {
+            el.innerText = raw;
+            return;
+        }
         code += raw ? `  ${raw.replace(/\n/g, '\n  ')}\n` : `  // Digite seu código na Mini-IDE acima\n`;
     }
 
