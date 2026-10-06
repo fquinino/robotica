@@ -2,7 +2,7 @@
    CRIADORES DE CÓDIGO — TRILHA DE APRENDIZAGEM & HUB DE CONQUISTAS
    ========================================================================== */
 
-const UNLOCKED_LESSONS = 4; // Liberadas Aulas 1, 2, 3 e 4
+const UNLOCKED_LESSONS = 5; // Liberadas Aulas 1, 2, 3, 4 e 5
 
 const getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
 
@@ -116,24 +116,28 @@ delay(2000);`,
         jogo:'tab-semaforo', btntext:'🎮 Ir para o Cruzamento & Mini-IDE!'
     },
     5: {
-        emoji:'🧮', title:'Variáveis e Tipos de Dados', color:'#38BDF8',
-        objetivo:'🧠 <b>O que você vai aprender:</b> O que são <b>variáveis</b> — "caixas com nome" na memória do computador para guardar pontos, moedas, temperaturas e textos!',
-        teoria:`<b>Caixinhas de Memória</b>
+        emoji:'🧮', title:'Variáveis e Tipos de Dados (C/C++ Arduino)', color:'#38BDF8',
+        objetivo:'🧠 <b>O que você vai aprender:</b> O que são <b>variáveis</b> — "caixas com nome" na memória RAM do computador para guardar pontos, moedas, temperaturas e textos usando <code>int</code>, <code>float</code>, <code>String</code> e <code>bool</code>!',
+        teoria:`<b>Caixinhas de Memória RAM 📦</b>
 
 Imagine que você tem caixas etiquetadas no seu quarto:
 - Caixa "Brinquedos" 🧸
 - Caixa "Roupas" 👕
 
-No computador, uma <b>VARIÁVEL</b> é uma caixinha na memória.
-Ela tem um <b>TIPO</b> (o que pode guardar dentro) e um <b>NOME</b>:
+No microcontrolador, uma <b>VARIÁVEL</b> é uma caixinha na memória.
+Ela tem um <b>TIPO</b> (o que pode guardar dentro), um <b>NOME</b> (etiqueta) e um <b>VALOR</b>:
 
 - <code>int pontos = 10;</code> → Guarda números inteiros (0, 1, 2, 50...)
 - <code>float temperatura = 25.5;</code> → Guarda números com vírgula/ponto
-- <code>bool botaoApertado = true;</code> → Guarda verdadeiro (true) ou falso (false)`,
-        exemplo:`int moedasColetadas = 0;
-moedasColetadas = moedasColetadas + 1; // Coletou 1 moeda!`,
-        dica:'💡 Dica Maker: Escolha nomes claros para suas variáveis! Use "pontosDoJogador" em vez de "p".',
-        jogo:'tab-tesouro', btntext:'🎮 Jogar Caça ao Tesouro Nível 3!'
+- <code>String piloto = "Maker";</code> → Guarda palavras e textos entre aspas
+- <code>bool motorLigado = true;</code> → Guarda verdadeiro (true) ou falso (false)`,
+        exemplo:`<span class="c-tp">int</span> <span class="c-var">moedasColetadas</span> = <span class="c-num">0</span>;
+<span class="c-var">moedasColetadas</span> = <span class="c-var">moedasColetadas</span> + <span class="c-num">1</span>; <span class="c-cm">// Coletou 1 moeda!</span>
+<span class="c-tp">float</span> <span class="c-var">temperatura</span> = <span class="c-num">26.5</span>;
+<span class="c-tp">String</span> <span class="c-var">status</span> = <span class="c-str">"OK"</span>;
+<span class="c-tp">bool</span> <span class="c-var">cofreAberto</span> = <span class="c-bool">true</span>;`,
+        dica:'💡 Dica Maker: O sinal = significa GUARDAR na caixa! Sempre termine a linha com ponto e vírgula (;).',
+        jogo:'tab-variaveis', btntext:'🎮 Ir para o Laboratório de Variáveis!'
     },
     6: {
         emoji:'⚡', title:'Introdução à Eletrônica (Lei de Ohm)', color:'#F87171',
@@ -261,12 +265,13 @@ function updateTrail() {
 
     const totalStars = getLevels('semaforo_levels').length + getLevels('tesouro_levels').length + 
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
-                       getLevels('jardim_levels').length + getLevels('arduino_levels').length;
+                       getLevels('jardim_levels').length + getLevels('arduino_levels').length +
+                       getLevels('variaveis_levels').length;
 
-    const percent = Math.min(100, Math.round((totalStars / 22) * 100));
+    const percent = Math.min(100, Math.round((totalStars / 30) * 100));
     const starCountEl = document.getElementById('trail-star-count');
     const progressBarEl = document.getElementById('trail-progress-bar');
-    if (starCountEl) starCountEl.innerText = `${totalStars} / 22 ⭐`;
+    if (starCountEl) starCountEl.innerText = `${totalStars} / 30 ⭐`;
     if (progressBarEl) progressBarEl.style.width = `${percent}%`;
 
     let html = '';
@@ -319,7 +324,13 @@ function showLessonModal(lessonNum) {
             <h4>📖 Explicação Simples</h4>
             <p>${lesson.teoria.replace(/\n/g, '<br>')}</p>
         </div>
-        <div class="lesson-exemplo"><b>💻 Exemplo de Código:</b><br>${lesson.exemplo}</div>
+        <div class="lesson-exemplo">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1E293B;">
+                <span style="color:#94A3B8;font-size:0.75rem;font-weight:800;font-family:'Fira Code',monospace;"><i class="fa-solid fa-code"></i> Código C/C++ (Arduino)</span>
+                <span style="background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:800;font-family:'Fira Code',monospace;border:1px solid rgba(56,189,248,0.3);">exemplo.ino</span>
+            </div>
+            <code>${lesson.exemplo}</code>
+        </div>
         <div class="lesson-dica">${lesson.dica}</div>
         <button class="lesson-btn" onclick="closeLessonModal(); openTab('${lesson.jogo}');">${lesson.btntext}</button>
     `;
@@ -353,6 +364,7 @@ function updateHubProgress() {
     const loo = getLevels('loopmaker_levels');
     const jar = getLevels('jardim_levels');
     const ard = getLevels('arduino_levels');
+    const vars = getLevels('variaveis_levels');
 
     setBadge('badge-semaforo', sem, 5);
     setBadge('badge-tesouro', tes);
@@ -360,10 +372,11 @@ function updateHubProgress() {
     setBadge('badge-loopmaker', loo, 4);
     setBadge('badge-jardim', jar, 4);
     setBadge('badge-arduino', ard);
+    setBadge('badge-variaveis', vars, 8);
 
-    const totalStars = sem.length + tes.length + lab.length + loo.length + jar.length + ard.length;
+    const totalStars = sem.length + tes.length + lab.length + loo.length + jar.length + ard.length + vars.length;
     const countEl = document.getElementById('hub-star-count');
     const barEl = document.getElementById('hub-progress-bar');
-    if (countEl) countEl.innerText = `${totalStars} / 22 ⭐`;
-    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 22) * 100))}%`;
+    if (countEl) countEl.innerText = `${totalStars} / 30 ⭐`;
+    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 30) * 100))}%`;
 }

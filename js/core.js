@@ -121,6 +121,25 @@ function triggerConfetti(durationMs = 3000) {
 const currentAttemptsMap = {};
 let lastErrorAttemptKey = 'default';
 let lastErrorMaxAttempts = 3;
+let errorPatienceTimer = null;
+
+const encouragementMessages = [
+    {
+        title: "Não desista! Errar faz parte da jornada Maker! 🚀",
+        text: "Os maiores programadores e engenheiros de robótica do mundo testam e erram dezenas de vezes antes de ver tudo funcionar. Cada tentativa te deixa mais perto da solução! 💪✨",
+        extra: "Pense no que o computador está executando linha por linha antes de tentar de novo."
+    },
+    {
+        title: "Você é mais esperto que o robô! 🧠💡",
+        text: "Programar é como montar um quebra-cabeça: às vezes precisamos virar a peça de lado para ela se encaixar com perfeição. Respire fundo, você é totalmente capaz!",
+        extra: "Revise os comandos, os números e confira se cada instrução terminou certinha."
+    },
+    {
+        title: "Paciência e foco: o superpoder do desenvolvedor! 🦾✨",
+        text: "O robô só faz exatamente o que a gente ensina. Quando dá erro, é o computador pedindo que você dê instruções com um pouquinho mais de detalhe. Você está quase lá!",
+        extra: "Dê uma olhadinha no código com calma ou revise a dica da missão para clarear as ideias."
+    }
+];
 
 function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCode = '', attemptKey = 'default', maxAttempts = 3) {
     playSound('error');
@@ -133,11 +152,46 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
     lastErrorAttemptKey = attemptKey;
     lastErrorMaxAttempts = maxAttempts;
 
+    // Reseta temporizador anterior e oculta a caixa de incentivo
+    if (errorPatienceTimer) {
+        clearTimeout(errorPatienceTimer);
+        errorPatienceTimer = null;
+    }
+    const encEl = document.getElementById('error-splash-encouragement');
+    if (encEl) encEl.style.display = 'none';
+
+    // Inicia contagem de 5 segundos para exibir ajuda animada e incentivo ao aluno
+    errorPatienceTimer = setTimeout(() => {
+        const encBox = document.getElementById('error-splash-encouragement');
+        if (!encBox) return;
+
+        const msg = encouragementMessages[Math.floor(Math.random() * encouragementMessages.length)];
+        const titleEl = document.getElementById('error-splash-encouragement-title');
+        const textEl = document.getElementById('error-splash-encouragement-text');
+        const extraEl = document.getElementById('error-splash-encouragement-extra');
+
+        if (titleEl) titleEl.innerText = msg.title;
+        if (textEl) textEl.innerHTML = msg.text;
+        if (extraEl) {
+            if (hint) {
+                extraEl.innerHTML = `💡 <b>Super Dica para essa missão:</b> ${hint}`;
+            } else {
+                extraEl.innerHTML = `💡 <b>Super Dica:</b> ${msg.extra}`;
+            }
+        }
+
+        encBox.style.display = 'block';
+        playSound('step'); // Suave efeito sonoro indicando a chegada da ajuda
+    }, 5000);
+
     if (typeof if_updateSolutionButtonState === 'function') {
         if_updateSolutionButtonState();
     }
     if (typeof sem_updateSolutionButtonState === 'function') {
         sem_updateSolutionButtonState();
+    }
+    if (typeof vars_updateSolutionButtonState === 'function') {
+        vars_updateSolutionButtonState();
     }
 
     document.getElementById('error-splash-icon').innerText = icon;
@@ -206,6 +260,13 @@ function toggleErrorSolution() {
 }
 
 function closeErrorSplash() {
+    if (errorPatienceTimer) {
+        clearTimeout(errorPatienceTimer);
+        errorPatienceTimer = null;
+    }
+    const encEl = document.getElementById('error-splash-encouragement');
+    if (encEl) encEl.style.display = 'none';
+
     const modal = document.getElementById('error-splash-modal');
     if(modal) {
         modal.style.opacity = '0';
@@ -217,6 +278,9 @@ function closeErrorSplash() {
     if (typeof sem_updateSolutionButtonState === 'function') {
         sem_updateSolutionButtonState();
     }
+    if (typeof vars_updateSolutionButtonState === 'function') {
+        vars_updateSolutionButtonState();
+    }
 }
 
 // ================= CERTIFICADO MAKER =================
@@ -225,9 +289,10 @@ function showCertificateModal() {
     if(!modal) return;
     const totalStars = getLevels('semaforo_levels').length + getLevels('tesouro_levels').length + 
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
-                       getLevels('jardim_levels').length + getLevels('arduino_levels').length;
+                       getLevels('jardim_levels').length + getLevels('arduino_levels').length +
+                       getLevels('variaveis_levels').length;
     const detail = document.getElementById('cert_stars_detail');
-    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 22 Estrelas Maker!`;
+    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 30 Estrelas Maker!`;
     modal.style.display = 'flex';
 }
 
@@ -258,6 +323,7 @@ function openTab(tabId) {
     if (tabId === 'tab-loopmaker' && !document.getElementById('loopmaker-loaded')) { if(typeof loadLoopmaker==='function') loadLoopmaker(); }
     if (tabId === 'tab-jardim' && !document.getElementById('jardim-loaded')) { if(typeof loadJardim==='function') loadJardim(); }
     if (tabId === 'tab-arduino' && !document.getElementById('arduino-loaded')) { if(typeof loadArduino==='function') loadArduino(); }
+    if (tabId === 'tab-variaveis' && !document.getElementById('variaveis-loaded')) { if(typeof loadVariaveis==='function') loadVariaveis(); }
     window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -267,7 +333,7 @@ function openTrail() {
 
 function resetAllProgress() {
     if (confirm('Tem certeza que deseja zerar todo o seu progresso?')) {
-        ['semaforo_levels','tesouro_levels','labmaker_levels','loopmaker_levels','jardim_levels','arduino_levels'].forEach(k => localStorage.removeItem(k));
+        ['semaforo_levels','tesouro_levels','labmaker_levels','loopmaker_levels','jardim_levels','arduino_levels','variaveis_levels'].forEach(k => localStorage.removeItem(k));
         alert('Progresso zerado! Vamos começar de novo!');
         if(typeof updateTrail==='function') updateTrail();
         if(typeof updateHubProgress==='function') updateHubProgress();

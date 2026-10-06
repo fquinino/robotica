@@ -119,5 +119,99 @@ h1 {
 .lesson-modal .lesson-btn { background:linear-gradient(135deg,#10B981,#059669); border:none; color:white; padding:14px 30px; border-radius:50px; font-weight:900; cursor:pointer; font-size:1.1rem; border-bottom:5px solid #047857; margin-top:14px; width:100%; transition:0.15s; }
 .lesson-modal .lesson-btn:active { transform:translateY(4px); border-bottom-width:1px; }
 .lesson-modal .lesson-close { position:absolute; top:14px; right:18px; background:none; border:none; color:#64748B; font-size:1.4rem; cursor:pointer; }
-.lesson-exemplo { background:#0F172A; border-radius:12px; padding:10px 14px; margin:8px 0; font-family:'Courier New',monospace; font-size:0.82rem; color:#E2E8F0; text-align:left; white-space:pre-wrap; }
+.lesson-exemplo { background:#0B0F19; border:1px solid #334155; border-radius:14px; padding:12px 16px; margin:10px 0; font-family:'Fira Code','Courier New',monospace; font-size:0.86rem; color:#E2E8F0; text-align:left; white-space:pre-wrap; line-height:1.65; box-shadow:inset 0 0 20px rgba(0,0,0,0.5); }
+.lesson-exemplo code { font-family:'Fira Code','Courier New',monospace; }
+.c-kw { color:#A78BFA; font-weight:bold; }
+.c-tp { color:#F472B6; font-weight:bold; }
+.c-var { color:#93C5FD; font-weight:bold; }
+.c-num { color:#FBBF24; font-weight:bold; }
+.c-str { color:#34D399; font-weight:bold; }
+.c-bool { color:#10B981; font-weight:bold; }
+.c-fn { color:#38BDF8; font-weight:bold; }
+.c-cst { color:#FBBF24; font-weight:bold; }
+.c-cm { color:#64748B; font-style:italic; }
+.c-op { color:#E2E8F0; font-weight:bold; }
 .lesson-dica { background:rgba(251,191,36,0.1); border:1px dashed #FBBF24; border-radius:12px; padding:10px 14px; margin:8px 0; color:#FBBF24; font-size:0.85rem; font-weight:700; }
+
+/* SISTEMA DE DICAS ANIMADAS & INCENTIVO APÓS 5 SEGUNDOS NO MODAL DE ERRO */
+.error-splash-encouragement {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(56, 189, 248, 0.16));
+    border: 2px solid #F59E0B;
+    border-radius: 18px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    text-align: left;
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.35);
+    animation: encouragementIn 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes encouragementIn {
+    0% {
+        opacity: 0;
+        transform: translateY(16px) scale(0.94);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.encouragement-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.encouragement-icon {
+    font-size: 1.5rem;
+    animation: pulseGlow 1.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); filter: drop-shadow(0 0 4px #F59E0B); }
+    100% { transform: scale(1.22); filter: drop-shadow(0 0 12px #FBBF24); }
+}
+
+.encouragement-badge {
+    background: rgba(245, 158, 11, 0.25);
+    color: #FBBF24;
+    font-size: 0.78rem;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 12px;
+    border: 1px solid #F59E0B;
+    letter-spacing: 0.5px;
+}
+
+.encouragement-title {
+    color: #FDE68A;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.encouragement-text {
+    color: #E2E8F0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.encouragement-extra {
+    background: rgba(15, 23, 42, 0.75);
+    border-left: 3px solid #38BDF8;
+    padding: 8px 12px;
+    border-radius: 0 8px 8px 0;
+    color: #7DD3FC;
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+@keyframes sonarPulse {
+    0% { transform: scale(0.9); opacity: 0.3; }
+    50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 8px #38BDF8); }
+    100% { transform: scale(0.9); opacity: 0.3; }
+}
+
