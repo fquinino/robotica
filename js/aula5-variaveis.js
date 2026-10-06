@@ -476,7 +476,7 @@ function loadVariaveis() {
                     </div>
                     <div style="display:flex;flex-direction:column;gap:8px;">
                         <div style="background:#1E293B;padding:10px 14px;border-radius:12px;border:1px solid #EF4444;font-size:0.86rem;">
-                            <b style="color:#EF4444;">1. Erro de Tipo (Misturar Alhos com Bugalhos):</b> Tentar colocar texto numa variável <code>int</code>: <code>int idade = "dez";</code> ❌ O compilador dá bronca na hora!
+                            <b style="color:#EF4444;">1. Erro de Tipo (Guardar na Caixa Errada):</b> Tentar colocar texto numa variável <code>int</code> de número inteiro: <code>int idade = "dez";</code> ❌ O compilador dá erro na hora! O correto é <code>int idade = 10;</code> ✅
                         </div>
                         <div style="background:#1E293B;padding:10px 14px;border-radius:12px;border:1px solid #F59E0B;font-size:0.86rem;">
                             <b style="color:#FBBF24;">2. Esquecer as Aspas no String:</b> <code>String nome = Robo;</code> ❌ Sem as aspas, o computador acha que "Robo" é outra variável! O certo é <code>String nome = "Robo";</code> ✅
