@@ -546,6 +546,10 @@
         if(l2_isExecuting) return;
         l2_currentLevel = lvl;
 
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.startTimer('loopmaker', lvl);
+        }
+
         document.querySelectorAll('.loop-level-btn').forEach(btn => {
             btn.classList.remove('active');
             if(parseInt(btn.dataset.level) === lvl) btn.classList.add('active');
@@ -1066,11 +1070,18 @@
     }
 
     function l2_showWinModal(icon, title, text) {
+        let speedrunHTML = '';
+        if (window.makerLeaderboard) {
+            const elapsed = window.makerLeaderboard.stopTimer('loopmaker', l2_currentLevel);
+            const res = window.makerLeaderboard.recordCompletion('loopmaker', l2_currentLevel, elapsed);
+            speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('loopmaker', l2_currentLevel, res);
+        }
         document.getElementById('l_win_icon').innerText = icon;
         document.getElementById('l_win_title').innerText = title;
-        document.getElementById('l_win_text').innerText = text;
+        document.getElementById('l_win_text').innerHTML = text + speedrunHTML;
         document.getElementById('l_modal_win').classList.add('active');
     }
+    window.l2_switchLevel = l2_switchLevel;
 
     function l2_nextStep() {
         document.getElementById('l_modal_win').classList.remove('active');

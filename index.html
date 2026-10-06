@@ -16,6 +16,7 @@
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-trail">📚 Aulas</button>
         <button class="tab-btn" data-tab="tab-hub">🏆 Conquistas</button>
+        <button class="tab-btn" data-tab="tab-leaderboard"><i class="fa-solid fa-bolt" style="color:#FBBF24;"></i> ⚡ Recordes & Speedrun</button>
     </div>
 
     <!-- TRILHA DE APRENDIZAGEM -->
@@ -100,6 +101,95 @@
                 <h3 style="color:white;font-family:'Fredoka One';">Variáveis & Tipos</h3>
                 <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Caixas de memória: int, float, String, bool e revisão de Loops e If-Else</p>
                 <div id="badge-variaveis" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F59E0B;font-size:0.9rem;">0/8 Níveis ⭐</div>
+            </div>
+            <div class="hub-card" onclick="openTab('tab-leaderboard')" style="background:linear-gradient(135deg,#1E1B4B,#1E293B);padding:22px;border-radius:24px;border:2px solid #F59E0B;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
+                <i class="fa-solid fa-ranking-star" style="font-size:3rem;color:#FBBF24;margin-bottom:10px;"></i>
+                <h3 style="color:#FBBF24;font-family:'Fredoka One';">Placar de Recordes</h3>
+                <p style="color:#CBD5E1;font-size:0.9rem;margin:6px 0 12px;">Menores tempos de conclusão por fase — Desafie seus colegas no Speedrun!</p>
+                <div id="badge-hub-leaderboard" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#FBBF24;font-size:0.9rem;">⚡ 30 Fases Speedrun</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PLACAR DE RECORDES & SPEEDRUN (LEADERBOARD) -->
+    <div class="game-panel" id="tab-leaderboard">
+        <div class="lb-hero-banner">
+            <h2 class="lb-hero-title"><i class="fa-solid fa-bolt" style="color:#FBBF24;"></i> ⚡ Placar dos Campeões Maker</h2>
+            <p class="lb-hero-subtitle">
+                Rastreamento do <b>Menor Tempo de Conclusão</b> em cada fase! Programe com agilidade, teste sua lógica e tente conquistar o 1º Lugar em todas as 30 missões da plataforma!
+            </p>
+
+            <div class="lb-player-bar">
+                <span style="font-weight:900;color:#CBD5E1;font-size:0.95rem;"><i class="fa-solid fa-user-astronaut" style="color:#38BDF8;"></i> Seu Codinome Maker:</span>
+                <input type="text" id="leaderboard_player_input" class="lb-player-input" placeholder="Seu apelido..." onchange="makerLeaderboard.setPlayerName(this.value)" oninput="makerLeaderboard.setPlayerName(this.value)" />
+                <button type="button" onclick="makerLeaderboard.resetLeaderboard()" style="background:#334155;border:1px solid #475569;color:#94A3B8;padding:6px 12px;border-radius:8px;font-size:0.8rem;font-weight:800;cursor:pointer;" title="Zerar recordes da turma"><i class="fa-solid fa-rotate-left"></i> Zerar Placar</button>
+            </div>
+        </div>
+
+        <!-- KPIs GERAIS DE VELOCIDADE -->
+        <div class="lb-stats-grid">
+            <div class="lb-stat-box highlight">
+                <div class="lb-stat-label">👑 Seus Recordes (1º Lugar)</div>
+                <div class="lb-stat-val" id="lb_stat_records">0 de 30</div>
+            </div>
+            <div class="lb-stat-box">
+                <div class="lb-stat-label">⏱️ Tempo Total Speedrun</div>
+                <div class="lb-stat-val" id="lb_stat_total_time" style="color:#38BDF8;">--:--.-</div>
+            </div>
+            <div class="lb-stat-box">
+                <div class="lb-stat-label">⭐ Níveis Registrados</div>
+                <div class="lb-stat-val" id="lb_stat_completed" style="color:#34D399;">30 / 30 Fases</div>
+            </div>
+        </div>
+
+        <!-- FILTROS POR AULA -->
+        <div class="lb-filters-bar">
+            <button class="lb-filter-btn active" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('all');">🌟 Todas as Aulas (30)</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('my_records');" style="color:#FBBF24;border-color:#F59E0B;">👑 Seus Recordes</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('tesouro');">🤖 Aula 1: Tesouro</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('loopmaker');">🔄 Aula 2: Loops</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('jardim');">🌱 Aula 3: IF/ELSE</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('semaforo');">🚦 Aula 4: Semáforo</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('variaveis');">🧮 Aula 5: Variáveis</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('labmaker');">⚡ Aula 6/7: Bancada</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('arduino');">🔌 Aula 8: Arduino</button>
+        </div>
+
+        <!-- CONTAINER DOS CARDS DE NÍVEIS -->
+        <div class="lb-levels-grid" id="leaderboard_content_area"></div>
+
+        <!-- CONQUISTAS SPEEDRUN -->
+        <div class="lb-achieve-banner">
+            <h3 class="lb-achieve-title"><i class="fa-solid fa-medal" style="color:#FBBF24;"></i> Emblemas de Velocidade Speedrun</h3>
+            <div class="lb-achieve-grid" id="lb_achieve_container">
+                <div class="lb-achieve-item">
+                    <span class="lb-achieve-icon">⚡</span>
+                    <div>
+                        <div class="lb-achieve-name">Raio Maker</div>
+                        <div class="lb-achieve-desc">Conclua qualquer nível em menos de 8 segundos!</div>
+                    </div>
+                </div>
+                <div class="lb-achieve-item">
+                    <span class="lb-achieve-icon">🏎️</span>
+                    <div>
+                        <div class="lb-achieve-name">Piloto Ágil</div>
+                        <div class="lb-achieve-desc">Conquiste o 1º lugar em 5 missões diferentes.</div>
+                    </div>
+                </div>
+                <div class="lb-achieve-item">
+                    <span class="lb-achieve-icon">🪐</span>
+                    <div>
+                        <div class="lb-achieve-name">Velocidade Marciana</div>
+                        <div class="lb-achieve-desc">Complete os 8 níveis de Variáveis no modo Speedrun.</div>
+                    </div>
+                </div>
+                <div class="lb-achieve-item">
+                    <span class="lb-achieve-icon">👑</span>
+                    <div>
+                        <div class="lb-achieve-name">Lenda do Laboratório</div>
+                        <div class="lb-achieve-desc">Marque seu nome no topo de todos os módulos Maker!</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -222,6 +312,7 @@
 <!-- ================= MÓDULOS DE SCRIPTS DA SPA ================= -->
 <script src="js/core.js"></script>
 <script src="js/trail.js"></script>
+<script src="js/leaderboard.js"></script>
 <script src="js/aula1-tesouro.js"></script>
 <script src="js/aula2-loopmaker.js"></script>
 <script src="js/aula3-ifelse.js"></script>

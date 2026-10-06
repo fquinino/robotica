@@ -213,6 +213,12 @@
                         <div id="ard-dyn-status" style="padding:10px;border-radius:10px;font-weight:800;font-size:0.9rem;background:#064E3B;color:#34D399;">
                             ✅ Circuito Operando em Faixa Segura!
                         </div>
+
+                        <div style="margin-top:16px;text-align:center;">
+                            <button type="button" onclick="ard_completeLevel(1, 'Lei de Ohm Dominada! ⚡', 'Você dominou o cálculo da Lei de Ohm e ajustou a corrente com perfeição no Tubo de Elétrons!')" style="background:linear-gradient(135deg, #10B981, #059669);border:none;color:white;font-weight:900;font-size:0.95rem;padding:12px 24px;border-radius:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(16,185,129,0.4);">
+                                <i class="fa-solid fa-flag-checkered"></i> Concluir Nível 1: Lei de Ohm (Speedrun) ⭐
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -302,6 +308,12 @@
                                     <div class="ard-fan-blade" id="ard-fan-b2"></div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div style="margin-top:16px;text-align:center;">
+                            <button type="button" onclick="ard_completeLevel(2, 'Mestre da Modulação PWM! 🌊', 'Você explorou a modulação por largura de pulso, o osciloscópio e o motor DC!')" style="background:linear-gradient(135deg, #38BDF8, #0284C7);border:none;color:#0F172A;font-weight:900;font-size:0.95rem;padding:12px 24px;border-radius:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(56,189,248,0.4);">
+                                <i class="fa-solid fa-flag-checkered"></i> Concluir Nível 2: Modulação PWM (Speedrun) ⭐
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -709,22 +721,31 @@
         const feedbackEl = document.getElementById('ard-quiz-feedback');
 
         if(ard_quizIndex >= ard_quizData.length) {
-            document.getElementById('ard-quiz-area').innerHTML = `
-                <div style="text-align:center;padding:20px;">
-                    <div style="font-size:3.5rem;">🎉🏆⭐</div>
-                    <h2 style="color:#10B981;font-family:'Fredoka One';">Parabéns, Maker!</h2>
-                    <p style="color:#CBD5E1;font-size:1.05rem;">Você acertou todas as questões sobre Lei de Ohm, Grandezas Elétricas e PWM!</p>
-                    <div style="background:#0F172A;display:inline-block;padding:10px 20px;border-radius:14px;border:2px solid #10B981;color:#FCD34D;font-weight:900;font-size:1.1rem;margin-top:10px;">
-                        +3 Estrelas Conquistadas na Oficina! ⭐⭐⭐
-                    </div>
-                </div>
-            `;
+            let speedrunHTML = '';
+            if (window.makerLeaderboard) {
+                const elapsed = window.makerLeaderboard.stopTimer('arduino', 3);
+                const res = window.makerLeaderboard.recordCompletion('arduino', 3, elapsed);
+                speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('arduino', 3, res);
+            }
             let saved = JSON.parse(localStorage.getItem('arduino_levels') || '[]');
             if(!saved.includes(1)) saved.push(1);
             if(!saved.includes(2)) saved.push(2);
             if(!saved.includes(3)) saved.push(3);
             localStorage.setItem('arduino_levels', JSON.stringify(saved));
             if(typeof updateHubProgress === 'function') updateHubProgress();
+            if(typeof updateTrail === 'function') updateTrail();
+
+            document.getElementById('ard-quiz-area').innerHTML = `
+                <div style="text-align:center;padding:20px;">
+                    <div style="font-size:3.5rem;">🎉🏆⭐</div>
+                    <h2 style="color:#10B981;font-family:'Fredoka One';">Parabéns, Maker!</h2>
+                    <p style="color:#CBD5E1;font-size:1.05rem;">Você acertou todas as questões sobre Lei de Ohm, Grandezas Elétricas e PWM!</p>
+                    <div style="background:#0F172A;display:inline-block;padding:10px 20px;border-radius:14px;border:2px solid #10B981;color:#FCD34D;font-weight:900;font-size:1.1rem;margin:10px 0;">
+                        +3 Estrelas Conquistadas na Oficina! ⭐⭐⭐
+                    </div>
+                    ${speedrunHTML}
+                </div>
+            `;
             return;
         }
 
@@ -764,6 +785,50 @@
             });
         }
     }
+
+    function ard_showModal(icon, title, text, extraHTML) {
+        const iconEl = document.getElementById('ard-mIcon');
+        const titleEl = document.getElementById('ard-mTitle');
+        const textEl = document.getElementById('ard-mText');
+        const modalEl = document.getElementById('ard-modal');
+        if (iconEl) iconEl.innerText = icon;
+        if (titleEl) titleEl.innerText = title;
+        if (textEl) textEl.innerHTML = text + (extraHTML || '');
+        if (modalEl) modalEl.classList.add('active');
+    }
+
+    function ard_closeModal() {
+        const modalEl = document.getElementById('ard-modal');
+        if (modalEl) modalEl.classList.remove('active');
+    }
+
+    function ard_completeLevel(levelNum, title, msg) {
+        let saved = JSON.parse(localStorage.getItem('arduino_levels') || '[]');
+        if (!saved.includes(levelNum)) saved.push(levelNum);
+        localStorage.setItem('arduino_levels', JSON.stringify(saved));
+        if (typeof updateHubProgress === 'function') updateHubProgress();
+        if (typeof updateTrail === 'function') updateTrail();
+
+        let speedrunHTML = '';
+        if (window.makerLeaderboard) {
+            const elapsed = window.makerLeaderboard.stopTimer('arduino', levelNum);
+            const res = window.makerLeaderboard.recordCompletion('arduino', levelNum, elapsed);
+            speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('arduino', levelNum, res);
+        }
+        ard_showModal('🏆', title, msg, speedrunHTML);
+    }
+
+    function ard_switchSubTab(tabId) {
+        const tabBtn = document.querySelector(`.ard-wrapper .tab[data-tab="${tabId}"]`);
+        if (tabBtn) {
+            tabBtn.click();
+        }
+    }
+
+    window.ard_showModal = ard_showModal;
+    window.ard_closeModal = ard_closeModal;
+    window.ard_completeLevel = ard_completeLevel;
+    window.ard_switchSubTab = ard_switchSubTab;
 
     // ================= INICIAR (primeira aba já carregada) =================
     // Carrega o primeiro jogo (hub já está visível)

@@ -1498,8 +1498,33 @@
         t_running=false;
     }
 
-    function t_showModal(icon,title,text){ document.getElementById('t_mIcon').innerText=icon; document.getElementById('t_mTitle').innerText=title; document.getElementById('t_mText').innerText=text; document.getElementById('t_modal').classList.add('active'); }
+    function t_showModal(icon,title,text){ 
+        let speedrunHTML = '';
+        if (window.makerLeaderboard) {
+            const elapsed = window.makerLeaderboard.stopTimer('tesouro', t_level);
+            const res = window.makerLeaderboard.recordCompletion('tesouro', t_level, elapsed);
+            speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('tesouro', t_level, res);
+        }
+        document.getElementById('t_mIcon').innerText=icon; 
+        document.getElementById('t_mTitle').innerText=title; 
+        document.getElementById('t_mText').innerHTML=text + speedrunHTML; 
+        document.getElementById('t_modal').classList.add('active'); 
+    }
     function t_closeModal(){ document.getElementById('t_modal').classList.remove('active'); if(t_autoAdvTimer){clearTimeout(t_autoAdvTimer);t_autoAdvTimer=null;} t_clearCode(); }
+    
+    function t_switchLevel(lvl) {
+        document.querySelectorAll('.tesouro-wrapper .level-btn').forEach(b=>b.classList.remove('active'));
+        const targetBtn = document.querySelector(`.tesouro-wrapper .level-btn[data-level="${lvl}"]`);
+        if(targetBtn) targetBtn.classList.add('active');
+        t_level = lvl;
+        t_errors = 0;
+        t_updateErrorCounter();
+        t_initLevel();
+        t_clearCode();
+        t_switchSubtab('jogar');
+        if(window.makerLeaderboard) window.makerLeaderboard.startTimer('tesouro', lvl);
+    }
+    window.t_switchLevel = t_switchLevel;
     
     function t_spawnConfetti() {
         const emojis = ['🎉','🌟','✨','💫','🎊','⭐','🔶','💛','🎯','🏆'];

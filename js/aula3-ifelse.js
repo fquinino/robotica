@@ -871,6 +871,10 @@ function if_switchLevel(level) {
     if (if_isRunning) return;
     if_currentLevel = level;
     
+    if (window.makerLeaderboard) {
+        window.makerLeaderboard.startTimer('jardim', level);
+    }
+
     // Atualiza botões da barra
     for(let i=1; i<=4; i++) {
         const b = document.getElementById('if_btn_lvl_' + i);
@@ -2018,9 +2022,15 @@ function if_saveLevelDone(lvl) {
 }
 
 function if_showWinModal(icon, title, text) {
+    let speedrunHTML = '';
+    if (window.makerLeaderboard) {
+        const elapsed = window.makerLeaderboard.stopTimer('jardim', if_currentLevel);
+        const res = window.makerLeaderboard.recordCompletion('jardim', if_currentLevel, elapsed);
+        speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('jardim', if_currentLevel, res);
+    }
     document.getElementById('if_modal_icon').innerText = icon;
     document.getElementById('if_modal_title').innerText = title;
-    document.getElementById('if_modal_text').innerText = text;
+    document.getElementById('if_modal_text').innerHTML = text + speedrunHTML;
     document.getElementById('if_win_modal')?.classList.add('active');
 }
 

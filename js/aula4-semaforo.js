@@ -1068,6 +1068,10 @@ function sem_switchLevel(lvl) {
     if (sem_running) return;
     sem_level = lvl;
 
+    if (window.makerLeaderboard) {
+        window.makerLeaderboard.startTimer('semaforo', lvl);
+    }
+
     for (let i = 1; i <= 5; i++) {
         document.getElementById(`sem_btn_lvl_${i}`)?.classList.toggle('active', i === lvl);
     }
@@ -2219,12 +2223,23 @@ function sem_showWinModal() {
     const textEl = document.getElementById('sem_modal_text');
 
     if (titleEl) titleEl.innerText = `Nível ${sem_level} Concluído! 🏆`;
+    let winMsg = '';
     if (textEl) {
-        if (sem_level === 1) textEl.innerText = 'Você programou a parada perfeita do Carro Vermelho 🚗 na linha branca do Semáforo 1!';
-        else if (sem_level === 2) textEl.innerText = 'Excelente! O Semáforo 1 (Avenida) e o Semáforo 2 (Rua Transversal) alternaram com segurança total sem nenhuma colisão!';
-        else if (sem_level === 3) textEl.innerText = 'Perfeito! O Pedestre 🚶 atravessou a faixa zebrada em segurança total enquanto todos os carros aguardaram!';
-        else if (sem_level === 4) textEl.innerText = 'Você domina completamente a lógica de Semáforos e Temporização em Arduino C++! Excelente trabalho na Mini-IDE!';
-        else textEl.innerText = 'Extraordinário! Você coordenou os 4 fluxos simultâneos em mão dupla da Grande Metrópole Maker! Carros paralelos avançaram juntos e o trânsito fluiu em sincronia perfeita! 🚀🌆';
+        if (sem_level === 1) winMsg = 'Você programou a parada perfeita do Carro Vermelho 🚗 na linha branca do Semáforo 1!';
+        else if (sem_level === 2) winMsg = 'Excelente! O Semáforo 1 (Avenida) e o Semáforo 2 (Rua Transversal) alternaram com segurança total sem nenhuma colisão!';
+        else if (sem_level === 3) winMsg = 'Perfeito! O Pedestre 🚶 atravessou a faixa zebrada em segurança total enquanto todos os carros aguardaram!';
+        else if (sem_level === 4) winMsg = 'Você domina completamente a lógica de Semáforos e Temporização em Arduino C++! Excelente trabalho na Mini-IDE!';
+        else winMsg = 'Extraordinário! Você coordenou os 4 fluxos simultâneos em mão dupla da Grande Metrópole Maker! Carros paralelos avançaram juntos e o trânsito fluiu em sincronia perfeita! 🚀🌆';
+
+        // Rastreamento de tempo do Speedrun
+        let speedrunHTML = '';
+        if (window.makerLeaderboard) {
+            const elapsed = window.makerLeaderboard.stopTimer('semaforo', sem_level);
+            const res = window.makerLeaderboard.recordCompletion('semaforo', sem_level, elapsed);
+            speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('semaforo', sem_level, res);
+        }
+
+        textEl.innerHTML = winMsg + speedrunHTML;
     }
 
     modal.classList.add('active');

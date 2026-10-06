@@ -1005,12 +1005,20 @@
     }
 
     function lab_completeMission(level, title, text) {
+        let speedrunHTML = '';
+        if (window.makerLeaderboard) {
+            const elapsed = window.makerLeaderboard.stopTimer('labmaker', level);
+            const res = window.makerLeaderboard.recordCompletion('labmaker', level, elapsed);
+            speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('labmaker', level, res);
+        }
         lab_activeMission = null;
         let saved = JSON.parse(localStorage.getItem('labmaker_levels')||'[]');
         if(!saved.includes(level)) saved.push(level);
         localStorage.setItem('labmaker_levels', JSON.stringify(saved));
         lab_updateMissionBadges();
-        lab_showModal('🏆', title, text);
+        if(typeof updateHubProgress === 'function') updateHubProgress();
+        if(typeof updateTrail === 'function') updateTrail();
+        lab_showModal('🏆', title, text + speedrunHTML);
     }
 
     function lab_updateMissionBadges() {
@@ -1029,6 +1037,9 @@
         lab_activeMission = level;
         lab_clearBoard();
         lab_switchSubTab('bancada');
+        if (window.makerLeaderboard) {
+            window.makerLeaderboard.startTimer('labmaker', level);
+        }
         if(level === 1) {
             lab_showModal('🎯','Missão 1 Iniciada!','Conecte +5V ao barramento vermelho, GND ao azul, encaixe 1 Resistor de 220Ω e 1 LED. Ligue a ENERGIA para vencer!');
         } else if(level === 2) {
@@ -1037,6 +1048,7 @@
             lab_showModal('🎯','Missão 3 Iniciada!','Monte 3 LEDs (Vermelho, Amarelo e Verde) com 3 Resistores de 220Ω na protoboard!');
         }
     }
+    window.lab_startMission = lab_startMission;
 
     function lab_loadPreset(preset) {
         lab_clearBoard();
@@ -1075,7 +1087,7 @@
     function lab_showModal(icon, title, text) {
         document.getElementById('lab_mIcon').innerText = icon;
         document.getElementById('lab_mTitle').innerText = title;
-        document.getElementById('lab_mText').innerText = text;
+        document.getElementById('lab_mText').innerHTML = text;
         document.getElementById('lab_modal').classList.add('active');
     }
 

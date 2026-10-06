@@ -339,16 +339,67 @@ function openTab(tabId) {
 
     if (tabId === 'tab-trail') { if(typeof updateTrail==='function') updateTrail(); return; }
     if (tabId === 'tab-hub') { if(typeof updateHubProgress==='function') updateHubProgress(); return; }
-    if (tabId === 'tab-semaforo' && !document.getElementById('semaforo-loaded')) { if(typeof loadSemaforo==='function') loadSemaforo(); }
-    if (tabId === 'tab-tesouro' && !document.getElementById('tesouro-loaded')) { if(typeof loadTesouro==='function') loadTesouro(); }
+    if (tabId === 'tab-leaderboard') {
+        if(window.makerLeaderboard && typeof window.makerLeaderboard.updateLeaderboardUI === 'function') {
+            window.makerLeaderboard.updateLeaderboardUI();
+        }
+        return;
+    }
+    if (tabId === 'tab-semaforo') {
+        if(!document.getElementById('semaforo-loaded') && typeof loadSemaforo==='function') loadSemaforo();
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.ensureHUD('semaforo', '#semaforo-container');
+            const lvl = (typeof sem_level !== 'undefined') ? sem_level : 1;
+            window.makerLeaderboard.startTimer('semaforo', lvl);
+        }
+    }
+    if (tabId === 'tab-tesouro') {
+        if(!document.getElementById('tesouro-loaded') && typeof loadTesouro==='function') loadTesouro();
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.ensureHUD('tesouro', '#tesouro-container');
+            const lvl = (typeof t_level !== 'undefined') ? t_level : 1;
+            window.makerLeaderboard.startTimer('tesouro', lvl);
+        }
+    }
     if (tabId === 'tab-labmaker') {
         if(!document.getElementById('labmaker-loaded')) { if(typeof loadLabmaker==='function') loadLabmaker(); }
         else setTimeout(() => { if(typeof lab_renderComponents==='function') lab_renderComponents(); }, 60);
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.ensureHUD('labmaker', '#labmaker-container');
+            window.makerLeaderboard.startTimer('labmaker', 1);
+        }
     }
-    if (tabId === 'tab-loopmaker' && !document.getElementById('loopmaker-loaded')) { if(typeof loadLoopmaker==='function') loadLoopmaker(); }
-    if (tabId === 'tab-jardim' && !document.getElementById('jardim-loaded')) { if(typeof loadJardim==='function') loadJardim(); }
-    if (tabId === 'tab-arduino' && !document.getElementById('arduino-loaded')) { if(typeof loadArduino==='function') loadArduino(); }
-    if (tabId === 'tab-variaveis' && !document.getElementById('variaveis-loaded')) { if(typeof loadVariaveis==='function') loadVariaveis(); }
+    if (tabId === 'tab-loopmaker') {
+        if(!document.getElementById('loopmaker-loaded') && typeof loadLoopmaker==='function') loadLoopmaker();
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.ensureHUD('loopmaker', '#loopmaker-container');
+            const lvl = (typeof l2_currentLevel !== 'undefined') ? l2_currentLevel : 1;
+            window.makerLeaderboard.startTimer('loopmaker', lvl);
+        }
+    }
+    if (tabId === 'tab-jardim') {
+        if(!document.getElementById('jardim-loaded') && typeof loadJardim==='function') loadJardim();
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.ensureHUD('jardim', '#jardim-container');
+            const lvl = (typeof if_currentLevel !== 'undefined') ? if_currentLevel : 1;
+            window.makerLeaderboard.startTimer('jardim', lvl);
+        }
+    }
+    if (tabId === 'tab-arduino') {
+        if(!document.getElementById('arduino-loaded') && typeof loadArduino==='function') loadArduino();
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.ensureHUD('arduino', '#arduino-container');
+            window.makerLeaderboard.startTimer('arduino', 1);
+        }
+    }
+    if (tabId === 'tab-variaveis') {
+        if(!document.getElementById('variaveis-loaded') && typeof loadVariaveis==='function') loadVariaveis();
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.ensureHUD('variaveis', '#variaveis-container');
+            const lvl = (typeof vars_level !== 'undefined') ? vars_level : 1;
+            window.makerLeaderboard.startTimer('variaveis', lvl);
+        }
+    }
     window.scrollTo({top:0,behavior:'smooth'});
 }
 

@@ -215,3 +215,581 @@ h1 {
     100% { transform: scale(0.9); opacity: 0.3; }
 }
 
+/* ==========================================================================
+   PLACAR DE RECORDES (LEADERBOARD) & SPEEDRUN STYLES
+   ========================================================================== */
+
+/* BARRA HUD DE CRONÔMETRO DENTRO DOS JOGOS */
+.maker-hud-timer-bar {
+    background: linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+    border: 2px solid #38BDF8;
+    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
+    border-radius: 14px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    animation: fadeIn 0.3s ease;
+}
+
+.hud-timer-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.88rem;
+    color: #CBD5E1;
+}
+
+.hud-timer-badge b {
+    color: #38BDF8;
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.hud-record-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: #94A3B8;
+}
+
+.hud-record-badge b {
+    color: #FBBF24;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.92rem;
+}
+
+.hud-btn-leaderboard {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    border: none;
+    color: #0F172A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 900;
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.15s;
+}
+
+.hud-btn-leaderboard:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+/* CARD DE SPEEDRUN NOS MODAIS DE VITÓRIA */
+.maker-win-speedrun-card {
+    background: #0B0F19;
+    border: 2px solid #38BDF8;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    text-align: left;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.maker-win-speedrun-card.is-record {
+    border-color: #F59E0B;
+    background: linear-gradient(180deg, #1E1B4B, #0B0F19);
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+}
+
+.m-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.m-card-title {
+    font-size: 0.95rem;
+    color: #CBD5E1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.m-record-pill {
+    background: linear-gradient(135deg, #F59E0B, #B45309);
+    color: white;
+    font-weight: 900;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    width: fit-content;
+}
+
+.m-best-pill {
+    font-size: 0.82rem;
+    color: #94A3B8;
+    background: #1E293B;
+    padding: 4px 10px;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.m-best-pill b {
+    color: #FBBF24;
+}
+
+.m-card-actions {
+    margin-top: 10px;
+}
+
+.m-btn-leaderboard {
+    background: #1E293B;
+    border: 1px solid #38BDF8;
+    color: #38BDF8;
+    font-weight: 800;
+    font-size: 0.8rem;
+    padding: 7px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.15s;
+    width: 100%;
+    justify-content: center;
+}
+
+.m-btn-leaderboard:hover {
+    background: #38BDF8;
+    color: #0F172A;
+}
+
+/* ABA GERAL DO LEADERBOARD (TAB-LEADERBOARD) */
+.lb-hero-banner {
+    background: linear-gradient(135deg, #1E1B4B, #0F172A);
+    border: 2px solid #8B5CF6;
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.lb-hero-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #FBBF24;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.lb-hero-subtitle {
+    color: #CBD5E1;
+    font-size: 0.95rem;
+    max-width: 650px;
+    margin: 0 auto 18px;
+    line-height: 1.5;
+}
+
+.lb-player-bar {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 580px;
+    margin: 0 auto;
+}
+
+.lb-player-input {
+    background: #030712;
+    border: 2px solid #38BDF8;
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 6px 14px;
+    border-radius: 10px;
+    outline: none;
+    text-align: center;
+    width: 200px;
+}
+
+.lb-player-input:focus {
+    border-color: #F59E0B;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+/* KPI CARDS */
+.lb-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.lb-stat-box {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 18px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.lb-stat-box.highlight {
+    border-color: #F59E0B;
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.1), #1E293B);
+}
+
+.lb-stat-val {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7rem;
+    color: #FBBF24;
+    margin: 4px 0;
+}
+
+.lb-stat-label {
+    color: #94A3B8;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* FILTROS POR AULA */
+.lb-filters-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+
+.lb-filter-btn {
+    background: #1E293B;
+    border: 1px solid #334155;
+    color: #94A3B8;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 0.84rem;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.lb-filter-btn:hover {
+    background: #334155;
+    color: white;
+}
+
+.lb-filter-btn.active {
+    background: #38BDF8;
+    color: #0F172A;
+    border-color: #38BDF8;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+/* GRID DE NÍVEIS DO PLACAR */
+.lb-levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.lb-level-card {
+    background: #1E293B;
+    border: 2px solid #334155;
+    border-radius: 20px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s, border-color 0.2s;
+    position: relative;
+}
+
+.lb-level-card:hover {
+    transform: translateY(-3px);
+    border-color: #38BDF8;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.lb-level-card.user-top-record {
+    border-color: #F59E0B;
+    background: linear-gradient(180deg, #1E2238, #1E293B);
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
+}
+
+.lb-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.lb-level-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lb-icon {
+    font-size: 2rem;
+    background: #0F172A;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #334155;
+    flex-shrink: 0;
+}
+
+.lb-module-name {
+    font-size: 0.75rem;
+    color: #38BDF8;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.lb-level-name {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: white;
+}
+
+.lb-user-crown {
+    background: linear-gradient(135deg, #F59E0B, #B45309);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+}
+
+.lb-record-showcase {
+    background: #0F172A;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.lb-medal-big {
+    font-size: 2.2rem;
+}
+
+.lb-record-time {
+    font-family: 'Fira Code', monospace;
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: #FBBF24;
+    line-height: 1.1;
+}
+
+.lb-record-holder {
+    font-size: 0.8rem;
+    color: #94A3B8;
+    margin-top: 2px;
+}
+
+.lb-record-date {
+    font-size: 0.72rem;
+    color: #64748B;
+}
+
+/* PODIUM TOP 3 */
+.lb-podium-list {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-bottom: 14px;
+}
+
+.lb-podium-title {
+    font-size: 0.74rem;
+    color: #64748B;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.lb-podium-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: #CBD5E1;
+    padding: 3px 0;
+    border-bottom: 1px dashed rgba(51, 65, 85, 0.5);
+}
+
+.lb-podium-row:last-child {
+    border-bottom: none;
+}
+
+.lb-podium-row.highlight {
+    color: #FBBF24;
+    font-weight: 800;
+}
+
+.podium-rank {
+    font-weight: 800;
+    width: 38px;
+}
+
+.podium-player {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 6px;
+}
+
+.podium-time {
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+}
+
+.lb-card-footer {
+    margin-top: 6px;
+}
+
+.lb-play-btn {
+    background: linear-gradient(135deg, #38BDF8, #0284C7);
+    color: #0F172A;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: 0.15s;
+    border-bottom: 3px solid #0369A1;
+}
+
+.lb-play-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(56, 189, 248, 0.35);
+}
+
+.lb-play-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 1px;
+}
+
+/* SPEEDRUN ACHIEVEMENTS SECTION */
+.lb-achieve-banner {
+    background: #1E293B;
+    border: 2px solid #334155;
+    border-radius: 20px;
+    padding: 22px;
+    margin-top: 20px;
+}
+
+.lb-achieve-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.35rem;
+    color: white;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lb-achieve-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.lb-achieve-item {
+    background: #0F172A;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.25s ease;
+}
+
+.lb-achieve-item.unlocked {
+    border-color: #F59E0B;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), #0F172A);
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.25);
+}
+
+.lb-achieve-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.lb-achieve-name {
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: #FBBF24;
+}
+
+.lb-achieve-desc {
+    font-size: 0.78rem;
+    color: #94A3B8;
+    line-height: 1.35;
+}
+
+/* SEU MELHOR TEMPO BADGE NO CARD */
+.lb-user-pb-badge {
+    background: #0F172A;
+    border: 1px dashed #38BDF8;
+    border-radius: 10px;
+    padding: 6px 12px;
+    margin: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lb-user-pb-badge.record-holder {
+    border-color: #F59E0B;
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.pulse {
+    animation: lbPulse 1.8s infinite;
+}
+
+@keyframes lbPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6)); }
+}
+
+
+

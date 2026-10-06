@@ -379,4 +379,10 @@ function updateHubProgress() {
     const barEl = document.getElementById('hub-progress-bar');
     if (countEl) countEl.innerText = `${totalStars} / 30 ⭐`;
     if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 30) * 100))}%`;
+
+    const lbBadge = document.getElementById('badge-hub-leaderboard');
+    if (lbBadge && window.makerLeaderboard && typeof window.makerLeaderboard.getSummaryStats === 'function') {
+        const stats = window.makerLeaderboard.getSummaryStats();
+        lbBadge.innerText = stats.userRecords > 0 ? `👑 ${stats.userRecords} Recordes ⚡` : `⚡ 30 Fases Speedrun`;
+    }
 }

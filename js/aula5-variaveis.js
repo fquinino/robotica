@@ -637,7 +637,7 @@ function loadVariaveis() {
                     <!-- SCAFFOLDING NÍVEL 1 (Vidas & Moedas - int) -->
                     <div id="vars_scaffold_n1" class="vars-scaffold-lines">
                         <div class="vars-sketch-setup">
-                            <span class="c-cm">// 📦 1. Declaração das variáveis no início do jogo:</span><br>
+                            <span class="c-cm">// 📦 Declaração das caixas de memória inteiras (int):</span><br>
                             <span class="c-tp">int</span> vidas = <input type="number" class="vars-input-num" id="vars_n1_vidas_init" value="3" min="1" max="5" oninput="vars_updateLiveCpp()" />;<br>
                             <span class="c-tp">int</span> moedas = 0;<br>
                             <span class="c-tp">int</span> pontos = 0;
@@ -648,32 +648,45 @@ function loadVariaveis() {
                         </div>
 
                         <div class="vars-sketch-loop-body">
-                            <div class="vars-scaffold-line"><span class="c-cm">// 1️⃣ O robô abre o Baú Dourado (+10 moedas):</span></div>
+                            <div class="vars-scaffold-line"><span class="c-cm">// 🎯 Objetivo 1: O robô abriu o baú dourado! Atualize a caixa de moedas somando o prêmio:</span></div>
                             <div class="vars-scaffold-line">
                                 <select class="vars-select-cmd" id="vars_n1_cmd1" onchange="vars_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha a operação de moedas —</option>
-                                    <option value="moedas = moedas + 10;">moedas = moedas + 10; // Soma +10</option>
-                                    <option value="moedas = moedas - 10;">moedas = moedas - 10; // Subtrai -10</option>
-                                    <option value="moedas = 10;">moedas = 10; // Define fixo</option>
+                                    <option value="" selected disabled>— escolha a instrução C++ —</option>
+                                    <option value="moedas = &quot;10&quot;;">moedas = "10";</option>
+                                    <option value="stirng moedas = 10;">stirng moedas = 10;</option>
+                                    <option value="moedas = moedas - 10;">moedas = moedas - 10;</option>
+                                    <option value="moedas = moedas + 10;">moedas = moedas + 10;</option>
+                                    <option value="moedas == moedas + 10;">moedas == moedas + 10;</option>
+                                    <option value="moedas = moedas + &quot;10&quot;;">moedas = moedas + "10";</option>
+                                    <option value="moedas = 10;">moedas = 10;</option>
                                 </select>
                             </div>
 
-                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 2️⃣ Ops! O robô pisou no espinho (-1 vida):</span></div>
+                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 🎯 Objetivo 2: O robô pisou no espinho da caverna! Atualize a vida do jogador:</span></div>
                             <div class="vars-scaffold-line">
                                 <select class="vars-select-cmd" id="vars_n1_cmd2" onchange="vars_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha a perda de vida —</option>
-                                    <option value="vidas = vidas - 1;">vidas = vidas - 1; // Perde 1 vida</option>
-                                    <option value="vidas = vidas + 1;">vidas = vidas + 1; // Ganha 1 vida</option>
-                                    <option value="vidas = 0;">vidas = 0; // Zera vidas</option>
+                                    <option value="" selected disabled>— escolha a instrução C++ —</option>
+                                    <option value="vidas = vidas + 1;">vidas = vidas + 1;</option>
+                                    <option value="vidas = &quot;3&quot;;">vidas = "3";</option>
+                                    <option value="stirng vidas = vidas - 1;">stirng vidas = vidas - 1;</option>
+                                    <option value="vidas = vidas - 1;">vidas = vidas - 1;</option>
+                                    <option value="vidas = 0;">vidas = 0;</option>
+                                    <option value="vida = vida - 1;">vida = vida - 1;</option>
+                                    <option value="vidas == vidas - 1;">vidas == vidas - 1;</option>
                                 </select>
                             </div>
 
-                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 3️⃣ Converte cada moeda em 100 pontos:</span></div>
+                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 🎯 Objetivo 3: Cada moeda vale 100 pontos! Calcule a pontuação final na memória:</span></div>
                             <div class="vars-scaffold-line">
                                 <select class="vars-select-cmd" id="vars_n1_cmd3" onchange="vars_updateLiveCpp()">
-                                    <option value="" selected disabled>— cálculo do placar de pontos —</option>
-                                    <option value="pontos = moedas * 100;">pontos = moedas * 100; // Multiplica por 100</option>
-                                    <option value="pontos = moedas + 100;">pontos = moedas + 100; // Soma 100</option>
+                                    <option value="" selected disabled>— escolha o cálculo do placar —</option>
+                                    <option value="pontos = moedas + 100;">pontos = moedas + 100;</option>
+                                    <option value="pontos = moedas + &quot;100&quot;;">pontos = moedas + "100";</option>
+                                    <option value="stirng pontos = 100;">stirng pontos = 100;</option>
+                                    <option value="pontos = moedas * 100;">pontos = moedas * 100;</option>
+                                    <option value="pontos = 100;">pontos = 100;</option>
+                                    <option value="pontos == moedas * 100;">pontos == moedas * 100;</option>
+                                    <option value="pontos = moedas * &quot;100&quot;;">pontos = moedas * "100";</option>
                                 </select>
                             </div>
                         </div>
@@ -684,7 +697,7 @@ function loadVariaveis() {
                     <!-- SCAFFOLDING NÍVEL 2 (Estação Meteorológica - float) -->
                     <div id="vars_scaffold_n2" class="vars-scaffold-lines" style="display:none;">
                         <div class="vars-sketch-setup">
-                            <span class="c-cm">// 🌡️ Variáveis com ponto decimal para leituras precisas:</span><br>
+                            <span class="c-cm">// 🌡️ Sensores da estufa registrando medições do ambiente:</span><br>
                             <span class="c-tp">float</span> tempManha = 20.5;<br>
                             <span class="c-tp">float</span> tempTarde = 31.5;<br>
                             <span class="c-tp">float</span> tempMedia = 0.0;<br>
@@ -696,27 +709,35 @@ function loadVariaveis() {
                         </div>
 
                         <div class="vars-sketch-loop-body">
-                            <div class="vars-scaffold-line"><span class="c-cm">// 1️⃣ Qual o tipo correto para guardar números com vírgula?</span></div>
+                            <div class="vars-scaffold-line"><span class="c-cm">// 🎯 Objetivo 1: Escolha o tipo de dado para registrar medições térmicas com casas decimais:</span></div>
                             <div class="vars-scaffold-line">
                                 <select class="vars-select-cmd" id="vars_n2_tipo" onchange="vars_updateLiveCpp()">
-                                    <option value="" selected disabled>— escolha o tipo de dado correto —</option>
-                                    <option value="float">float (Números com ponto decimal)</option>
-                                    <option value="int">int (Apenas números inteiros)</option>
-                                    <option value="String">String (Apenas textos e palavras)</option>
+                                    <option value="" selected disabled>— escolha o tipo de dado C++ —</option>
+                                    <option value="stirng">stirng</option>
+                                    <option value="int">int</option>
+                                    <option value="decimal">decimal</option>
+                                    <option value="float">float</option>
+                                    <option value="numero">numero</option>
+                                    <option value="String">String</option>
+                                    <option value="flutuante">flutuante</option>
                                 </select>
                             </div>
 
-                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 2️⃣ Calcule a média aritmética das temperaturas:</span></div>
+                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 🎯 Objetivo 2: Determine a temperatura média combinando a leitura matutina e vespertina:</span></div>
                             <div class="vars-scaffold-line">
                                 <select class="vars-select-cmd" id="vars_n2_calc" onchange="vars_updateLiveCpp()">
-                                    <option value="" selected disabled>— fórmula matemática da média —</option>
-                                    <option value="tempMedia = (tempManha + tempTarde) / 2.0;">tempMedia = (tempManha + tempTarde) / 2.0; // Soma e divide por 2</option>
-                                    <option value="tempMedia = tempManha + tempTarde;">tempMedia = tempManha + tempTarde; // Só somou</option>
-                                    <option value="tempMedia = tempTarde - tempManha;">tempMedia = tempTarde - tempManha; // Subtraiu</option>
+                                    <option value="" selected disabled>— escolha a fórmula da média —</option>
+                                    <option value="tempMedia = tempManha + tempTarde;">tempMedia = tempManha + tempTarde;</option>
+                                    <option value="tempMedia = &quot;tempManha + tempTarde / 2&quot;;">tempMedia = "tempManha + tempTarde / 2";</option>
+                                    <option value="tempMedia = tempManha + tempTarde / 2.0;">tempMedia = tempManha + tempTarde / 2.0;</option>
+                                    <option value="tempMedia = (tempManha + tempTarde) / 2.0;">tempMedia = (tempManha + tempTarde) / 2.0;</option>
+                                    <option value="tempMedia = (tempManha * tempTarde) / 2;">tempMedia = (tempManha * tempTarde) / 2;</option>
+                                    <option value="tempMedia = (tempManha + tempTarde) / &quot;2.0&quot;;">tempMedia = (tempManha + tempTarde) / "2.0";</option>
+                                    <option value="stirng tempMedia = (tempManha + tempTarde) / 2;">stirng tempMedia = (tempManha + tempTarde) / 2;</option>
                                 </select>
                             </div>
 
-                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 3️⃣ Envie os dados para a tela LCD:</span></div>
+                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 🎯 Saída: Envie os dados calculados para o display LCD:</span></div>
                             <div class="vars-scaffold-line">
                                 <span class="c-fn">lcd_imprimir</span>(tempMedia);
                             </div>
@@ -739,28 +760,37 @@ function loadVariaveis() {
                         </div>
 
                         <div class="vars-sketch-loop-body">
-                            <div class="vars-scaffold-line"><span class="c-cm">// 1️⃣ Qual tipo armazena a palavra da senha entre aspas?</span></div>
+                            <div class="vars-scaffold-line"><span class="c-cm">// 🎯 Objetivo 1: Defina o tipo de dado para armazenar textos alfanuméricos entre aspas:</span></div>
                             <div class="vars-scaffold-line">
                                 <select class="vars-select-cmd" id="vars_n3_tipo_str" onchange="vars_updateLiveCpp()">
-                                    <option value="" selected disabled>— selecione o tipo para textos —</option>
-                                    <option value="String">String (Textos e frases)</option>
-                                    <option value="int">int (Números inteiros)</option>
-                                    <option value="bool">bool (Verdadeiro ou Falso)</option>
+                                    <option value="" selected disabled>— selecione o tipo para a senha —</option>
+                                    <option value="int">int</option>
+                                    <option value="stirng">stirng</option>
+                                    <option value="texto">texto</option>
+                                    <option value="String">String</option>
+                                    <option value="bool">bool</option>
+                                    <option value="char">char</option>
+                                    <option value="float">float</option>
                                 </select>
                             </div>
 
-                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 2️⃣ Digite a senha correta no teclado do cofre:</span></div>
+                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 🎯 Objetivo 2: Digite a senha de acesso no teclado numérico:</span></div>
                             <div class="vars-scaffold-line">
                                 senhaDigitada = <input type="text" class="vars-input-text" id="vars_n3_input_senha" placeholder="digite aqui..." value="ARDUINO2026" oninput="vars_updateLiveCpp()" />;
                             </div>
 
-                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 3️⃣ Se a senha bater, o que acontece com a trava booleana?</span></div>
+                            <div class="vars-scaffold-line" style="margin-top:6px;"><span class="c-cm">// 🎯 Objetivo 3: Se as credenciais forem confirmadas, acione o destravamento lógico do cofre:</span></div>
                             <div class="vars-scaffold-line">
                                 <span class="c-kw">if</span> (senhaDigitada == senhaMestre) {<br>
                                 &nbsp;&nbsp;<select class="vars-select-cmd" id="vars_n3_trava_cmd" onchange="vars_updateLiveCpp()">
-                                    <option value="" selected disabled>— defina o estado da trava —</option>
-                                    <option value="travaAberta = true;">travaAberta = true; // Abre o cofre! 🔓</option>
-                                    <option value="travaAberta = false;">travaAberta = false; // Mantém fechado 🔒</option>
+                                    <option value="" selected disabled>— defina o comando da trava —</option>
+                                    <option value="travaAberta = &quot;true&quot;;">travaAberta = "true";</option>
+                                    <option value="travaAberta = false;">travaAberta = false;</option>
+                                    <option value="travaAberta = &quot;ABERTO&quot;;">travaAberta = "ABERTO";</option>
+                                    <option value="travaAberta = true;">travaAberta = true;</option>
+                                    <option value="travaAberta == true;">travaAberta == true;</option>
+                                    <option value="travaAberta = 100;">travaAberta = 100;</option>
+                                    <option value="stirng travaAberta = true;">stirng travaAberta = true;</option>
                                 </select><br>
                                 }
                             </div>
@@ -772,38 +802,46 @@ function loadVariaveis() {
                     <!-- SCAFFOLDING NÍVEL 4 (Revisão: Variáveis + Loop FOR na Esteira Solar) -->
                     <div id="vars_scaffold_n4" class="vars-scaffold-lines" style="display:none;">
                         <div class="vars-sketch-setup">
-                            <span class="c-cm">// 🔋 Variável acumuladora de energia (começa descarregada em 0%):</span><br>
-                            <span class="c-tp">int</span> energia = 0; <span class="c-cm">// Caixa que vai somando a cada volta</span>
+                            <span class="c-cm">// 🔋 Bateria começando descarregada em 0%:</span><br>
+                            <span class="c-tp">int</span> energia = 0;<br>
                         </div>
 
                         <div class="vars-sketch-loop-tag">
-                            <span class="c-kw">void</span> <span class="c-fn">loop</span>() { <span class="c-cm">// 🔄 A esteira de recarga solar dá 4 voltas:</span>
+                            <span class="c-kw">void</span> <span class="c-fn">loop</span>() { <span class="c-cm">// 🔄 Recarga nos 4 painéis solares:</span>
                         </div>
 
                         <div class="vars-sketch-loop-body">
-                            <div class="vars-scaffold-line"><span class="c-cm">// 1️⃣ Configure o Laço FOR para rodar 4 vezes (ciclo de 1 até 4):</span></div>
+                            <div class="vars-scaffold-line"><span class="c-cm">// 🎯 Objetivo 1: Programe a condição do FOR para percorrer todas as estações solares:</span></div>
                             <div class="vars-scaffold-line">
                                 <span class="c-kw">for</span> ( <span class="c-tp">int</span> ciclo = 1;
                                 <select class="vars-select-cmd" id="vars_n4_loop_cond" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— escolha a condição de parada —</option>
-                                    <option value="ciclo <= 4;">ciclo <= 4; // Repete 4 voltas na esteira</option>
-                                    <option value="ciclo <= 1;">ciclo <= 1; // Só 1 volta (não enche a bateria)</option>
-                                    <option value="ciclo <= 10;">ciclo <= 10; // 10 voltas (sobrecarrega)</option>
+                                    <option value="ciclo >= 4;">ciclo >= 4;</option>
+                                    <option value="ciclo <= &quot;4&quot;;">ciclo <= "4";</option>
+                                    <option value="ciclo == 4;">ciclo == 4;</option>
+                                    <option value="ciclo <= 4;">ciclo <= 4;</option>
+                                    <option value="ciclo <= 1;">ciclo <= 1;</option>
+                                    <option value="ciclo = 4;">ciclo = 4;</option>
+                                    <option value="stirng ciclo <= 4;">stirng ciclo <= 4;</option>
                                 </select>
                                 ciclo++ ) {
                             </div>
 
                             <div class="vars-scaffold-line" style="margin-left:14px;border-left:2px solid #38BDF8;padding-left:10px;">
-                                <span class="c-cm">// 2️⃣ Acumulador: a cada volta do FOR, some +25% de energia!</span><br>
+                                <span class="c-cm">// 🎯 Objetivo 2: A cada painel solar, acumule uma fração de carga (+25%) na bateria:</span><br>
                                 <select class="vars-select-cmd" id="vars_n4_energia_cmd" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— escolha a instrução acumuladora —</option>
-                                    <option value="energia = energia + 25;">energia = energia + 25; // Acumula +25% a cada ciclo</option>
-                                    <option value="energia = 25;">energia = 25; // Não acumula, fica fixo em 25</option>
-                                    <option value="energia = energia - 25;">energia = energia - 25; // Descarrega a bateria</option>
+                                    <option value="energia = 25;">energia = 25;</option>
+                                    <option value="energia = &quot;25&quot;;">energia = "25";</option>
+                                    <option value="energia = energia - 25;">energia = energia - 25;</option>
+                                    <option value="energia = energia + 25;">energia = energia + 25;</option>
+                                    <option value="energia == energia + 25;">energia == energia + 25;</option>
+                                    <option value="energia = &quot;energia + 25&quot;;">energia = "energia + 25";</option>
+                                    <option value="stirng energia = energia + 25;">stirng energia = energia + 25;</option>
                                 </select>
                             </div>
 
-                            <div class="vars-scaffold-line">} <span class="c-cm">// Fim do FOR: 25 + 25 + 25 + 25 = 100% de Bateria!</span></div>
+                            <div class="vars-scaffold-line">} <span class="c-cm">// Fim do laço FOR</span></div>
                         </div>
 
                         <div class="vars-sketch-loop-close">}</div>
@@ -812,9 +850,9 @@ function loadVariaveis() {
                     <!-- SCAFFOLDING NÍVEL 5 (Revisão: Variáveis + Loop FOR na Mineração de Cristais em Marte) -->
                     <div id="vars_scaffold_n5" class="vars-scaffold-lines" style="display:none;">
                         <div class="vars-sketch-setup">
-                            <span class="c-cm">// 💎 Variáveis de recursos e carga do Rover:</span><br>
-                            <span class="c-tp">int</span> cristais = 0; <span class="c-cm">// Coletados na mochila</span><br>
-                            <span class="c-tp">int</span> bateria = 100; <span class="c-cm">// Energia do Rover</span>
+                            <span class="c-cm">// 💎 Recursos e bateria inicial do Rover Marciano:</span><br>
+                            <span class="c-tp">int</span> cristais = 0; <span class="c-cm">// Mochila de minérios</span><br>
+                            <span class="c-tp">int</span> bateria = 100; <span class="c-cm">// Carga da bateria</span>
                         </div>
 
                         <div class="vars-sketch-loop-tag">
@@ -822,38 +860,51 @@ function loadVariaveis() {
                         </div>
 
                         <div class="vars-sketch-loop-body">
-                            <div class="vars-scaffold-line"><span class="c-cm">// 1️⃣ Configure o laço FOR para minerar os 4 setores (de 1 a 4):</span></div>
+                            <div class="vars-scaffold-line"><span class="c-cm">// 🎯 Objetivo 1: Programe a condição do laço FOR para minerar ordenadamente todos os setores:</span></div>
                             <div class="vars-scaffold-line">
                                 <span class="c-kw">for</span> ( <span class="c-tp">int</span> setor = 1;
                                 <select class="vars-select-cmd" id="vars_n5_loop_cond" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— escolha a condição de parada —</option>
-                                    <option value="setor <= 4;">setor <= 4; // Minera os 4 setores de Marte</option>
-                                    <option value="setor <= 1;">setor <= 1; // Só o primeiro setor</option>
-                                    <option value="setor <= 0;">setor <= 0; // Não minera nenhum</option>
+                                    <option value="setor >= 4;">setor >= 4;</option>
+                                    <option value="setor <= &quot;4&quot;;">setor <= "4";</option>
+                                    <option value="setor == 4;">setor == 4;</option>
+                                    <option value="setor <= 4;">setor <= 4;</option>
+                                    <option value="setor <= 1;">setor <= 1;</option>
+                                    <option value="setor = 4;">setor = 4;</option>
+                                    <option value="stirng setor <= 4;">stirng setor <= 4;</option>
                                 </select>
                                 setor++ ) {
                             </div>
 
                             <div class="vars-scaffold-line" style="margin-left:14px;border-left:2px solid #38BDF8;padding-left:10px;">
-                                <span class="c-cm">// 2️⃣ Extraia +5 cristais de plasma a cada setor minerado:</span><br>
+                                <span class="c-cm">// 🎯 Objetivo 2: A cada setor explorado, recolha o lote de plasma e acumule na mochila:</span><br>
                                 <select class="vars-select-cmd" id="vars_n5_cristais_cmd" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— cálculo dos cristais —</option>
-                                    <option value="cristais = cristais + 5;">cristais = cristais + 5; // Adiciona +5 cristais por setor</option>
-                                    <option value="cristais = 5;">cristais = 5; // Fixa em 5 sem acumular</option>
-                                    <option value="cristais = cristais - 5;">cristais = cristais - 5; // Perde cristais</option>
+                                    <option value="cristais = 5;">cristais = 5;</option>
+                                    <option value="cristais = &quot;5&quot;;">cristais = "5";</option>
+                                    <option value="cristais = cristais - 5;">cristais = cristais - 5;</option>
+                                    <option value="cristais = cristais + 5;">cristais = cristais + 5;</option>
+                                    <option value="cristais == cristais + 5;">cristais == cristais + 5;</option>
+                                    <option value="cristais = cristais + &quot;5&quot;;">cristais = cristais + "5";</option>
+                                    <option value="stirng cristais = 5;">stirng cristais = 5;</option>
                                 </select>
                             </div>
 
                             <div class="vars-scaffold-line" style="margin-left:14px;border-left:2px solid #F59E0B;padding-left:10px;margin-top:6px;">
-                                <span class="c-cm">// 3️⃣ O raio minerador consome -10% de bateria por setor:</span><br>
+                                <span class="c-cm">// 🎯 Objetivo 3: O raio extrator consome energia a cada disparo: reduza a porcentagem da bateria:</span><br>
                                 <select class="vars-select-cmd" id="vars_n5_bateria_cmd" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— consumo de energia —</option>
-                                    <option value="bateria = bateria - 10;">bateria = bateria - 10; // Gasta 10% por setor</option>
-                                    <option value="bateria = bateria + 10;">bateria = bateria + 10; // Recarrega</option>
+                                    <option value="bateria = bateria + 10;">bateria = bateria + 10;</option>
+                                    <option value="bateria = &quot;10&quot;;">bateria = "10";</option>
+                                    <option value="bateria = 10;">bateria = 10;</option>
+                                    <option value="bateria = bateria - 10;">bateria = bateria - 10;</option>
+                                    <option value="bateria == bateria - 10;">bateria == bateria - 10;</option>
+                                    <option value="bateria = bateria - &quot;10&quot;;">bateria = bateria - "10";</option>
+                                    <option value="stirng bateria = bateria - 10;">stirng bateria = bateria - 10;</option>
                                 </select>
                             </div>
 
-                            <div class="vars-scaffold-line">} <span class="c-cm">// Fim da mineração: 4 x 5 = 20 cristais e 60% de bateria!</span></div>
+                            <div class="vars-scaffold-line">} <span class="c-cm">// Fim da mineração marciana</span></div>
                         </div>
 
                         <div class="vars-sketch-loop-close">}</div>
@@ -874,24 +925,33 @@ function loadVariaveis() {
                         </div>
 
                         <div class="vars-sketch-loop-body">
-                            <div class="vars-scaffold-line"><span class="c-cm">// 1️⃣ Teste SE a temperatura está maior que o limite seguro:</span></div>
+                            <div class="vars-scaffold-line"><span class="c-cm">// 🎯 Objetivo 1: Verifique se o calor detectado ultrapassa a zona de conforto térmico:</span></div>
                             <div class="vars-scaffold-line">
                                 <span class="c-kw">if</span> (
                                 <select class="vars-select-cmd" id="vars_n6_if_cond" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— condição da comparação —</option>
-                                    <option value="temperatura > tempLimite">temperatura > tempLimite // Calor excessivo!</option>
-                                    <option value="temperatura < tempLimite">temperatura < tempLimite // Temperatura baixa</option>
-                                    <option value="temperatura == 0">temperatura == 0 // Sensor desligado</option>
+                                    <option value="temperatura < tempLimite">temperatura < tempLimite</option>
+                                    <option value="temperatura == &quot;30.0&quot;">temperatura == "30.0"</option>
+                                    <option value="temperatura = tempLimite">temperatura = tempLimite</option>
+                                    <option value="temperatura > tempLimite">temperatura > tempLimite</option>
+                                    <option value="temperatura == 0">temperatura == 0</option>
+                                    <option value="temperatura >= &quot;tempLimite&quot;">temperatura >= "tempLimite"</option>
+                                    <option value="stirng temperatura > tempLimite">stirng temperatura > tempLimite</option>
                                 </select>
                                 ) {
                             </div>
 
                             <div class="vars-scaffold-line" style="margin-left:14px;border-left:2px solid #10B981;padding-left:10px;">
-                                <span class="c-cm">// 2️⃣ Se esquentou demais, o que fazer com a variável do ventilador?</span><br>
+                                <span class="c-cm">// 🎯 Objetivo 2: Se houver calor excessivo, ative a refrigeração e atualize a mensagem de status:</span><br>
                                 <select class="vars-select-cmd" id="vars_n6_fan_cmd" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— comando do atuador —</option>
-                                    <option value="ventiladorLigado = true; statusClima = &quot;ALERTA: VENTILADOR LIGADO&quot;;">ventiladorLigado = true; statusClima = "ALERTA: VENTILADOR LIGADO";</option>
                                     <option value="ventiladorLigado = false; statusClima = &quot;DESLIGADO&quot;;">ventiladorLigado = false; statusClima = "DESLIGADO";</option>
+                                    <option value="ventiladorLigado = &quot;true&quot;; statusClima = 100;">ventiladorLigado = "true"; statusClima = 100;</option>
+                                    <option value="ventiladorLigado == true; statusClima == &quot;ALERTA&quot;;">ventiladorLigado == true; statusClima == "ALERTA";</option>
+                                    <option value="ventiladorLigado = true; statusClima = &quot;ALERTA: VENTILADOR LIGADO&quot;;">ventiladorLigado = true; statusClima = "ALERTA: VENTILADOR LIGADO";</option>
+                                    <option value="ventiladorLigado = &quot;LIGAR&quot;; statusClima = &quot;ALERTA&quot;;">ventiladorLigado = "LIGAR"; statusClima = "ALERTA";</option>
+                                    <option value="ventiladorLigado = 0; statusClima = &quot;&quot;;">ventiladorLigado = 0; statusClima = "";</option>
+                                    <option value="stirng ventiladorLigado = true;">stirng ventiladorLigado = true;</option>
                                 </select>
                             </div>
 
@@ -920,24 +980,33 @@ function loadVariaveis() {
                         </div>
 
                         <div class="vars-sketch-loop-body">
-                            <div class="vars-scaffold-line"><span class="c-cm">// 1️⃣ Teste SE a distância é MENOR que a distância de segurança:</span></div>
+                            <div class="vars-scaffold-line"><span class="c-cm">// 🎯 Objetivo 1: O sensor mediu um obstáculo à frente: teste se há risco de impacto iminente:</span></div>
                             <div class="vars-scaffold-line">
                                 <span class="c-kw">if</span> (
                                 <select class="vars-select-cmd" id="vars_n7_if_cond" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— condição de perigo de colisão —</option>
-                                    <option value="distanciaObstaculo < distanciaSegura">distanciaObstaculo < distanciaSegura // Perigo iminente!</option>
-                                    <option value="distanciaObstaculo > distanciaSegura">distanciaObstaculo > distanciaSegura // Distância segura</option>
-                                    <option value="distanciaObstaculo == 0">distanciaObstaculo == 0 // Sem leitura</option>
+                                    <option value="distanciaObstaculo > distanciaSegura">distanciaObstaculo > distanciaSegura</option>
+                                    <option value="distanciaObstaculo == &quot;14.5&quot;">distanciaObstaculo == "14.5"</option>
+                                    <option value="distanciaObstaculo = distanciaSegura">distanciaObstaculo = distanciaSegura</option>
+                                    <option value="distanciaObstaculo < distanciaSegura">distanciaObstaculo < distanciaSegura</option>
+                                    <option value="distanciaObstaculo <= &quot;20.0&quot;">distanciaObstaculo <= "20.0"</option>
+                                    <option value="distanciaObstaculo == 0">distanciaObstaculo == 0</option>
+                                    <option value="stirng distanciaObstaculo < distanciaSegura">stirng distanciaObstaculo < distanciaSegura</option>
                                 </select>
                                 ) {
                             </div>
 
                             <div class="vars-scaffold-line" style="margin-left:14px;border-left:2px solid #EF4444;padding-left:10px;">
-                                <span class="c-cm">// 2️⃣ Se há perigo, ative o freio de emergência e mude o alerta:</span><br>
+                                <span class="c-cm">// 🎯 Objetivo 2: Detectado o risco de colisão, acione os freios autônomos e notifique o piloto:</span><br>
                                 <select class="vars-select-cmd" id="vars_n7_freio_cmd" onchange="vars_updateLiveCpp()">
                                     <option value="" selected disabled>— comando de emergência —</option>
-                                    <option value="freioEmergencia = true; alertaPiloto = &quot;PERIGO: FREIO ACIONADO!&quot;;">freioEmergencia = true; alertaPiloto = "PERIGO: FREIO ACIONADO!";</option>
                                     <option value="freioEmergencia = false; alertaPiloto = &quot;ACELERANDO&quot;;">freioEmergencia = false; alertaPiloto = "ACELERANDO";</option>
+                                    <option value="freioEmergencia = &quot;SIM&quot;; alertaPiloto = 999;">freioEmergencia = "SIM"; alertaPiloto = 999;</option>
+                                    <option value="freioEmergencia == true; alertaPiloto == &quot;FREIO&quot;;">freioEmergencia == true; alertaPiloto == "FREIO";</option>
+                                    <option value="freioEmergencia = true; alertaPiloto = &quot;PERIGO: FREIO ACIONADO!&quot;;">freioEmergencia = true; alertaPiloto = "PERIGO: FREIO ACIONADO!";</option>
+                                    <option value="freioEmergencia = &quot;true&quot;; alertaPiloto = &quot;PERIGO&quot;;">freioEmergencia = "true"; alertaPiloto = "PERIGO";</option>
+                                    <option value="freioEmergencia = 0; alertaPiloto = &quot;&quot;;">freioEmergencia = 0; alertaPiloto = "";</option>
+                                    <option value="stirng freioEmergencia = true;">stirng freioEmergencia = true;</option>
                                 </select>
                             </div>
 
@@ -1047,7 +1116,7 @@ const vars_levels_data = {
     1: {
         title: 'Missão 1: O Contador de Vidas & Moedas do Robô (Tipo int)',
         badge: 'Números Inteiros (int)',
-        desc: 'Bem-vindo ao Laboratório de Variáveis! 🧮<br>O Robô Maker está explorando a mina digital. Ele começa com <code>int vidas = 3;</code> e <code>int moedas = 0;</code>.<br><br><b>Sua Missão:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Ao abrir o Baú Dourado, some <b>+10 moedas</b> à sua caixa: <code>moedas = moedas + 10;</code></li><li>2️⃣ Ao tropeçar no espinho da caverna, diminua <b>1 vida</b>: <code>vidas = vidas - 1;</code></li><li>3️⃣ No fim da fase, cada moeda vale 100 pontos: multiplique <code>pontos = moedas * 100;</code></li></ul>Veja as caixas de memória RAM atualizarem e brilharem na bancada!',
+        desc: 'Bem-vindo ao Laboratório de Variáveis! 🧮<br>O Robô Maker está explorando a mina digital. Ele começa com 3 vidas e 0 moedas declaradas na memória RAM.<br><br><b>🎯 Seus Objetivos de Programação:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Ao abrir o Baú Dourado, <b>acumule +10 moedas</b> ao total da sua caixa de moedas.</li><li>2️⃣ Ao tropeçar no espinho da caverna, <b>desconte 1 vida</b> do jogador.</li><li>3️⃣ No fim da fase, cada moeda coletada vale 100 pontos: calcule a pontuação multiplicando o total de moedas por 100.</li></ul>Fique atento com as pegadinhas nos seletores: números inteiros não levam aspas e acumuladores somam com o valor anterior!',
         solution: `// Solução Nível 1 (Arduino C++):
 int vidas = 3;
 int moedas = 0;
@@ -1062,7 +1131,7 @@ void loop() {
     2: {
         title: 'Missão 2: A Estação Meteorológica & Termômetro (Tipo float)',
         badge: 'Casas Decimais (float)',
-        desc: 'A estufa inteligente da escola precisa registrar temperaturas com precisão de casas decimais! 🌡️<br>O tipo <code>int</code> só guarda números redondos (como 20 ou 31), mas para <b>20.5 °C</b> e <b>31.5 °C</b> precisamos do tipo <code>float</code>!<br><br><b>Sua Missão:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Escolha o tipo de dado correto para números com casas decimais: <code>float</code>.</li><li>2️⃣ Calcule a temperatura média do dia somando manhã e tarde e dividindo por 2: <code>tempMedia = (tempManha + tempTarde) / 2.0;</code></li><li>3️⃣ Observe a coluna de mercúrio subir no termômetro e a tela LCD do Arduino exibir a média de <b>26.0 °C</b>!</li></ul>',
+        desc: 'A estufa inteligente da escola precisa registrar temperaturas com precisão de casas decimais! 🌡️<br>O tipo <code>int</code> só guarda números redondos, mas para medições como <b>20.5 °C</b> e <b>31.5 °C</b> precisamos de um tipo com ponto flutuante.<br><br><b>🎯 Seus Objetivos de Programação:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Escolha o tipo de dado correto da linguagem C++ para armazenar números com casas decimais.</li><li>2️⃣ Calcule a temperatura média aritmética do dia somando a leitura da manhã com a da tarde e dividindo o total por 2.</li><li>3️⃣ Observe a coluna de mercúrio subir no termômetro e o display LCD registrar a média calculada!</li></ul>Atenção à ordem das operações matemáticas e ao uso de parênteses!',
         solution: `// Solução Nível 2 (Arduino C++):
 float tempManha = 20.5;
 float tempTarde = 31.5;
@@ -1076,7 +1145,7 @@ void loop() {
     3: {
         title: 'Missão 3: O Cofre Secreto do Laboratório (String & bool)',
         badge: 'Textos & Trava Lógica',
-        desc: 'O cofre que guarda as placas Arduino de ouro possui uma trava de segurança eletrônica! 🔐<br>Ele utiliza dois tipos fundamentais de dados: <code>String</code> para guardar senhas e textos, e <code>bool</code> para a trava aberta (<code>true</code>) ou trancada (<code>false</code>)!<br><br><b>Sua Missão:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Selecione o tipo de dado feito para guardar frases e palavras: <code>String</code>.</li><li>2️⃣ Digite a senha mestre de acesso: <code>ARDUINO2026</code>.</li><li>3️⃣ Quando a senha for verificada com sucesso, mude a trava booleana para destravada: <code>travaAberta = true;</code>!</li></ul>Assista ao volante do cofre girar e o LED verde acender!',
+        desc: 'O cofre que guarda os microcontroladores de ouro possui uma trava de segurança eletrônica! 🔐<br>Ele utiliza dois tipos fundamentais de variáveis: um para textos/palavras e outro para estados lógicos de verdadeiro ou falso.<br><br><b>🎯 Seus Objetivos de Programação:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Selecione o tipo de dado C++ específico para guardar frases e palavras entre aspas.</li><li>2️⃣ Digite a senha mestre de acesso <code>ARDUINO2026</code> no teclado numérico.</li><li>3️⃣ Se a senha digitada bater com a senha mestre, altere a trava booleana para destrancada (verdadeiro).</li></ul>Cuidado: variáveis booleanas só aceitam true ou false sem aspas!',
         solution: `// Solução Nível 3 (Arduino C++):
 String senhaMestre = "ARDUINO2026";
 String senhaDigitada = "ARDUINO2026";
@@ -1091,7 +1160,7 @@ void loop() {
     4: {
         title: 'Missão 4: Revisão de Loops 1 — O Acumulador de Energia Solar (Variáveis + FOR 🔄🔋)',
         badge: 'Laço FOR + Variáveis',
-        desc: 'Hora de revisar os <b>Loops FOR da Aula 2</b> agora com Variáveis! 🔄<br>O robô chegou à esteira de recarga solar com a bateria zerada (<code>int energia = 0;</code>).<br>A esteira possui 4 geradores fotovoltaicos. A cada volta do laço <code>for</code>, o robô recebe uma carga e acumula <b>+25%</b>!<br><br><b>Sua Missão:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Configure a condição do laço <code>for</code> para rodar <b>4 voltas</b>: <code>ciclo <= 4;</code></li><li>2️⃣ Dentro do laço, programe o acumulador somando +25%: <code>energia = energia + 25;</code></li><li>3️⃣ Veja o robô avançar pela esteira e a barra de bateria subir: 25% ➔ 50% ➔ 75% ➔ 100%!</li></ul>',
+        desc: 'Hora de revisar os <b>Loops FOR da Aula 2</b> agora integrados com Variáveis! 🔄<br>O robô chegou à esteira de recarga solar com a bateria zerada (0%). A esteira possui 4 estações fotovoltaicas consecutivas.<br><br><b>🎯 Seus Objetivos de Programação:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Configure a condição de parada do laço <code>for</code> para executar exatamente as 4 voltas na esteira.</li><li>2️⃣ Dentro do laço, programe o acumulador para somar +25% de carga à bateria a cada volta percorrida.</li><li>3️⃣ Veja o robô avançar pelas estações e a barra de bateria subir de 0% até 100%!</li></ul>Atenção: variáveis acumuladoras somam o valor antigo com o novo ganho!',
         solution: `// Solução Nível 4 (Arduino C++):
 int energia = 0;
 
@@ -1104,7 +1173,7 @@ void loop() {
     5: {
         title: 'Missão 5: Revisão de Loops 2 — Mineração Marciana de Cristais (Variáveis + FOR 💎🪐)',
         badge: 'FOR Acumulador + Salto',
-        desc: 'Vamos aprofundar os <b>Loops FOR com Variáveis</b> na exploração de Marte! 💎<br>O Rover precisa minerar cristais nos <b>4 quadrantes</b> do planeta vermelho. A cada setor percorrido pelo laço <code>for</code>, o raio extrator coleta <b>+5 cristais</b> e gasta <b>-10%</b> de bateria!<br><br><b>Sua Missão:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Configure o loop para minerar os 4 setores: <code>setor <= 4;</code></li><li>2️⃣ Acumule 5 cristais por setor: <code>cristais = cristais + 5;</code></li><li>3️⃣ Desconte o consumo de energia: <code>bateria = bateria - 10;</code></li></ul>Assista ao carrinho avançar pelos setores e encher a mochila de minérios!',
+        desc: 'Vamos aprofundar os <b>Loops FOR com Variáveis</b> na exploração de Marte! 💎<br>O Rover precisa minerar plasma nos 4 setores do planeta vermelho com seu raio extrator.<br><br><b>🎯 Seus Objetivos de Programação:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Configure a condição do laço <code>for</code> para minerar ordenadamente do setor 1 até o setor 4.</li><li>2️⃣ A cada setor minerado, acumule +5 cristais de plasma na mochila do robô.</li><li>3️⃣ O raio extrator gasta energia: desconte 10% de bateria a cada setor percorrido.</li></ul>Cuidado com operadores invertidos e pegadinhas com textos entre aspas!',
         solution: `// Solução Nível 5 (Arduino C++):
 int cristais = 0;
 int bateria = 100;
@@ -1119,7 +1188,7 @@ void loop() {
     6: {
         title: 'Missão 6: Revisão de Decisões 1 — O Climatizador da Estufa (Variáveis + IF / ELSE 🌱🌡️)',
         badge: 'IF / ELSE + Variáveis',
-        desc: 'Hora de revisar as <b>Decisões IF / ELSE da Aula 3</b> controladas por Variáveis! 🧠<br>Na estufa inteligente, o sensor mediu um calor perigoso: <code>float temperatura = 34.5;</code> e o limite seguro é <code>float tempLimite = 30.0;</code>.<br><br><b>Sua Missão:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Monte o teste condicional: <code>if (temperatura > tempLimite)</code></li><li>2️⃣ Se estiver muito quente, acione o ventilador: <code>ventiladorLigado = true; statusClima = "ALERTA: VENTILADOR LIGADO";</code></li><li>3️⃣ Observe as hélices mecânicas girarem em alta rotação para refrescar as mudinhas!</li></ul>',
+        desc: 'Hora de revisar as <b>Decisões IF / ELSE da Aula 3</b> controladas por Variáveis! 🧠<br>Na estufa inteligente, o sensor registrou calor elevado (34.5 °C), enquanto o limite térmico seguro é de 30.0 °C.<br><br><b>🎯 Seus Objetivos de Programação:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Monte a expressão condicional no <code>if</code>: teste se a temperatura medida ultrapassa a temperatura limite permitida.</li><li>2️⃣ Se o teste for verdadeiro, acione o ventilador e atualize o texto de status com aviso de alerta para a equipe.</li><li>3️⃣ Observe as hélices mecânicas girarem em alta velocidade para refrigerar a estufa!</li></ul>Cuidado com o operador de igualdade ou aspas em lugares indevidos!',
         solution: `// Solução Nível 6 (Arduino C++):
 float temperatura = 34.5;
 float tempLimite = 30.0;
@@ -1139,7 +1208,7 @@ void loop() {
     7: {
         title: 'Missão 7: Revisão de Decisões 2 — Radar Ultrassônico & Frenagem Autônoma (Variáveis + IF / ELSE 🚨🚗)',
         badge: 'Sensor de Distância + IF/ELSE',
-        desc: 'O veículo robótico está em movimento e se aproxima de um rochedo! 🚨<br>O sensor ultrassônico mediu <code>float distanciaObstaculo = 14.5;</code> e a distância segura de parada é <code>float distanciaSegura = 20.0;</code>.<br><br><b>Sua Missão:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Teste SE o obstáculo está perto demais: <code>if (distanciaObstaculo < distanciaSegura)</code></li><li>2️⃣ Acione o freio de emergência autônomo: <code>freioEmergencia = true; alertaPiloto = "PERIGO: FREIO ACIONADO!";</code></li><li>3️⃣ Veja o feixe de sonar piscar e as luzes de ré vermelhas acenderem antes da colisão!</li></ul>',
+        desc: 'O veículo robótico está em movimento e se aproxima de um obstáculo na pista! 🚨<br>O sensor ultrassônico mediu uma distância de 14.5 cm, mas a margem de segurança exige pelo menos 20.0 cm.<br><br><b>🎯 Seus Objetivos de Programação:</b><ul style="margin:6px 0 6px 18px;padding:0;line-height:1.6;"><li>1️⃣ Monte o teste de segurança no <code>if</code>: verifique se a distância atual até o obstáculo é menor que a distância segura exigida.</li><li>2️⃣ Em caso de perigo de colisão, ative o freio de emergência (verdadeiro) e atualize o alerta do painel.</li><li>3️⃣ Veja o feixe sonar piscar e os freios ABS travarem o carro antes do impacto!</li></ul>Evite as pegadinhas com tipos de dados trocados!',
         solution: `// Solução Nível 7 (Arduino C++):
 float distanciaObstaculo = 14.5;
 float distanciaSegura = 20.0;
@@ -1221,6 +1290,10 @@ function vars_prevGuideSlide() {
 function vars_switchLevel(lvl) {
     if (vars_running) return;
     vars_level = lvl;
+
+    if (window.makerLeaderboard) {
+        window.makerLeaderboard.startTimer('variaveis', lvl);
+    }
 
     for (let i = 1; i <= 8; i++) {
         document.getElementById(`vars_btn_lvl_${i}`)?.classList.toggle('active', i === lvl);
@@ -2649,11 +2722,19 @@ function vars_showWin(lvl, title, msg) {
     }
     vars_updateLevelButtons();
 
+    // Rastreia o tempo do Leaderboard Speedrun
+    let speedrunHTML = '';
+    if (window.makerLeaderboard) {
+        const elapsed = window.makerLeaderboard.stopTimer('variaveis', lvl);
+        const res = window.makerLeaderboard.recordCompletion('variaveis', lvl, elapsed);
+        speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('variaveis', lvl, res);
+    }
+
     const modal = document.getElementById('vars_win_modal');
     const mTitle = document.getElementById('vars_modal_title');
     const mText = document.getElementById('vars_modal_text');
     if (mTitle) mTitle.innerText = title;
-    if (mText) mText.innerHTML = msg;
+    if (mText) mText.innerHTML = msg + speedrunHTML;
     if (modal) modal.classList.add('active');
 }
 
