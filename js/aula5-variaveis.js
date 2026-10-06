@@ -110,11 +110,169 @@ function loadVariaveis() {
             .vars-vault-led.red.on { opacity:1; background:#EF4444; box-shadow:0 0 16px #EF4444; }
             .vars-vault-led.green.on { opacity:1; background:#10B981; box-shadow:0 0 16px #10B981; }
 
-            /* CENÁRIO 4: ROVER EM MARTE */
-            .vars-rover-stage { width:100%; height:180px; position:relative; background:linear-gradient(180deg, #1E1B4B 0%, #7F1D1D 65%, #991B1B 100%); border-radius:14px; overflow:hidden; display:flex; align-items:flex-end; padding-bottom:12px; }
-            .vars-rover-body { position:absolute; bottom:16px; left:30px; font-size:3.2rem; filter:drop-shadow(0 10px 8px rgba(0,0,0,0.7)); transition:left 1s ease-in-out; }
-            .vars-radar-beam { position:absolute; top:20px; right:30px; width:50px; height:50px; border-radius:50%; border:2px solid #38BDF8; animation:radarPulse 1.8s infinite; opacity:0; }
-            @keyframes radarPulse { 0% { transform:scale(0.5); opacity:0.9; } 100% { transform:scale(2.5); opacity:0; } }
+            /* ANIMAÇÕES VISUAIS DE INTERAÇÃO DO ROBÔ */
+            .vars-pop-toast { position:absolute; z-index:90; font-family:'Fredoka One', cursive; font-size:1.15rem; padding:5px 14px; border-radius:14px; pointer-events:none; animation:floatPop 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; box-shadow:0 6px 20px rgba(0,0,0,0.6); display:flex; align-items:center; gap:6px; border:2px solid currentColor; }
+            @keyframes floatPop {
+                0% { opacity:0; transform:translateY(15px) scale(0.6); }
+                25% { opacity:1; transform:translateY(-8px) scale(1.15); }
+                75% { opacity:1; transform:translateY(-22px) scale(1.0); }
+                100% { opacity:0; transform:translateY(-38px) scale(0.8); }
+            }
+            .vars-robot-walking { animation:robotWalk 0.35s infinite alternate; }
+            @keyframes robotWalk { 0% { transform:rotate(-7deg) translateY(-3px); } 100% { transform:rotate(7deg) translateY(3px); } }
+            .vars-robot-hurt { animation:robotHurt 0.5s ease; filter:drop-shadow(0 0 16px #EF4444) hue-rotate(300deg) !important; }
+            @keyframes robotHurt { 0%,100% { transform:scale(1) rotate(0); } 25% { transform:scale(1.3) rotate(-14deg); } 50% { transform:scale(1.2) rotate(14deg); } 75% { transform:scale(1.25) rotate(-8deg); } }
+            .vars-robot-cheer { animation:robotCheer 0.6s infinite alternate; filter:drop-shadow(0 0 18px #FBBF24) !important; }
+            @keyframes robotCheer { 0% { transform:scale(1) translateY(0); } 100% { transform:scale(1.35) translateY(-16px); } }
+            .vars-chest-glow { animation:chestGlow 0.7s infinite alternate; filter:drop-shadow(0 0 20px #F59E0B) !important; }
+            @keyframes chestGlow { 0% { transform:scale(1); } 100% { transform:scale(1.25); } }
+            .vars-laser-beam { position:absolute; width:4px; background:linear-gradient(180deg,#38BDF8,#67E8F9); box-shadow:0 0 15px #38BDF8; border-radius:2px; animation:laserPulse 0.3s infinite alternate; z-index:30; }
+            @keyframes laserPulse { 0% { opacity:0.6; width:3px; } 100% { opacity:1; width:6px; } }
+            .vars-wind-line { position:absolute; height:3px; background:linear-gradient(90deg,transparent,#67E8F9,transparent); border-radius:3px; animation:windBlow 0.8s linear infinite; pointer-events:none; }
+            @keyframes windBlow { 0% { transform:translateX(-30px); opacity:0; } 50% { opacity:0.8; } 100% { transform:translateX(80px); opacity:0; } }
+            .vars-sonar-wave { position:absolute; border:2px solid #38BDF8; border-radius:50%; animation:sonarExpand 1.2s infinite ease-out; opacity:0; pointer-events:none; }
+            @keyframes sonarExpand { 0% { width:10px; height:10px; opacity:0.9; transform:scale(0.3); } 100% { width:80px; height:80px; opacity:0; transform:scale(2.2); } }
+            .vars-shield-dome { position:absolute; border-radius:50%; border:3px solid #38BDF8; background:radial-gradient(circle, rgba(56,189,248,0.25) 0%, transparent 70%); box-shadow:0 0 25px rgba(56,189,248,0.7); animation:shieldPulse 1.5s infinite alternate; pointer-events:none; }
+            @keyframes shieldPulse { 0% { transform:scale(0.95); opacity:0.7; } 100% { transform:scale(1.06); opacity:1; } }
+
+            /* ANIMAÇÕES VISUAIS DE PARTÍCULAS E ELEMENTOS DOS CENÁRIOS */
+            .vars-coin-particle {
+                position: absolute;
+                font-size: 1.4rem;
+                pointer-events: none;
+                z-index: 60;
+                animation: coinFlyArc 0.85s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+            }
+            @keyframes coinFlyArc {
+                0% { transform: translate(0, 0) scale(0.6) rotate(0deg); opacity: 1; }
+                40% { transform: translate(var(--dx, -25px), var(--dy, -45px)) scale(1.3) rotate(180deg); opacity: 1; filter: drop-shadow(0 0 10px #FBBF24); }
+                100% { transform: translate(var(--tx, -55px), var(--ty, -15px)) scale(0.9) rotate(360deg); opacity: 0; }
+            }
+            .vars-heart-loss {
+                position: absolute;
+                font-size: 1.6rem;
+                pointer-events: none;
+                z-index: 60;
+                animation: heartLossFloat 0.9s ease-out forwards;
+            }
+            @keyframes heartLossFloat {
+                0% { transform: translate(0, 0) scale(0.8); opacity: 1; filter: drop-shadow(0 0 12px #EF4444); }
+                40% { transform: translate(0, -25px) scale(1.4); opacity: 1; }
+                100% { transform: translate(0, -55px) scale(1.1); opacity: 0; }
+            }
+            .vars-smoke-puff {
+                position: absolute;
+                font-size: 1.5rem;
+                pointer-events: none;
+                z-index: 55;
+                animation: smokeFloat 0.9s ease-out forwards;
+            }
+            @keyframes smokeFloat {
+                0% { transform: scale(0.4) translateY(0); opacity: 0.9; }
+                100% { transform: scale(1.8) translateY(-40px); opacity: 0; }
+            }
+            .vars-sparkle-burst {
+                position: absolute;
+                font-size: 1.3rem;
+                pointer-events: none;
+                z-index: 55;
+                animation: sparkPop 0.75s ease-out forwards;
+            }
+            @keyframes sparkPop {
+                0% { transform: scale(0.3); opacity: 1; }
+                50% { transform: scale(1.4) translateY(-15px); opacity: 1; filter: drop-shadow(0 0 10px #FDE047); }
+                100% { transform: scale(2) translateY(-30px); opacity: 0; }
+            }
+            .vars-crystal-particle {
+                position: absolute;
+                font-size: 1.4rem;
+                pointer-events: none;
+                z-index: 60;
+                animation: crystalFly 0.85s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+            }
+            @keyframes crystalFly {
+                0% { transform: translate(0, 0) scale(0.6); opacity: 1; }
+                50% { transform: translate(-30px, -40px) scale(1.35); opacity: 1; filter: drop-shadow(0 0 12px #38BDF8); }
+                100% { transform: translate(-65px, -15px) scale(0.9); opacity: 0; }
+            }
+            .vars-solar-beam {
+                position: absolute;
+                width: 6px;
+                background: linear-gradient(180deg, #FBBF24, #F59E0B, #10B981);
+                border-radius: 4px;
+                box-shadow: 0 0 20px #FBBF24;
+                animation: solarBeamPulse 0.4s infinite alternate;
+                z-index: 35;
+                pointer-events: none;
+            }
+            @keyframes solarBeamPulse {
+                0% { opacity: 0.7; transform: scaleX(0.8); }
+                100% { opacity: 1; transform: scaleX(1.4); }
+            }
+            .vars-conveyor-belt {
+                background: repeating-linear-gradient(90deg, #1E293B, #1E293B 20px, #334155 20px, #334155 40px);
+                background-size: 40px 100%;
+            }
+            .vars-conveyor-moving {
+                animation: beltSlide 0.4s linear infinite;
+            }
+            @keyframes beltSlide {
+                0% { background-position: 0 0; }
+                100% { background-position: 40px 0; }
+            }
+            .vars-fan-spin {
+                animation: fanRotate 0.22s linear infinite;
+            }
+            @keyframes fanRotate {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            .vars-portal-vortex {
+                animation: portalSpin 2.5s linear infinite;
+            }
+            @keyframes portalSpin {
+                0% { transform: rotate(0deg) scale(1); }
+                50% { transform: rotate(180deg) scale(1.15); filter: drop-shadow(0 0 20px #38BDF8); }
+                100% { transform: rotate(360deg) scale(1); }
+            }
+            .vars-sonar-pulse-ring {
+                position: absolute;
+                border: 2px solid #38BDF8;
+                border-radius: 50%;
+                animation: sonarRingExpand 1.1s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+                pointer-events: none;
+            }
+            @keyframes sonarRingExpand {
+                0% { width: 12px; height: 12px; opacity: 1; transform: scale(0.5); }
+                100% { width: 110px; height: 110px; opacity: 0; transform: scale(2.2); }
+            }
+            .vars-skid-trail {
+                position: absolute;
+                bottom: 18px;
+                height: 4px;
+                background: #000;
+                border-radius: 2px;
+                opacity: 0.75;
+                box-shadow: 0 0 6px rgba(0,0,0,0.8);
+            }
+            .vars-robot-dizzy {
+                animation: robotDizzy 0.6s infinite alternate;
+                filter: grayscale(0.8) drop-shadow(0 0 10px #64748B) !important;
+            }
+            @keyframes robotDizzy {
+                0% { transform: rotate(-25deg) translateY(8px); }
+                100% { transform: rotate(25deg) translateY(8px); }
+            }
+            .vars-arena-shake {
+                animation: arenaShake 0.4s ease;
+            }
+            @keyframes arenaShake {
+                0%, 100% { transform: translate(0, 0); }
+                20% { transform: translate(-6px, 4px); }
+                40% { transform: translate(6px, -4px); }
+                60% { transform: translate(-4px, -2px); }
+                80% { transform: translate(4px, 2px); }
+            }
 
             /* LAYOUT DA MINI-IDE E SCAFFOLDING */
             .vars-ide-layout { display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:18px; margin-bottom:15px; width:100%; max-width:100%; }
@@ -155,10 +313,22 @@ function loadVariaveis() {
             .vars-shortcut-btn.clear { background:#450A0A; border-color:#991B1B; color:#FCA5A5; }
             .vars-shortcut-btn.clear:hover { background:#DC2626; color:white; }
 
-            .vars-code-wrapper { position:relative; display:flex; background:#030712; border-radius:14px; border:1px solid #1F2937; overflow:hidden; min-height:220px; }
-            .vars-line-numbers { background:#0B0F19; color:#4B5563; padding:12px 8px; text-align:right; font-family:'Fira Code', monospace; font-size:0.88rem; line-height:1.7; user-select:none; border-right:1px solid #1F2937; min-width:32px; }
-            .vars-code-input { flex:1; background:transparent; border:none; color:#F3F4F6; padding:12px; font-family:'Fira Code', monospace; font-size:0.9rem; line-height:1.7; resize:none; outline:none; white-space:pre; tab-size:4; min-height:220px; }
-            .vars-autocomplete-box { position:absolute; bottom:10px; right:12px; background:#1E293B; border:1px solid #38BDF8; border-radius:8px; padding:6px 10px; font-size:0.75rem; color:#7DD3FC; display:none; z-index:50; box-shadow:0 4px 15px rgba(0,0,0,0.5); font-family:'Fira Code', monospace; }
+            .vars-code-wrapper { position:relative; display:flex; background:#030712; border-radius:14px; border:2px solid #1F2937; overflow:hidden; min-height:380px; height:380px; transition:border-color 0.2s; }
+            .vars-code-wrapper:focus-within { border-color:#38BDF8; box-shadow:0 0 20px rgba(56,189,248,0.2); }
+            .vars-line-numbers { background:#0B0F19; color:#4B5563; padding:14px 10px; text-align:right; font-family:'Fira Code', monospace; font-size:0.88rem; line-height:1.8; user-select:none; border-right:1px solid #1F2937; min-width:38px; }
+            .vars-code-input { flex:1; background:transparent; border:none; color:#F3F4F6; padding:14px; font-family:'Fira Code', monospace; font-size:0.95rem; line-height:1.8; resize:none; outline:none; white-space:pre; tab-size:4; min-height:380px; }
+            
+            /* AUTOCOMPLETE FLUTUANTE DA MINI-IDE (PADRÃO AULA 4) */
+            .vars-autocomplete-box { position:absolute; left:48px; background:#0B0F19; border:2px solid #38BDF8; border-radius:12px; z-index:100; box-shadow:0 12px 30px rgba(0,0,0,0.85); max-height:240px; overflow-y:auto; display:none; min-width:320px; width:max-content; max-width:92%; }
+            .vars-ac-item { padding:8px 14px; color:#CBD5E1; font-family:'Fira Code', monospace; font-size:0.83rem; cursor:pointer; border-bottom:1px solid #1E293B; display:flex; justify-content:space-between; align-items:center; transition:0.12s; }
+            .vars-ac-item:hover, .vars-ac-item.active { background:rgba(56,189,248,0.25); color:#38BDF8; }
+            .vars-ac-shortcut { font-size:0.72rem; background:#1E293B; color:#38BDF8; padding:2px 6px; border-radius:4px; margin-left:12px; font-weight:700; border:1px solid #38BDF8; }
+
+            /* MODO TELA EXPANDIDA / MAXIMIZADA DA IDE */
+            .vars-ide-maximized { position:fixed !important; top:20px !important; left:20px !important; right:20px !important; bottom:20px !important; z-index:100000 !important; background:#070B14 !important; border:3px solid #38BDF8 !important; border-radius:20px !important; padding:24px !important; box-shadow:0 0 60px rgba(0,0,0,0.95), 0 0 35px rgba(56,189,248,0.45) !important; display:flex !important; flex-direction:column !important; overflow:hidden !important; animation:varsFadeIn 0.2s ease; }
+            .vars-ide-maximized .vars-code-wrapper { flex:1 !important; height:auto !important; min-height:460px !important; }
+            .vars-ide-maximized .vars-code-input { min-height:460px !important; font-size:1.05rem !important; line-height:1.8 !important; }
+            .vars-ide-maximized .vars-shortcuts-bar { margin-bottom:14px !important; }
 
             /* CAIXA DE DICA E RESOLUÇÃO */
             .vars-btn-solution { background:linear-gradient(135deg,#D97706,#B45309); border:none; color:white; padding:10px 14px; border-radius:12px; font-size:0.85rem; font-weight:900; cursor:pointer; transition:0.15s; margin-top:12px; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; opacity:0.6; }
@@ -785,32 +955,35 @@ function loadVariaveis() {
                     <div id="vars_ide_n8" style="display:none;">
                         <!-- Atalhos Rápidos com Variáveis, FOR e IF/ELSE -->
                         <div class="vars-shortcuts-bar">
-                            <button type="button" class="vars-shortcut-btn btn-int" onclick="vars_insertText('int bateria = 100;\n')">📦 int bateria = 100;</button>
-                            <button type="button" class="vars-shortcut-btn btn-int" onclick="vars_insertText('int cristais = 0;\n')">💎 int cristais = 0;</button>
-                            <button type="button" class="vars-shortcut-btn btn-float" onclick="vars_insertText('float velocidade = 4.5;\n')">📐 float velocidade = 4.5;</button>
-                            <button type="button" class="vars-shortcut-btn btn-string" onclick="vars_insertText('String status = \"EXPLORANDO\";\n')">🏷️ String status = "EXPLORANDO";</button>
-                            <button type="button" class="vars-shortcut-btn btn-bool" onclick="vars_insertText('bool escudo = true;\n')">🛡️ bool escudo = true;</button>
-                            <button type="button" class="vars-shortcut-btn" style="border-color:#A78BFA;color:#DDD6FE;" onclick="vars_insertText('for (int setor = 1; setor <= 4; setor++) {\n    cristais = cristais + 5;\n}\n')">🔄 for (setor 1..4)</button>
-                            <button type="button" class="vars-shortcut-btn" style="border-color:#34D399;color:#A7F3D0;" onclick="vars_insertText('if (escudo == true) {\n    Serial.println(\"Protegido!\");\n}\n')">🌱 if (escudo == true)</button>
-                            <button type="button" class="vars-shortcut-btn" onclick="vars_insertText('bateria = bateria - 10;\n')">⚡ bateria = bateria - 10;</button>
+                            <button type="button" class="vars-shortcut-btn btn-int" onclick="vars_insertSnippet('bateria')">📦 int bateria = 100;</button>
+                            <button type="button" class="vars-shortcut-btn btn-int" onclick="vars_insertSnippet('cristais')">💎 int cristais = 0;</button>
+                            <button type="button" class="vars-shortcut-btn btn-float" onclick="vars_insertSnippet('velocidade')">📐 float velocidade = 4.5;</button>
+                            <button type="button" class="vars-shortcut-btn btn-string" onclick="vars_insertSnippet('status')">🏷️ String status = "EXPLORANDO";</button>
+                            <button type="button" class="vars-shortcut-btn btn-bool" onclick="vars_insertSnippet('escudo')">🛡️ bool escudo = true;</button>
+                            <button type="button" class="vars-shortcut-btn" style="border-color:#A78BFA;color:#DDD6FE;" onclick="vars_insertSnippet('for_setores')">🔄 for (setor 1..4)</button>
+                            <button type="button" class="vars-shortcut-btn" style="border-color:#34D399;color:#A7F3D0;" onclick="vars_insertSnippet('if_escudo')">🌱 if (escudo == true)</button>
+                            <button type="button" class="vars-shortcut-btn" onclick="vars_insertSnippet('bateria_sub')">⚡ bateria = bateria - 10;</button>
+                            <button type="button" class="vars-shortcut-btn" id="vars_btn_expand_ide" style="border-color:#38BDF8;color:#7DD3FC;margin-left:auto;" onclick="vars_toggleExpandIde()" title="Alternar modo tela cheia / expandir editor"><i class="fa-solid fa-expand" id="vars_expand_icon"></i> <span id="vars_expand_label">Expandir IDE</span></button>
                             <button type="button" class="vars-shortcut-btn clear" onclick="vars_clearIde()"><i class="fa-solid fa-trash"></i> Limpar Tudo</button>
                         </div>
 
-                        <!-- Editor Textarea com Numeração de Linhas -->
+                        <!-- Editor Textarea com Numeração de Linhas e Autocomplete Flutuante -->
                         <div class="vars-code-wrapper">
-                            <div class="vars-line-numbers" id="vars_line_numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
+                            <div class="vars-line-numbers" id="vars_line_numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
                             <textarea class="vars-code-input" id="vars_code_input" spellcheck="false"
-                                      placeholder="// 🚀 Grande Desafio Maker do Rover em Marte!&#10;// Combine Variáveis + Loop FOR + IF/ELSE:&#10;// int bateria = 100;&#10;// int cristais = 0;&#10;// bool escudo = true;&#10;// for (int setor = 1; setor <= 4; setor++) {&#10;//     cristais = cristais + 5;&#10;//     bateria = bateria - 10;&#10;// }&#10;// if (cristais >= 20) { status = &quot;MISSAO CUMPRIDA&quot;; }"
+                                      placeholder="// 🚀 Grande Desafio Maker do Rover em Marte!&#10;// Combine Variáveis + Loop FOR + IF/ELSE:&#10;// int bateria = 100;&#10;// int cristais = 0;&#10;// float velocidade = 4.5;&#10;// String status = &quot;EXPLORANDO&quot;;&#10;// bool escudo = true;&#10;// for (int setor = 1; setor <= 4; setor++) {&#10;//     cristais = cristais + 5;&#10;//     bateria = bateria - 10;&#10;// }&#10;// if (escudo == true) { status = &quot;ROVER PROTEGIDO&quot;; }"
                                       oninput="vars_handleIdeInput(); vars_ideAutoComplete(this);"
                                       onkeydown="vars_handleIdeKeyDown(event, this);"
+                                      onclick="vars_trackCursor()"
+                                      onkeyup="vars_trackCursor()"
                                       onscroll="document.getElementById('vars_line_numbers').scrollTop = this.scrollTop;"></textarea>
                             <div class="vars-autocomplete-box" id="vars_autocomplete_list"></div>
                         </div>
 
-                        <div style="background:#0F172A;border:1px dashed #38BDF8;border-radius:12px;padding:10px 14px;margin-top:10px;font-size:0.84rem;color:#CBD5E1;display:flex;flex-direction:column;gap:6px;line-height:1.5;">
-                            <div><b>⚡ Desafio de Mestre:</b> Declare suas variáveis, use um laço <code>for</code> para percorrer os 4 setores de Marte e um <code>if/else</code> para checar o escudo!</div>
+                        <div style="background:#0F172A;border:1px dashed #38BDF8;border-radius:12px;padding:12px 16px;margin-top:12px;font-size:0.85rem;color:#CBD5E1;display:flex;flex-direction:column;gap:6px;line-height:1.6;">
+                            <div><b>⚡ Super Poder do Programador (Autocompletar):</b> Digite comandos como <code>int</code>, <code>flo</code>, <code>for</code>, <code>if</code>, <code>bat</code> ou <code>esc</code> e aperte <b>Tab ⇥</b> ou <b>Enter ↵</b> para autocompletar na hora!</div>
                             <div style="font-size:0.80rem;color:#94A3B8;">
-                                <b>Dica:</b> Aperte <b>Tab ⇥</b> para autocompletar qualquer palavra-chave como mágica!
+                                <b>Dica Maker:</b> Clique nos botões coloridos no topo para escrever blocos prontos ou clique em <b>Expandir IDE</b> para ter uma tela gigante de programação!
                             </div>
                         </div>
                     </div>
@@ -820,8 +993,11 @@ function loadVariaveis() {
                         <i class="fa-solid fa-lightbulb"></i> <span>💡 Precisa de Ajuda? Ver Resolução C/C++</span>
                     </button>
                     <div class="vars-solution-card" id="vars_solution_box">
-                        <div style="font-weight:900;color:#FBBF24;margin-bottom:6px;font-size:0.88rem;">📋 Resolução Recomendada em C/C++:</div>
-                        <pre id="vars_solution_text" style="margin:0;background:#030712;padding:10px;border-radius:8px;border:1px solid #F59E0B;color:#FDE68A;font-family:'Fira Code',monospace;font-size:0.82rem;white-space:pre-wrap;"></pre>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
+                            <span style="font-weight:900;color:#FBBF24;font-size:0.88rem;"><i class="fa-solid fa-lightbulb"></i> 📋 Resolução Recomendada em C/C++:</span>
+                            <button type="button" onclick="vars_applyCurrentSolution()" style="background:linear-gradient(135deg,#10B981,#059669);color:white;border:none;padding:5px 12px;border-radius:8px;font-weight:900;font-size:0.78rem;cursor:pointer;display:inline-flex;align-items:center;gap:4px;box-shadow:0 3px 10px rgba(16,185,129,0.3);"><i class="fa-solid fa-wand-magic-sparkles"></i> ✨ Preencher no Exercício</button>
+                        </div>
+                        <pre id="vars_solution_text" style="margin:0;background:#030712;padding:12px;border-radius:10px;border:1px solid #F59E0B;color:#FDE68A;font-family:'Fira Code',monospace;font-size:0.84rem;white-space:pre-wrap;line-height:1.55;"></pre>
                     </div>
 
                     <!-- Botões de Execução -->
@@ -987,8 +1163,9 @@ void loop() {
         solution: `// Solução Nível 8 (Desafio Geral Maker):
 int bateria = 100;
 int cristais = 0;
-bool escudo = true;
+float velocidade = 4.5;
 String status = "EXPLORANDO";
+bool escudo = true;
 
 void loop() {
   for (int setor = 1; setor <= 4; setor++) {
@@ -1110,6 +1287,107 @@ function vars_updateLevelButtons() {
 
 /* ================= RENDERIZADOR DA BANCADA DE MEMÓRIA RAM ================= */
 
+function vars_showToast(text, color = '#FBBF24', left = '50%', top = '25%') {
+    const arena = document.getElementById('vars_arena_box');
+    if (!arena) return;
+    const t = document.createElement('div');
+    t.className = 'vars-pop-toast';
+    t.style.color = color;
+    t.style.left = typeof left === 'number' ? `${left}px` : left;
+    t.style.top = typeof top === 'number' ? `${top}px` : top;
+    t.innerHTML = text;
+    arena.appendChild(t);
+    setTimeout(() => t.remove(), 1300);
+}
+
+function vars_spawnCoinParticles(x, y) {
+    const arena = document.getElementById('vars_arena_box');
+    if (!arena) return;
+    const offsets = [
+        { dx: -25, dy: -45, tx: -40, ty: -20 },
+        { dx: 15, dy: -55, tx: -15, ty: -25 },
+        { dx: -10, dy: -60, tx: -30, ty: -10 }
+    ];
+    offsets.forEach((off, i) => {
+        setTimeout(() => {
+            const p = document.createElement('div');
+            p.className = 'vars-coin-particle';
+            p.style.setProperty('--dx', `${off.dx}px`);
+            p.style.setProperty('--dy', `${off.dy}px`);
+            p.style.setProperty('--tx', `${off.tx}px`);
+            p.style.setProperty('--ty', `${off.ty}px`);
+            p.style.left = `${x}px`;
+            p.style.top = `${y}px`;
+            p.innerText = '🪙';
+            arena.appendChild(p);
+            setTimeout(() => p.remove(), 900);
+        }, i * 100);
+    });
+}
+
+function vars_spawnDamageEffect(x, y) {
+    const arena = document.getElementById('vars_arena_box');
+    if (!arena) return;
+    arena.classList.add('vars-arena-shake');
+    setTimeout(() => arena.classList.remove('vars-arena-shake'), 450);
+
+    const h = document.createElement('div');
+    h.className = 'vars-heart-loss';
+    h.style.left = `${x}px`;
+    h.style.top = `${y}px`;
+    h.innerText = '💔';
+    arena.appendChild(h);
+    setTimeout(() => h.remove(), 950);
+
+    const s = document.createElement('div');
+    s.className = 'vars-smoke-puff';
+    s.style.left = `${x - 10}px`;
+    s.style.top = `${y + 10}px`;
+    s.innerText = '💥';
+    arena.appendChild(s);
+    setTimeout(() => s.remove(), 900);
+}
+
+function vars_spawnCrystalParticles(x, y) {
+    const arena = document.getElementById('vars_arena_box');
+    if (!arena) return;
+    for (let i = 0; i < 2; i++) {
+        setTimeout(() => {
+            const p = document.createElement('div');
+            p.className = 'vars-crystal-particle';
+            p.style.left = `${x}px`;
+            p.style.top = `${y}px`;
+            p.innerText = '💎';
+            arena.appendChild(p);
+            setTimeout(() => p.remove(), 900);
+        }, i * 150);
+    }
+}
+
+function vars_spawnSmokePuff(x, y) {
+    const arena = document.getElementById('vars_arena_box');
+    if (!arena) return;
+    const s = document.createElement('div');
+    s.className = 'vars-smoke-puff';
+    s.style.left = `${x}px`;
+    s.style.top = `${y}px`;
+    s.innerText = '💨';
+    arena.appendChild(s);
+    setTimeout(() => s.remove(), 900);
+}
+
+function vars_spawnSparks(x, y) {
+    const arena = document.getElementById('vars_arena_box');
+    if (!arena) return;
+    const sp = document.createElement('div');
+    sp.className = 'vars-sparkle-burst';
+    sp.style.left = `${x}px`;
+    sp.style.top = `${y}px`;
+    sp.innerText = '⚡';
+    arena.appendChild(sp);
+    setTimeout(() => sp.remove(), 800);
+}
+
 function vars_renderRamBoxes(boxes) {
     const container = document.getElementById('vars_ram_boxes');
     if (!container) return;
@@ -1146,19 +1424,33 @@ function vars_renderArena(lvl, state = {}) {
         // NÍVEL 1: ROBÔ NA CAVERNA DE MOEDAS E ESPINHOS
         const step = state.step || 0; // 0=inicio, 1=bau, 2=espinho, 3=fim
         const posX = step === 0 ? 30 : step === 1 ? 190 : step === 2 ? 350 : 490;
+        const robotClass = state.robotClass || (step > 0 ? 'vars-robot-walking' : '');
+        const robotEmoji = state.robotEmoji || (step === 2 && state.hurt ? '😵' : step === 3 ? '🥳' : step === 1 ? '😃' : '🤖');
+        const bauAberto = step >= 1 && (state.moedas !== undefined ? state.moedas > 0 : true);
+        const espinhoAtivo = step === 2;
+
         arena.innerHTML = `
             <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;">
-                <div style="display:flex;gap:20px;font-weight:900;font-size:0.95rem;background:#0F172A;padding:6px 18px;border-radius:20px;border:1px solid #334155;">
+                <div style="display:flex;gap:20px;font-weight:900;font-size:0.95rem;background:#0F172A;padding:6px 18px;border-radius:20px;border:1px solid #334155;box-shadow:0 4px 15px rgba(0,0,0,0.5);">
                     <span style="color:#EF4444;">❤️ Vidas: <b id="hud_vidas">${state.vidas !== undefined ? state.vidas : 3}</b></span>
                     <span style="color:#FBBF24;">🪙 Moedas: <b id="hud_moedas">${state.moedas !== undefined ? state.moedas : 0}</b></span>
                     <span style="color:#38BDF8;">⭐ Pontos: <b id="hud_pontos">${state.pontos !== undefined ? state.pontos : 0}</b></span>
                 </div>
-                <div class="vars-robot-track">
-                    <div class="vars-robot-actor" style="left:${posX}px;">🤖</div>
+                <div class="vars-robot-track" style="background:radial-gradient(ellipse at 50% 50%, #1E293B 0%, #0F172A 100%);border:2px solid #334155;">
+                    <div class="vars-robot-actor ${robotClass}" id="robot_actor_n1" style="left:${posX}px;">
+                        <span style="font-size:2.2rem;filter:drop-shadow(0 6px 10px rgba(0,0,0,0.7));">${robotEmoji}</span>
+                        ${state.speech ? `<div style="position:absolute;top:-30px;left:50%;transform:translateX(-50%);background:#0F172A;color:#FBBF24;font-size:0.75rem;padding:3px 10px;border-radius:10px;border:1px solid #F59E0B;white-space:nowrap;font-weight:900;box-shadow:0 4px 12px rgba(0,0,0,0.8);">${state.speech}</div>` : ''}
+                    </div>
                     <div class="vars-node-spot ${step >= 0 ? 'active' : ''}" title="Início">🏁</div>
-                    <div class="vars-node-spot ${step >= 1 ? 'active' : ''}" title="Baú Dourado (+10 Moedas)">📦</div>
-                    <div class="vars-node-spot ${step >= 2 ? 'active' : ''}" title="Armadilha de Espinho (-1 Vida)">🌵</div>
-                    <div class="vars-node-spot ${step >= 3 ? 'active' : ''}" title="Portal de Saída">🏆</div>
+                    <div class="vars-node-spot ${step >= 1 ? 'active vars-chest-glow' : ''}" id="spot_bau" style="${bauAberto ? 'border-color:#F59E0B;box-shadow:0 0 18px #F59E0B;' : ''}" title="Baú Dourado (+10 Moedas)">
+                        ${bauAberto ? '🎁' : '📦'}
+                        ${bauAberto ? '<div class="vars-sparkle-burst" style="left:14px;top:-10px;">✨</div>' : ''}
+                    </div>
+                    <div class="vars-node-spot ${step >= 2 ? 'active' : ''}" style="${espinhoAtivo ? 'border-color:#EF4444;box-shadow:0 0 20px #EF4444;animation:pulseGlow 0.4s infinite alternate;' : ''}" title="Armadilha de Espinho (-1 Vida)">
+                        🌵
+                        ${espinhoAtivo ? '<div style="position:absolute;top:-12px;font-size:0.9rem;color:#EF4444;">⚡</div>' : ''}
+                    </div>
+                    <div class="vars-node-spot ${step >= 3 ? 'active vars-portal-vortex' : ''}" style="${step >= 3 ? 'border-color:#38BDF8;box-shadow:0 0 25px #38BDF8;' : ''}" title="Portal de Saída">🏆</div>
                 </div>
             </div>
         `;
@@ -1166,22 +1458,46 @@ function vars_renderArena(lvl, state = {}) {
         // NÍVEL 2: ESTAÇÃO METEOROLÓGICA & TERMÔMETRO DIGITAL
         const temp = state.tempMedia !== undefined ? state.tempMedia : 0.0;
         const mercuryHeight = temp > 0 ? Math.min(100, Math.max(15, (temp / 40) * 100)) : 15;
+        const robotSpeech = state.speech || (temp > 0 ? `MED: ${temp.toFixed(1)}°C [CALIBRADO]` : 'Aguardando medições...');
+        const reading = state.reading || 'idle'; // 'manha', 'tarde', 'done'
+
         arena.innerHTML = `
             <div class="vars-weather-bench">
+                <!-- Zona 1: Manhã -->
+                <div style="display:flex;flex-direction:column;align-items:center;background:${reading === 'manha' ? 'rgba(56,189,248,0.2)' : '#0F172A'};padding:8px 12px;border-radius:14px;border:1px solid ${reading === 'manha' ? '#38BDF8' : '#334155'};transition:all 0.3s;">
+                    <div style="font-size:2rem;">🌅</div>
+                    <span style="font-size:0.75rem;font-weight:900;color:#38BDF8;">Manhã: 20.5°C</span>
+                </div>
+
+                <!-- Robô Meteorologista com Sensor -->
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;">
+                    <div style="font-size:3.2rem;filter:drop-shadow(0 6px 10px rgba(0,0,0,0.6));">🤖</div>
+                    <span style="font-size:0.75rem;color:#7DD3FC;font-weight:800;background:#0F172A;padding:2px 8px;border-radius:8px;border:1px solid #38BDF8;">Sensor DHT11</span>
+                    ${state.speech ? `<div style="position:absolute;top:-28px;background:#0F172A;color:#38BDF8;font-size:0.72rem;padding:3px 8px;border-radius:8px;border:1px solid #38BDF8;white-space:nowrap;font-weight:900;">${state.speech}</div>` : ''}
+                </div>
+
+                <!-- Termômetro de Mercúrio com Escala -->
                 <div class="vars-thermo-wrap">
                     <div class="vars-thermo-glass">
                         <div class="vars-thermo-mercury" style="height:${mercuryHeight}%;"></div>
                     </div>
                     <div>
                         <div style="font-size:0.75rem;color:#94A3B8;font-weight:900;">TERMÔMETRO</div>
-                        <div style="font-family:'Fira Code';font-size:1.3rem;font-weight:900;color:#FBBF24;">${temp > 0 ? temp.toFixed(1) : '--.-'} °C</div>
-                        <div style="font-size:0.72rem;color:#38BDF8;">Bateria: 4.85 V</div>
+                        <div style="font-family:'Fira Code';font-size:1.35rem;font-weight:900;color:#FBBF24;">${temp > 0 ? temp.toFixed(1) : '--.-'} °C</div>
+                        <div style="font-size:0.72rem;color:#38BDF8;">float preciso (ponto decimal)</div>
                     </div>
                 </div>
 
-                <div class="vars-lcd">
-                    <div class="vars-lcd-line">ESTACAO MAKER v1</div>
-                    <div class="vars-lcd-line" id="vars_lcd_line2">${temp > 0 ? `MED: ${temp.toFixed(1)}C [OK]` : 'AGUARDANDO DADOS...'}</div>
+                <!-- Zona 2: Tarde -->
+                <div style="display:flex;flex-direction:column;align-items:center;background:${reading === 'tarde' ? 'rgba(245,158,11,0.2)' : '#0F172A'};padding:8px 12px;border-radius:14px;border:1px solid ${reading === 'tarde' ? '#F59E0B' : '#334155'};transition:all 0.3s;">
+                    <div style="font-size:2rem;">☀️🔥</div>
+                    <span style="font-size:0.75rem;font-weight:900;color:#FBBF24;">Tarde: 31.5°C</span>
+                </div>
+
+                <!-- Display LCD 16x2 Arduino -->
+                <div class="vars-lcd" style="width:100%;max-width:520px;margin-top:6px;">
+                    <div class="vars-lcd-line">ESTACAO ARDUINO v1</div>
+                    <div class="vars-lcd-line" id="vars_lcd_line2">${state.lcdText || (temp > 0 ? `MED: ${temp.toFixed(1)}C [OK]` : 'AGUARDANDO DADOS...')}</div>
                 </div>
             </div>
         `;
@@ -1189,16 +1505,25 @@ function vars_renderArena(lvl, state = {}) {
         // NÍVEL 3: COFRE ELETRÔNICO
         const aberto = state.travaAberta === true;
         arena.innerHTML = `
-            <div class="vars-vault-box">
-                <div class="vars-vault-leds">
-                    <div class="vars-vault-led red ${aberto ? '' : 'on'}" title="Trancado"></div>
-                    <div class="vars-vault-led green ${aberto ? 'on' : ''}" title="Destravado"></div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:20px;width:100%;max-width:560px;">
+                <!-- Robô Hacker Maker -->
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;">
+                    <div style="font-size:3.2rem;filter:drop-shadow(0 6px 10px rgba(0,0,0,0.6));">${aberto ? '🥳' : '🤖'}</div>
+                    <span style="font-size:0.75rem;color:#34D399;font-weight:800;background:#0F172A;padding:2px 8px;border-radius:8px;border:1px solid #10B981;">Teclado Matrix 4x4</span>
+                    ${state.speech ? `<div style="position:absolute;top:-28px;background:#0F172A;color:#34D399;font-size:0.72rem;padding:3px 8px;border-radius:8px;border:1px solid #10B981;white-space:nowrap;font-weight:900;">${state.speech}</div>` : ''}
                 </div>
-                <div class="vars-vault-wheel ${aberto ? 'unlocked' : ''}">
-                    ${aberto ? '🔓' : '🔒'}
-                </div>
-                <div style="font-family:'Fira Code';font-size:0.88rem;background:#030712;padding:6px 14px;border-radius:10px;border:1px solid ${aberto ? '#10B981' : '#475569'};color:${aberto ? '#34D399' : '#CBD5E1'};margin-top:6px;">
-                    STATUS: ${aberto ? 'COFRE DESTRAVADO! [ACESSO PERMITIDO]' : 'TRAVA DE SEGURANCA ATIVA'}
+
+                <div class="vars-vault-box" style="flex:1;">
+                    <div class="vars-vault-leds">
+                        <div class="vars-vault-led red ${aberto ? '' : 'on'}" title="Trancado (bool travaAberta = false)"></div>
+                        <div class="vars-vault-led green ${aberto ? 'on' : ''}" title="Destravado (bool travaAberta = true)"></div>
+                    </div>
+                    <div class="vars-vault-wheel ${aberto ? 'unlocked' : ''}">
+                        ${aberto ? '🔓' : '🔒'}
+                    </div>
+                    <div style="font-family:'Fira Code';font-size:0.86rem;background:#030712;padding:6px 14px;border-radius:10px;border:1px solid ${aberto ? '#10B981' : '#475569'};color:${aberto ? '#34D399' : '#CBD5E1'};margin-top:6px;width:100%;text-align:center;">
+                        ${aberto ? '✨ COFRE ABERTO! 🏅 Placas de Ouro ✨' : (state.typedPass ? `DIGITANDO: ${state.typedPass}` : 'TRAVA DE SEGURANÇA ATIVA')}
+                    </div>
                 </div>
             </div>
         `;
@@ -1217,12 +1542,17 @@ function vars_renderArena(lvl, state = {}) {
                 <div style="width:100%;max-width:540px;background:#1E293B;height:16px;border-radius:10px;overflow:hidden;border:1px solid #334155;">
                     <div style="background:linear-gradient(90deg,#F59E0B,#10B981);height:100%;width:${energia}%;transition:width 0.4s ease;border-radius:8px;"></div>
                 </div>
-                <div class="vars-robot-track" style="max-width:540px;">
-                    <div class="vars-robot-actor" style="left:${posX}px;">🤖</div>
-                    <div class="vars-node-spot ${ciclo >= 1 ? 'active' : ''}" title="Gerador Solar 1 (+25%)">☀️1</div>
-                    <div class="vars-node-spot ${ciclo >= 2 ? 'active' : ''}" title="Gerador Solar 2 (+25%)">☀️2</div>
-                    <div class="vars-node-spot ${ciclo >= 3 ? 'active' : ''}" title="Gerador Solar 3 (+25%)">☀️3</div>
-                    <div class="vars-node-spot ${ciclo >= 4 ? 'active' : ''}" title="Gerador Solar 4 (+25%)">☀️4</div>
+                <div class="vars-robot-track vars-conveyor-belt ${ciclo > 0 ? 'vars-conveyor-moving' : ''}" style="max-width:540px;position:relative;">
+                    <div class="vars-robot-actor ${ciclo > 0 ? 'vars-robot-walking' : ''}" style="left:${posX}px;">
+                        <span style="font-size:2.2rem;">🤖</span>
+                        ${ciclo > 0 ? '<div style="position:absolute;top:-15px;right:-10px;font-size:1rem;color:#FBBF24;animation:pulseGlow 0.4s infinite alternate;">⚡</div>' : ''}
+                        ${energia >= 100 ? '<div style="position:absolute;bottom:-18px;font-size:1.1rem;">🚀🔥</div>' : ''}
+                    </div>
+                    ${ciclo > 0 && ciclo <= 4 ? `<div class="vars-solar-beam" style="left:${posX + 24}px;top:0;height:45px;"></div>` : ''}
+                    <div class="vars-node-spot ${ciclo >= 1 ? 'active' : ''}" style="${ciclo === 1 ? 'border-color:#F59E0B;box-shadow:0 0 18px #F59E0B;' : ''}" title="Gerador Solar 1 (+25%)">☀️1</div>
+                    <div class="vars-node-spot ${ciclo >= 2 ? 'active' : ''}" style="${ciclo === 2 ? 'border-color:#F59E0B;box-shadow:0 0 18px #F59E0B;' : ''}" title="Gerador Solar 2 (+25%)">☀️2</div>
+                    <div class="vars-node-spot ${ciclo >= 3 ? 'active' : ''}" style="${ciclo === 3 ? 'border-color:#F59E0B;box-shadow:0 0 18px #F59E0B;' : ''}" title="Gerador Solar 3 (+25%)">☀️3</div>
+                    <div class="vars-node-spot ${ciclo >= 4 ? 'active' : ''}" style="${ciclo >= 4 ? 'border-color:#10B981;box-shadow:0 0 25px #10B981;' : ''}" title="Gerador Solar 4 (+25%)">☀️4</div>
                 </div>
             </div>
         `;
@@ -1239,12 +1569,15 @@ function vars_renderArena(lvl, state = {}) {
                     <span style="color:#38BDF8;">💎 Mochila: <b id="hud_cristais">${cristais} / 20 cristais</b></span>
                     <span style="color:#FBBF24;">🔋 Bateria: <b id="hud_bat_min">${bat}%</b></span>
                 </div>
-                <div class="vars-robot-track" style="max-width:540px;background:linear-gradient(90deg,#450A0A,#1E1B4B);border-color:#F43F5E;">
-                    <div class="vars-robot-actor" style="left:${posX}px;">🚜</div>
-                    <div class="vars-node-spot ${setor >= 1 ? 'active' : ''}" style="border-color:${setor >= 1 ? '#38BDF8' : '#334155'};" title="Setor Alfa (+5 Cristais)">💎1</div>
-                    <div class="vars-node-spot ${setor >= 2 ? 'active' : ''}" style="border-color:${setor >= 2 ? '#38BDF8' : '#334155'};" title="Setor Beta (+5 Cristais)">💎2</div>
-                    <div class="vars-node-spot ${setor >= 3 ? 'active' : ''}" style="border-color:${setor >= 3 ? '#38BDF8' : '#334155'};" title="Setor Gama (+5 Cristais)">💎3</div>
-                    <div class="vars-node-spot ${setor >= 4 ? 'active' : ''}" style="border-color:${setor >= 4 ? '#38BDF8' : '#334155'};" title="Setor Delta (+5 Cristais)">💎4</div>
+                <div class="vars-robot-track" style="max-width:540px;background:radial-gradient(circle at 50% 50%, #450A0A 0%, #1E1B4B 100%);border-color:#F43F5E;position:relative;">
+                    <div class="vars-robot-actor" style="left:${posX}px;">
+                        <span style="font-size:2.2rem;">🚜</span>
+                        ${setor > 0 ? '<div class="vars-laser-beam" style="left:24px;top:45px;height:25px;"></div>' : ''}
+                    </div>
+                    <div class="vars-node-spot ${setor >= 1 ? 'active' : ''}" style="border-color:${setor >= 1 ? '#38BDF8' : '#334155'};box-shadow:${setor === 1 ? '0 0 15px #38BDF8' : 'none'};" title="Setor Alfa (+5 Cristais)">💎1</div>
+                    <div class="vars-node-spot ${setor >= 2 ? 'active' : ''}" style="border-color:${setor >= 2 ? '#38BDF8' : '#334155'};box-shadow:${setor === 2 ? '0 0 15px #38BDF8' : 'none'};" title="Setor Beta (+5 Cristais)">💎2</div>
+                    <div class="vars-node-spot ${setor >= 3 ? 'active' : ''}" style="border-color:${setor >= 3 ? '#38BDF8' : '#334155'};box-shadow:${setor === 3 ? '0 0 15px #38BDF8' : 'none'};" title="Setor Gama (+5 Cristais)">💎3</div>
+                    <div class="vars-node-spot ${setor >= 4 ? 'active' : ''}" style="border-color:${setor >= 4 ? '#38BDF8' : '#334155'};box-shadow:${setor === 4 ? '0 0 20px #38BDF8' : 'none'};" title="Setor Delta (+5 Cristais)">💎4</div>
                 </div>
             </div>
         `;
@@ -1253,21 +1586,37 @@ function vars_renderArena(lvl, state = {}) {
         const fanOn = state.ventiladorLigado === true;
         const temp = state.temperatura || 34.5;
         arena.innerHTML = `
-            <div style="display:flex;align-items:center;justify-content:space-around;width:100%;max-width:560px;gap:16px;flex-wrap:wrap;">
-                <div style="background:#1E293B;padding:14px 18px;border-radius:18px;border:2px solid ${fanOn ? '#10B981' : '#EF4444'};text-align:center;">
-                    <div style="font-size:3rem;display:inline-block;animation:${fanOn ? 'pulseGlow 0.4s infinite alternate' : 'none'};">
+            <div style="display:flex;align-items:center;justify-content:space-around;width:100%;max-width:560px;gap:16px;flex-wrap:wrap;position:relative;">
+                <!-- Ventilador com animação de vento -->
+                <div style="background:#1E293B;padding:14px 18px;border-radius:18px;border:2px solid ${fanOn ? '#10B981' : '#EF4444'};text-align:center;position:relative;overflow:hidden;min-width:180px;">
+                    <div class="${fanOn ? 'vars-fan-spin' : ''}" style="font-size:3.2rem;display:inline-block;">
                         ${fanOn ? '🌀' : '🛑'}
                     </div>
+                    ${fanOn ? `
+                        <div class="vars-wind-line" style="top:25px;left:10px;width:70px;"></div>
+                        <div class="vars-wind-line" style="top:45px;left:5px;width:90px;animation-delay:0.2s;"></div>
+                        <div class="vars-wind-line" style="top:60px;left:15px;width:60px;animation-delay:0.4s;"></div>
+                    ` : ''}
                     <div style="font-family:'Fredoka One';color:${fanOn ? '#34D399' : '#FCA5A5'};font-size:0.95rem;margin-top:4px;">
                         ${fanOn ? 'VENTILADOR LIGADO (RESFRIANDO)' : 'VENTILADOR DESLIGADO'}
                     </div>
                     <div style="font-size:0.75rem;color:#94A3B8;margin-top:2px;">Atuador Digital (Pino 9)</div>
                 </div>
 
-                <div style="display:flex;flex-direction:column;gap:8px;">
-                    <div class="vars-lcd" style="max-width:300px;">
+                <!-- Plantinhas e Mudas da Estufa -->
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;background:#0F172A;padding:12px 16px;border-radius:18px;border:1px solid #334155;">
+                    <div style="font-size:2rem;letter-spacing:6px;">
+                        ${fanOn ? '🌸🌿🌸' : '🥀🍂🥀'}
+                    </div>
+                    <div style="font-size:0.78rem;font-weight:900;color:${fanOn ? '#34D399' : '#F87171'};">
+                        ${fanOn ? '🌱 Clima Agradável: Mudas Felizes!' : '🥵 Alerta: Calor Excessivo!'}
+                    </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:320px;">
+                    <div class="vars-lcd" style="max-width:100%;">
                         <div class="vars-lcd-line">ESTUFA SMART 🌱</div>
-                        <div class="vars-lcd-line" style="color:${fanOn ? '#34D399' : '#F87171'};">${fanOn ? 'CLIMA: RESFRIANDO' : 'ALERTA: CALOR 34.5C'}</div>
+                        <div class="vars-lcd-line" style="color:${fanOn ? '#34D399' : '#F87171'};">${fanOn ? 'CLIMA: RESFRIANDO [OK]' : 'ALERTA: CALOR 34.5C'}</div>
                     </div>
                     <div style="background:#0F172A;padding:8px 12px;border-radius:10px;border:1px solid #334155;font-size:0.8rem;color:#E2E8F0;display:flex;justify-content:space-between;">
                         <span>Termômetro: <b style="color:#FBBF24;">${temp}°C</b></span>
@@ -1291,14 +1640,14 @@ function vars_renderArena(lvl, state = {}) {
                 <div style="width:100%;max-width:540px;height:120px;background:#090D16;border-radius:16px;border:2px solid #334155;position:relative;overflow:hidden;display:flex;align-items:center;">
                     <!-- Linha da Pista -->
                     <div style="position:absolute;bottom:20px;left:0;width:100%;height:3px;background:dashed #475569;"></div>
+                    ${freio ? '<div class="vars-skid-trail" style="left:120px;width:120px;"></div>' : ''}
                     <!-- Carrinho Autônomo -->
                     <div style="position:absolute;left:${carX}px;bottom:14px;font-size:2.8rem;transition:left 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);">
-                        🚗
+                        🏎️
+                        ${freio ? '<div style="position:absolute;top:-18px;left:10px;font-size:1.2rem;animation:pulseGlow 0.3s infinite;">🚨</div>' : ''}
                     </div>
                     <!-- Ondas de Sonar -->
-                    <div style="position:absolute;left:${carX + 60}px;bottom:28px;font-size:1.4rem;color:#38BDF8;animation:sonarPulse 1.2s infinite;">
-                        📡)))
-                    </div>
+                    <div class="vars-sonar-pulse-ring" style="left:${carX + 65}px;bottom:22px;"></div>
                     <!-- Obstáculo (Rocha Espacial) -->
                     <div style="position:absolute;right:25px;bottom:12px;font-size:3rem;" title="Obstáculo a 14.5 cm">
                         🪨
@@ -1320,11 +1669,17 @@ function vars_renderArena(lvl, state = {}) {
                     <span style="color:#FBBF24;">🔋 Bateria: ${bat}%</span>
                     <span style="color:#38BDF8;">💎 Cristais: ${cristais}</span>
                     <span style="color:#34D399;">🛡️ Escudo: ${escudo ? 'ATIVO' : 'OFF'}</span>
-                    <span style="color:#A78BFA;">🚀 Setores: 4</span>
+                    <span style="color:#A78BFA;">🚀 Vel: ${vel} km/h</span>
                 </div>
-                <div class="vars-rover-stage">
-                    <div class="vars-radar-beam" style="display:${escudo ? 'block' : 'none'};"></div>
-                    <div class="vars-rover-body" id="rover_actor">🚜</div>
+                <div class="vars-rover-stage" style="min-height:120px;background:radial-gradient(ellipse at 50% 50%, #450A0A 0%, #090D16 100%);border-radius:16px;border:2px solid #334155;position:relative;overflow:hidden;display:flex;align-items:center;padding:10px 20px;">
+                    ${escudo ? '<div class="vars-shield-dome" style="width:100px;height:100px;left:20px;bottom:10px;"></div>' : ''}
+                    <div class="vars-rover-body" id="rover_actor" style="font-size:3rem;position:absolute;left:35px;bottom:18px;transition:left 1s ease;">
+                        🚜
+                        <div style="position:absolute;top:-10px;right:-10px;font-size:1rem;color:#FBBF24;">💡</div>
+                    </div>
+                    <div style="position:absolute;right:30px;bottom:20px;font-size:2.4rem;">
+                        💎🪨
+                    </div>
                 </div>
             </div>
         `;
@@ -1645,41 +2000,78 @@ function vars_runLevel1() {
     let moedas = 0;
     let pontos = 0;
 
-    // Etapa 1: Baú
+    // Início da caminhada
+    vars_renderArena(1, { step: 0, vidas, moedas, pontos, robotClass: 'vars-robot-walking', speech: 'Lá vou eu explorar a caverna! 🤖' });
+    playSound('step');
+
+    // Etapa 1: Baú de Moedas
     setTimeout(() => {
         playSound('step');
-        if (cmd1 === 'moedas = moedas + 10;') moedas += 10;
-        else if (cmd1 === 'moedas = moedas - 10;') moedas -= 10;
-        else if (cmd1 === 'moedas = 10;') moedas = 10;
+        if (cmd1 === 'moedas = moedas + 10;') {
+            moedas += 10;
+            vars_spawnCoinParticles(220, 50);
+            vars_renderArena(1, { step: 1, vidas, moedas, pontos, robotClass: 'vars-robot-cheer', robotEmoji: '😃', speech: 'Baú Dourado! +10 🪙 Moedas!' });
+            vars_showToast('+10 🪙 MOEDAS COLETADAS!', '#FBBF24', 210, 20);
+        } else if (cmd1 === 'moedas = moedas - 10;') {
+            moedas -= 10;
+            vars_spawnSmokePuff(220, 50);
+            playSound('error');
+            vars_renderArena(1, { step: 1, vidas, moedas, pontos, robotClass: 'vars-robot-hurt', robotEmoji: '😢', speech: 'Ops! Perdi 10 moedas!' });
+            vars_showToast('-10 🪙 MOEDAS PERDIDAS!', '#EF4444', 210, 20);
+        } else if (cmd1 === 'moedas = 10;') {
+            moedas = 10;
+            vars_spawnCoinParticles(220, 50);
+            vars_renderArena(1, { step: 1, vidas, moedas, pontos, robotClass: 'vars-robot-cheer', robotEmoji: '😃', speech: 'Defini 10 moedas!' });
+            vars_showToast('+10 🪙 Moedas!', '#FBBF24', 210, 20);
+        }
 
-        vars_renderArena(1, { step: 1, vidas, moedas, pontos });
         vars_renderRamBoxes([
             { addr: '0x01A0', type: 'int', name: 'vidas', val: vidas },
             { addr: '0x01A2', type: 'int', name: 'moedas', val: moedas, updated: true },
             { addr: '0x01A4', type: 'int', name: 'pontos', val: pontos }
         ]);
 
-        // Etapa 2: Espinho
+        // Etapa 2: Espinho / Dano
         setTimeout(() => {
-            playSound('step');
-            if (cmd2 === 'vidas = vidas - 1;') vidas -= 1;
-            else if (cmd2 === 'vidas = vidas + 1;') vidas += 1;
-            else if (cmd2 === 'vidas = 0;') vidas = 0;
+            if (cmd2 === 'vidas = vidas - 1;') {
+                vidas -= 1;
+                vars_spawnDamageEffect(370, 50);
+                playSound('error');
+                vars_renderArena(1, { step: 2, vidas, moedas, pontos, robotClass: 'vars-robot-hurt', robotEmoji: '😵', speech: 'Ai! O espinho me feriu! 🌵', hurt: true });
+                vars_showToast('💥 -1 ❤️ VIDA PERDIDA!', '#EF4444', 360, 20);
+            } else if (cmd2 === 'vidas = vidas + 1;') {
+                vidas += 1;
+                playSound('step');
+                vars_renderArena(1, { step: 2, vidas, moedas, pontos, robotClass: 'vars-robot-cheer', robotEmoji: '💚', speech: 'Poção curativa! +1 Vida!' });
+                vars_showToast('💚 +1 ❤️ VIDA!', '#10B981', 360, 20);
+            } else if (cmd2 === 'vidas = 0;') {
+                vidas = 0;
+                vars_spawnDamageEffect(370, 50);
+                playSound('error');
+                vars_renderArena(1, { step: 2, vidas: 0, moedas, pontos, robotClass: 'vars-robot-dizzy', robotEmoji: '💫', speech: 'Sem energia! Caí no espinho!', hurt: true });
+                vars_showToast('💀 0 ❤️ TODAS AS VIDAS ZERADAS!', '#EF4444', 360, 20);
+            }
 
-            vars_renderArena(1, { step: 2, vidas, moedas, pontos });
             vars_renderRamBoxes([
                 { addr: '0x01A0', type: 'int', name: 'vidas', val: vidas, updated: true },
                 { addr: '0x01A2', type: 'int', name: 'moedas', val: moedas },
                 { addr: '0x01A4', type: 'int', name: 'pontos', val: pontos }
             ]);
 
-            // Etapa 3: Pontos
+            // Etapa 3: Pontos e Saída
             setTimeout(() => {
-                playSound('step');
-                if (cmd3 === 'pontos = moedas * 100;') pontos = moedas * 100;
-                else if (cmd3 === 'pontos = moedas + 100;') pontos = moedas + 100;
+                if (cmd3 === 'pontos = moedas * 100;') {
+                    pontos = moedas * 100;
+                    vars_spawnSparks(510, 50);
+                    playSound('success');
+                    vars_renderArena(1, { step: 3, vidas, moedas, pontos, robotClass: 'vars-robot-cheer', robotEmoji: '🥳', speech: `Multipliquei: ${moedas} x 100 = ${pontos} pts! 🏆` });
+                    vars_showToast(`⭐ PONTOS: ${moedas} x 100 = ${pontos}!`, '#38BDF8', 410, 15);
+                } else if (cmd3 === 'pontos = moedas + 100;') {
+                    pontos = moedas + 100;
+                    playSound('step');
+                    vars_renderArena(1, { step: 3, vidas, moedas, pontos, robotClass: 'vars-robot-walking', robotEmoji: '🤖', speech: `Soma: ${moedas} + 100 = ${pontos} pts` });
+                }
 
-                vars_renderArena(1, { step: 3, vidas, moedas, pontos });
                 vars_renderRamBoxes([
                     { addr: '0x01A0', type: 'int', name: 'vidas', val: vidas },
                     { addr: '0x01A2', type: 'int', name: 'moedas', val: moedas },
@@ -1688,17 +2080,17 @@ function vars_runLevel1() {
 
                 // Checagem de sucesso
                 if (cmd1 === 'moedas = moedas + 10;' && cmd2 === 'vidas = vidas - 1;' && cmd3 === 'pontos = moedas * 100;' && vidas >= 1 && moedas === 10 && pontos === 1000) {
-                    setTimeout(() => vars_showWin(1, 'Você dominou o tipo int!', 'Suas variáveis guardaram as vidas, somaram moedas e multiplicaram os pontos com perfeição!'), 600);
+                    setTimeout(() => vars_showWin(1, 'Você dominou o tipo int!', 'O robô coletou o baú (+10 moedas), sentiu o espinho (-1 vida) e multiplicou os pontos com perfeição!'), 700);
                 } else {
                     setTimeout(() => {
                         vars_triggerError('Cálculo Incorreto!', 'As variáveis não receberam os valores esperados. O robô precisava de +10 moedas, -1 vida e pontos = moedas * 100.', 'Lembre-se: para somar é +, subtrair é - e multiplicar é * !');
                         vars_running = false;
                         document.getElementById('vars_btn_run').disabled = false;
-                    }, 600);
+                    }, 700);
                 }
-            }, 700);
-        }, 700);
-    }, 600);
+            }, 850);
+        }, 850);
+    }, 750);
 }
 
 function vars_runLevel2() {
@@ -1727,18 +2119,35 @@ function vars_runLevel2() {
     }
 
     const tempMedia = (20.5 + 31.5) / 2.0; // 26.0
+
+    // Passo 1: Robô mede manhã
+    vars_renderArena(2, { tempMedia: 20.5, reading: 'manha', speech: 'Lendo manhã: 20.5°C 🌅', lcdText: 'LENDO MANHA: 20.5C' });
     playSound('step');
-    vars_renderArena(2, { tempMedia });
-    vars_renderRamBoxes([
-        { addr: '0x01A0', type: 'float', name: 'tempManha', val: '20.5' },
-        { addr: '0x01A4', type: 'float', name: 'tempTarde', val: '31.5' },
-        { addr: '0x01A8', type: 'float', name: 'tempMedia', val: tempMedia.toFixed(1), updated: true },
-        { addr: '0x01AC', type: 'float', name: 'tensaoBateria', val: '4.85' }
-    ]);
 
     setTimeout(() => {
-        vars_showWin(2, 'Termômetro Digital Calibrado!', `O tipo <b>float</b> registrou a média exata de <b>${tempMedia.toFixed(1)} °C</b> sem perder as casas decimais!`);
-    }, 800);
+        // Passo 2: Robô mede tarde
+        vars_renderArena(2, { tempMedia: 31.5, reading: 'tarde', speech: 'Lendo tarde: 31.5°C ☀️🔥', lcdText: 'LENDO TARDE: 31.5C' });
+        vars_spawnSparks(480, 40);
+        playSound('step');
+
+        setTimeout(() => {
+            // Passo 3: Média calculada
+            playSound('success');
+            vars_renderArena(2, { tempMedia, reading: 'done', speech: 'Média: (20.5+31.5)/2 = 26.0°C! 💡', lcdText: `MED: ${tempMedia.toFixed(1)}C [CALIBRADO]` });
+            vars_showToast(`🌡️ +${tempMedia.toFixed(1)} °C (float preciso!)`, '#38BDF8', 160, 20);
+
+            vars_renderRamBoxes([
+                { addr: '0x01A0', type: 'float', name: 'tempManha', val: '20.5' },
+                { addr: '0x01A4', type: 'float', name: 'tempTarde', val: '31.5' },
+                { addr: '0x01A8', type: 'float', name: 'tempMedia', val: tempMedia.toFixed(1), updated: true },
+                { addr: '0x01AC', type: 'float', name: 'tensaoBateria', val: '4.85' }
+            ]);
+
+            setTimeout(() => {
+                vars_showWin(2, 'Termômetro Digital Calibrado!', `O tipo <b>float</b> registrou a média exata de <b>${tempMedia.toFixed(1)} °C</b> sem perder as casas decimais!`);
+            }, 800);
+        }, 750);
+    }, 750);
 }
 
 function vars_runLevel3() {
@@ -1774,17 +2183,31 @@ function vars_runLevel3() {
         return;
     }
 
-    playSound('success');
-    vars_renderArena(3, { travaAberta: true });
-    vars_renderRamBoxes([
-        { addr: '0x01A0', type: 'String', name: 'senhaMestre', val: '"ARDUINO2026"' },
-        { addr: '0x01B0', type: 'String', name: 'senhaDigitada', val: `"${inputSenha}"`, updated: true },
-        { addr: '0x01C0', type: 'bool', name: 'travaAberta', val: 'true', updated: true }
-    ]);
+    // Animação de digitação da senha e destravamento
+    vars_renderArena(3, { typedPass: 'ARDUINO...', speech: 'Digitando texto no teclado...' });
+    playSound('step');
 
     setTimeout(() => {
-        vars_showWin(3, 'Cofre Secreto Destravado!', 'Você combinou a variável <b>String</b> de texto com a variável <b>bool</b> da trava de segurança com perfeição!');
-    }, 900);
+        vars_renderArena(3, { typedPass: 'ARDUINO2026', speech: 'Senha Completa! Verificando...' });
+        playSound('step');
+
+        setTimeout(() => {
+            playSound('success');
+            vars_renderArena(3, { travaAberta: true, typedPass: 'ARDUINO2026', speech: 'Cofre Aberto! Peguei o ouro! 🏅💎' });
+            vars_spawnSparks(380, 50);
+            vars_showToast('🔓 COFRE DESTRAVADO! travaAberta = true;', '#34D399', 180, 25);
+
+            vars_renderRamBoxes([
+                { addr: '0x01A0', type: 'String', name: 'senhaMestre', val: '"ARDUINO2026"' },
+                { addr: '0x01B0', type: 'String', name: 'senhaDigitada', val: `"${inputSenha}"`, updated: true },
+                { addr: '0x01C0', type: 'bool', name: 'travaAberta', val: 'true', updated: true }
+            ]);
+
+            setTimeout(() => {
+                vars_showWin(3, 'Cofre Secreto Destravado!', 'Você combinou a variável <b>String</b> de texto com a variável <b>bool</b> da trava de segurança com perfeição!');
+            }, 850);
+        }, 650);
+    }, 600);
 }
 
 function vars_runLevel4() {
@@ -1818,7 +2241,11 @@ function vars_runLevel4() {
     const stepInterval = setInterval(() => {
         playSound('step');
         energia += 25;
+        const currentPosX = ciclo === 1 ? 150 : ciclo === 2 ? 270 : ciclo === 3 ? 390 : 500;
         vars_renderArena(4, { ciclo, energia });
+        vars_spawnSparks(currentPosX + 24, 40);
+        vars_showToast(`⚡ +25% Bateria! [Ciclo ${ciclo}]`, '#FBBF24', currentPosX, 20);
+
         vars_renderRamBoxes([
             { addr: '0x01A0', type: 'int', name: 'energia', val: `${energia}%`, updated: true },
             { addr: '0x01A2', type: 'int', name: 'ciclo', val: ciclo, updated: true },
@@ -1827,12 +2254,13 @@ function vars_runLevel4() {
 
         if (ciclo >= 4) {
             clearInterval(stepInterval);
+            playSound('success');
             setTimeout(() => {
                 vars_showWin(4, 'Bateria 100% Recarregada com FOR!', 'O laço <b>for</b> rodou 4 vezes e a variável <b>energia</b> acumulou de 25 em 25 até a carga máxima!');
-            }, 700);
+            }, 750);
         }
         ciclo++;
-    }, 600);
+    }, 650);
 }
 
 function vars_runLevel5() {
@@ -1876,7 +2304,12 @@ function vars_runLevel5() {
         playSound('step');
         cristais += 5;
         bat -= 10;
+        const currentPosX = setor === 1 ? 150 : setor === 2 ? 270 : setor === 3 ? 390 : 500;
         vars_renderArena(5, { setor, cristais, bateria: bat });
+        vars_spawnCrystalParticles(currentPosX + 25, 45);
+        vars_spawnSmokePuff(currentPosX - 10, 30);
+        vars_showToast(`💎 +5 Cristais | 🔋 -10% Bateria`, '#38BDF8', currentPosX, 20);
+
         vars_renderRamBoxes([
             { addr: '0x01A0', type: 'int', name: 'cristais', val: cristais, updated: true },
             { addr: '0x01A2', type: 'int', name: 'bateria', val: `${bat}%`, updated: true },
@@ -1885,12 +2318,13 @@ function vars_runLevel5() {
 
         if (setor >= 4) {
             clearInterval(stepInterval);
+            playSound('success');
             setTimeout(() => {
                 vars_showWin(5, 'Mineração Marciana Concluída!', 'Você combinou o laço <b>for</b> com duas variáveis ao mesmo tempo: somando <b>+20 cristais</b> e gerenciando a <b>bateria</b>!');
-            }, 700);
+            }, 750);
         }
         setor++;
-    }, 600);
+    }, 650);
 }
 
 function vars_runLevel6() {
@@ -1920,6 +2354,9 @@ function vars_runLevel6() {
 
     playSound('success');
     vars_renderArena(6, { temperatura: 34.5, ventiladorLigado: true });
+    vars_spawnSparks(120, 60);
+    vars_showToast('🌀 VENTILADOR ACIONADO! Resfriando estufa...', '#34D399', 120, 20);
+
     vars_renderRamBoxes([
         { addr: '0x01A0', type: 'float', name: 'temperatura', val: '34.5' },
         { addr: '0x01A4', type: 'float', name: 'tempLimite', val: '30.0' },
@@ -1929,7 +2366,7 @@ function vars_runLevel6() {
 
     setTimeout(() => {
         vars_showWin(6, 'Estufa Climatizada com Sucesso!', 'Sua decisão <b>if/else</b> monitorou as variáveis <code>float</code> e acionou o ventilador <code>bool</code> protegendo todas as mudinhas!');
-    }, 800);
+    }, 850);
 }
 
 function vars_runLevel7() {
@@ -1957,18 +2394,28 @@ function vars_runLevel7() {
         return;
     }
 
-    playSound('success');
-    vars_renderArena(7, { distanciaObstaculo: 14.5, freioEmergencia: true });
-    vars_renderRamBoxes([
-        { addr: '0x01A0', type: 'float', name: 'distanciaObstaculo', val: '14.5' },
-        { addr: '0x01A4', type: 'float', name: 'distanciaSegura', val: '20.0' },
-        { addr: '0x01A8', type: 'bool', name: 'freioEmergencia', val: 'true', updated: true },
-        { addr: '0x01B0', type: 'String', name: 'alertaPiloto', val: '"PERIGO: FREIO!"', updated: true }
-    ]);
+    // Passo 1: Carro acelera na pista
+    vars_renderArena(7, { distanciaObstaculo: 30.0, freioEmergencia: false });
+    playSound('step');
 
     setTimeout(() => {
-        vars_showWin(7, 'Frenagem Autônoma de Sucesso!', 'O sensor detectou o perigo com <b>distanciaObstaculo < distanciaSegura</b> e acionou a trava <b>freioEmergencia = true</b> evitando a colisão!');
-    }, 900);
+        // Passo 2: Freio de emergência acionado a 14.5 cm
+        playSound('success');
+        vars_renderArena(7, { distanciaObstaculo: 14.5, freioEmergencia: true });
+        vars_spawnSmokePuff(260, 60);
+        vars_showToast('🛑 FREIO ACIONADO A 14.5 cm!', '#EF4444', 180, 20);
+
+        vars_renderRamBoxes([
+            { addr: '0x01A0', type: 'float', name: 'distanciaObstaculo', val: '14.5' },
+            { addr: '0x01A4', type: 'float', name: 'distanciaSegura', val: '20.0' },
+            { addr: '0x01A8', type: 'bool', name: 'freioEmergencia', val: 'true', updated: true },
+            { addr: '0x01B0', type: 'String', name: 'alertaPiloto', val: '"PERIGO: FREIO!"', updated: true }
+        ]);
+
+        setTimeout(() => {
+            vars_showWin(7, 'Frenagem Autônoma de Sucesso!', 'O sensor detectou o perigo com <b>distanciaObstaculo < distanciaSegura</b> e acionou a trava <b>freioEmergencia = true</b> evitando a colisão!');
+        }, 900);
+    }, 600);
 }
 
 function vars_runLevel8() {
@@ -2043,22 +2490,32 @@ function vars_runLevel8() {
     const mEsc = code.match(/\bescudo\s*=\s*(true|false)/);
     if (mEsc) esc = mEsc[1] === 'true';
 
-    playSound('success');
-    vars_renderArena(8, { bateria: bat, cristais, velocidade: vel, escudo: esc });
-    const actor = document.getElementById('rover_actor');
-    if (actor) actor.style.left = '220px';
-
-    vars_renderRamBoxes([
-        { addr: '0x01A0', type: 'int', name: 'bateria', val: String(bat), updated: true },
-        { addr: '0x01A2', type: 'int', name: 'cristais', val: String(cristais), updated: true },
-        { addr: '0x01A4', type: 'float', name: 'velocidade', val: String(vel), updated: true },
-        { addr: '0x01A8', type: 'bool', name: 'escudo', val: String(esc), updated: true },
-        { addr: '0x01B0', type: 'String', name: 'status', val: '"MISSAO OK"', updated: true }
-    ]);
+    // Passo 1: Liga faróis e escudo
+    vars_renderArena(8, { bateria: bat, cristais: 0, velocidade: vel, escudo: esc });
+    playSound('step');
 
     setTimeout(() => {
-        vars_showWin(8, 'Mestre Supremo Maker: Variáveis, Loops & Decisões!', 'Você construiu o firmware completo do Rover em C++, unindo variáveis, laço for e decisão if/else com perfeição!');
-    }, 1000);
+        // Passo 2: Avança e minera cristais
+        playSound('success');
+        vars_renderArena(8, { bateria: bat, cristais, velocidade: vel, escudo: esc });
+        const actor = document.getElementById('rover_actor');
+        if (actor) actor.style.left = '220px';
+        vars_spawnCrystalParticles(260, 50);
+        vars_spawnSparks(250, 40);
+        vars_showToast('🚀 FIRMWARE DO ROVER CARREGADO COM SUCESSO!', '#38BDF8', 120, 20);
+
+        vars_renderRamBoxes([
+            { addr: '0x01A0', type: 'int', name: 'bateria', val: String(bat), updated: true },
+            { addr: '0x01A2', type: 'int', name: 'cristais', val: String(cristais), updated: true },
+            { addr: '0x01A4', type: 'float', name: 'velocidade', val: String(vel), updated: true },
+            { addr: '0x01A8', type: 'bool', name: 'escudo', val: String(esc), updated: true },
+            { addr: '0x01B0', type: 'String', name: 'status', val: '"MISSAO OK"', updated: true }
+        ]);
+
+        setTimeout(() => {
+            vars_showWin(8, 'Mestre Supremo Maker: Variáveis, Loops & Decisões!', 'Você construiu o firmware completo do Rover em C++, unindo variáveis, laço for e decisão if/else com perfeição!');
+        }, 1000);
+    }, 600);
 }
 
 /* ================= TRATAMENTO DE ERROS E SOLUÇÕES ================= */
@@ -2079,13 +2536,27 @@ function vars_triggerError(title, msg, hint) {
 function vars_updateSolutionButtonState() {
     const attempts = (typeof currentAttemptsMap !== 'undefined' && currentAttemptsMap[`vars_lvl_${vars_level}`]) || vars_errors_count[vars_level] || 0;
     const btn = document.getElementById('vars_btn_solution');
+    const box = document.getElementById('vars_solution_box');
+    const solT = document.getElementById('vars_solution_text');
+    const solData = vars_levels_data[vars_level]?.solution || '';
+
     if (btn) {
         if (attempts >= 3) {
             btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-lightbulb"></i> 💡 Ver Resolução do Código C/C++';
+            btn.innerHTML = '<i class="fa-solid fa-lightbulb"></i> <span>💡 Ver / Ocultar Resolução Liberada (3/3 erros)</span>';
+            btn.style.opacity = '1';
+            btn.style.boxShadow = '0 0 20px rgba(245,158,11,0.5)';
+            // SE O JOGADOR ERRAR 3 VEZES: MOSTRA O RESULTADO AUTOMATICAMENTE
+            if (box) {
+                box.style.display = 'block';
+                if (solT) solT.innerText = solData;
+            }
         } else {
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-lock"></i> 💡 Resolução Bloqueada (${attempts}/3 tentativas)`;
+            btn.innerHTML = `<i class="fa-solid fa-lock"></i> <span>💡 Resolução Bloqueada (${attempts}/3 erros)</span>`;
+            btn.style.opacity = '0.6';
+            btn.style.boxShadow = 'none';
+            if (box) box.style.display = 'none';
         }
     }
 }
@@ -2094,8 +2565,73 @@ function vars_toggleSolution() {
     const attempts = (typeof currentAttemptsMap !== 'undefined' && currentAttemptsMap[`vars_lvl_${vars_level}`]) || vars_errors_count[vars_level] || 0;
     if (attempts < 3) return;
     const box = document.getElementById('vars_solution_box');
+    const solT = document.getElementById('vars_solution_text');
+    const solData = vars_levels_data[vars_level]?.solution || '';
     if (!box) return;
-    box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    const isOpen = box.style.display === 'block';
+    box.style.display = isOpen ? 'none' : 'block';
+    if (!isOpen && solT) solT.innerText = solData;
+}
+
+function vars_applyCurrentSolution() {
+    const lvl = vars_level;
+    const data = vars_levels_data[lvl];
+    if (!data) return;
+
+    if (lvl === 1) {
+        const vi = document.getElementById('vars_n1_vidas_init');
+        const c1 = document.getElementById('vars_n1_cmd1');
+        const c2 = document.getElementById('vars_n1_cmd2');
+        const c3 = document.getElementById('vars_n1_cmd3');
+        if (vi) vi.value = '3';
+        if (c1) c1.value = 'moedas = moedas + 10;';
+        if (c2) c2.value = 'vidas = vidas - 1;';
+        if (c3) c3.value = 'pontos = moedas * 100;';
+    } else if (lvl === 2) {
+        const tp = document.getElementById('vars_n2_tipo');
+        const cl = document.getElementById('vars_n2_calc');
+        if (tp) tp.value = 'float';
+        if (cl) cl.value = 'tempMedia = (tempManha + tempTarde) / 2.0;';
+    } else if (lvl === 3) {
+        const tp = document.getElementById('vars_n3_tipo_str');
+        const is = document.getElementById('vars_n3_input_senha');
+        const tr = document.getElementById('vars_n3_trava_cmd');
+        if (tp) tp.value = 'String';
+        if (is) is.value = 'ARDUINO2026';
+        if (tr) tr.value = 'travaAberta = true;';
+    } else if (lvl === 4) {
+        const cond = document.getElementById('vars_n4_loop_cond');
+        const cmd = document.getElementById('vars_n4_energia_cmd');
+        if (cond) cond.value = 'ciclo <= 4;';
+        if (cmd) cmd.value = 'energia = energia + 25;';
+    } else if (lvl === 5) {
+        const cond = document.getElementById('vars_n5_loop_cond');
+        const cCmd = document.getElementById('vars_n5_cristais_cmd');
+        const bCmd = document.getElementById('vars_n5_bateria_cmd');
+        if (cond) cond.value = 'setor <= 4;';
+        if (cCmd) cCmd.value = 'cristais = cristais + 5;';
+        if (bCmd) bCmd.value = 'bateria = bateria - 10;';
+    } else if (lvl === 6) {
+        const cond = document.getElementById('vars_n6_if_cond');
+        const fan = document.getElementById('vars_n6_fan_cmd');
+        if (cond) cond.value = 'temperatura > tempLimite';
+        if (fan) fan.value = 'ventiladorLigado = true; statusClima = "ALERTA: VENTILADOR LIGADO";';
+    } else if (lvl === 7) {
+        const cond = document.getElementById('vars_n7_if_cond');
+        const fr = document.getElementById('vars_n7_freio_cmd');
+        if (cond) cond.value = 'distanciaObstaculo < distanciaSegura';
+        if (fr) fr.value = 'freioEmergencia = true; alertaPiloto = "PERIGO: FREIO ACIONADO!";';
+    } else if (lvl === 8) {
+        const inp = document.getElementById('vars_code_input');
+        if (inp) {
+            inp.value = `int bateria = 100;\nint cristais = 0;\nfloat velocidade = 4.5;\nString status = "EXPLORANDO";\nbool escudo = true;\n\nfor (int setor = 1; setor <= 4; setor++) {\n    cristais = cristais + 5;\n    bateria = bateria - 10;\n}\n\nif (escudo == true) {\n    status = "ROVER PROTEGIDO";\n}`;
+            vars_handleIdeInput();
+        }
+    }
+
+    vars_updateLiveCpp();
+    if (typeof playSound === 'function') playSound('success');
+    vars_showToast('✨ Resolução aplicada com sucesso! Clique em EXECUTAR!', '#10B981');
 }
 
 /* ================= MODAL DE VITÓRIA & PROGRESSÃO ================= */
@@ -2134,19 +2670,62 @@ function vars_closeWinModal() {
     }
 }
 
-/* ================= MINI-IDE HELPERS ================= */
+/* ================= MINI-IDE HELPERS, ATALHOS & EXPANSÃO ================= */
+
+const VARS_SNIPPETS = {
+    bateria: 'int bateria = 100;\n',
+    cristais: 'int cristais = 0;\n',
+    velocidade: 'float velocidade = 4.5;\n',
+    status: 'String status = "EXPLORANDO";\n',
+    escudo: 'bool escudo = true;\n',
+    for_setores: 'for (int setor = 1; setor <= 4; setor++) {\n    cristais = cristais + 5;\n    bateria = bateria - 10;\n}\n',
+    if_escudo: 'if (escudo == true) {\n    status = "ROVER PROTEGIDO";\n}\n',
+    bateria_sub: 'bateria = bateria - 10;\n'
+};
+
+let vars_lastSelectionPos = null;
+
+function vars_trackCursor() {
+    const input = document.getElementById('vars_code_input');
+    if (input && typeof input.selectionStart === 'number') {
+        vars_lastSelectionPos = input.selectionStart;
+    }
+}
+
+function vars_insertSnippet(key) {
+    const txt = VARS_SNIPPETS[key] || key;
+    vars_insertText(txt);
+}
 
 function vars_insertText(txt) {
     const input = document.getElementById('vars_code_input');
     if (!input) return;
-    input.focus();
-    const start = input.selectionStart;
-    const end = input.selectionEnd;
-    const old = input.value;
+
+    let start = (typeof input.selectionStart === 'number') ? input.selectionStart : input.value.length;
+    let end = (typeof input.selectionEnd === 'number') ? input.selectionEnd : start;
+
+    if (document.activeElement !== input) {
+        if (typeof vars_lastSelectionPos === 'number' && vars_lastSelectionPos >= 0) {
+            start = end = vars_lastSelectionPos;
+        } else {
+            start = end = input.value.length;
+        }
+    }
+
+    const old = input.value || '';
     input.value = old.substring(0, start) + txt + old.substring(end);
-    input.selectionStart = input.selectionEnd = start + txt.length;
+    const newPos = start + txt.length;
+    input.selectionStart = newPos;
+    input.selectionEnd = newPos;
+    vars_lastSelectionPos = newPos;
+    input.focus();
+
+    const popup = document.getElementById('vars_autocomplete_list');
+    if (popup) popup.style.display = 'none';
+    vars_currentMatches = [];
+
     vars_handleIdeInput();
-    playSound('click');
+    if (typeof playSound === 'function') playSound('click');
 }
 
 function vars_clearIde() {
@@ -2154,8 +2733,11 @@ function vars_clearIde() {
     if (!input) return;
     if (confirm('Deseja limpar todo o código do editor?')) {
         input.value = '';
+        vars_lastSelectionPos = 0;
         vars_handleIdeInput();
         playSound('click');
+        const popup = document.getElementById('vars_autocomplete_list');
+        if (popup) popup.style.display = 'none';
     }
 }
 
@@ -2167,7 +2749,7 @@ function vars_handleIdeInput() {
 
     const lines = input.value.split('\n').length;
     if (lineNumbers) {
-        lineNumbers.innerHTML = Array.from({ length: Math.max(lines, 8) }, (_, i) => i + 1).join('<br>');
+        lineNumbers.innerHTML = Array.from({ length: Math.max(lines, 12) }, (_, i) => i + 1).join('<br>');
     }
 
     if (codeEl && vars_level === 8) {
@@ -2180,38 +2762,171 @@ ${input.value || '// Digite suas variáveis, laço for e if/else aqui...'}`;
     }
 }
 
-function vars_handleIdeKeyDown(e, el) {
-    if (e.key === 'Tab') {
-        e.preventDefault();
-        const popup = document.getElementById('vars_autocomplete_list');
-        if (popup && popup.dataset.suggestion) {
-            vars_insertText(popup.dataset.suggestion);
-            popup.style.display = 'none';
-            return;
-        }
-        vars_insertText('    ');
+function vars_toggleExpandIde() {
+    const ide = document.getElementById('vars_ide_n8');
+    const icon = document.getElementById('vars_expand_icon');
+    const label = document.getElementById('vars_expand_label');
+    if (!ide) return;
+
+    const isExpanded = ide.classList.toggle('vars-ide-maximized');
+    if (icon) icon.className = isExpanded ? 'fa-solid fa-compress' : 'fa-solid fa-expand';
+    if (label) label.innerText = isExpanded ? 'Recolher IDE' : 'Expandir IDE';
+
+    if (isExpanded) {
+        vars_showToast('⛶ Modo Tela Expandida Ativado! (Pressione ESC ou clique para recolher)', '#38BDF8');
+        playSound('click');
+        const input = document.getElementById('vars_code_input');
+        if (input) input.focus();
+    } else {
+        vars_showToast('Editor recolhido ao tamanho padrão', '#94A3B8');
+        playSound('click');
     }
 }
 
-function vars_ideAutoComplete(el) {
-    const val = el.value;
-    const cur = el.selectionStart;
-    const lastWord = val.slice(0, cur).split(/[\s;\(\)\{\}]+/).pop();
-    const popup = document.getElementById('vars_autocomplete_list');
-    if (!popup) return;
+/* ================= AUTOCOMPLETE PROFISSIONAL (PADRÃO AULA 4) ================= */
 
-    const keywords = ['int', 'float', 'String', 'bool', 'true', 'false', 'Serial.println', 'bateria', 'velocidade', 'missao', 'radarAtivo'];
-    if (lastWord.length >= 2) {
-        const match = keywords.find(k => k.toLowerCase().startsWith(lastWord.toLowerCase()) && k !== lastWord);
-        if (match) {
-            const completion = match.slice(lastWord.length);
-            popup.innerText = `⇥ Tab: ${match}`;
-            popup.dataset.suggestion = completion;
-            popup.style.display = 'block';
+const VARS_AUTOCOMPLETE_OPTIONS = [
+    { trigger: 'int',       label: 'int bateria = 100;',                           insert: 'int bateria = 100;\n' },
+    { trigger: 'bat',       label: 'int bateria = 100;',                           insert: 'int bateria = 100;\n' },
+    { trigger: 'cris',      label: 'int cristais = 0;',                            insert: 'int cristais = 0;\n' },
+    { trigger: 'flo',       label: 'float velocidade = 4.5;',                      insert: 'float velocidade = 4.5;\n' },
+    { trigger: 'vel',       label: 'float velocidade = 4.5;',                      insert: 'float velocidade = 4.5;\n' },
+    { trigger: 'str',       label: 'String status = "EXPLORANDO";',                insert: 'String status = "EXPLORANDO";\n' },
+    { trigger: 'stat',      label: 'status = "MISSAO CUMPRIDA";',                  insert: 'status = "MISSAO CUMPRIDA";\n' },
+    { trigger: 'boo',       label: 'bool escudo = true;',                          insert: 'bool escudo = true;\n' },
+    { trigger: 'esc',       label: 'bool escudo = true;',                          insert: 'bool escudo = true;\n' },
+    { trigger: 'for',       label: 'for (int setor = 1; setor <= 4; setor++) { ... }', insert: 'for (int setor = 1; setor <= 4; setor++) {\n    cristais = cristais + 5;\n    bateria = bateria - 10;\n}\n' },
+    { trigger: 'if',        label: 'if (escudo == true) { ... }',                  insert: 'if (escudo == true) {\n    status = "ROVER PROTEGIDO";\n}\n' },
+    { trigger: 'if_cris',   label: 'if (cristais >= 20) { ... }',                  insert: 'if (cristais >= 20) {\n    status = "MISSAO CUMPRIDA";\n}\n' },
+    { trigger: 'if_bat',    label: 'if (bateria <= 20) { ... }',                   insert: 'if (bateria <= 20) {\n    status = "BATERIA FRACA";\n}\n' },
+    { trigger: 'els',       label: 'else { ... }',                                 insert: 'else {\n    status = "ALERTA";\n}\n' },
+    { trigger: 'sub',       label: 'bateria = bateria - 10;',                      insert: 'bateria = bateria - 10;\n' },
+    { trigger: 'som',       label: 'cristais = cristais + 5;',                     insert: 'cristais = cristais + 5;\n' },
+    { trigger: 'ser',       label: 'Serial.println("ROVER ATIVO");',               insert: 'Serial.println("ROVER ATIVO");\n' },
+    { trigger: 'tru',       label: 'true',                                         insert: 'true' },
+    { trigger: 'fal',       label: 'false',                                        insert: 'false' },
+    { trigger: 'del',       label: 'delay(1000);',                                 insert: 'delay(1000);\n' }
+];
+
+let vars_currentMatches = [];
+let vars_activeAcIndex = 0;
+
+function vars_ideAutoComplete(textarea) {
+    const list = document.getElementById('vars_autocomplete_list');
+    if (!list) return;
+
+    const code = textarea.value;
+    const cursorPos = (typeof textarea.selectionStart === 'number') ? textarea.selectionStart : code.length;
+    vars_lastSelectionPos = cursorPos;
+    const beforeCursor = code.substring(0, cursorPos);
+    const lastWord = beforeCursor.split(/[\s\n{};(),]+/).pop();
+
+    if (!lastWord || lastWord.length < 2) {
+        list.style.display = 'none';
+        vars_currentMatches = [];
+        return;
+    }
+
+    const lowWord = lastWord.toLowerCase();
+    const matches = VARS_AUTOCOMPLETE_OPTIONS.filter(o =>
+        o.trigger.toLowerCase().startsWith(lowWord) ||
+        o.label.toLowerCase().includes(lowWord) ||
+        o.insert.toLowerCase().includes(lowWord)
+    );
+
+    if (matches.length === 0) {
+        list.style.display = 'none';
+        vars_currentMatches = [];
+        return;
+    }
+
+    vars_currentMatches = matches;
+    vars_activeAcIndex = 0;
+
+    const linesBefore = beforeCursor.split('\n');
+    const lineIndex = Math.min(linesBefore.length - 1, 12);
+    list.style.top = `${Math.min((lineIndex * 26) + 38, 300)}px`;
+    list.style.display = 'block';
+
+    vars_renderAutoCompleteList();
+}
+
+function vars_renderAutoCompleteList() {
+    const list = document.getElementById('vars_autocomplete_list');
+    if (!list) return;
+
+    list.innerHTML = vars_currentMatches.map((m, idx) => {
+        const isSel = idx === vars_activeAcIndex;
+        const escInsert = m.insert.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n');
+        return `<div class="vars-ac-item ${isSel ? 'active' : ''}" 
+                     onclick="vars_applyAutoComplete('${escInsert}')"
+                     onmouseenter="vars_activeAcIndex = ${idx}; vars_renderAutoCompleteList();">
+            <span>${m.label}</span>
+            <span class="vars-ac-shortcut">Tab ⇥</span>
+        </div>`;
+    }).join('');
+}
+
+function vars_applyAutoComplete(insertText) {
+    const textarea = document.getElementById('vars_code_input');
+    const list = document.getElementById('vars_autocomplete_list');
+    if (!textarea) return;
+
+    const pos = (typeof textarea.selectionStart === 'number') ? textarea.selectionStart : textarea.value.length;
+    const before = textarea.value.substring(0, pos);
+    const after = textarea.value.substring(pos);
+    const cleanBefore = before.replace(/[a-zA-Z0-9_]+$/, '');
+    textarea.value = cleanBefore + insertText + after;
+    const newPos = cleanBefore.length + insertText.length;
+    textarea.selectionStart = textarea.selectionEnd = newPos;
+    vars_lastSelectionPos = newPos;
+    textarea.focus();
+    if (list) list.style.display = 'none';
+    vars_currentMatches = [];
+    vars_handleIdeInput();
+    if (typeof playSound === 'function') playSound('step');
+}
+
+function vars_handleIdeKeyDown(e, textarea) {
+    const list = document.getElementById('vars_autocomplete_list');
+    const isListOpen = list && list.style.display === 'block' && vars_currentMatches.length > 0;
+
+    if (isListOpen) {
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            vars_activeAcIndex = (vars_activeAcIndex + 1) % vars_currentMatches.length;
+            vars_renderAutoCompleteList();
+            return;
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            vars_activeAcIndex = (vars_activeAcIndex - 1 + vars_currentMatches.length) % vars_currentMatches.length;
+            vars_renderAutoCompleteList();
+            return;
+        } else if (e.key === 'Tab' || e.key === 'Enter') {
+            e.preventDefault();
+            const chosen = vars_currentMatches[vars_activeAcIndex];
+            if (chosen) {
+                vars_applyAutoComplete(chosen.insert);
+            }
+            return;
+        } else if (e.key === 'Escape') {
+            list.style.display = 'none';
+            vars_currentMatches = [];
             return;
         }
+    } else {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            vars_insertText('    ');
+            return;
+        } else if (e.key === 'Escape') {
+            const ide = document.getElementById('vars_ide_n8');
+            if (ide && ide.classList.contains('vars-ide-maximized')) {
+                vars_toggleExpandIde();
+                return;
+            }
+        }
     }
-    popup.style.display = 'none';
 }
 
 function vars_copyCode() {
@@ -2223,3 +2938,28 @@ function vars_copyCode() {
         });
     }
 }
+
+// Fechamento de autocomplete ao clicar fora da IDE
+document.addEventListener('click', (e) => {
+    const list = document.getElementById('vars_autocomplete_list');
+    const input = document.getElementById('vars_code_input');
+    if (list && list.style.display === 'block' && e.target !== input && !list.contains(e.target)) {
+        list.style.display = 'none';
+        vars_currentMatches = [];
+    }
+});
+
+window.vars_insertSnippet = vars_insertSnippet;
+window.vars_insertText = vars_insertText;
+window.vars_clearIde = vars_clearIde;
+window.vars_handleIdeInput = vars_handleIdeInput;
+window.vars_toggleExpandIde = vars_toggleExpandIde;
+window.vars_ideAutoComplete = vars_ideAutoComplete;
+window.vars_renderAutoCompleteList = vars_renderAutoCompleteList;
+window.vars_applyAutoComplete = vars_applyAutoComplete;
+window.vars_handleIdeKeyDown = vars_handleIdeKeyDown;
+window.vars_trackCursor = vars_trackCursor;
+window.vars_applyCurrentSolution = vars_applyCurrentSolution;
+window.vars_updateSolutionButtonState = vars_updateSolutionButtonState;
+window.vars_toggleSolution = vars_toggleSolution;
+

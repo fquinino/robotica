@@ -204,7 +204,10 @@
                     <span id="error-solution-arrow">▼</span>
                 </button>
                 <div id="error-splash-solution-box" style="display:none;background:#0F172A;border:1px solid #8B5CF6;border-radius:12px;padding:14px;margin-top:8px;">
-                    <div style="color:#CBD5E1;font-size:0.8rem;margin-bottom:6px;font-family:'Fira Code',monospace;">// Solução Recomendada em Linguagem C/C++:</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
+                        <span style="color:#CBD5E1;font-size:0.8rem;font-family:'Fira Code',monospace;">// Solução Recomendada em Linguagem C/C++:</span>
+                        <button type="button" onclick="applyErrorSolutionToActiveLesson()" style="background:linear-gradient(135deg,#10B981,#059669);color:white;border:none;padding:5px 12px;border-radius:8px;font-weight:900;font-size:0.78rem;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 3px 10px rgba(16,185,129,0.3);"><i class="fa-solid fa-wand-magic-sparkles"></i> ✨ Preencher no Exercício</button>
+                    </div>
                     <pre id="error-splash-solution-code" style="margin:0;color:#38BDF8;font-family:'Fira Code',monospace;font-size:0.85rem;white-space:pre-wrap;line-height:1.5;"></pre>
                 </div>
             </div>

@@ -234,8 +234,9 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
             solBtn.style.display = 'flex';
             solBtn.disabled = false;
         }
-        if (solBox) solBox.style.display = 'none';
-        if (solArrow) solArrow.textContent = '▼';
+        // Se errou 3 vezes ou mais: mostra o resultado e código da solução automaticamente
+        if (solBox) solBox.style.display = 'block';
+        if (solArrow) solArrow.textContent = '▲';
     } else {
         if (solWrapper) solWrapper.style.display = 'none';
         if (solBtn) solBtn.style.display = 'none';
@@ -245,6 +246,30 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
     modal.style.opacity = '1';
     modal.style.pointerEvents = 'all';
 }
+
+function applyErrorSolutionToActiveLesson() {
+    if (typeof vars_applyCurrentSolution === 'function' && document.getElementById('tab-aula5')?.classList.contains('active')) {
+        vars_applyCurrentSolution();
+        closeErrorSplash();
+        return;
+    }
+    if (typeof sem_applyCurrentSolution === 'function' && document.getElementById('tab-aula4')?.classList.contains('active')) {
+        sem_applyCurrentSolution();
+        closeErrorSplash();
+        return;
+    }
+    const codeEl = document.getElementById('error-splash-solution-code');
+    if (codeEl && navigator.clipboard) {
+        navigator.clipboard.writeText(codeEl.innerText).then(() => {
+            playSound('success');
+            alert('Código da solução copiado com sucesso!');
+            closeErrorSplash();
+        });
+    } else {
+        closeErrorSplash();
+    }
+}
+window.applyErrorSolutionToActiveLesson = applyErrorSolutionToActiveLesson;
 
 function toggleErrorSolution() {
     const attempts = currentAttemptsMap[lastErrorAttemptKey] || 0;
