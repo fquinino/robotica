@@ -2,7 +2,7 @@
    CRIADORES DE CÓDIGO — TRILHA DE APRENDIZAGEM & HUB DE CONQUISTAS
    ========================================================================== */
 
-const UNLOCKED_LESSONS = 5; // Liberadas Aulas 1, 2, 3, 4 e 5
+const UNLOCKED_LESSONS = 6; // Liberadas Aulas 1, 2, 3, 4, 5 e 6
 
 const getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
 
@@ -140,21 +140,41 @@ Ela tem um <b>TIPO</b> (o que pode guardar dentro), um <b>NOME</b> (etiqueta) e 
         jogo:'tab-variaveis', btntext:'🎮 Ir para o Laboratório de Variáveis!'
     },
     6: {
-        emoji:'⚡', title:'Introdução à Eletrônica (Lei de Ohm)', color:'#F87171',
-        objetivo:'🧠 <b>O que você vai aprender:</b> Os 3 pilares da eletricidade: <b>Tensão (V)</b>, <b>Corrente (I)</b> e <b>Resistência (R)</b>, e a famosa fórmula V = R * I!',
-        teoria:`<b>A Analogia do Cano de Água 🚰</b>
+        emoji:'⚡', title:'Introdução à Eletrônica (Positivo, Negativo & Lei de Ohm)', color:'#F87171',
+        objetivo:'🧠 <b>O que você vai aprender:</b> O básico que todo maker precisa saber: o que é <b>Positivo (+)</b> e <b>Negativo (-)</b>, onde eles ficam no Arduino (o pino <b>5V</b> e o <b>GND</b>), e a divertida <b>analogia do cano d\'água</b> para entender por que usamos o resistor protetor de <b>220 Ω</b> para não queimar o LED!',
+        teoria:`<b>1. O Segredo da Energia: Positivo (+) e Negativo (-) 🔋</b>
+Toda pilha, bateria e placa eletrônica tem DOIS lados: o <b>Pólo Positivo (+)</b> e o <b>Pólo Negativo (-)</b>.
+Para uma lâmpada ou LED acender, a eletricidade precisa fazer uma <b>viagem completa em círculo</b> (um circuito fechado!). Ela sai do positivo, passa pela peça e volta para o negativo. Se um fio se soltar, a viagem é interrompida e nada acende!
 
-Para entender eletricidade, pense numa caixa d'água com uma mangueira:
+<b>2. Na Placa Arduino: Quem é quem? 🔌</b>
+- <b>Pino 5V:</b> É o lado <b>Positivo (+)</b>! De onde a energia sai com 5 Volts de força. (E quando você liga um pino digital, como o Pino 9 com HIGH, ele também manda 5V!).
+- <b>Pino GND (Ground / Terra):</b> É o lado <b>Negativo (-)</b>! É o ponto zero (0V) por onde a energia completa a volta.
+- <b>E o LED?</b> Ele também tem lado! A perninha <b>mais longa</b> é o Positivo (+) e a perninha <b>mais curta</b> é o Negativo (-). Se ligar invertido, ele não acende.
 
-1️⃣ <b>TENSÃO (Volts - V):</b> É a <i>pressão</i> da água (altura da caixa). Quanto mais alta, mais forte empurra!
-2️⃣ <b>CORRENTE (Amperes - A):</b> É a <i>quantidade</i> de água que passa pelo cano por segundo.
-3️⃣ <b>RESISTÊNCIA (Ohms):</b> É o <i>aperto</i> no cano. Se você apertar a mangueira, passa menos água!
+<b>3. A Grande Analogia do Cano d'Água 🚰</b>
+Para entender eletricidade, imagine uma mangueira de água:
+- <b>Tensão (5V em Volts):</b> É a <b>pressão da água</b>! Uma caixa d'água alta empurrando tudo com força.
+- <b>Corrente (em mA):</b> É o <b>fluxo da água</b>! A quantidade de água correndo pelo tubo.
+- <b>Resistência (em Ohms Ω):</b> É o <b>estreitamento do cano</b> ou uma torneira reguladora!
 
-<b>A Lei de Ohm:</b> V = R * I (Tensão = Resistência * Corrente)`,
-        exemplo:`Se temos uma bateria de 9V e um resistor de 450 ohms:
-Corrente (I) = V / R = 9 / 450 = 0.02 Amperes (20 mA) — Perfeito para ligar um LED sem queimar!`,
-        dica:'💡 Dica Maker: LEDs precisam SEMPRE de um resistor em série, senão a corrente alta queima o LED em milissegundos!',
-        jogo:'tab-labmaker', btntext:'🧪 Ir para a Bancada Maker!'
+<b>4. Por que precisamos do Resistor de 220 Ω? 🛡️</b>
+O LED é delicado! Se você ligar ele direto no 5V sem resistor, a água vem com tanta pressão e força que o LED <b>ESTOURA (queima)</b> em um piscar de olhos!
+O resistor de <b>220 Ω</b> é a nossa "torneirinha mágica": ele aperta o cano na medida certa, deixando passar apenas <b>15 mA</b> de corrente. Assim o LED brilha forte, lindo e 100% seguro!`,
+        exemplo:`<span class="c-cm">// Pisca-Pisca Seguro: 5V (HIGH) e 0V (LOW)</span>
+<span class="c-kw">const</span> <span class="c-tp">int</span> pinoLed = <span class="c-num">9</span>;
+
+<span class="c-kw">void</span> <span class="c-fn">setup</span>() {
+  <span class="c-fn">pinMode</span>(pinoLed, <span class="c-kw">OUTPUT</span>); <span class="c-cm">// Pino 9 vira saída de energia</span>
+}
+
+<span class="c-kw">void</span> <span class="c-fn">loop</span>() {
+  <span class="c-fn">digitalWrite</span>(pinoLed, <span class="c-kw">HIGH</span>); <span class="c-cm">// Manda 5V (Positivo): LED acende!</span>
+  <span class="c-fn">delay</span>(<span class="c-num">1000</span>);                 <span class="c-cm">// Espera 1 segundo</span>
+  <span class="c-fn">digitalWrite</span>(pinoLed, <span class="c-kw">LOW</span>);  <span class="c-cm">// Desliga para 0V (GND): LED apaga!</span>
+  <span class="c-fn">delay</span>(<span class="c-num">1000</span>);                 <span class="c-cm">// Espera 1 segundo</span>
+}`,
+        dica:'💡 Dica Maker de Ouro: Sempre coloque um resistor de 220 Ω no caminho do LED antes de ligar no Arduino para não queimar!',
+        jogo:'tab-eletronica', btntext:'⚡ Explorar o Laboratório de Eletrônica!'
     },
     7: {
         emoji:'🔌', title:'Circuitos Elétricos e Protoboard', color:'#38BDF8',
@@ -266,12 +286,12 @@ function updateTrail() {
     const totalStars = getLevels('semaforo_levels').length + getLevels('tesouro_levels').length + 
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
                        getLevels('jardim_levels').length + getLevels('arduino_levels').length +
-                       getLevels('variaveis_levels').length;
+                       getLevels('variaveis_levels').length + getLevels('eletronica_levels').length;
 
-    const percent = Math.min(100, Math.round((totalStars / 30) * 100));
+    const percent = Math.min(100, Math.round((totalStars / 36) * 100));
     const starCountEl = document.getElementById('trail-star-count');
     const progressBarEl = document.getElementById('trail-progress-bar');
-    if (starCountEl) starCountEl.innerText = `${totalStars} / 30 ⭐`;
+    if (starCountEl) starCountEl.innerText = `${totalStars} / 36 ⭐`;
     if (progressBarEl) progressBarEl.style.width = `${percent}%`;
 
     let html = '';
@@ -365,6 +385,7 @@ function updateHubProgress() {
     const jar = getLevels('jardim_levels');
     const ard = getLevels('arduino_levels');
     const vars = getLevels('variaveis_levels');
+    const elet = getLevels('eletronica_levels');
 
     setBadge('badge-semaforo', sem, 5);
     setBadge('badge-tesouro', tes);
@@ -373,16 +394,17 @@ function updateHubProgress() {
     setBadge('badge-jardim', jar, 4);
     setBadge('badge-arduino', ard);
     setBadge('badge-variaveis', vars, 8);
+    setBadge('badge-eletronica', elet, 6);
 
-    const totalStars = sem.length + tes.length + lab.length + loo.length + jar.length + ard.length + vars.length;
+    const totalStars = sem.length + tes.length + lab.length + loo.length + jar.length + ard.length + vars.length + elet.length;
     const countEl = document.getElementById('hub-star-count');
     const barEl = document.getElementById('hub-progress-bar');
-    if (countEl) countEl.innerText = `${totalStars} / 30 ⭐`;
-    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 30) * 100))}%`;
+    if (countEl) countEl.innerText = `${totalStars} / 36 ⭐`;
+    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 36) * 100))}%`;
 
     const lbBadge = document.getElementById('badge-hub-leaderboard');
     if (lbBadge && window.makerLeaderboard && typeof window.makerLeaderboard.getSummaryStats === 'function') {
         const stats = window.makerLeaderboard.getSummaryStats();
-        lbBadge.innerText = stats.userRecords > 0 ? `👑 ${stats.userRecords} Recordes ⚡` : `⚡ 30 Fases Speedrun`;
+        lbBadge.innerText = stats.userRecords > 0 ? `👑 ${stats.userRecords} Recordes ⚡` : `⚡ 36 Fases Speedrun`;
     }
 }

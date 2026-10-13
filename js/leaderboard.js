@@ -42,10 +42,18 @@
         { id: 'variaveis_7', module: 'variaveis', moduleName: 'Aula 5: Variáveis & Tipos', num: 7, name: 'Radar & Freio Autônomo (IF/ELSE)', icon: '🚨', benchmarkTime: 15.0, benchmarkPlayer: 'SinalVerde' },
         { id: 'variaveis_8', module: 'variaveis', moduleName: 'Aula 5: Variáveis & Tipos', num: 8, name: 'Firmware do Rover Marciano (Mini-IDE)', icon: '🚀', benchmarkTime: 25.0, benchmarkPlayer: 'SpeedDev' },
 
-        // AULA 6/7: LABORATÓRIO MAKER (3 Níveis)
-        { id: 'labmaker_1', module: 'labmaker', moduleName: 'Aula 6/7: Bancada Maker', num: 1, name: 'Circuito +5V, Resistor & LED', icon: '💡', benchmarkTime: 12.0, benchmarkPlayer: 'Robô Alfa' },
-        { id: 'labmaker_2', module: 'labmaker', moduleName: 'Aula 6/7: Bancada Maker', num: 2, name: 'Circuito com Pushbutton', icon: '🔘', benchmarkTime: 16.0, benchmarkPlayer: 'CyberMaker' },
-        { id: 'labmaker_3', module: 'labmaker', moduleName: 'Aula 6/7: Bancada Maker', num: 3, name: 'Semáforo Físico (3 LEDs)', icon: '⚡', benchmarkTime: 22.0, benchmarkPlayer: 'SpeedDev' },
+        // AULA 6: INTRODUÇÃO À ELETRÔNICA & LEI DE OHM (6 Níveis)
+        { id: 'eletronica_1', module: 'eletronica', moduleName: 'Aula 6: Eletrônica & Lei de Ohm', num: 1, name: 'Tubo de Elétrons & Corrente (I)', icon: '⚡', benchmarkTime: 8.0, benchmarkPlayer: 'Robô Alfa' },
+        { id: 'eletronica_2', module: 'eletronica', moduleName: 'Aula 6: Eletrônica & Lei de Ohm', num: 2, name: 'Guardião do LED (Resistor Ideal)', icon: '💡', benchmarkTime: 10.5, benchmarkPlayer: 'Ana Dev' },
+        { id: 'eletronica_3', module: 'eletronica', moduleName: 'Aula 6: Eletrônica & Lei de Ohm', num: 3, name: 'Bateria 9V & Farol do Robô', icon: '🔋', benchmarkTime: 12.0, benchmarkPlayer: 'ByteMaster' },
+        { id: 'eletronica_4', module: 'eletronica', moduleName: 'Aula 6: Eletrônica & Lei de Ohm', num: 4, name: 'Decodificador de Faixas de Cores', icon: '🎨', benchmarkTime: 14.0, benchmarkPlayer: 'DevKid' },
+        { id: 'eletronica_5', module: 'eletronica', moduleName: 'Aula 6: Eletrônica & Lei de Ohm', num: 5, name: 'Multímetro C++ & Potência (mW)', icon: '📟', benchmarkTime: 16.5, benchmarkPlayer: 'CyberMaker' },
+        { id: 'eletronica_6', module: 'eletronica', moduleName: 'Aula 6: Eletrônica & Lei de Ohm', num: 6, name: 'Proteção Anti-Curto com IF/ELSE', icon: '🚨', benchmarkTime: 22.0, benchmarkPlayer: 'SpeedDev' },
+
+        // AULA 7: CIRCUITOS & PROTOBOARD (3 Níveis)
+        { id: 'labmaker_1', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 1, name: 'Circuito +5V, Resistor & LED', icon: '🔌', benchmarkTime: 12.0, benchmarkPlayer: 'Robô Alfa' },
+        { id: 'labmaker_2', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 2, name: 'Circuito com Pushbutton', icon: '🔘', benchmarkTime: 16.0, benchmarkPlayer: 'CyberMaker' },
+        { id: 'labmaker_3', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 3, name: 'Semáforo Físico (3 LEDs)', icon: '🚦', benchmarkTime: 22.0, benchmarkPlayer: 'SpeedDev' },
 
         // AULA 8: OFICINA DO ARDUINO (3 Níveis)
         { id: 'arduino_1', module: 'arduino', moduleName: 'Aula 8: Oficina do Arduino', num: 1, name: 'Lei de Ohm & Tubo de Elétrons', icon: '🧪', benchmarkTime: 10.0, benchmarkPlayer: 'Robô Alfa' },
@@ -348,6 +356,8 @@
                 window.sem_switchLevel(levelNum);
             } else if (moduleKey === 'variaveis' && typeof window.vars_switchLevel === 'function') {
                 window.vars_switchLevel(levelNum);
+            } else if (moduleKey === 'eletronica' && typeof window.elet_switchLevel === 'function') {
+                window.elet_switchLevel(levelNum);
             } else if (moduleKey === 'labmaker' && typeof window.lab_startMission === 'function') {
                 window.lab_startMission(levelNum);
             } else if (moduleKey === 'arduino' && typeof window.ard_switchSubTab === 'function') {

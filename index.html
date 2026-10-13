@@ -102,11 +102,17 @@
                 <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Caixas de memória: int, float, String, bool e revisão de Loops e If-Else</p>
                 <div id="badge-variaveis" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F59E0B;font-size:0.9rem;">0/8 Níveis ⭐</div>
             </div>
+            <div class="hub-card" onclick="openTab('tab-eletronica')" style="background:#1E293B;padding:22px;border-radius:24px;border:2px solid #F87171;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
+                <i class="fa-solid fa-bolt" style="font-size:3rem;color:#F87171;margin-bottom:10px;"></i>
+                <h3 style="color:white;font-family:'Fredoka One';">Eletrônica & Lei de Ohm</h3>
+                <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Tensão (V), Corrente (I), Resistência (R), Multímetro e Tubo de Elétrons</p>
+                <div id="badge-eletronica" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F87171;font-size:0.9rem;">0/6 Níveis ⭐</div>
+            </div>
             <div class="hub-card" onclick="openTab('tab-leaderboard')" style="background:linear-gradient(135deg,#1E1B4B,#1E293B);padding:22px;border-radius:24px;border:2px solid #F59E0B;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
                 <i class="fa-solid fa-ranking-star" style="font-size:3rem;color:#FBBF24;margin-bottom:10px;"></i>
                 <h3 style="color:#FBBF24;font-family:'Fredoka One';">Placar de Recordes</h3>
                 <p style="color:#CBD5E1;font-size:0.9rem;margin:6px 0 12px;">Menores tempos de conclusão por fase — Desafie seus colegas no Speedrun!</p>
-                <div id="badge-hub-leaderboard" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#FBBF24;font-size:0.9rem;">⚡ 30 Fases Speedrun</div>
+                <div id="badge-hub-leaderboard" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#FBBF24;font-size:0.9rem;">⚡ 36 Fases Speedrun</div>
             </div>
         </div>
     </div>
@@ -130,7 +136,7 @@
         <div class="lb-stats-grid">
             <div class="lb-stat-box highlight">
                 <div class="lb-stat-label">👑 Seus Recordes (1º Lugar)</div>
-                <div class="lb-stat-val" id="lb_stat_records">0 de 30</div>
+                <div class="lb-stat-val" id="lb_stat_records">0 de 36</div>
             </div>
             <div class="lb-stat-box">
                 <div class="lb-stat-label">⏱️ Tempo Total Speedrun</div>
@@ -138,21 +144,22 @@
             </div>
             <div class="lb-stat-box">
                 <div class="lb-stat-label">⭐ Níveis Registrados</div>
-                <div class="lb-stat-val" id="lb_stat_completed" style="color:#34D399;">30 / 30 Fases</div>
+                <div class="lb-stat-val" id="lb_stat_completed" style="color:#34D399;">36 / 36 Fases</div>
             </div>
         </div>
 
         <!-- FILTROS POR AULA -->
         <div class="lb-filters-bar">
-            <button class="lb-filter-btn active" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('all');">🌟 Todas as Aulas (30)</button>
+            <button class="lb-filter-btn active" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('all');">🌟 Todas as Aulas (36)</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('my_records');" style="color:#FBBF24;border-color:#F59E0B;">👑 Seus Recordes</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('tesouro');">🤖 Aula 1: Tesouro</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('loopmaker');">🔄 Aula 2: Loops</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('jardim');">🌱 Aula 3: IF/ELSE</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('semaforo');">🚦 Aula 4: Semáforo</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('variaveis');">🧮 Aula 5: Variáveis</button>
-            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('labmaker');">⚡ Aula 6/7: Bancada</button>
-            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('arduino');">🔌 Aula 8: Arduino</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('eletronica');">⚡ Aula 6: Eletrônica</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('labmaker');">🔌 Aula 7: Protoboard</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('arduino');">🤖 Aula 8: Arduino</button>
         </div>
 
         <!-- CONTAINER DOS CARDS DE NÍVEIS -->
@@ -250,6 +257,11 @@
         <div id="variaveis-container"></div>
     </div>
 
+    <div class="game-panel" id="tab-eletronica">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
+        <div id="eletronica-container"></div>
+    </div>
+
     <div class="footer">⭐ 3 ou 4 estrelas por módulo = 100% completo!</div>
 
     <!-- MODAL DE AULA TEÓRICA -->
@@ -318,6 +330,7 @@
 <script src="js/aula3-ifelse.js"></script>
 <script src="js/aula4-semaforo.js"></script>
 <script src="js/aula5-variaveis.js"></script>
+<script src="js/aula6-eletronica.js"></script>
 <script src="js/aula67-labmaker.js"></script>
 <script src="js/aula8-arduino.js"></script>
 

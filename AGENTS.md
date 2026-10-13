@@ -25,23 +25,26 @@ A aplicação é construída como uma **Single-Page Application (SPA)** autocont
      * `loopmaker_levels`
      * `jardim_levels`
      * `arduino_levels`
-   * Total de estrelas: 18 estrelas (3 por módulo).
+     * `variaveis_levels`
+     * `eletronica_levels`
+   * Total de estrelas: 36 estrelas na plataforma.
 4. **Camadas Gráficas & Simulação:**
    * Simulador de Protoboard: Renderizado via DOM + camada SVG dinâmica (`.bb-svg-layer`) para traçado de fios jumpers, resistores e checagem de circuito fechado (+5V -> Resistor -> LED -> GND).
    * Matriz 2D/3D (Tesouro): Grid dinâmico com obstáculos, escadas, moedas e colisão.
-   * Modulação PWM & Lei de Ohm: Cálculos reativos em tempo real via sliders e eventos de input.
+   * Tubo de Elétrons, Multímetro & Lei de Ohm: Simulação animada do fluxo de elétrons, queda de tensão e corrente calculada em tempo real via sliders e Mini-IDE Arduino C++.
+   * Modulação PWM & Osciloscópio: Simulação de duty cycle e frequências.
 
 ---
 
 ## 🗺️ 3. Estrutura Pedagógica (10 Aulas)
 
 1. **Aula 1 — Algoritmos e Sequências:** Introdução a comandos ordenados passo a passo (Módulo: *Caça ao Tesouro*).
-2. **Aula 2 — Estruturas de Repetição (Loops em C/C++):** Laços `for` em C/C++ (`for (int i=0; i<N; i++)`), automação de tarefas repetitivas (Módulo: *Mini-IDE C/C++*).
-3. **Aula 3 — Condicionais (Decisões):** Estruturas `if/else` com base em leituras e sensores (Módulo: *Jardim dos Loops*).
+2. **Aula 2 — Estruturas de Repetição (Loops em C/C++):** Laços `for` em C/C++ (`for (int i=0; i<N; i++)`), automação de tarefas repetitivas (Módulo: *Máquina de Loops*).
+3. **Aula 3 — Condicionais (Decisões):** Estruturas `if/else` com base em leituras e sensores (Módulo: *Robô com IF/ELSE*).
 4. **Aula 4 — Sequências Temporizadas:** Controle de tempo e `delay()` em milissegundos (Módulo: *Semáforo Digital*).
-5. **Aula 5 — Variáveis e Tipos de Dados:** Tipos `int`, `float`, `String`, `bool` e gerenciamento de estados (Módulo: *Caça ao Tesouro Nível 3*).
-6. **Aula 6 — Introdução à Eletrônica:** Tensão ($V$), Corrente ($I$), Resistência ($R$) e Lei de Ohm ($V = R \cdot I$) (Módulo: *Laboratório Maker — Teoria*).
-7. **Aula 7 — Circuitos e Protoboard:** Barramentos de alimentação, colunas interligadas e polaridade de componentes (Módulo: *Laboratório Maker — Bancada*).
+5. **Aula 5 — Variáveis e Tipos de Dados:** Tipos `int`, `float`, `String`, `bool` e gerenciamento de estados (Módulo: *Laboratório de Variáveis*).
+6. **Aula 6 — Introdução à Eletrônica:** Tensão ($V$), Corrente ($I$), Resistência ($R$) e Lei de Ohm ($V = R \cdot I$) (Módulo: *Eletrônica & Lei de Ohm — js/aula6-eletronica.js*).
+7. **Aula 7 — Circuitos e Protoboard:** Barramentos de alimentação, colunas interligadas e polaridade de componentes (Módulo: *Bancada Protoboard Maker*).
 8. **Aula 8 — Arduino e Linguagem C++:** Anatomia da placa UNO, pinos digitais/analógicos/PWM, funções `setup()` e `loop()` (Módulo: *Oficina do Arduino & Quiz*).
 9. **Aula 9 — Prática: Montagem do Semáforo:** Guia físico de montagem com protoboard real, 3 LEDs, 3 resistores de 220Ω e Arduino UNO (Módulo: `#tab-aula9`).
 10. **Aula 10 — Prática: Programação do Semáforo:** Código fonte Arduino C++ completo, configuração no Arduino IDE e processo de upload (Módulo: `#tab-aula10`).

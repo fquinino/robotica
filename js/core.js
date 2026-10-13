@@ -400,6 +400,14 @@ function openTab(tabId) {
             window.makerLeaderboard.startTimer('variaveis', lvl);
         }
     }
+    if (tabId === 'tab-eletronica') {
+        if(!document.getElementById('eletronica-loaded') && typeof loadEletronica==='function') loadEletronica();
+        if(window.makerLeaderboard) {
+            window.makerLeaderboard.ensureHUD('eletronica', '#eletronica-container');
+            const lvl = (typeof elet_level !== 'undefined') ? elet_level : 1;
+            window.makerLeaderboard.startTimer('eletronica', lvl);
+        }
+    }
     window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -409,7 +417,7 @@ function openTrail() {
 
 function resetAllProgress() {
     if (confirm('Tem certeza que deseja zerar todo o seu progresso?')) {
-        ['semaforo_levels','tesouro_levels','labmaker_levels','loopmaker_levels','jardim_levels','arduino_levels','variaveis_levels'].forEach(k => localStorage.removeItem(k));
+        ['semaforo_levels','tesouro_levels','labmaker_levels','loopmaker_levels','jardim_levels','arduino_levels','variaveis_levels','eletronica_levels'].forEach(k => localStorage.removeItem(k));
         alert('Progresso zerado! Vamos começar de novo!');
         if(typeof updateTrail==='function') updateTrail();
         if(typeof updateHubProgress==='function') updateHubProgress();
