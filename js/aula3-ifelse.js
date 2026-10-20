@@ -869,22 +869,56 @@ function if_toggleGuide() {
 
 function if_switchLevel(level) {
     if (if_isRunning) return;
+    level = parseInt(level, 10);
+    if (isNaN(level) || level < 1) level = 1;
+
+    // Regra Estrita: NÃO DEIXA AVANÇAR SEM PASSAR PELO NÍVEL ANTERIOR!
+    let saved = getLevels('jardim_levels');
+    for (let prev = 1; prev < level; prev++) {
+        if (!saved.includes(prev)) {
+            if (typeof playSound === 'function') playSound('error');
+            alert(`🔒 Nível ${level} Bloqueado!\n\nVocê precisa programar as condições IF/ELSE do Nível ${prev} com sucesso antes de avançar para o próximo nível!`);
+            return;
+        }
+    }
+
     if_currentLevel = level;
     
     if (window.makerLeaderboard) {
         window.makerLeaderboard.startTimer('jardim', level);
     }
 
-    // Atualiza botões da barra
+    // Atualiza botões da barra com estado de cadeado / concluído
     for(let i=1; i<=4; i++) {
         const b = document.getElementById('if_btn_lvl_' + i);
         if(b) {
             b.classList.remove('active');
-            let saved = getLevels('jardim_levels');
-            if(saved.includes(i)) {
-                b.classList.add('done');
+            let canAccess = true;
+            for (let p = 1; p < i; p++) {
+                if (!saved.includes(p)) {
+                    canAccess = false;
+                    break;
+                }
+            }
+            b.classList.toggle('locked', !canAccess);
+            if (!canAccess) {
+                b.style.cursor = 'not-allowed';
+                b.style.opacity = '0.55';
+                b.title = `Nível ${i} (Bloqueado — Complete os níveis anteriores primeiro)`;
                 const star = b.querySelector('.if-lvl-status');
-                if(star) star.innerHTML = '<i class="fa-solid fa-star" style="color:#FBBF24;"></i>';
+                if(star) star.innerHTML = '<i class="fa-solid fa-lock" style="font-size:0.8rem;"></i>';
+            } else {
+                b.style.cursor = 'pointer';
+                b.style.opacity = '1';
+                b.title = `Nível ${i}`;
+                if(saved.includes(i)) {
+                    b.classList.add('done');
+                    const star = b.querySelector('.if-lvl-status');
+                    if(star) star.innerHTML = '<i class="fa-solid fa-star" style="color:#FBBF24;"></i>';
+                } else {
+                    const star = b.querySelector('.if-lvl-status');
+                    if(star) star.innerHTML = '';
+                }
             }
         }
     }

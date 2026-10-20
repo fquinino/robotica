@@ -2742,11 +2742,26 @@ function elet_setLedColor(colorKey) {
 
 function elet_switchLevel(lvl) {
     if (elet_running) return;
+    lvl = parseInt(lvl, 10);
+    if (isNaN(lvl) || lvl < 1) lvl = 1;
+
+    // Regra Estrita: NÃO DEIXA AVANÇAR SEM PASSAR PELO NÍVEL ANTERIOR!
+    const saved = getLevels('eletronica_levels');
+    for (let prev = 1; prev < lvl; prev++) {
+        if (!saved.includes(prev)) {
+            if (typeof playSound === 'function') playSound('error');
+            alert(`🔒 Nível ${lvl} Bloqueado!\n\nVocê precisa resolver e concluir o circuito do Nível ${prev} com sucesso antes de avançar para o próximo nível!`);
+            return;
+        }
+    }
+
     elet_level = lvl;
 
     if (window.makerLeaderboard) {
         window.makerLeaderboard.startTimer('eletronica', lvl);
     }
+
+    elet_updateLevelButtons();
 
     for (let i = 1; i <= 6; i++) {
         document.getElementById(`elet_btn_lvl_${i}`)?.classList.toggle('active', i === lvl);
@@ -2779,12 +2794,31 @@ function elet_updateLevelButtons() {
         const stat = document.getElementById(`elet_lvl_stat_${i}`);
         if (!btn || !stat) continue;
 
-        if (saved.includes(i)) {
-            btn.classList.add('done');
-            stat.innerText = '⭐';
+        let canAccess = true;
+        for (let p = 1; p < i; p++) {
+            if (!saved.includes(p)) {
+                canAccess = false;
+                break;
+            }
+        }
+
+        btn.classList.toggle('done', saved.includes(i));
+        btn.classList.toggle('locked', !canAccess);
+
+        if (!canAccess) {
+            btn.style.cursor = 'not-allowed';
+            btn.style.opacity = '0.55';
+            btn.title = `Nível ${i} (Bloqueado — Complete os níveis anteriores primeiro)`;
+            stat.innerText = '🔒';
         } else {
-            btn.classList.remove('done');
-            stat.innerText = (i === 1 || saved.includes(i - 1)) ? '🔓' : '🔒';
+            btn.style.cursor = 'pointer';
+            btn.style.opacity = '1';
+            btn.title = `Nível ${i}`;
+            if (saved.includes(i)) {
+                stat.innerText = '⭐';
+            } else {
+                stat.innerText = '🔓';
+            }
         }
     }
 }

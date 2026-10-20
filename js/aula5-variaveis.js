@@ -1289,12 +1289,26 @@ function vars_prevGuideSlide() {
 
 function vars_switchLevel(lvl) {
     if (vars_running) return;
+    lvl = parseInt(lvl, 10);
+    if (isNaN(lvl) || lvl < 1) lvl = 1;
+
+    // Regra Estrita: NÃO DEIXA AVANÇAR SEM PASSAR PELO NÍVEL ANTERIOR!
+    const saved = getLevels('variaveis_levels');
+    for (let prev = 1; prev < lvl; prev++) {
+        if (!saved.includes(prev)) {
+            if (typeof playSound === 'function') playSound('error');
+            alert(`🔒 Nível ${lvl} Bloqueado!\n\nVocê precisa declarar e manipular as variáveis do Nível ${prev} com sucesso antes de avançar para o próximo nível!`);
+            return;
+        }
+    }
+
     vars_level = lvl;
 
     if (window.makerLeaderboard) {
         window.makerLeaderboard.startTimer('variaveis', lvl);
     }
 
+    vars_updateLevelButtons();
     for (let i = 1; i <= 8; i++) {
         document.getElementById(`vars_btn_lvl_${i}`)?.classList.toggle('active', i === lvl);
     }
@@ -1347,13 +1361,32 @@ function vars_updateLevelButtons() {
         const stat = document.getElementById(`vars_lvl_stat_${i}`);
         if (!btn || !stat) continue;
         const isDone = saved.includes(i);
+        let canAccess = true;
+        for (let p = 1; p < i; p++) {
+            if (!saved.includes(p)) {
+                canAccess = false;
+                break;
+            }
+        }
         btn.classList.toggle('done', isDone);
-        if (isDone) {
-            stat.innerText = '⭐';
-            stat.style.color = '#F59E0B';
+        btn.classList.toggle('locked', !canAccess);
+        if (!canAccess) {
+            btn.style.cursor = 'not-allowed';
+            btn.style.opacity = '0.55';
+            btn.title = `Nível ${i} (Bloqueado — Complete os níveis anteriores primeiro)`;
+            stat.innerText = '🔒';
+            stat.style.color = '#EF4444';
         } else {
-            stat.innerText = i === 1 || saved.includes(i - 1) ? '⚪' : '🔒';
-            stat.style.color = '#475569';
+            btn.style.cursor = 'pointer';
+            btn.style.opacity = '1';
+            btn.title = `Nível ${i}`;
+            if (isDone) {
+                stat.innerText = '⭐';
+                stat.style.color = '#F59E0B';
+            } else {
+                stat.innerText = '⚪';
+                stat.style.color = '#38BDF8';
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
    CRIADORES DE CÓDIGO — TRILHA DE APRENDIZAGEM & HUB DE CONQUISTAS
    ========================================================================== */
 
-const UNLOCKED_LESSONS = 10; // Liberadas todas as 10 Aulas do currículo Maker!
+const UNLOCKED_LESSONS = 7; // Aulas 8, 9 e 10 trancadas — foco exclusivo na Aula 7 (Protoboard Maker)
 
 const getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
 
@@ -344,7 +344,8 @@ function showLessonModal(lessonNum) {
     const lesson = lessonContents[lessonNum];
     if (!lesson) return;
     if (lessonNum > UNLOCKED_LESSONS) {
-        alert('🔒 Esta aula será liberada conforme você avança no curso!');
+        if (typeof playSound === 'function') playSound('error');
+        alert('🔒 As Aulas 8, 9 e 10 estão trancadas pelo professor!\n\nO foco atual do laboratório é a Aula 7 (Protoboard Maker)!');
         return;
     }
 
@@ -421,7 +422,17 @@ function updateHubProgress() {
     setBadge('badge-labmaker', lab);
     setBadge('badge-loopmaker', loo, 4);
     setBadge('badge-jardim', jar, 4);
-    setBadge('badge-arduino', ard);
+    if (typeof UNLOCKED_LESSONS !== 'undefined' && UNLOCKED_LESSONS < 8) {
+        const ardBadge = document.getElementById('badge-arduino');
+        if (ardBadge) {
+            ardBadge.innerText = '🔒 Trancada (Aula 8)';
+            ardBadge.style.background = '#1E293B';
+            ardBadge.style.color = '#94A3B8';
+            ardBadge.style.border = '1px dashed #475569';
+        }
+    } else {
+        setBadge('badge-arduino', ard);
+    }
     setBadge('badge-variaveis', vars, 8);
     setBadge('badge-eletronica', elet, 6);
 

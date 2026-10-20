@@ -542,8 +542,46 @@
         l2_switchLevel(1);
     }
 
+    function l2_updateButtonsLockUI() {
+        const saved = JSON.parse(localStorage.getItem('loopmaker_levels') || '[]');
+        document.querySelectorAll('.loop-level-btn').forEach(btn => {
+            const lvl = parseInt(btn.dataset.level, 10);
+            if (isNaN(lvl)) return;
+            let canAccess = true;
+            for (let p = 1; p < lvl; p++) {
+                if (!saved.includes(p)) {
+                    canAccess = false;
+                    break;
+                }
+            }
+            btn.classList.toggle('locked', !canAccess);
+            if (!canAccess) {
+                btn.title = `Nível ${lvl} (Bloqueado — Complete os níveis anteriores primeiro)`;
+                btn.style.cursor = 'not-allowed';
+                btn.style.opacity = '0.55';
+            } else {
+                btn.title = `Nível ${lvl}`;
+                btn.style.cursor = 'pointer';
+                btn.style.opacity = '1';
+            }
+        });
+    }
+
     function l2_switchLevel(lvl) {
         if(l2_isExecuting) return;
+        lvl = parseInt(lvl, 10);
+        if (isNaN(lvl) || lvl < 1) lvl = 1;
+
+        // Regra Estrita: NÃO DEIXA AVANÇAR SEM PASSAR PELO NÍVEL ANTERIOR!
+        const saved = JSON.parse(localStorage.getItem('loopmaker_levels') || '[]');
+        for (let prev = 1; prev < lvl; prev++) {
+            if (!saved.includes(prev)) {
+                if (typeof playSound === 'function') playSound('error');
+                alert(`🔒 Nível ${lvl} Bloqueado!\n\nVocê precisa concluir o desafio do Nível ${prev} com sucesso antes de avançar para o próximo nível!`);
+                return;
+            }
+        }
+
         l2_currentLevel = lvl;
 
         if(window.makerLeaderboard) {
@@ -554,6 +592,7 @@
             btn.classList.remove('active');
             if(parseInt(btn.dataset.level) === lvl) btn.classList.add('active');
         });
+        l2_updateButtonsLockUI();
 
         document.getElementById('l2_view_lvl1').style.display = (lvl === 1) ? 'block' : 'none';
         document.getElementById('l2_view_lvl2').style.display = (lvl === 2) ? 'block' : 'none';

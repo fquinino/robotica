@@ -1066,6 +1066,19 @@ function sem_prevGuideSlide() {
 
 function sem_switchLevel(lvl) {
     if (sem_running) return;
+    lvl = parseInt(lvl, 10);
+    if (isNaN(lvl) || lvl < 1) lvl = 1;
+
+    // Regra Estrita: NÃO DEIXA AVANÇAR SEM PASSAR PELO NÍVEL ANTERIOR!
+    const saved = JSON.parse(localStorage.getItem('semaforo_levels') || '[]');
+    for (let prev = 1; prev < lvl; prev++) {
+        if (!saved.includes(prev)) {
+            if (typeof playSound === 'function') playSound('error');
+            alert(`🔒 Nível ${lvl} Bloqueado!\n\nVocê precisa programar e concluir o Nível ${prev} com sucesso antes de avançar para o próximo nível!`);
+            return;
+        }
+    }
+
     sem_level = lvl;
 
     if (window.makerLeaderboard) {
@@ -1106,6 +1119,7 @@ function sem_switchLevel(lvl) {
 
     sem_resetScene();
     sem_updateLiveCpp();
+    sem_updateLevelButtons();
 }
 
 function sem_updateLevelButtons() {
@@ -1114,10 +1128,26 @@ function sem_updateLevelButtons() {
         const btn = document.getElementById(`sem_btn_lvl_${i}`);
         if (!btn) continue;
         const isDone = saved.includes(i);
+        let canAccess = true;
+        for (let p = 1; p < i; p++) {
+            if (!saved.includes(p)) { canAccess = false; break; }
+        }
+        const isLocked = !canAccess;
+
         btn.classList.toggle('done', isDone);
+        btn.classList.toggle('locked', isLocked);
+        btn.style.opacity = isLocked ? '0.5' : '1';
+        btn.style.cursor = isLocked ? 'not-allowed' : 'pointer';
+
         const statusEl = btn.querySelector('.sem-lvl-status');
         if (statusEl) {
-            statusEl.innerHTML = isDone ? '<i class="fa-solid fa-circle-check" style="color:#10B981;"></i>' : '<i class="fa-solid fa-star"></i>';
+            if (isLocked) {
+                statusEl.innerHTML = '<i class="fa-solid fa-lock" style="font-size:0.75rem;color:#94A3B8;"></i>';
+            } else if (isDone) {
+                statusEl.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10B981;"></i>';
+            } else {
+                statusEl.innerHTML = '<i class="fa-solid fa-star"></i>';
+            }
         }
     }
 }

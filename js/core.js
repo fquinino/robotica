@@ -397,6 +397,11 @@ function openTab(tabId) {
         }
     }
     if (tabId === 'tab-arduino') {
+        if (typeof UNLOCKED_LESSONS !== 'undefined' && UNLOCKED_LESSONS < 8) {
+            if (typeof playSound === 'function') playSound('error');
+            alert('🔒 A Aula 8 (Oficina do Arduino) está trancada no momento!\n\nO foco atual é a Aula 7 (Bancada Protoboard Maker).');
+            return;
+        }
         if(!document.getElementById('arduino-loaded') && typeof loadArduino==='function') loadArduino();
         if(window.makerLeaderboard) {
             window.makerLeaderboard.ensureHUD('arduino', '#arduino-container');
@@ -428,10 +433,23 @@ function openTrail() {
 
 function resetAllProgress() {
     if (confirm('Tem certeza que deseja zerar todo o seu progresso?')) {
-        ['semaforo_levels','tesouro_levels','labmaker_levels','loopmaker_levels','jardim_levels','arduino_levels','variaveis_levels','eletronica_levels'].forEach(k => localStorage.removeItem(k));
+        [
+            'semaforo_levels','tesouro_levels','labmaker_levels','loopmaker_levels',
+            'jardim_levels','arduino_levels','variaveis_levels','eletronica_levels',
+            'lab_challenges_done','lab_unlocked_step','lab_minigame_won','aula10_completed'
+        ].forEach(k => localStorage.removeItem(k));
         alert('Progresso zerado! Vamos começar de novo!');
         if(typeof updateTrail==='function') updateTrail();
         if(typeof updateHubProgress==='function') updateHubProgress();
+        if(typeof lab_initStepLocking==='function') lab_initStepLocking();
+        if(typeof lab_updateBadges==='function') lab_updateBadges();
+        if(typeof lab_switchGuideStep==='function') lab_switchGuideStep(1);
+        if(typeof t_switchLevel==='function') t_switchLevel(1);
+        if(typeof l2_switchLevel==='function') l2_switchLevel(1);
+        if(typeof if_switchLevel==='function') if_switchLevel(1);
+        if(typeof sem_switchLevel==='function') sem_switchLevel(1);
+        if(typeof vars_switchLevel==='function') vars_switchLevel(1);
+        if(typeof elet_switchLevel==='function') elet_switchLevel(1);
     }
 }
 

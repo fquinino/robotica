@@ -42,13 +42,38 @@ function loadLabmaker() {
             /* Hero Banner de Raio-X Explodido 3D */
             .vg-hero-card { background:linear-gradient(135deg, #020617 0%, #0F172A 100%); border:2px solid #38BDF8; border-radius:22px; padding:22px; margin:20px 0; box-shadow:0 12px 36px rgba(0,0,0,0.5), inset 0 0 25px rgba(56,189,248,0.08); }
 
-            /* Galeria de Figuras do que existe por baixo da Protoboard */
-            .vg-figures-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:18px; margin:20px 0; }
-            .vg-figure-card { background:#0F172A; border:2px solid #334155; border-radius:20px; padding:20px; display:flex; flex-direction:column; justify-content:space-between; transition:0.25s; box-shadow:0 8px 24px rgba(0,0,0,0.3); }
-            .vg-figure-card:hover { border-color:#38BDF8; transform:translateY(-2px); box-shadow:0 12px 28px rgba(56,189,248,0.2); }
+            /* Carrossel Interativo da Galeria Visual da Aula 7 */
+            .vg-carousel-container { background:#0F172A; border:2px solid #38BDF8; border-radius:22px; padding:20px; margin:24px 0; box-shadow:0 12px 36px rgba(0,0,0,0.45); position:relative; }
+            .vg-carousel-topbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px; }
+            .vg-carousel-counter-badge { background:rgba(56,189,248,0.15); border:1px solid #38BDF8; color:#38BDF8; padding:5px 14px; border-radius:14px; font-weight:900; font-size:0.85rem; font-family:'Fira Code', monospace; display:flex; align-items:center; gap:6px; }
+            
+            /* Abas de Navegação Rápida do Carrossel */
+            .vg-carousel-nav-tabs { display:flex; gap:8px; overflow-x:auto; padding:4px 2px 10px; margin-bottom:12px; scrollbar-width:thin; }
+            .vg-carousel-tab-btn { background:#1E293B; border:1px solid #334155; color:#94A3B8; padding:8px 14px; border-radius:12px; font-size:0.82rem; font-weight:800; cursor:pointer; white-space:nowrap; transition:all 0.2s; display:inline-flex; align-items:center; gap:6px; flex-shrink:0; }
+            .vg-carousel-tab-btn:hover { border-color:#38BDF8; color:#F8FAFC; transform:translateY(-1px); }
+            .vg-carousel-tab-btn.active { background:linear-gradient(135deg, #0284C7, #0369A1); border-color:#38BDF8; color:white; box-shadow:0 4px 14px rgba(56,189,248,0.35); }
+            
+            /* Viewport e Trilho Deslizante */
+            .vg-carousel-viewport { overflow:hidden; border-radius:18px; background:#020617; border:2px solid #1E293B; position:relative; }
+            .vg-carousel-track { display:flex; transition:transform 0.35s cubic-bezier(0.25, 1, 0.5, 1); width:100%; will-change:transform; }
+            .vg-carousel-slide { flex:0 0 100%; min-width:100%; max-width:100%; box-sizing:border-box; padding:22px 24px; display:grid; grid-template-columns:1.2fr 1fr; gap:22px; align-items:center; }
+            @media (max-width:768px) {
+                .vg-carousel-slide { grid-template-columns:1fr; padding:16px; gap:16px; }
+            }
+            
+            /* Controles Inferiores (Anterior, Dots, Próximo) */
+            .vg-carousel-controls { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:16px; padding-top:14px; border-top:1px solid #1E293B; }
+            .vg-carousel-arrow-btn { background:#1E293B; border:1px solid #475569; color:#F8FAFC; padding:10px 18px; border-radius:12px; font-size:0.88rem; font-weight:800; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:8px; user-select:none; }
+            .vg-carousel-arrow-btn:hover:not(:disabled) { background:#38BDF8; color:#0F172A; border-color:#38BDF8; transform:translateY(-1px); box-shadow:0 4px 12px rgba(56,189,248,0.3); }
+            .vg-carousel-arrow-btn:disabled { opacity:0.4; cursor:not-allowed; }
+            .vg-carousel-dots { display:flex; gap:8px; align-items:center; }
+            .vg-carousel-dot { width:10px; height:10px; border-radius:50%; background:#334155; cursor:pointer; transition:all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+            .vg-carousel-dot:hover { background:#64748B; }
+            .vg-carousel-dot.active { background:#38BDF8; width:26px; border-radius:10px; box-shadow:0 0 10px rgba(56,189,248,0.6); }
+
             .vg-fig-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
             .vg-fig-badge { padding:4px 10px; border-radius:12px; font-size:0.75rem; font-weight:900; letter-spacing:0.5px; }
-            .vg-svg-box { background:#020617; border-radius:14px; border:1px solid #1E293B; padding:12px; margin-top:12px; display:flex; align-items:center; justify-content:center; }
+            .vg-svg-box { background:#0B1120; border-radius:14px; border:1px solid #1E293B; padding:12px; display:flex; align-items:center; justify-content:center; box-shadow:inset 0 0 20px rgba(0,0,0,0.6); }
 
             /* Caixas de Destaque Didático */
             .lab-box-recap { background:linear-gradient(135deg, rgba(245,158,11,0.12), rgba(217,119,6,0.06)); border:2px solid #F59E0B; border-radius:18px; padding:18px 22px; margin:16px 0; }
@@ -396,7 +421,10 @@ function loadLabmaker() {
             <div style="background:#0F172A;border:1px solid #334155;border-radius:16px;padding:12px 18px;margin-bottom:18px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:0.88rem;flex-wrap:wrap;gap:8px;">
                     <span style="color:#94A3B8;font-weight:700;"><i class="fa-solid fa-route" style="color:#38BDF8;"></i> Trilha de Aprendizado da Aula 7:</span>
-                    <span id="lab_progress_text" style="color:#38BDF8;font-weight:900;">Nível 1 de 6 (17% Concluído)</span>
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <button type="button" onclick="lab_resetLevelProgress()" style="background:#1E293B;border:1px solid #334155;color:#94A3B8;padding:4px 12px;border-radius:10px;font-size:0.75rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;" title="Reiniciar todos os níveis da Aula 7 do zero"><i class="fa-solid fa-rotate-left"></i> Reiniciar Fases</button>
+                        <span id="lab_progress_text" style="color:#38BDF8;font-weight:900;">Nível 1 de 6 (17% Concluído)</span>
+                    </div>
                 </div>
                 <div style="width:100%;height:10px;background:#1E293B;border-radius:6px;overflow:hidden;position:relative;">
                     <div id="lab_global_progress_fill" style="width:16.6%;height:100%;background:linear-gradient(90deg, #0284C7, #38BDF8, #10B981);border-radius:6px;transition:width 0.4s ease;"></div>
@@ -646,255 +674,303 @@ function loadLabmaker() {
                         </div>
                     </div>
 
-                    <!-- GALERIA DE FIGURAS ILUSTRADAS PARA CADA ITEM DO QUE EXISTE POR BAIXO -->
-                    <div style="margin:28px 0 12px;">
-                        <h3 class="lab-title-font" style="color:#38BDF8;font-size:1.35rem;margin:0 0 6px;">
-                            🔍 Galeria Visual: Veja Cada Parte que Existe Por Baixo do Plástico
-                        </h3>
-                        <p style="color:#94A3B8;margin:0;font-size:0.95rem;">
-                            Clique e observe cada figura para entender exatamente como a eletricidade se movimenta sob seus dedos:
-                        </p>
-                    </div>
-
-                    <div class="vg-figures-grid">
-                        <!-- FIGURA 1: GARRA DE PRESSÃO INTERNA -->
-                        <div class="vg-figure-card">
+                    <!-- CARROSSEL DA GALERIA VISUAL (DIMINUI SCROLL E FOCA NO ITEM SELECIONADO) -->
+                    <div class="vg-carousel-container" id="vg_carousel_main">
+                        <div class="vg-carousel-topbar">
                             <div>
-                                <div class="vg-fig-header">
-                                    <span class="vg-fig-badge" style="background:#8B5CF6;color:white;">ITEM 1: GARRA INTERNA</span>
-                                    <span style="color:#C4B5FD;font-weight:900;font-size:0.75rem;">SEM SOLDA</span>
-                                </div>
-                                <h4 class="lab-title-font" style="color:white;font-size:1.15rem;margin:4px 0 6px;">
-                                    Como o Furinho Segura o Pino
-                                </h4>
-                                <p style="color:#94A3B8;font-size:0.88rem;margin:0;line-height:1.5;">
-                                    Dentro de cada furo existe uma <b>pinça elástica de bronze</b>. Quando você empurra o pino do jumper ou a perna do resistor, as duas lâminas se abrem e mordem o metal com pressão firme!
+                                <h3 class="lab-title-font" style="color:#38BDF8;font-size:1.35rem;margin:0 0 4px;display:flex;align-items:center;gap:10px;">
+                                    <span>🔍 Galeria Visual Interativa (Carrossel)</span>
+                                </h3>
+                                <p style="color:#94A3B8;margin:0;font-size:0.88rem;">
+                                    Explore cada parte interna da protoboard sem precisar rolar páginas longas!
                                 </p>
                             </div>
-                            <div class="vg-svg-box">
-                                <svg width="290" height="130" viewBox="0 0 290 130">
-                                    <rect x="95" y="8" width="100" height="30" fill="#F8FAFC" stroke="#CBD5E1" rx="6"/>
-                                    <rect x="135" y="8" width="20" height="30" fill="#0F172A"/>
-                                    <text x="145" y="24" fill="#94A3B8" font-size="7.5" font-weight="bold" text-anchor="middle">FURO</text>
-                                    <!-- Pino metálico entrando -->
-                                    <rect x="142" y="2" width="6" height="65" rx="2" fill="#E2E8F0" stroke="#64748B"/>
-                                    <text x="185" y="30" fill="#38BDF8" font-size="8" font-weight="bold">Pino Metálico</text>
-                                    <!-- Pinça elástica de latão -->
-                                    <path d="M 120 90 C 136 90 138 74 140 60" fill="none" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
-                                    <path d="M 170 90 C 154 90 152 74 150 60" fill="none" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
-                                    <text x="145" y="112" fill="#FBBF24" font-size="8.5" font-weight="bold" text-anchor="middle">Garra com Efeito Mola (Aperto Firme!)</text>
-                                </svg>
+                            <div class="vg-carousel-counter-badge" id="vg_carousel_counter">
+                                <i class="fa-solid fa-layer-group"></i> <span>Card 1 de 7</span>
                             </div>
                         </div>
 
-                        <!-- FIGURA 2: COLUNAS A-E -->
-                        <div class="vg-figure-card">
-                            <div>
-                                <div class="vg-fig-header">
-                                    <span class="vg-fig-badge" style="background:#0284C7;color:white;">ITEM 2: COLUNAS A-E</span>
-                                    <span style="color:#38BDF8;font-weight:900;font-size:0.75rem;">5 FUROS = 1 CONDUTOR</span>
+                        <!-- Abas de Navegação Rápida -->
+                        <div class="vg-carousel-nav-tabs">
+                            <button type="button" class="vg-carousel-tab-btn active" onclick="lab_carousel_goto(0)">📌 1. Garra Interna</button>
+                            <button type="button" class="vg-carousel-tab-btn" onclick="lab_carousel_goto(1)">⚡ 2. Colunas A-E</button>
+                            <button type="button" class="vg-carousel-tab-btn" onclick="lab_carousel_goto(2)">⛔ 3. Calha Central</button>
+                            <button type="button" class="vg-carousel-tab-btn" onclick="lab_carousel_goto(3)">🔌 4. Colunas F-J</button>
+                            <button type="button" class="vg-carousel-tab-btn" onclick="lab_carousel_goto(4)">🔋 5. Barramentos (+/-)</button>
+                            <button type="button" class="vg-carousel-tab-btn" onclick="lab_carousel_goto(5)">⚠️ 6. Curto-Circuito</button>
+                            <button type="button" class="vg-carousel-tab-btn" onclick="lab_carousel_goto(6)">🚦 7. Conexão Semáforo</button>
+                        </div>
+
+                        <!-- Viewport do Carrossel -->
+                        <div class="vg-carousel-viewport">
+                            <div class="vg-carousel-track" id="vg_carousel_track">
+                                
+                                <!-- SLIDE 1: GARRA DE PRESSÃO INTERNA -->
+                                <div class="vg-carousel-slide">
+                                    <div>
+                                        <div class="vg-fig-header">
+                                            <span class="vg-fig-badge" style="background:#8B5CF6;color:white;">ITEM 1 DE 7: GARRA INTERNA</span>
+                                            <span style="color:#C4B5FD;font-weight:900;font-size:0.75rem;">SEM SOLDA</span>
+                                        </div>
+                                        <h4 class="lab-title-font" style="color:white;font-size:1.25rem;margin:6px 0 8px;">
+                                            Como o Furinho Segura o Pino
+                                        </h4>
+                                        <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 10px;line-height:1.6;">
+                                            Dentro de cada furo existe uma <b>pinça elástica de bronze fosforoso</b>. Quando você empurra o pino do jumper ou a perna do resistor, as duas lâminas se abrem e mordem o metal com pressão firme!
+                                        </p>
+                                        <div style="background:#0F172A;border-left:3px solid #8B5CF6;padding:8px 12px;border-radius:8px;color:#A78BFA;font-size:0.85rem;line-height:1.5;">
+                                            💡 <b>Efeito Mola:</b> Garante contato elétrico perfeito sem precisar soldar nada!
+                                        </div>
+                                    </div>
+                                    <div class="vg-svg-box">
+                                        <svg width="290" height="135" viewBox="0 0 290 135">
+                                            <rect x="95" y="8" width="100" height="30" fill="#F8FAFC" stroke="#CBD5E1" rx="6"/>
+                                            <rect x="135" y="8" width="20" height="30" fill="#0F172A"/>
+                                            <text x="145" y="24" fill="#94A3B8" font-size="7.5" font-weight="bold" text-anchor="middle">FURO</text>
+                                            <rect x="142" y="2" width="6" height="65" rx="2" fill="#E2E8F0" stroke="#64748B"/>
+                                            <text x="185" y="30" fill="#38BDF8" font-size="8" font-weight="bold">Pino Metálico</text>
+                                            <path d="M 120 90 C 136 90 138 74 140 60" fill="none" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
+                                            <path d="M 170 90 C 154 90 152 74 150 60" fill="none" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
+                                            <text x="145" y="114" fill="#FBBF24" font-size="8.5" font-weight="bold" text-anchor="middle">Garra com Efeito Mola (Aperto Firme!)</text>
+                                        </svg>
+                                    </div>
                                 </div>
-                                <h4 class="lab-title-font" style="color:white;font-size:1.15rem;margin:4px 0 6px;">
-                                    Tiras Verticais Superiores (A a E)
-                                </h4>
-                                <p style="color:#94A3B8;font-size:0.88rem;margin:0;line-height:1.5;">
-                                    Os 5 furos de <b>A até E</b> da mesma coluna estão soldados na mesma lâmina de metal!
-                                    Se você colocar o pino 13 no <code>10A</code> e a perna do LED no <code>10C</code>, a corrente viaja pela lâmina e chega ao LED!
-                                </p>
-                            </div>
-                            <div class="vg-svg-box">
-                                <svg width="290" height="130" viewBox="0 0 290 130">
-                                    <rect x="20" y="10" width="250" height="110" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
-                                    <!-- Lâmina de cobre por baixo -->
-                                    <rect x="125" y="18" width="40" height="92" rx="6" fill="#F59E0B" opacity="0.35" stroke="#D97706" stroke-dasharray="3,2"/>
-                                    <text x="145" y="16" fill="#0284C7" font-size="9" font-weight="bold" text-anchor="middle">Coluna 10 (A-E)</text>
-                                    <!-- Furos A, B, C, D, E -->
-                                    <circle cx="145" cy="30" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="33" fill="#64748B" font-size="7">A</text>
-                                    <circle cx="145" cy="48" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="51" fill="#64748B" font-size="7">B</text>
-                                    <circle cx="145" cy="66" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="69" fill="#64748B" font-size="7">C</text>
-                                    <circle cx="145" cy="84" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="87" fill="#64748B" font-size="7">D</text>
-                                    <circle cx="145" cy="102" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="105" fill="#64748B" font-size="7">E</text>
-                                    <path d="M 145 30 L 145 102" stroke="#10B981" stroke-width="2.5" stroke-dasharray="3,3"/>
-                                    <text x="205" y="60" fill="#10B981" font-size="9" font-weight="bold">Mesmo nó</text>
-                                    <text x="205" y="72" fill="#64748B" font-size="7.5">condutor elétrico!</text>
-                                </svg>
+
+                                <!-- SLIDE 2: COLUNAS A-E -->
+                                <div class="vg-carousel-slide">
+                                    <div>
+                                        <div class="vg-fig-header">
+                                            <span class="vg-fig-badge" style="background:#0284C7;color:white;">ITEM 2 DE 7: COLUNAS A-E</span>
+                                            <span style="color:#38BDF8;font-weight:900;font-size:0.75rem;">5 FUROS = 1 CONDUTOR</span>
+                                        </div>
+                                        <h4 class="lab-title-font" style="color:white;font-size:1.25rem;margin:6px 0 8px;">
+                                            Tiras Verticais Superiores (A a E)
+                                        </h4>
+                                        <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 10px;line-height:1.6;">
+                                            Os 5 furos de <b>A até E</b> da mesma coluna estão soldados na mesma lâmina de metal! Se você colocar o pino 13 no <code>10A</code> e a perna do LED no <code>10C</code>, a corrente viaja pela lâmina e chega ao LED!
+                                        </p>
+                                        <div style="background:#0F172A;border-left:3px solid #0284C7;padding:8px 12px;border-radius:8px;color:#7DD3FC;font-size:0.85rem;line-height:1.5;">
+                                            🔗 <b>Mesmo Nó:</b> Furos alinhados na mesma coluna (A-E) são como se fossem a mesma ponta de um fio.
+                                        </div>
+                                    </div>
+                                    <div class="vg-svg-box">
+                                        <svg width="290" height="135" viewBox="0 0 290 135">
+                                            <rect x="20" y="10" width="250" height="115" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+                                            <rect x="125" y="18" width="40" height="96" rx="6" fill="#F59E0B" opacity="0.35" stroke="#D97706" stroke-dasharray="3,2"/>
+                                            <text x="145" y="16" fill="#0284C7" font-size="9" font-weight="bold" text-anchor="middle">Coluna 10 (A-E)</text>
+                                            <circle cx="145" cy="30" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="33" fill="#64748B" font-size="7">A</text>
+                                            <circle cx="145" cy="48" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="51" fill="#64748B" font-size="7">B</text>
+                                            <circle cx="145" cy="66" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="69" fill="#64748B" font-size="7">C</text>
+                                            <circle cx="145" cy="84" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="87" fill="#64748B" font-size="7">D</text>
+                                            <circle cx="145" cy="102" r="4.5" fill="#1E293B" stroke="#0284C7" stroke-width="2"/><text x="132" y="105" fill="#64748B" font-size="7">E</text>
+                                            <path d="M 145 30 L 145 102" stroke="#10B981" stroke-width="2.5" stroke-dasharray="3,3"/>
+                                            <text x="205" y="62" fill="#10B981" font-size="9" font-weight="bold">Mesmo nó</text>
+                                            <text x="205" y="74" fill="#64748B" font-size="7.5">condutor elétrico!</text>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- SLIDE 3: CALHA CENTRAL -->
+                                <div class="vg-carousel-slide">
+                                    <div>
+                                        <div class="vg-fig-header">
+                                            <span class="vg-fig-badge" style="background:#EF4444;color:white;">ITEM 3 DE 7: CALHA CENTRAL</span>
+                                            <span style="color:#FCA5A5;font-weight:900;font-size:0.75rem;">ISOLAMENTO TOTAL</span>
+                                        </div>
+                                        <h4 class="lab-title-font" style="color:white;font-size:1.25rem;margin:6px 0 8px;">
+                                            O Fosso Isolante (A-E NÃO Toca F-J)
+                                        </h4>
+                                        <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 10px;line-height:1.6;">
+                                            No centro da placa existe uma fenda plástica funda. Ela <b>corta o metal</b>! O lado superior A-E <b>nunca encosta</b> no lado inferior F-J, servindo para isolar circuitos ou encaixar chips e microcontroladores.
+                                        </p>
+                                        <div style="background:#0F172A;border-left:3px solid #EF4444;padding:8px 12px;border-radius:8px;color:#FCA5A5;font-size:0.85rem;line-height:1.5;">
+                                            ⛔ <b>Zero Contato:</b> 10E e 10F estão separados pela fenda plástica central!
+                                        </div>
+                                    </div>
+                                    <div class="vg-svg-box">
+                                        <svg width="290" height="135" viewBox="0 0 290 135">
+                                            <rect x="15" y="18" width="115" height="98" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+                                            <text x="72" y="36" fill="#0284C7" font-weight="bold" font-size="9" text-anchor="middle">Lado A-E (Cobre)</text>
+                                            <rect x="48" y="46" width="48" height="52" rx="4" fill="#F59E0B" opacity="0.3"/>
+                                            <rect x="135" y="12" width="20" height="110" fill="#334155" rx="3"/>
+                                            <line x1="145" y1="18" x2="145" y2="116" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,2"/>
+                                            <text x="145" y="70" fill="#EF4444" font-size="14" font-weight="bold" text-anchor="middle">⛔</text>
+                                            <rect x="160" y="18" width="115" height="98" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+                                            <text x="217" y="36" fill="#F59E0B" font-weight="bold" font-size="9" text-anchor="middle">Lado F-J (Cobre)</text>
+                                            <rect x="193" y="46" width="48" height="52" rx="4" fill="#F59E0B" opacity="0.3"/>
+                                            <text x="145" y="127" fill="#FCA5A5" font-size="8" font-weight="bold" text-anchor="middle">Barreira Plástica!</text>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- SLIDE 4: COLUNAS F-J -->
+                                <div class="vg-carousel-slide">
+                                    <div>
+                                        <div class="vg-fig-header">
+                                            <span class="vg-fig-badge" style="background:#F59E0B;color:#0F172A;">ITEM 4 DE 7: COLUNAS F-J</span>
+                                            <span style="color:#FBBF24;font-weight:900;font-size:0.75rem;">SEGUNDO BLOCO</span>
+                                        </div>
+                                        <h4 class="lab-title-font" style="color:white;font-size:1.25rem;margin:6px 0 8px;">
+                                            Tiras Metálicas Inferiores (F a J)
+                                        </h4>
+                                        <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 10px;line-height:1.6;">
+                                            O bloco inferior tem suas próprias tiras verticais de 5 furos. Os furos <code>10F</code>, <code>10G</code>, <code>10H</code>, <code>10I</code> e <code>10J</code> estão interligados entre si, funcionando como uma segunda bancada!
+                                        </p>
+                                        <div style="background:#0F172A;border-left:3px solid #F59E0B;padding:8px 12px;border-radius:8px;color:#FDE68A;font-size:0.85rem;line-height:1.5;">
+                                            ✌️ <b>Duas Bancadas:</b> Permite montar circuitos duplos ou conectar CIs com pernas dos dois lados.
+                                        </div>
+                                    </div>
+                                    <div class="vg-svg-box">
+                                        <svg width="290" height="135" viewBox="0 0 290 135">
+                                            <rect x="20" y="10" width="250" height="115" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+                                            <rect x="125" y="18" width="40" height="96" rx="6" fill="#F59E0B" opacity="0.35" stroke="#D97706" stroke-dasharray="3,2"/>
+                                            <text x="145" y="16" fill="#F59E0B" font-size="9" font-weight="bold" text-anchor="middle">Coluna 10 (F-J)</text>
+                                            <circle cx="145" cy="30" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="33" fill="#64748B" font-size="7">F</text>
+                                            <circle cx="145" cy="48" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="51" fill="#64748B" font-size="7">G</text>
+                                            <circle cx="145" cy="66" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="69" fill="#64748B" font-size="7">H</text>
+                                            <circle cx="145" cy="84" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="87" fill="#64748B" font-size="7">I</text>
+                                            <circle cx="145" cy="102" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="105" fill="#64748B" font-size="7">J</text>
+                                            <text x="205" y="62" fill="#FBBF24" font-size="9" font-weight="bold">Furos 10F a 10J</text>
+                                            <text x="205" y="74" fill="#64748B" font-size="7.5">unidos entre si!</text>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- SLIDE 5: BARRAMENTOS HORIZONTAIS (+ e -) -->
+                                <div class="vg-carousel-slide">
+                                    <div>
+                                        <div class="vg-fig-header">
+                                            <span class="vg-fig-badge" style="background:#10B981;color:white;">ITEM 5 DE 7: BARRAMENTOS</span>
+                                            <span style="color:#34D399;font-weight:900;font-size:0.75rem;">HORIZONTAL (30 PINOS)</span>
+                                        </div>
+                                        <h4 class="lab-title-font" style="color:white;font-size:1.25rem;margin:6px 0 8px;">
+                                            Linhas Longas de Alimentação (+ e -)
+                                        </h4>
+                                        <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 10px;line-height:1.6;">
+                                            Ao contrário das colunas que são verticais de 5 furos, os barramentos correm na <b>HORIZONTAL</b> com até 30 furos unidos de ponta a ponta para levar energia (+5V e GND) a toda a placa!
+                                        </p>
+                                        <div style="background:#0F172A;border-left:3px solid #10B981;padding:8px 12px;border-radius:8px;color:#A7F3D0;font-size:0.85rem;line-height:1.5;">
+                                            ⚡ <b>Super Rodovia:</b> Conecte o GND uma única vez no barramento e todos os 30 furos terão GND!
+                                        </div>
+                                    </div>
+                                    <div class="vg-svg-box">
+                                        <svg width="290" height="135" viewBox="0 0 290 135">
+                                            <rect x="15" y="20" width="260" height="38" rx="6" fill="#FEE2E2" stroke="#EF4444"/>
+                                            <text x="28" y="44" fill="#EF4444" font-size="16" font-weight="bold">+</text>
+                                            <line x1="45" y1="40" x2="265" y2="40" stroke="#EF4444" stroke-width="3"/>
+                                            <text x="155" y="35" fill="#DC2626" font-size="8" font-weight="bold" text-anchor="middle">Barramento Vermelho: Todos levam +5V</text>
+                                            <rect x="15" y="74" width="260" height="38" rx="6" fill="#E0F2FE" stroke="#0284C7"/>
+                                            <text x="28" y="98" fill="#0284C7" font-size="18" font-weight="bold">-</text>
+                                            <line x1="45" y1="94" x2="265" y2="94" stroke="#0284C7" stroke-width="3"/>
+                                            <text x="155" y="89" fill="#0369A1" font-size="8" font-weight="bold" text-anchor="middle">Barramento Azul: Todos levam Terra (GND 0V)</text>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- SLIDE 6: LIGAÇÃO CERTA VS CURTO-CIRCUITO -->
+                                <div class="vg-carousel-slide">
+                                    <div>
+                                        <div class="vg-fig-header">
+                                            <span class="vg-fig-badge" style="background:#EF4444;color:white;">ITEM 6 DE 7: REGRA DE OURO</span>
+                                            <span style="color:#FCA5A5;font-weight:900;font-size:0.75rem;">CERTO vs ERRADO</span>
+                                        </div>
+                                        <h4 class="lab-title-font" style="color:white;font-size:1.25rem;margin:6px 0 8px;">
+                                            O Mistério do Curto-Circuito
+                                        </h4>
+                                        <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 10px;line-height:1.6;">
+                                            Se colocar 2 pernas do mesmo componente na mesma coluna, a corrente dá a volta por baixo pelo cobre e desvia do componente (curto-circuito)! As pernas precisam ficar em <b>colunas separadas</b>!
+                                        </p>
+                                        <div style="background:#0F172A;border-left:3px solid #EF4444;padding:8px 12px;border-radius:8px;color:#FECACA;font-size:0.85rem;line-height:1.5;">
+                                            ⚠️ <b>Atenção Maker:</b> Pernas na mesma coluna = curto-circuito! Use sempre colunas diferentes.
+                                        </div>
+                                    </div>
+                                    <div class="vg-svg-box">
+                                        <svg width="290" height="135" viewBox="0 0 290 135">
+                                            <rect x="10" y="10" width="130" height="115" rx="8" fill="#064E3B" stroke="#10B981" stroke-width="1.5"/>
+                                            <text x="75" y="26" fill="#A7F3D0" font-size="8.5" font-weight="bold" text-anchor="middle">✅ CERTO: Colunas 10 e 11</text>
+                                            <circle cx="50" cy="55" r="4" fill="#10B981"/><text x="50" y="70" fill="#A7F3D0" font-size="7" text-anchor="middle">10C</text>
+                                            <circle cx="100" cy="55" r="4" fill="#10B981"/><text x="100" y="70" fill="#A7F3D0" font-size="7" text-anchor="middle">11C</text>
+                                            <path d="M 50 55 Q 75 35 100 55" fill="none" stroke="#FBBF24" stroke-width="3"/>
+                                            <text x="75" y="92" fill="#FBBF24" font-size="7.5" font-weight="bold" text-anchor="middle">Corrente atravessa!</text>
+                                            <text x="75" y="104" fill="#6EE7B7" font-size="7" text-anchor="middle">O LED Acende 🎉</text>
+
+                                            <rect x="150" y="10" width="130" height="115" rx="8" fill="#450A0A" stroke="#EF4444" stroke-width="1.5"/>
+                                            <text x="215" y="26" fill="#FECACA" font-size="8.5" font-weight="bold" text-anchor="middle">❌ ERRADO: Mesma Coluna</text>
+                                            <circle cx="200" cy="45" r="4" fill="#EF4444"/><text x="186" y="48" fill="#FECACA" font-size="7">10B</text>
+                                            <circle cx="200" cy="75" r="4" fill="#EF4444"/><text x="186" y="78" fill="#FECACA" font-size="7">10C</text>
+                                            <path d="M 200 45 Q 225 60 200 75" fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="3,2"/>
+                                            <line x1="200" y1="45" x2="200" y2="75" stroke="#F59E0B" stroke-width="4"/>
+                                            <text x="215" y="98" fill="#FCA5A5" font-size="7.5" font-weight="bold" text-anchor="middle">Curto! Passa por baixo</text>
+                                            <text x="215" y="110" fill="#EF4444" font-size="7" text-anchor="middle">O LED Fica Apagado!</text>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- SLIDE 7: CONEXÃO DO SEMÁFORO NA PRÁTICA -->
+                                <div class="vg-carousel-slide">
+                                    <div>
+                                        <div class="vg-fig-header">
+                                            <span class="vg-fig-badge" style="background:#10B981;color:white;">ITEM 7 DE 7: PONTE DO SEMÁFORO</span>
+                                            <span style="color:#A7F3D0;font-weight:900;font-size:0.75rem;">JUMPER + LED + RESISTOR</span>
+                                        </div>
+                                        <h4 class="lab-title-font" style="color:white;font-size:1.25rem;margin:6px 0 8px;">
+                                            Como o Semáforo se Conecta
+                                        </h4>
+                                        <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 10px;line-height:1.6;">
+                                            O Jumper entra no <code>10A</code> e passa energia para o LED no <code>10C</code>. A perna curta sai no <code>11C</code> e entrega a energia para o Resistor no <code>11D</code> até o barramento negativo (GND)!
+                                        </p>
+                                        <div style="background:#0F172A;border-left:3px solid #10B981;padding:8px 12px;border-radius:8px;color:#A7F3D0;font-size:0.85rem;line-height:1.5;">
+                                            🚦 <b>Circuito Fechado:</b> Arduino D13 ➔ Jumper ➔ LED ➔ Resistor ➔ GND.
+                                        </div>
+                                    </div>
+                                    <div class="vg-svg-box">
+                                        <svg width="290" height="135" viewBox="0 0 290 135">
+                                            <rect x="20" y="10" width="250" height="115" rx="8" fill="#020617" stroke="#334155"/>
+                                            <rect x="55" y="20" width="25" height="90" rx="4" fill="#EF4444" opacity="0.2"/>
+                                            <text x="67" y="18" fill="#EF4444" font-size="8" font-weight="bold" text-anchor="middle">Col 10</text>
+                                            <circle cx="67" cy="35" r="4" fill="#EF4444"/><text x="45" y="38" fill="#EF4444" font-size="7">10A</text>
+                                            <circle cx="67" cy="65" r="4" fill="#EF4444"/><text x="45" y="68" fill="#EF4444" font-size="7">10C</text>
+                                            
+                                            <path d="M 67 65 Q 90 40 115 65" fill="none" stroke="#DC2626" stroke-width="4"/>
+                                            <circle cx="91" cy="48" r="8" fill="#EF4444"/>
+                                            <text x="91" y="51" fill="white" font-size="6" font-weight="bold" text-anchor="middle">LED</text>
+
+                                            <rect x="103" y="20" width="25" height="90" rx="4" fill="#10B981" opacity="0.2"/>
+                                            <text x="115" y="18" fill="#10B981" font-size="8" font-weight="bold" text-anchor="middle">Col 11</text>
+                                            <circle cx="115" cy="65" r="4" fill="#10B981"/><text x="135" y="68" fill="#10B981" font-size="7">11C</text>
+                                            <circle cx="115" cy="85" r="4" fill="#F59E0B"/><text x="135" y="88" fill="#F59E0B" font-size="7">11D</text>
+
+                                            <line x1="115" y1="85" x2="185" y2="85" stroke="#94A3B8" stroke-width="3"/>
+                                            <rect x="135" y="78" width="25" height="14" rx="3" fill="#D4B996" stroke="#8C6D4F"/>
+                                            <text x="147" y="88" fill="#78350F" font-size="6" font-weight="bold" text-anchor="middle">300Ω</text>
+                                            <circle cx="185" cy="85" r="4" fill="#0284C7"/>
+                                            <text x="215" y="88" fill="#0284C7" font-size="8" font-weight="bold">Barramento GND</text>
+                                        </svg>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
-                        <!-- FIGURA 3: CALHA CENTRAL -->
-                        <div class="vg-figure-card">
-                            <div>
-                                <div class="vg-fig-header">
-                                    <span class="vg-fig-badge" style="background:#EF4444;color:white;">ITEM 3: CALHA CENTRAL</span>
-                                    <span style="color:#FCA5A5;font-weight:900;font-size:0.75rem;">ISOLAMENTO TOTAL</span>
-                                </div>
-                                <h4 class="lab-title-font" style="color:white;font-size:1.15rem;margin:4px 0 6px;">
-                                    O Fosso Isolante (A-E NÃO Toca F-J)
-                                </h4>
-                                <p style="color:#94A3B8;font-size:0.88rem;margin:0;line-height:1.5;">
-                                    No centro da placa existe uma fenda plástica funda. Ela <b>corta o metal</b>!
-                                    O lado superior A-E <b>nunca encosta</b> no lado inferior F-J, servindo para isolar circuitos ou encaixar chips microcontroladores.
-                                </p>
+                        <!-- Barra de Controles do Carrossel (Anterior, Pontos, Próximo) -->
+                        <div class="vg-carousel-controls">
+                            <button type="button" class="vg-carousel-arrow-btn" id="vg_carousel_prev" onclick="lab_carousel_prev()">
+                                <i class="fa-solid fa-chevron-left"></i> Anterior
+                            </button>
+                            
+                            <div class="vg-carousel-dots" id="vg_carousel_dots">
+                                <div class="vg-carousel-dot active" onclick="lab_carousel_goto(0)" title="Item 1: Garra Interna"></div>
+                                <div class="vg-carousel-dot" onclick="lab_carousel_goto(1)" title="Item 2: Colunas A-E"></div>
+                                <div class="vg-carousel-dot" onclick="lab_carousel_goto(2)" title="Item 3: Calha Central"></div>
+                                <div class="vg-carousel-dot" onclick="lab_carousel_goto(3)" title="Item 4: Colunas F-J"></div>
+                                <div class="vg-carousel-dot" onclick="lab_carousel_goto(4)" title="Item 5: Barramentos (+/-)"></div>
+                                <div class="vg-carousel-dot" onclick="lab_carousel_goto(5)" title="Item 6: Curto-Circuito"></div>
+                                <div class="vg-carousel-dot" onclick="lab_carousel_goto(6)" title="Item 7: Conexão Semáforo"></div>
                             </div>
-                            <div class="vg-svg-box">
-                                <svg width="290" height="130" viewBox="0 0 290 130">
-                                    <rect x="15" y="18" width="115" height="94" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
-                                    <text x="72" y="36" fill="#0284C7" font-weight="bold" font-size="9" text-anchor="middle">Lado A-E (Cobre)</text>
-                                    <rect x="48" y="46" width="48" height="52" rx="4" fill="#F59E0B" opacity="0.3"/>
-                                    <!-- Fosso Central Isolante -->
-                                    <rect x="135" y="12" width="20" height="106" fill="#334155" rx="3"/>
-                                    <line x1="145" y1="18" x2="145" y2="112" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,2"/>
-                                    <text x="145" y="68" fill="#EF4444" font-size="12" font-weight="bold" text-anchor="middle">⛔</text>
-                                    <!-- Lado Inferior F-J -->
-                                    <rect x="160" y="18" width="115" height="94" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
-                                    <text x="217" y="36" fill="#F59E0B" font-weight="bold" font-size="9" text-anchor="middle">Lado F-J (Cobre)</text>
-                                    <rect x="193" y="46" width="48" height="52" rx="4" fill="#F59E0B" opacity="0.3"/>
-                                    <text x="145" y="125" fill="#FCA5A5" font-size="8" font-weight="bold" text-anchor="middle">Barreira Plástica!</text>
-                                </svg>
-                            </div>
-                        </div>
 
-                        <!-- FIGURA 4: COLUNAS F-J -->
-                        <div class="vg-figure-card">
-                            <div>
-                                <div class="vg-fig-header">
-                                    <span class="vg-fig-badge" style="background:#F59E0B;color:#0F172A;">ITEM 4: COLUNAS F-J</span>
-                                    <span style="color:#FBBF24;font-weight:900;font-size:0.75rem;">SEGUNDO BLOCO</span>
-                                </div>
-                                <h4 class="lab-title-font" style="color:white;font-size:1.15rem;margin:4px 0 6px;">
-                                    Tiras Metálicas Inferiores (F a J)
-                                </h4>
-                                <p style="color:#94A3B8;font-size:0.88rem;margin:0;line-height:1.5;">
-                                    O bloco inferior tem suas próprias tiras verticais de 5 furos.
-                                    Os furos <code>10F</code>, <code>10G</code>, <code>10H</code>, <code>10I</code> e <code>10J</code> estão interligados entre si, funcionando como uma segunda bancada!
-                                </p>
-                            </div>
-                            <div class="vg-svg-box">
-                                <svg width="290" height="130" viewBox="0 0 290 130">
-                                    <rect x="20" y="10" width="250" height="110" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
-                                    <rect x="125" y="18" width="40" height="92" rx="6" fill="#F59E0B" opacity="0.35" stroke="#D97706" stroke-dasharray="3,2"/>
-                                    <text x="145" y="16" fill="#F59E0B" font-size="9" font-weight="bold" text-anchor="middle">Coluna 10 (F-J)</text>
-                                    <circle cx="145" cy="30" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="33" fill="#64748B" font-size="7">F</text>
-                                    <circle cx="145" cy="48" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="51" fill="#64748B" font-size="7">G</text>
-                                    <circle cx="145" cy="66" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="69" fill="#64748B" font-size="7">H</text>
-                                    <circle cx="145" cy="84" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="87" fill="#64748B" font-size="7">I</text>
-                                    <circle cx="145" cy="102" r="4.5" fill="#1E293B" stroke="#D97706" stroke-width="2"/><text x="132" y="105" fill="#64748B" font-size="7">J</text>
-                                    <text x="205" y="60" fill="#FBBF24" font-size="9" font-weight="bold">Furos 10F a 10J</text>
-                                    <text x="205" y="72" fill="#64748B" font-size="7.5">unidos entre si!</text>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <!-- FIGURA 5: BARRAMENTOS HORIZONTAIS (+ e -) -->
-                        <div class="vg-figure-card">
-                            <div>
-                                <div class="vg-fig-header">
-                                    <span class="vg-fig-badge" style="background:#10B981;color:white;">ITEM 5: BARRAMENTOS</span>
-                                    <span style="color:#34D399;font-weight:900;font-size:0.75rem;">HORIZONTAL (30 PINOS)</span>
-                                </div>
-                                <h4 class="lab-title-font" style="color:white;font-size:1.15rem;margin:4px 0 6px;">
-                                    Linhas Longas de Alimentação (+ e -)
-                                </h4>
-                                <p style="color:#94A3B8;font-size:0.88rem;margin:0;line-height:1.5;">
-                                    Ao contrário das colunas que são verticais de 5 furos, os barramentos correm na <b>HORIZONTAL</b> com até 30 furos unidos de ponta a ponta para levar energia (+5V e GND) a toda a placa!
-                                </p>
-                            </div>
-                            <div class="vg-svg-box">
-                                <svg width="290" height="130" viewBox="0 0 290 130">
-                                    <!-- Barra Positiva (+) -->
-                                    <rect x="15" y="22" width="260" height="36" rx="6" fill="#FEE2E2" stroke="#EF4444"/>
-                                    <text x="28" y="44" fill="#EF4444" font-size="16" font-weight="bold">+</text>
-                                    <line x1="45" y1="40" x2="265" y2="40" stroke="#EF4444" stroke-width="3"/>
-                                    <text x="155" y="36" fill="#DC2626" font-size="8" font-weight="bold" text-anchor="middle">Barramento Vermelho: Todos levam +5V</text>
-                                    <!-- Barra Negativa (-) GND -->
-                                    <rect x="15" y="70" width="260" height="36" rx="6" fill="#E0F2FE" stroke="#0284C7"/>
-                                    <text x="28" y="92" fill="#0284C7" font-size="18" font-weight="bold">-</text>
-                                    <line x1="45" y1="88" x2="265" y2="88" stroke="#0284C7" stroke-width="3"/>
-                                    <text x="155" y="84" fill="#0369A1" font-size="8" font-weight="bold" text-anchor="middle">Barramento Azul: Todos levam Terra (GND 0V)</text>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <!-- FIGURA 6: LIGAÇÃO CERTA VS CURTO-CIRCUITO -->
-                        <div class="vg-figure-card">
-                            <div>
-                                <div class="vg-fig-header">
-                                    <span class="vg-fig-badge" style="background:#EF4444;color:white;">ITEM 6: REGRA DE OURO</span>
-                                    <span style="color:#FCA5A5;font-weight:900;font-size:0.75rem;">CERTO vs ERRADO</span>
-                                </div>
-                                <h4 class="lab-title-font" style="color:white;font-size:1.15rem;margin:4px 0 6px;">
-                                    O Mistério do Curto-Circuito
-                                </h4>
-                                <p style="color:#94A3B8;font-size:0.88rem;margin:0;line-height:1.5;">
-                                    Se colocar 2 pernas na mesma coluna, a corrente dá a volta por baixo pelo cobre e desvia do componente (curto-circuito)! As pernas precisam ficar em <b>colunas separadas</b>!
-                                </p>
-                            </div>
-                            <div class="vg-svg-box">
-                                <svg width="290" height="130" viewBox="0 0 290 130">
-                                    <!-- Lado Certo -->
-                                    <rect x="10" y="10" width="130" height="110" rx="8" fill="#064E3B" stroke="#10B981" stroke-width="1.5"/>
-                                    <text x="75" y="26" fill="#A7F3D0" font-size="8.5" font-weight="bold" text-anchor="middle">✅ CERTO: Colunas 10 e 11</text>
-                                    <circle cx="50" cy="55" r="4" fill="#10B981"/><text x="50" y="70" fill="#A7F3D0" font-size="7" text-anchor="middle">10C</text>
-                                    <circle cx="100" cy="55" r="4" fill="#10B981"/><text x="100" y="70" fill="#A7F3D0" font-size="7" text-anchor="middle">11C</text>
-                                    <path d="M 50 55 Q 75 35 100 55" fill="none" stroke="#FBBF24" stroke-width="3"/>
-                                    <text x="75" y="92" fill="#FBBF24" font-size="7.5" font-weight="bold" text-anchor="middle">Corrente atravessa!</text>
-                                    <text x="75" y="104" fill="#6EE7B7" font-size="7" text-anchor="middle">O LED Acende 🎉</text>
-
-                                    <!-- Lado Errado -->
-                                    <rect x="150" y="10" width="130" height="110" rx="8" fill="#450A0A" stroke="#EF4444" stroke-width="1.5"/>
-                                    <text x="215" y="26" fill="#FECACA" font-size="8.5" font-weight="bold" text-anchor="middle">❌ ERRADO: Mesma Coluna</text>
-                                    <circle cx="200" cy="45" r="4" fill="#EF4444"/><text x="186" y="48" fill="#FECACA" font-size="7">10B</text>
-                                    <circle cx="200" cy="75" r="4" fill="#EF4444"/><text x="186" y="78" fill="#FECACA" font-size="7">10C</text>
-                                    <path d="M 200 45 Q 225 60 200 75" fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="3,2"/>
-                                    <line x1="200" y1="45" x2="200" y2="75" stroke="#F59E0B" stroke-width="4"/>
-                                    <text x="215" y="98" fill="#FCA5A5" font-size="7.5" font-weight="bold" text-anchor="middle">Curto! Passa por baixo</text>
-                                    <text x="215" y="110" fill="#EF4444" font-size="7" text-anchor="middle">O LED Fica Apagado!</text>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <!-- FIGURA 7: CONEXÃO DO SEMÁFORO NA PRÁTICA -->
-                        <div class="vg-figure-card">
-                            <div>
-                                <div class="vg-fig-header">
-                                    <span class="vg-fig-badge" style="background:#10B981;color:white;">ITEM 7: PONTE DO SEMÁFORO</span>
-                                    <span style="color:#A7F3D0;font-weight:900;font-size:0.75rem;">JUMPER + LED + RESISTOR</span>
-                                </div>
-                                <h4 class="lab-title-font" style="color:white;font-size:1.15rem;margin:4px 0 6px;">
-                                    Como o Semáforo se Conecta
-                                </h4>
-                                <p style="color:#94A3B8;font-size:0.88rem;margin:0;line-height:1.5;">
-                                    O Jumper entra no <code>10A</code> e passa energia para o LED no <code>10C</code>. A perna curta sai no <code>11C</code> e entrega a energia para o Resistor no <code>11D</code>!
-                                </p>
-                            </div>
-                            <div class="vg-svg-box">
-                                <svg width="290" height="130" viewBox="0 0 290 130">
-                                    <rect x="20" y="10" width="250" height="110" rx="8" fill="#020617" stroke="#334155"/>
-                                    <!-- Coluna 10 (Sinal) -->
-                                    <rect x="55" y="20" width="25" height="90" rx="4" fill="#EF4444" opacity="0.2"/>
-                                    <text x="67" y="18" fill="#EF4444" font-size="8" font-weight="bold" text-anchor="middle">Col 10</text>
-                                    <circle cx="67" cy="35" r="4" fill="#EF4444"/><text x="45" y="38" fill="#EF4444" font-size="7">10A</text>
-                                    <circle cx="67" cy="65" r="4" fill="#EF4444"/><text x="45" y="68" fill="#EF4444" font-size="7">10C</text>
-                                    
-                                    <!-- LED curvando de 10C para 11C -->
-                                    <path d="M 67 65 Q 90 40 115 65" fill="none" stroke="#DC2626" stroke-width="4"/>
-                                    <circle cx="91" cy="48" r="8" fill="#EF4444"/>
-                                    <text x="91" y="51" fill="white" font-size="6" font-weight="bold" text-anchor="middle">LED</text>
-
-                                    <!-- Coluna 11 (Retorno com resistor) -->
-                                    <rect x="103" y="20" width="25" height="90" rx="4" fill="#10B981" opacity="0.2"/>
-                                    <text x="115" y="18" fill="#10B981" font-size="8" font-weight="bold" text-anchor="middle">Col 11</text>
-                                    <circle cx="115" cy="65" r="4" fill="#10B981"/><text x="135" y="68" fill="#10B981" font-size="7">11C</text>
-                                    <circle cx="115" cy="85" r="4" fill="#F59E0B"/><text x="135" y="88" fill="#F59E0B" font-size="7">11D</text>
-
-                                    <!-- Resistor saindo de 11D para o GND -->
-                                    <line x1="115" y1="85" x2="185" y2="85" stroke="#94A3B8" stroke-width="3"/>
-                                    <rect x="135" y="78" width="25" height="14" rx="3" fill="#D4B996" stroke="#8C6D4F"/>
-                                    <text x="147" y="88" fill="#78350F" font-size="6" font-weight="bold" text-anchor="middle">300Ω</text>
-                                    <circle cx="185" cy="85" r="4" fill="#0284C7"/>
-                                    <text x="215" y="88" fill="#0284C7" font-size="8" font-weight="bold">Barramento GND</text>
-                                </svg>
-                            </div>
+                            <button type="button" class="vg-carousel-arrow-btn" id="vg_carousel_next" onclick="lab_carousel_next()">
+                                Próximo <i class="fa-solid fa-chevron-right"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -2171,8 +2247,8 @@ function loadLabmaker() {
                         <button type="button" class="lab-nav-btn" onclick="lab_switchGuideStep(5)">
                             <i class="fa-solid fa-arrow-left"></i> Voltar à Bancada Virtual
                         </button>
-                        <button type="button" class="lab-nav-btn active" onclick="if(typeof openTab==='function'){openTab('tab-arduino');}else{lab_switchGuideStep(1);}" style="background:linear-gradient(135deg,#0284C7,#059669);border-color:#10B981;">
-                            Avançar para a Aula 8: O Cérebro do Arduino e Programação C++ 🚀
+                        <button type="button" class="lab-nav-btn active" onclick="lab_switchGuideStep(1);" style="background:linear-gradient(135deg,#0284C7,#059669);border-color:#10B981;">
+                            <i class="fa-solid fa-trophy" style="color:#FDE68A;"></i> Parabéns! Você concluiu a Aula 7 (Rever desde o Nível 1 🔄)
                         </button>
                     </div>
                 </div>
@@ -2363,9 +2439,82 @@ const LAB_COMPONENT_DETAILS = {
     }
 };
 
+/* ==========================================================================
+   CARROSSEL INTERATIVO DA GALERIA VISUAL DA AULA 7
+   ========================================================================== */
+let lab_carousel_index = 0;
+const LAB_CAROUSEL_TOTAL = 7;
+
+function lab_carousel_goto(index, playSnd = true) {
+    if (index < 0) index = 0;
+    if (index >= LAB_CAROUSEL_TOTAL) index = LAB_CAROUSEL_TOTAL - 1;
+    lab_carousel_index = index;
+
+    const track = document.getElementById('vg_carousel_track');
+    if (track) {
+        track.style.transform = `translateX(-${lab_carousel_index * 100}%)`;
+    }
+
+    // Atualiza botões das abas superiores
+    const tabs = document.querySelectorAll('.vg-carousel-tab-btn');
+    tabs.forEach((btn, i) => {
+        if (i === lab_carousel_index) {
+            btn.classList.add('active');
+            try {
+                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } catch(e) {}
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    // Atualiza dots indicadores
+    const dots = document.querySelectorAll('.vg-carousel-dot');
+    dots.forEach((dot, i) => {
+        if (i === lab_carousel_index) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+
+    // Atualiza contador de cards
+    const counter = document.getElementById('vg_carousel_counter');
+    if (counter) {
+        counter.innerHTML = `<i class="fa-solid fa-layer-group"></i> <span>Card ${lab_carousel_index + 1} de ${LAB_CAROUSEL_TOTAL}</span>`;
+    }
+
+    // Atualiza estado dos botões Anterior e Próximo
+    const prevBtn = document.getElementById('vg_carousel_prev');
+    const nextBtn = document.getElementById('vg_carousel_next');
+    if (prevBtn) {
+        prevBtn.disabled = (lab_carousel_index === 0);
+    }
+    if (nextBtn) {
+        nextBtn.disabled = (lab_carousel_index === LAB_CAROUSEL_TOTAL - 1);
+    }
+
+    if (playSnd && typeof playSound === 'function') {
+        playSound('click');
+    }
+}
+
+function lab_carousel_prev() {
+    if (lab_carousel_index > 0) {
+        lab_carousel_goto(lab_carousel_index - 1, true);
+    }
+}
+
+function lab_carousel_next() {
+    if (lab_carousel_index < LAB_CAROUSEL_TOTAL - 1) {
+        lab_carousel_goto(lab_carousel_index + 1, true);
+    }
+}
+
 /* Inicialização */
 function lab_init() {
     lab_build30Breadboard();
+    lab_carousel_goto(0, false);
     lab_vguide_init();
     lab_updateBadges();
     lab_renderCircuit();
@@ -2530,27 +2679,33 @@ function lab_initStepLocking() {
         lab_completedChallenges = {};
     }
 
-    // Calcula o nível desbloqueado de forma estritamente sequencial
+    // Higieniza: garante que só há progressão se TODOS os anteriores foram completados
+    const cleanChallenges = {};
     let maxUnlocked = 1;
     for (let lvl = 1; lvl <= 5; lvl++) {
         if (lab_completedChallenges[lvl] === true) {
+            cleanChallenges[lvl] = true;
             maxUnlocked = lvl + 1;
         } else {
             break; // Bloqueia no primeiro desafio ainda não respondido!
         }
     }
+    lab_completedChallenges = cleanChallenges;
+    try {
+        localStorage.setItem('lab_challenges_done', JSON.stringify(lab_completedChallenges));
+    } catch(e) {}
     lab_unlockedGuideStep = maxUnlocked;
 
     lab_updateStepBarLockUI();
 
-    // Atualiza estado visual de cada caixa de desafio
+    // Atualiza estado visual de cada caixa de desafio e botão de avanço
     for (let lvl = 1; lvl <= 5; lvl++) {
-        if (lab_completedChallenges[lvl]) {
-            const box = document.getElementById('lab_challenge_box_' + lvl);
-            const status = document.getElementById('lab_challenge_status_' + lvl);
-            const nextBtn = document.getElementById('lab_next_btn_' + lvl);
-            const fb = document.getElementById('lab_step_fb_' + lvl);
+        const box = document.getElementById('lab_challenge_box_' + lvl);
+        const status = document.getElementById('lab_challenge_status_' + lvl);
+        const nextBtn = document.getElementById('lab_next_btn_' + lvl);
+        const fb = document.getElementById('lab_step_fb_' + lvl);
 
+        if (lab_completedChallenges[lvl]) {
             if (box) box.classList.add('completed');
             if (status) {
                 status.classList.add('unlocked');
@@ -2562,6 +2717,7 @@ function lab_initStepLocking() {
                 nextBtn.style.background = 'linear-gradient(135deg, #0284C7, #10B981)';
                 nextBtn.style.color = '#FFFFFF';
                 nextBtn.style.cursor = 'pointer';
+                nextBtn.style.boxShadow = '0 0 16px rgba(16,185,129,0.4)';
             }
             if (fb && lvl <= 4) {
                 fb.style.display = 'block';
@@ -2569,6 +2725,21 @@ function lab_initStepLocking() {
                 fb.style.color = '#A7F3D0';
                 fb.innerHTML = '✅ Desafio concluído com sucesso! Conhecimento consolidado.';
             }
+        } else {
+            if (box) box.classList.remove('completed');
+            if (status) {
+                status.classList.remove('unlocked');
+                status.innerHTML = '<i class="fa-solid fa-lock"></i> Desafio Obrigatório';
+            }
+            if (nextBtn) {
+                nextBtn.classList.add('locked');
+                nextBtn.innerHTML = `<i class="fa-solid fa-lock"></i> Conclua o Desafio Acima para Avançar ao Nível ${lvl + 1}`;
+                nextBtn.style.background = '#334155';
+                nextBtn.style.color = '#94A3B8';
+                nextBtn.style.cursor = 'not-allowed';
+                nextBtn.style.boxShadow = 'none';
+            }
+            if (fb) fb.style.display = 'none';
         }
     }
 }
@@ -2580,14 +2751,22 @@ function lab_updateStepBarLockUI() {
         if (!btn) continue;
 
         const circle = btn.querySelector('.lab-step-circle');
-        const isLocked = s > lab_unlockedGuideStep;
-        const isCompleted = s < lab_unlockedGuideStep || (lab_completedChallenges[s] === true);
+        // Para acessar o nível 's', TODOS os níveis anteriores (1 a s-1) DEVEM estar concluídos
+        let canAccess = true;
+        for (let p = 1; p < s; p++) {
+            if (!lab_completedChallenges[p]) {
+                canAccess = false;
+                break;
+            }
+        }
+        const isLocked = !canAccess;
+        const isCompleted = (lab_completedChallenges[s] === true);
 
         btn.classList.toggle('locked', isLocked);
         btn.classList.toggle('completed', isCompleted && !isLocked);
 
         if (isLocked) {
-            btn.title = `Nível ${s} (Bloqueado — Responda e acerte a pergunta do Nível ${lab_unlockedGuideStep} primeiro)`;
+            btn.title = `Nível ${s} (Bloqueado — Complete os níveis anteriores primeiro)`;
             btn.style.cursor = 'not-allowed';
             btn.style.opacity = '0.55';
             if (circle) circle.innerHTML = '<i class="fa-solid fa-lock" style="font-size:0.75rem;"></i>';
@@ -2605,34 +2784,37 @@ function lab_updateStepBarLockUI() {
     }
 }
 
-/* Navegação Contínua nos 6 Níveis da Trilha (Com Bloqueio Estrito de Perguntas) */
+/* Navegação Contínua nos 6 Níveis da Trilha (Com Bloqueio Estrito Sequencial) */
 function lab_switchGuideStep(step) {
-    // Se o usuário tentar avançar para frente sem ter acertado a pergunta do nível atual
-    if (step > lab_activeGuideStep && !lab_completedChallenges[lab_activeGuideStep]) {
-        playSound('error');
-        lab_showToast(`Responda e acerte o Desafio do Nível ${lab_activeGuideStep} antes de avançar!`, '🔒');
-        const currentChallenge = document.getElementById('lab_challenge_box_' + lab_activeGuideStep);
-        if (currentChallenge) {
-            currentChallenge.classList.remove('pulse-focus');
-            void currentChallenge.offsetWidth;
-            currentChallenge.classList.add('pulse-focus');
-            currentChallenge.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        return;
-    }
+    step = parseInt(step, 10);
+    if (isNaN(step) || step < 1) step = 1;
+    if (step > 6) step = 6;
 
-    // Se o nível de destino for maior que o nível liberado
-    if (step > lab_unlockedGuideStep) {
-        playSound('error');
-        lab_showToast(`Nível ${step} Bloqueado! Complete a pergunta do Nível ${lab_unlockedGuideStep} primeiro!`, '🔒');
-        const currentChallenge = document.getElementById('lab_challenge_box_' + lab_unlockedGuideStep);
-        if (currentChallenge) {
-            currentChallenge.classList.remove('pulse-focus');
-            void currentChallenge.offsetWidth;
-            currentChallenge.classList.add('pulse-focus');
-            currentChallenge.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // REGRA DE OURO: NÃO DEIXA AVANÇAR SEM PASSAR PELO NÍVEL ANTERIOR!
+    for (let prev = 1; prev < step; prev++) {
+        if (!lab_completedChallenges[prev]) {
+            playSound('error');
+            lab_showToast(`🔒 Nível ${step} bloqueado! Você precisa concluir o Desafio do Nível ${prev} primeiro!`, '🔒');
+            
+            // Redireciona e foca imediatamente no nível pendente
+            lab_activeGuideStep = prev;
+            for (let s = 1; s <= 6; s++) {
+                const card = document.getElementById('lab_guide_step_' + s);
+                const btn = document.getElementById('lab_step_btn_' + s);
+                if (card) card.style.display = (s === prev) ? 'block' : 'none';
+                if (btn) btn.classList.toggle('active', s === prev);
+            }
+            lab_updateStepBarLockUI();
+
+            const pendingBox = document.getElementById('lab_challenge_box_' + prev);
+            if (pendingBox) {
+                pendingBox.classList.remove('pulse-focus');
+                void pendingBox.offsetWidth;
+                pendingBox.classList.add('pulse-focus');
+                pendingBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return;
         }
-        return;
     }
 
     playSound('step');
@@ -2645,24 +2827,22 @@ function lab_switchGuideStep(step) {
     if (fill) fill.style.width = `${pct}%`;
     if (txt) txt.innerText = `Nível ${step} de 6 (${pct}% Concluído)`;
 
-    for(let s = 1; s <= 6; s++) {
+    for (let s = 1; s <= 6; s++) {
         const card = document.getElementById('lab_guide_step_' + s);
         const btn = document.getElementById('lab_step_btn_' + s);
-        if(card) card.style.display = (s === step) ? 'block' : 'none';
-        if(btn) {
-            btn.classList.toggle('active', s === step);
-        }
+        if (card) card.style.display = (s === step) ? 'block' : 'none';
+        if (btn) btn.classList.toggle('active', s === step);
     }
     lab_updateStepBarLockUI();
 
-    if(step === 1) {
+    if (step === 1) {
         setTimeout(lab_vguide_init, 40);
-    } else if(step === 5) {
+    } else if (step === 5) {
         setTimeout(() => {
             lab_renderCircuit();
             lab_renderInspectorPanel();
         }, 60);
-    } else if(step === 6) {
+    } else if (step === 6) {
         setTimeout(() => {
             if (typeof triggerConfetti === 'function') triggerConfetti(3500);
             if (typeof lab_initMiniGame === 'function') lab_initMiniGame();
@@ -2686,19 +2866,41 @@ function lab_unlockStep(targetLevel) {
 
 /* Avanço guiado pelo botão inferior com bloqueio estrito se o desafio não foi feito */
 function lab_advanceNextStep(fromStep) {
-    if (!lab_completedChallenges[fromStep]) {
-        playSound('error');
-        lab_showToast(`Responda e acerte o Desafio do Nível ${fromStep} antes de avançar!`, '🔒');
-        const box = document.getElementById('lab_challenge_box_' + fromStep);
-        if (box) {
-            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            box.classList.remove('pulse-focus');
-            void box.offsetWidth;
-            box.classList.add('pulse-focus');
+    fromStep = parseInt(fromStep, 10);
+    // Validação estrita: todos os níveis de 1 até fromStep devem estar concluídos
+    for (let c = 1; c <= fromStep; c++) {
+        if (!lab_completedChallenges[c]) {
+            playSound('error');
+            lab_showToast(`🔒 Responda e acerte o Desafio do Nível ${c} antes de avançar!`, '🔒');
+            const box = document.getElementById('lab_challenge_box_' + c);
+            if (box) {
+                box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                box.classList.remove('pulse-focus');
+                void box.offsetWidth;
+                box.classList.add('pulse-focus');
+            }
+            return;
         }
-        return;
     }
     lab_switchGuideStep(fromStep + 1);
+}
+
+/* Reiniciar progresso dos níveis da Aula 7 para testar do zero */
+function lab_resetLevelProgress() {
+    if (confirm('Deseja reiniciar todos os 6 níveis da Aula 7 para fazer os desafios desde o Nível 1?')) {
+        lab_completedChallenges = {};
+        lab_unlockedGuideStep = 1;
+        try {
+            localStorage.removeItem('lab_challenges_done');
+            localStorage.removeItem('lab_unlocked_step');
+            localStorage.removeItem('labmaker_levels');
+            localStorage.removeItem('lab_minigame_won');
+        } catch(e) {}
+        lab_initStepLocking();
+        lab_switchGuideStep(1);
+        playSound('click');
+        lab_showToast('Progresso da Aula 7 reiniciado! Começando do Nível 1.', '🔄');
+    }
 }
 
 /* Resposta a um Desafio Maker de Nível */
@@ -3744,6 +3946,20 @@ document.addEventListener('click', function(e) {
 
 /* ================= MISSÕES E PERSISTÊNCIA ================= */
 function lab_completeMission(level, title, text) {
+    level = parseInt(level, 10);
+    if (isNaN(level) || level < 1) level = 1;
+
+    let saved = JSON.parse(localStorage.getItem('labmaker_levels') || '[]');
+
+    // Validação estrita: não pode avançar para a Missão 2 ou 3 sem passar pela anterior!
+    for (let prev = 1; prev < level; prev++) {
+        if (!saved.includes(prev)) {
+            if (typeof playSound === 'function') playSound('error');
+            alert(`🔒 Missão ${level} Bloqueada!\n\nVocê precisa concluir a Missão ${prev} primeiro antes de avançar para a Missão ${level}!`);
+            return;
+        }
+    }
+
     playSound('success');
     if(typeof triggerConfetti === 'function') triggerConfetti(3500);
 
@@ -3754,7 +3970,6 @@ function lab_completeMission(level, title, text) {
         speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('labmaker', level, res);
     }
 
-    let saved = JSON.parse(localStorage.getItem('labmaker_levels') || '[]');
     if(!saved.includes(level)) saved.push(level);
     localStorage.setItem('labmaker_levels', JSON.stringify(saved));
 
@@ -3772,12 +3987,40 @@ function lab_updateBadges() {
         const card = document.getElementById('mcard_' + lvl);
         const btn = document.getElementById('mbtn_' + lvl);
 
+        let canAccess = true;
+        for (let p = 1; p < lvl; p++) {
+            if (!saved.includes(p)) {
+                canAccess = false;
+                break;
+            }
+        }
+
         if(saved.includes(lvl)) {
-            if(chip) chip.classList.add('active');
-            if(card) card.classList.add('done');
+            if(chip) { chip.classList.add('active'); chip.style.opacity = '1'; }
+            if(card) { card.classList.add('done'); card.style.opacity = '1'; }
             if(btn) {
                 btn.innerText = '✅ Missão Concluída ⭐';
                 btn.style.background = '#10B981';
+                btn.style.cursor = 'default';
+                btn.disabled = false;
+            }
+        } else if (!canAccess) {
+            if(chip) { chip.classList.remove('active'); chip.style.opacity = '0.55'; }
+            if(card) { card.classList.remove('done'); card.style.opacity = '0.6'; }
+            if(btn) {
+                btn.innerText = `🔒 Bloqueado (Faça Missão ${lvl - 1} primeiro)`;
+                btn.style.background = '#334155';
+                btn.style.color = '#94A3B8';
+                btn.style.cursor = 'not-allowed';
+            }
+        } else {
+            if(chip) { chip.classList.remove('active'); chip.style.opacity = '1'; }
+            if(card) { card.classList.remove('done'); card.style.opacity = '1'; }
+            if(btn) {
+                btn.innerText = `Concluir Missão ${lvl} ${'⭐'.repeat(lvl)}`;
+                btn.style.background = '#0284C7';
+                btn.style.color = '#FFFFFF';
+                btn.style.cursor = 'pointer';
             }
         }
     });
@@ -4782,3 +5025,7 @@ window.lab_vguide_resetMini = lab_vguide_resetMini;
 window.lab_initMiniGame = lab_initMiniGame;
 window.lab_miniGame_restart = lab_miniGame_restart;
 window.lab_miniGame_answer = lab_miniGame_answer;
+window.lab_carousel_goto = lab_carousel_goto;
+window.lab_carousel_prev = lab_carousel_prev;
+window.lab_carousel_next = lab_carousel_next;
+window.lab_resetLevelProgress = lab_resetLevelProgress;
