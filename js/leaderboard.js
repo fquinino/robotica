@@ -51,9 +51,9 @@
         { id: 'eletronica_6', module: 'eletronica', moduleName: 'Aula 6: Eletrônica & Lei de Ohm', num: 6, name: 'Proteção Anti-Curto com IF/ELSE', icon: '🚨', benchmarkTime: 22.0, benchmarkPlayer: 'SpeedDev' },
 
         // AULA 7: CIRCUITOS & PROTOBOARD (3 Níveis)
-        { id: 'labmaker_1', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 1, name: 'Circuito +5V, Resistor & LED', icon: '🔌', benchmarkTime: 12.0, benchmarkPlayer: 'Robô Alfa' },
-        { id: 'labmaker_2', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 2, name: 'Circuito com Pushbutton', icon: '🔘', benchmarkTime: 16.0, benchmarkPlayer: 'CyberMaker' },
-        { id: 'labmaker_3', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 3, name: 'Semáforo Físico (3 LEDs)', icon: '🚦', benchmarkTime: 22.0, benchmarkPlayer: 'SpeedDev' },
+        { id: 'labmaker_1', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 1, name: 'Nível 1: Protoboard 1-30 & 3 Resistores', icon: '🛡️', benchmarkTime: 12.0, benchmarkPlayer: 'Robô Alfa' },
+        { id: 'labmaker_2', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 2, name: 'Nível 2: Montagem dos 3 LEDs (Semáforo)', icon: '🚦', benchmarkTime: 16.0, benchmarkPlayer: 'CyberMaker' },
+        { id: 'labmaker_3', module: 'labmaker', moduleName: 'Aula 7: Circuitos & Protoboard', num: 3, name: 'Nível 3: Arduino UNO & O Grande Teste', icon: '✨', benchmarkTime: 22.0, benchmarkPlayer: 'SpeedDev' },
 
         // AULA 8: OFICINA DO ARDUINO (3 Níveis)
         { id: 'arduino_1', module: 'arduino', moduleName: 'Aula 8: Oficina do Arduino', num: 1, name: 'Lei de Ohm & Tubo de Elétrons', icon: '🧪', benchmarkTime: 10.0, benchmarkPlayer: 'Robô Alfa' },

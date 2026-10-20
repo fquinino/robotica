@@ -55,6 +55,11 @@ function playSound(type) {
         osc.type = 'triangle'; osc.frequency.setValueAtTime(300, audioCtx.currentTime);
         gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
         osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+    } else if(type === 'coin') {
+        osc.type = 'sine'; osc.frequency.setValueAtTime(987.77, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(1318.51, audioCtx.currentTime + 0.08);
+        gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.35);
     }
 }
 
@@ -248,12 +253,12 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
 }
 
 function applyErrorSolutionToActiveLesson() {
-    if (typeof vars_applyCurrentSolution === 'function' && document.getElementById('tab-aula5')?.classList.contains('active')) {
+    if (typeof vars_applyCurrentSolution === 'function' && (document.getElementById('tab-variaveis')?.classList.contains('active') || document.getElementById('tab-aula5')?.classList.contains('active'))) {
         vars_applyCurrentSolution();
         closeErrorSplash();
         return;
     }
-    if (typeof sem_applyCurrentSolution === 'function' && document.getElementById('tab-aula4')?.classList.contains('active')) {
+    if (typeof sem_applyCurrentSolution === 'function' && (document.getElementById('tab-semaforo')?.classList.contains('active') || document.getElementById('tab-aula4')?.classList.contains('active'))) {
         sem_applyCurrentSolution();
         closeErrorSplash();
         return;
@@ -308,8 +313,14 @@ function closeErrorSplash() {
     }
 }
 
-// ================= CERTIFICADO MAKER =================
+// ================= CERTIFICADO MAKER (EXCLUSIVO DA AULA 10) =================
 function showCertificateModal() {
+    const isAula10Done = localStorage.getItem('aula10_completed') === 'true';
+    if (!isAula10Done) {
+        if (typeof playSound === 'function') playSound('error');
+        alert('🎓 O Certificado Oficial Maker será emitido e liberado exclusivamente na conclusão da Aula 10 (Programação & Upload no Arduino IDE)!');
+        return;
+    }
     const modal = document.getElementById('cert_modal');
     if(!modal) return;
     const totalStars = getLevels('semaforo_levels').length + getLevels('tesouro_levels').length + 
@@ -317,7 +328,7 @@ function showCertificateModal() {
                        getLevels('jardim_levels').length + getLevels('arduino_levels').length +
                        getLevels('variaveis_levels').length;
     const detail = document.getElementById('cert_stars_detail');
-    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 30 Estrelas Maker!`;
+    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 36 Estrelas Maker!`;
     modal.style.display = 'flex';
 }
 

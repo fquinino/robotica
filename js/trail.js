@@ -2,7 +2,7 @@
    CRIADORES DE CÓDIGO — TRILHA DE APRENDIZAGEM & HUB DE CONQUISTAS
    ========================================================================== */
 
-const UNLOCKED_LESSONS = 6; // Liberadas Aulas 1, 2, 3, 4, 5 e 6
+const UNLOCKED_LESSONS = 10; // Liberadas todas as 10 Aulas do currículo Maker!
 
 const getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
 
@@ -177,20 +177,36 @@ O resistor de <b>220 Ω</b> é a nossa "torneirinha mágica": ele aperta o cano 
         jogo:'tab-eletronica', btntext:'⚡ Explorar o Laboratório de Eletrônica!'
     },
     7: {
-        emoji:'🔌', title:'Circuitos Elétricos e Protoboard', color:'#38BDF8',
-        objetivo:'🧠 <b>O que você vai aprender:</b> Como montar circuitos em uma <b>Protoboard</b> (placa de ensaios) sem precisar soldar nenhum fio!',
-        teoria:`<b>Como funciona a Protoboard? 🧱</b>
+        emoji:'🔌', title:'Circuitos & Protoboard (Montagem do Semáforo)', color:'#38BDF8',
+        objetivo:'🧠 <b>O que você vai aprender:</b> Como montar na prática um <b>Semáforo de 3 LEDs</b> na <b>Protoboard de 30 Pinos</b> com <b>3 Resistores de 300Ω</b> e o <b>Arduino UNO</b>, aprendendo a regra de ouro das conexões e a polaridade correta!',
+        teoria:`<b>Bem-vindo à Bancada Maker! 🛠️🚦</b>
 
-A protoboard é cheia de furos com contatos metálicos escondidos por baixo:
+Hoje você vai colocar a mão na massa no seu kit físico real!
+Vamos montar o circuito do <b>Semáforo com 3 LEDs (Vermelho, Amarelo e Verde)</b> que cada um acende de forma independente!
 
-- <b>Linhas de Alimentação (Vermelha + e Azul -):</b> Conectadas na <i>HORIZONTAL</i> de ponta a ponta. Usadas para trazer o 5V e o GND (terra).
-- <b>Terminais Centrais (colunas a-b-c-d-e e f-g-h-i-j):</b> Conectadas na <i>VERTICAL</i> (5 furos interligados).
+<b>1. O que é a Protoboard? 🧱</b>
+Uma placa mágica com centenas de furos onde encaixamos peças sem precisar de solda!
+- <b>Colunas de A a E e de F a J (Pinos 1 a 30):</b> São trilhos metálicos verticais escondidos. Todos os 5 furos na mesma coluna estão conectados entre si!
+- <b>Calha Central:</b> O sulco no meio que isola os dois lados.
+- <b>Barramentos (+ e -):</b> As linhas horizontais azuis (-) e vermelhas (+) para espalhar o GND (Terra) e 5V.
 
-<b>Circuito Fechado:</b> A corrente sai do pólo positivo (+5V), passa pelo resistor, entra no LED (anodo +), sai do LED (catodo -) e volta para o negativo (GND).`,
-        exemplo:`Componentes de um circuito simples:
-Fonte (5V) ➔ Resistor (220 ohms) ➔ LED (Anodo + / Catodo -) ➔ GND (Terra)`,
-        dica:'💡 Dica Maker: LEDs têm polaridade! A perna MAIOR é o Anodo (+) e a perna MENOR (com lado achatado) é o Catodo (-).',
-        jogo:'tab-labmaker', btntext:'🧪 Montar Circuito na Protoboard!'
+<b>2. O Segredo dos Resistores: TEM LADO? 🛡️</b>
+<b>NÃO! O resistor não tem polaridade!</b> Tanto faz qual lado você liga no positivo ou no negativo! Ele protege o LED dos dois jeitos. Usamos resistores de <b>300 Ω</b> (Laranja, Preto, Marrom) ou <b>220 Ω</b>.
+
+<b>3. E os LEDs? CUIDADO MÁXIMO COM O LADO! 🚦</b>
+O LED <b>TEM POLARIDADE</b> obrigatória:
+• <b>Perna LONGA (Ânodo +):</b> Recebe o sinal positivo vindo do pino do Arduino.
+• <b>Perna CURTA (Cátodo -):</b> Conecta no resistor de proteção para voltar ao GND!
+
+<b>4. Conectando ao Arduino UNO 🤖</b>
+Usamos jumpers macho-macho para ligar o <b>Pino 13</b> no Vermelho, <b>Pino 12</b> no Amarelo, <b>Pino 11</b> no Verde e o <b>GND</b> no barramento negativo da protoboard!`,
+        exemplo:`// Mapeamento dos pinos do Semáforo no Arduino UNO:
+Pino Digital 13 ➔ LED Vermelho (Ânodo +)
+Pino Digital 12 ➔ LED Amarelo  (Ânodo +)
+Pino Digital 11 ➔ LED Verde    (Ânodo +)
+GND (Terra 0V)  ➔ Barramento Azul (-) ➔ Resistores de 300Ω ➔ Cátodos (-)`,
+        dica:'💡 Dica Maker de Ouro: Nunca encaixe as duas pernas de uma mesma peça na mesma coluna! Cada coluna é um fio só!',
+        jogo:'tab-labmaker', btntext:'🔌 Abrir Bancada da Protoboard!'
     },
     8: {
         emoji:'🤖', title:'Arduino & O que é uma IDE (C/C++)', color:'#F87171',
@@ -336,23 +352,36 @@ function showLessonModal(lessonNum) {
     if (!modalBox) return;
 
     modalBox.innerHTML = `
-        <button class="lesson-close" onclick="closeLessonModal()">✕</button>
-        <div class="lesson-modal-emoji">${lesson.emoji}</div>
-        <h2>Aula ${lessonNum}: ${lesson.title}</h2>
-        <div class="lesson-objetivo">${lesson.objetivo}</div>
-        <div class="lesson-teoria">
-            <h4>📖 Explicação Simples</h4>
-            <p>${lesson.teoria.replace(/\n/g, '<br>')}</p>
-        </div>
-        <div class="lesson-exemplo">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1E293B;">
-                <span style="color:#94A3B8;font-size:0.75rem;font-weight:800;font-family:'Fira Code',monospace;"><i class="fa-solid fa-code"></i> Código C/C++ (Arduino)</span>
-                <span style="background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:800;font-family:'Fira Code',monospace;border:1px solid rgba(56,189,248,0.3);">exemplo.ino</span>
+        <button class="lesson-close" onclick="closeLessonModal()" title="Fechar janela">✕</button>
+        <div class="lesson-modal-header">
+            <div class="lesson-modal-emoji">${lesson.emoji}</div>
+            <div class="lesson-modal-title-group">
+                <div class="lesson-modal-badge-aula">Trilha de Robótica & Arduino • Aula ${lessonNum}</div>
+                <h2>${lesson.title}</h2>
             </div>
-            <code>${lesson.exemplo}</code>
         </div>
-        <div class="lesson-dica">${lesson.dica}</div>
-        <button class="lesson-btn" onclick="closeLessonModal(); openTab('${lesson.jogo}');">${lesson.btntext}</button>
+        <div class="lesson-objetivo">${lesson.objetivo}</div>
+        <div class="lesson-modal-body-grid">
+            <div class="lesson-teoria">
+                <h4><i class="fa-solid fa-book-open"></i> Explicação Didática</h4>
+                <div class="lesson-teoria-content">${lesson.teoria.replace(/\n/g, '<br>')}</div>
+            </div>
+            <div class="lesson-exemplo-col">
+                <div class="lesson-exemplo">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1E293B;">
+                        <span style="color:#94A3B8;font-size:0.75rem;font-weight:800;font-family:'Fira Code',monospace;"><i class="fa-solid fa-code"></i> Código C/C++ (Arduino)</span>
+                        <span style="background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:800;font-family:'Fira Code',monospace;border:1px solid rgba(56,189,248,0.3);">exemplo.ino</span>
+                    </div>
+                    <code>${lesson.exemplo}</code>
+                </div>
+                <div class="lesson-dica">${lesson.dica}</div>
+            </div>
+        </div>
+        <div class="lesson-modal-footer">
+            <button class="lesson-btn" onclick="closeLessonModal(); openTab('${lesson.jogo}');">
+                ${lesson.btntext} <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i>
+            </button>
+        </div>
     `;
 
     document.getElementById('lesson-modal')?.classList.add('active');
