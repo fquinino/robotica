@@ -2,7 +2,7 @@
    CRIADORES DE CÓDIGO — TRILHA DE APRENDIZAGEM & HUB DE CONQUISTAS
    ========================================================================== */
 
-const UNLOCKED_LESSONS = 7; // Aulas 8, 9 e 10 trancadas — foco exclusivo na Aula 7 (Protoboard Maker)
+const UNLOCKED_LESSONS = 10; // Todas as 10 Aulas liberadas para acesso e exploração completa!
 
 const getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
 
@@ -209,32 +209,43 @@ GND (Terra 0V)  ➔ Barramento Azul (-) ➔ Resistores de 300Ω ➔ Cátodos (-)
         jogo:'tab-labmaker', btntext:'🔌 Abrir Bancada da Protoboard!'
     },
     8: {
-        emoji:'🤖', title:'Arduino & O que é uma IDE (C/C++)', color:'#F87171',
-        objetivo:'🧠 <b>O que você vai aprender:</b> O que é uma <b>IDE</b> (a mesa de trabalho do programador), a anatomia do <b>Arduino UNO</b> e as funções de base <code>setup()</code> e <code>loop()</code>!',
-        teoria:`<b>O que é uma IDE? 💻 (Mesa de Trabalho Maker)</b>
+        emoji:'🤖', title:'Arduino IDE, Drivers & Conexão', color:'#F87171',
+        objetivo:'🧠 <b>O que você vai aprender:</b> Como instalar gratuitamente a <b>Arduino IDE</b> (clicando em <i>JUST DOWNLOAD</i>), como conectar o cabo USB e reconhecer o <b>Driver / Porta COMx</b>, como configurar a placa no menu <b>Ferramentas</b>, como enviar o código e como <b>zerar as configurações</b> do Arduino com o <i>BareMinimum</i>!',
+        teoria:`<b>1. Baixando e Instalando a Arduino IDE 💻</b>
+A Arduino IDE é o programa oficial e gratuito (open source) onde escrevemos os códigos para o Arduino.
+- Acesse <b>www.arduino.cc</b> e vá na aba de Downloads.
+- Uma tela de contribuição voluntária aparecerá: <b>não é obrigatório doar!</b> Basta clicar no botão <b>"JUST DOWNLOAD"</b> para baixar 100% de graça!
 
-IDE significa <i>Integrated Development Environment</i> (Ambiente de Desenvolvimento Integrado).
+<b>2. O Cabo USB e o Driver da Placa 🔌</b>
+Ao conectar o cabo USB do kit no computador, o sistema cria uma <b>Porta Serial de Comunicação (COMx)</b>:
+- <b>No Windows:</b> Você pode conferir no <i>Gerenciador de Dispositivos</i> > <i>Portas (COM e LPT)</i> (ex: COM3, COM4).
+- <b>No Mac:</b> A porta tem o formato <code>/dev/cu.usbserial-*</code> ou <code>/dev/cu.usbmodem*</code>.
+- Placas com chip CH340 ou BlackBoard utilizam o driver USB-Serial padrão do fabricante.
 
-Pense na IDE como a <b>Mesa do Super-Heroi da Programação</b>. Em vez de abrir 3 programas diferentes, a IDE junta 3 ferramentas essenciais numa única tela:
-1️⃣ ✏️ <b>O Editor de Código:</b> Onde você digita suas instruções em C/C++ coloridinhas.
-2️⃣ 🔍 <b>O Compilador:</b> O tradutor que verifica se há erros e transforma seu código C++ em 0s e 1s para o robô.
-3️⃣ 🚀 <b>O Uploader (Carregador):</b> O botão mágico que envia o programa via cabo USB para o cérebro do Arduino!
+<b>3. Conectando a IDE ao Arduino ⚙️</b>
+Para o computador conseguir falar com a placa, precisamos indicar 2 coisas no menu da IDE:
+1️⃣ <b>Menu Ferramentas > Placa:</b> Selecione <b>Arduino Uno</b> (mesmo para placas BlackBoard Uno!).
+2️⃣ <b>Menu Ferramentas > Porta:</b> Marque a sua porta serial (ex: <b>COM3</b>).
 
-<b>Anatomia do Arduino UNO 🧠</b>
-- <b>Pinos Digitais (0 a 13):</b> Entradas e saídas de 2 estados: <code>HIGH</code> (5V / Liga) ou <code>LOW</code> (0V / Desliga).
-- <b>Função <code>setup()</code>:</b> Roda 1 vez ao ligar para configurar os pinos.
-- <b>Função <code>loop()</code>:</b> Roda REPETIDAMENTE sem parar!`,
-        exemplo:`void setup() {
-    pinMode(13, OUTPUT); // Configura o pino 13 como saída
+<b>4. Enviando o Código (Upload) 🚀</b>
+- Clique no botão <b>✔ Verificar</b> para checar erros de digitação.
+- Clique no botão <b>➔ Carregar (Upload)</b>: os LEDs TX e RX da placa piscarão rapidamente transmitindo os dados!
+
+<b>5. Como "Zerar" o Arduino 🔄</b>
+O Arduino não tem tela: ele guarda o último código na memória Flash e roda sempre que é ligado na tomada!
+Para "zerar" a placa e deixá-la sem fazer nada:
+- Abra o menu: <i>Arquivo > Exemplos > 01.Basics > BareMinimum</i> (código em branco com <code>setup()</code> e <code>loop()</code> vazios).
+- Clique em <b>➔ Carregar</b>. Pronto! A placa agora está zerada e limpa!`,
+        exemplo:`// Código em branco para zerar o Arduino (BareMinimum):
+void setup() {
+  // Configurações vazias - placa neutra
 }
+
 void loop() {
-    digitalWrite(13, HIGH); // Liga o LED
-    delay(1000);            // Espera 1 segundo
-    digitalWrite(13, LOW);  // Desliga o LED
-    delay(1000);            // Espera 1 segundo
+  // Laço vazio - placa em repouso
 }`,
-        dica:'💡 Dica Autodidacta: No Arduino IDE real, o botão ✔ VERIFICA erros no código e o botão ➔ CARREGA o código na placa!',
-        jogo:'tab-arduino', btntext:'🎮 Ir para a Oficina do Arduino!'
+        dica:'💡 Dica Maker: Se a IDE der erro de comunicação ao carregar (stk500), confira se a Porta COM certa está marcada no menu Ferramentas > Porta!',
+        jogo:'tab-arduino', btntext:'🎮 Abrir Laboratório da IDE & Drivers!'
     },
     9: {
         emoji:'🔧', title:'Prática: Montagem Física do Semáforo', color:'#F59E0B',
@@ -345,7 +356,7 @@ function showLessonModal(lessonNum) {
     if (!lesson) return;
     if (lessonNum > UNLOCKED_LESSONS) {
         if (typeof playSound === 'function') playSound('error');
-        alert('🔒 As Aulas 8, 9 e 10 estão trancadas pelo professor!\n\nO foco atual do laboratório é a Aula 7 (Protoboard Maker)!');
+        alert('🔒 Esta aula ainda não foi liberada!');
         return;
     }
 

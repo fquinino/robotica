@@ -110,6 +110,18 @@
                 <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Tensão (V), Corrente (I), Resistência (R), Multímetro e Tubo de Elétrons</p>
                 <div id="badge-eletronica" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F87171;font-size:0.9rem;">0/6 Níveis ⭐</div>
             </div>
+            <div class="hub-card" onclick="openTab('tab-aula9')" style="background:#1E293B;padding:22px;border-radius:24px;border:2px solid #F59E0B;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
+                <i class="fa-solid fa-wrench" style="font-size:3rem;color:#F59E0B;margin-bottom:10px;"></i>
+                <h3 style="color:white;font-family:'Fredoka One';">Montagem do Semáforo</h3>
+                <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Passo a passo com 3 LEDs, 3 resistores e Arduino UNO na protoboard</p>
+                <div id="badge-aula9" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F59E0B;font-size:0.9rem;">Prática Física 🛠️</div>
+            </div>
+            <div class="hub-card" onclick="openTab('tab-aula10')" style="background:#1E293B;padding:22px;border-radius:24px;border:2px solid #10B981;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
+                <i class="fa-solid fa-code" style="font-size:3rem;color:#10B981;margin-bottom:10px;"></i>
+                <h3 style="color:white;font-family:'Fredoka One';">Programação C++ & Upload</h3>
+                <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Arduino IDE, compilação, monitor serial e Certificado Oficial Maker</p>
+                <div id="badge-aula10" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#10B981;font-size:0.9rem;">Certificado Maker 🎓</div>
+            </div>
             <div class="hub-card" onclick="openTab('tab-leaderboard')" style="background:linear-gradient(135deg,#1E1B4B,#1E293B);padding:22px;border-radius:24px;border:2px solid #F59E0B;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
                 <i class="fa-solid fa-ranking-star" style="font-size:3rem;color:#FBBF24;margin-bottom:10px;"></i>
                 <h3 style="color:#FBBF24;font-family:'Fredoka One';">Placar de Recordes</h3>
@@ -264,6 +276,16 @@
         <div id="eletronica-container"></div>
     </div>
 
+    <div class="game-panel" id="tab-aula9">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
+        <div id="aula9-container"></div>
+    </div>
+
+    <div class="game-panel" id="tab-aula10">
+        <button onclick="openTrail()" style="background:#1E293B;border:2px solid #334155;color:#94A3B8;padding:8px 18px;border-radius:20px;font-weight:900;cursor:pointer;font-size:0.85rem;margin-bottom:14px;">← Voltar para Aulas</button>
+        <div id="aula10-container"></div>
+    </div>
+
     <div class="footer">⭐ 3 ou 4 estrelas por módulo = 100% completo!</div>
 
     <!-- MODAL DE AULA TEÓRICA -->
@@ -335,6 +357,8 @@
 <script src="js/aula6-eletronica.js"></script>
 <script src="js/aula67-labmaker.js"></script>
 <script src="js/aula8-arduino.js"></script>
+<script src="js/aula9-montagem.js"></script>
+<script src="js/aula10-programacao.js"></script>
 
 <script>
     // Inicialização da Trilha na carga inicial

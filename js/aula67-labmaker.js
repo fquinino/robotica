@@ -81,6 +81,25 @@ function loadLabmaker() {
             .lab-box-success { background:linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.06)); border:2px solid #10B981; border-radius:18px; padding:18px 22px; margin:16px 0; }
             .lab-box-info { background:linear-gradient(135deg, rgba(56,189,248,0.12), rgba(2,132,199,0.06)); border:2px solid #38BDF8; border-radius:18px; padding:18px 22px; margin:16px 0; }
 
+            /* Estilos dos Desafios Práticos na Carteira */
+            .lab-desk-challenge { background:linear-gradient(135deg, #090F1E, #0D1933); border:2px dashed #38BDF8; border-radius:20px; padding:22px 24px; margin:26px 0 20px; box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(56,189,248,0.06); position:relative; }
+            .lab-desk-challenge.lvl-2 { border-color:#F59E0B; box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(245,158,11,0.06); }
+            .lab-desk-challenge.lvl-3 { border-color:#10B981; box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(16,185,129,0.06); }
+            .lab-desk-challenge.lvl-4 { border-color:#A78BFA; box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(167,139,250,0.06); }
+            .lab-desk-challenge.lvl-5 { border-color:#EC4899; box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(236,72,153,0.06); }
+            .lab-desk-challenge.lvl-6 { border-color:#FBBF24; box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(251,191,36,0.06); }
+            .lab-desk-steps-list { list-style:none; padding:0; margin:14px 0 16px; display:flex; flex-direction:column; gap:10px; }
+            .lab-desk-step-item { display:flex; align-items:flex-start; gap:12px; background:rgba(15, 23, 42, 0.7); border:1px solid rgba(255, 255, 255, 0.08); border-radius:12px; padding:10px 14px; color:#CBD5E1; font-size:0.95rem; line-height:1.5; }
+            .lab-desk-step-num { background:#0284C7; color:white; font-weight:900; width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.82rem; flex-shrink:0; margin-top:2px; }
+            .lab-desk-step-num.lvl-2 { background:#D97706; }
+            .lab-desk-step-num.lvl-3 { background:#059669; }
+            .lab-desk-step-num.lvl-4 { background:#7C3AED; }
+            .lab-desk-step-num.lvl-5 { background:#DB2777; }
+            .lab-desk-step-num.lvl-6 { background:#D97706; }
+            .lab-desk-btn-done { background:#1E293B; border:1px solid #475569; color:#E2E8F0; padding:10px 20px; border-radius:14px; font-weight:800; font-size:0.92rem; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:8px; }
+            .lab-desk-btn-done:hover { transform:translateY(-1px); border-color:#38BDF8; color:white; }
+            .lab-desk-btn-done.checked { background:linear-gradient(135deg, #059669, #10B981); border-color:#34D399; color:white; box-shadow:0 4px 16px rgba(16,185,129,0.4); }
+
             /* Tabela de Pinos Físicos */
             .lab-pins-table { width:100%; border-collapse:collapse; margin:16px 0; border-radius:14px; overflow:hidden; }
             .lab-pins-table th { background:#0F172A; color:#38BDF8; padding:12px 14px; text-align:left; font-weight:800; border-bottom:2px solid #334155; }
@@ -985,16 +1004,7 @@ function loadLabmaker() {
                         </p>
                     </div>
 
-                    <!-- DESAFIO PRÁTICO NA CARTEIRA -->
-                    <div style="background:#0F172A;border:2px dashed #38BDF8;border-radius:18px;padding:18px;margin:20px 0;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-                        <div style="font-size:2.4rem;">🖐️</div>
-                        <div>
-                            <h4 class="lab-title-font" style="color:white;margin:0 0 4px;font-size:1.1rem;">Desafio Prático na Sua Carteira:</h4>
-                            <p style="color:#94A3B8;margin:0;font-size:0.95rem;">
-                                Pegue sua protoboard na mão. Localize as letras <b>A, B, C, D, E</b> de um lado, as letras <b>F, G, H, I, J</b> do outro, e ache as colunas <b>10, 16 e 22</b> (que é onde vamos montar nosso semáforo!).
-                            </p>
-                        </div>
-                    </div>
+
 
                     <!-- ================= O EXPLORADOR INTERATIVO RAIO-X (INTEGRADO DIRETAMENTE AQUI) ================= -->
                     <div style="margin:32px 0 16px;">
@@ -1127,6 +1137,51 @@ function loadLabmaker() {
                             <span id="vg_info_warning_box">
                                 <b>Aviso sobre a Calha Central:</b> A corrente <b>NÃO</b> passa para a coluna <code>10F</code> a <code>10J</code>! O fosso central no meio isola os dois lados.
                             </span>
+                        </div>
+                    </div>
+
+                    <!-- DESAFIO PRÁTICO NA SUA CARTEIRA (PASSO 1) -->
+                    <div class="lab-desk-challenge lvl-1">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="font-size:2.2rem;line-height:1;">🖐️</div>
+                                <div>
+                                    <h4 class="lab-title-font" style="color:#38BDF8;margin:0;font-size:1.25rem;">
+                                        Desafio Prático na Sua Carteira — Passo 1:
+                                    </h4>
+                                    <span style="color:#94A3B8;font-size:0.88rem;">Conhecendo e mapeando a sua Protoboard física real</span>
+                                </div>
+                            </div>
+                            <span style="background:rgba(56,189,248,0.2);color:#38BDF8;border:1px solid #38BDF8;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:900;">
+                                Mão na Massa Real! 🛠️
+                            </span>
+                        </div>
+                        <p style="color:#E2E8F0;font-size:0.98rem;line-height:1.6;margin:0 0 12px;">
+                            Pegue a sua protoboard física na mão agora mesmo sobre a sua carteira e execute os passos de reconhecimento:
+                        </p>
+                        <ul class="lab-desk-steps-list">
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num">1</span>
+                                <div>Localize as letras <b>A, B, C, D, E</b> no lado esquerdo/inferior da placa.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num">2</span>
+                                <div>Localize as letras <b>F, G, H, I, J</b> no lado oposto e veja a <b>calha divisória central</b> que separa os dois lados.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num">3</span>
+                                <div>Encontre com o dedo as colunas verticais <b>10, 16 e 22</b> — é exatamente nestas 3 colunas que montaremos nosso semáforo (10 = Vermelho, 16 = Amarelo, 22 = Verde)!</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num">4</span>
+                                <div>Ache a longa linha azul com sinal de menos <b>(-)</b> na lateral: é o <b>Barramento GND (Terra)</b> onde todos os circuitos fecham o retorno!</div>
+                            </li>
+                        </ul>
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;">
+                            <span style="color:#94A3B8;font-size:0.85rem;">Ao terminar esta lição, seu semáforo estará 100% conectado com LEDs, resistores e Arduino!</span>
+                            <button type="button" class="lab-desk-btn-done" id="desk_btn_done_1" onclick="lab_toggleDeskCheck(1)">
+                                <i class="fa-regular fa-square"></i> Marcar como feito na minha carteira 🖐️
+                            </button>
                         </div>
                     </div>
 
@@ -1307,6 +1362,54 @@ function loadLabmaker() {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- DESAFIO PRÁTICO NA SUA CARTEIRA (PASSO 2) -->
+                    <div class="lab-desk-challenge lvl-2">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="font-size:2.2rem;line-height:1;">🖐️</div>
+                                <div>
+                                    <h4 class="lab-title-font" style="color:#F59E0B;margin:0;font-size:1.25rem;">
+                                        Desafio Prático na Sua Carteira — Passo 2:
+                                    </h4>
+                                    <span style="color:#94A3B8;font-size:0.88rem;">Espetando os 3 Resistores Protetores de 300Ω (ou 220Ω)</span>
+                                </div>
+                            </div>
+                            <span style="background:rgba(245,158,11,0.2);color:#F59E0B;border:1px solid #F59E0B;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:900;">
+                                Mão na Massa Real! 🛠️
+                            </span>
+                        </div>
+                        <p style="color:#E2E8F0;font-size:0.98rem;line-height:1.6;margin:0 0 12px;">
+                            Pegue agora os <b>3 resistores de 300Ω</b> (ou 220Ω) do seu kit. Lembre-se: resistor <b>não tem polaridade</b> (+/-), tanto faz o lado!
+                        </p>
+                        <ul class="lab-desk-steps-list">
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-2">1</span>
+                                <div>Dobre delicadamente os dois terminais de metal dos 3 resistores em formato de <b>"U"</b> para facilitar o encaixe.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-2">2</span>
+                                <div><b>1º Resistor (LED Vermelho):</b> Espete uma perna no furo <b>10D</b> e a outra perna no <b>Barramento Azul GND (-)</b>.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-2">3</span>
+                                <div><b>2º Resistor (LED Amarelo):</b> Espete uma perna no furo <b>16D</b> e a outra perna no <b>Barramento Azul GND (-)</b>.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-2">4</span>
+                                <div><b>3º Resistor (LED Verde):</b> Espete uma perna no furo <b>22D</b> e a outra perna no <b>Barramento Azul GND (-)</b>.</div>
+                            </li>
+                        </ul>
+                        <div style="background:rgba(245,158,11,0.1);border-left:3px solid #F59E0B;padding:8px 14px;border-radius:8px;margin-bottom:14px;font-size:0.88rem;color:#FEF3C7;">
+                            <b>💡 Dica de Engenheiro:</b> Empurre os resistores até o fim! A garra de bronze dentro da placa precisa abraçar o metal com firmeza para não dar mau contato.
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;">
+                            <span style="color:#94A3B8;font-size:0.85rem;">Pronto! Os 3 caminhos de proteção e retorno para o terra estão montados na sua mesa!</span>
+                            <button type="button" class="lab-desk-btn-done" id="desk_btn_done_2" onclick="lab_toggleDeskCheck(2)">
+                                <i class="fa-regular fa-square"></i> Marcar como feito na minha carteira 🖐️
+                            </button>
                         </div>
                     </div>
 
@@ -1535,6 +1638,50 @@ function loadLabmaker() {
                         </div>
                     </div>
 
+                    <!-- DESAFIO PRÁTICO NA SUA CARTEIRA (PASSO 3) -->
+                    <div class="lab-desk-challenge lvl-3">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="font-size:2.2rem;line-height:1;">🖐️</div>
+                                <div>
+                                    <h4 class="lab-title-font" style="color:#10B981;margin:0;font-size:1.25rem;">
+                                        Desafio Prático na Sua Carteira — Passo 3:
+                                    </h4>
+                                    <span style="color:#94A3B8;font-size:0.88rem;">Encaixando os 3 LEDs do Semáforo (Atenção à Polaridade +/-)</span>
+                                </div>
+                            </div>
+                            <span style="background:rgba(16,185,129,0.2);color:#10B981;border:1px solid #10B981;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:900;">
+                                Mão na Massa Real! 🛠️
+                            </span>
+                        </div>
+                        <p style="color:#E2E8F0;font-size:0.98rem;line-height:1.6;margin:0 0 12px;">
+                            Pegue agora os seus <b>3 LEDs (Vermelho, Amarelo e Verde)</b>. Olhe contra a luz: a <b>perna mais LONGA é o Ânodo (+)</b> e a <b>perna mais CURTA (lado chanfrado) é o Cátodo (-)</b>!
+                        </p>
+                        <ul class="lab-desk-steps-list">
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-3">1</span>
+                                <div><b>LED Vermelho:</b> Espete a perna CURTA (-) no furo <b>10E</b> (ligando na mesma coluna do resistor!) e a perna LONGA (+) no furo <b>10A</b>.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-3">2</span>
+                                <div><b>LED Amarelo:</b> Espete a perna CURTA (-) no furo <b>16E</b> (ligando na mesma coluna do resistor!) e a perna LONGA (+) no furo <b>16A</b>.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-3">3</span>
+                                <div><b>LED Verde:</b> Espete a perna CURTA (-) no furo <b>22E</b> (ligando na mesma coluna do resistor!) e a perna LONGA (+) no furo <b>22A</b>.</div>
+                            </li>
+                        </ul>
+                        <div style="background:rgba(16,185,129,0.1);border-left:3px solid #10B981;padding:8px 14px;border-radius:8px;margin-bottom:14px;font-size:0.88rem;color:#D1FAE5;">
+                            <b>🔍 Conferência Visual:</b> Olhe sua placa de cima: todas as 3 pernas longas (+) devem estar alinhadas na fileira <b>A</b> (para receber os fios do Arduino) e todas as 3 pernas curtas (-) na fileira <b>E</b> unidas com os resistores!
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;">
+                            <span style="color:#94A3B8;font-size:0.85rem;">Sensacional! Os 3 LEDs e os 3 resistores já estão perfeitamente conectados na sua carteira!</span>
+                            <button type="button" class="lab-desk-btn-done" id="desk_btn_done_3" onclick="lab_toggleDeskCheck(3)">
+                                <i class="fa-regular fa-square"></i> Marcar como feito na minha carteira 🖐️
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- DESAFIO MAKER DO NÍVEL 3: O MISTÉRIO DA POLARIDADE DO LED -->
                     <div class="lab-challenge-box" id="lab_challenge_box_3">
                         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
@@ -1732,6 +1879,54 @@ function loadLabmaker() {
 
                         <div id="vg_mini_status_msg" style="margin-top:10px;font-weight:bold;color:#94A3B8;font-size:0.9rem;">
                             Complete os 4 passos clicando nos botões acima para destravar o botão de energia!
+                        </div>
+                    </div>
+
+                    <!-- DESAFIO PRÁTICO NA SUA CARTEIRA (PASSO 4) -->
+                    <div class="lab-desk-challenge lvl-4">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="font-size:2.2rem;line-height:1;">🖐️</div>
+                                <div>
+                                    <h4 class="lab-title-font" style="color:#A78BFA;margin:0;font-size:1.25rem;">
+                                        Desafio Prático na Sua Carteira — Passo 4:
+                                    </h4>
+                                    <span style="color:#94A3B8;font-size:0.88rem;">Ligando os Jumpers entre a Protoboard e a Placa Arduino UNO</span>
+                                </div>
+                            </div>
+                            <span style="background:rgba(167,139,250,0.2);color:#A78BFA;border:1px solid #A78BFA;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:900;">
+                                Mão na Massa Real! 🛠️
+                            </span>
+                        </div>
+                        <p style="color:#E2E8F0;font-size:0.98rem;line-height:1.6;margin:0 0 12px;">
+                            Pegue <b>4 fios Jumpers Macho-Macho</b> (se possível, use 1 Preto/Azul para o terra, 1 Vermelho, 1 Amarelo/Laranja e 1 Verde):
+                        </p>
+                        <ul class="lab-desk-steps-list">
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-4">1</span>
+                                <div><b>Fio GND (Terra):</b> Conecte uma ponta em qualquer pino <b>GND</b> do Arduino UNO e a outra ponta no <b>Barramento Azul (-)</b> da Protoboard.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-4">2</span>
+                                <div><b>Fio Vermelho:</b> Conecte uma ponta no <b>Pino Digital 13</b> do Arduino e a outra ponta no furo <b>10B</b> (ou 10A) na coluna do LED Vermelho.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-4">3</span>
+                                <div><b>Fio Amarelo:</b> Conecte uma ponta no <b>Pino Digital 12</b> do Arduino e a outra ponta no furo <b>16B</b> (ou 16A) na coluna do LED Amarelo.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-4">4</span>
+                                <div><b>Fio Verde:</b> Conecte uma ponta no <b>Pino Digital 11</b> do Arduino e a outra ponta no furo <b>22B</b> (ou 22A) na coluna do LED Verde.</div>
+                            </li>
+                        </ul>
+                        <div style="background:rgba(167,139,250,0.1);border-left:3px solid #A78BFA;padding:8px 14px;border-radius:8px;margin-bottom:14px;font-size:0.88rem;color:#EDE9FE;">
+                            <b>⚡ Circuito Fechado:</b> Agora a placa de ensaios e o microcontrolador Arduino estão 100% integrados física e eletricamente!
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;">
+                            <span style="color:#94A3B8;font-size:0.85rem;">Incrível! Fiação completa montada entre Arduino e Protoboard na sua carteira!</span>
+                            <button type="button" class="lab-desk-btn-done" id="desk_btn_done_4" onclick="lab_toggleDeskCheck(4)">
+                                <i class="fa-regular fa-square"></i> Marcar como feito na minha carteira 🖐️
+                            </button>
                         </div>
                     </div>
 
@@ -1980,6 +2175,54 @@ function loadLabmaker() {
                         </div>
                     </div>
 
+                    <!-- DESAFIO PRÁTICO NA SUA CARTEIRA (PASSO 5) -->
+                    <div class="lab-desk-challenge lvl-5">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="font-size:2.2rem;line-height:1;">🖐️</div>
+                                <div>
+                                    <h4 class="lab-title-font" style="color:#EC4899;margin:0;font-size:1.25rem;">
+                                        Desafio Prático na Sua Carteira — Passo 5:
+                                    </h4>
+                                    <span style="color:#94A3B8;font-size:0.88rem;">Inspeção Tátil de Segurança & Conexão do Cabo USB (5V)</span>
+                                </div>
+                            </div>
+                            <span style="background:rgba(236,72,153,0.2);color:#EC4899;border:1px solid #EC4899;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:900;">
+                                Mão na Massa Real! 🛠️
+                            </span>
+                        </div>
+                        <p style="color:#E2E8F0;font-size:0.98rem;line-height:1.6;margin:0 0 12px;">
+                            Antes de energizar seu Arduino na porta USB, faça o checklist de segurança com as mãos na sua carteira:
+                        </p>
+                        <ul class="lab-desk-steps-list">
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-5">1</span>
+                                <div><b>Inspeção de Toque:</b> Olhe bem de perto e sinta com o dedo: nenhuma perna de metal dos resistores ou LEDs está encostando na perna vizinha? (Isto evita qualquer curto-circuito indesejado!).</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-5">2</span>
+                                <div><b>Firmeza dos Componentes:</b> Dê uma leve empurradinha nos 3 LEDs e nos 3 resistores para se certificar de que as lâminas internas da protoboard morderam firme os terminais.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-5">3</span>
+                                <div><b>Conexão USB:</b> Pegue o cabo USB azul. Conecte a ponta quadrada no Arduino UNO e a ponta USB no seu computador!</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-5">4</span>
+                                <div><b>Luz de Vida ('ON'):</b> Observe o LED verde pequeno marcado como <b>'ON'</b> no Arduino UNO acender! Seu circuito agora está alimentado e vivo!</div>
+                            </li>
+                        </ul>
+                        <div style="background:rgba(236,72,153,0.1);border-left:3px solid #EC4899;padding:8px 14px;border-radius:8px;margin-bottom:14px;font-size:0.88rem;color:#FCE7F3;">
+                            <b>🎉 Conquista Maker Histórica:</b> Sua montagem física está completa! Protoboard, 3 resistores, 3 LEDs, 4 jumpers e placa Arduino UNO estão todos conectados na sua frente!
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;">
+                            <span style="color:#94A3B8;font-size:0.85rem;">Agora faça os testes na bancada virtual abaixo para validar e concluir o Nível 5!</span>
+                            <button type="button" class="lab-desk-btn-done" id="desk_btn_done_5" onclick="lab_toggleDeskCheck(5)">
+                                <i class="fa-regular fa-square"></i> Marcar como feito na minha carteira 🖐️
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- DESAFIO MAKER DO NÍVEL 5: O GRANDE TESTE NA BANCADA -->
                     <div class="lab-challenge-box" id="lab_challenge_box_5">
                         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
@@ -2120,6 +2363,47 @@ function loadLabmaker() {
                                     <span style="color:#94A3B8;font-size:0.78rem;">Alimentação 5V e semáforo aceso</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- DESAFIO PRÁTICO NA SUA CARTEIRA (PASSO 6) -->
+                    <div class="lab-desk-challenge lvl-6">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="font-size:2.2rem;line-height:1;">🖐️</div>
+                                <div>
+                                    <h4 class="lab-title-font" style="color:#FBBF24;margin:0;font-size:1.25rem;">
+                                        Desafio Prático na Sua Carteira — Passo 6:
+                                    </h4>
+                                    <span style="color:#94A3B8;font-size:0.88rem;">A Apresentação da Sua Obra de Engenharia Maker</span>
+                                </div>
+                            </div>
+                            <span style="background:rgba(251,191,36,0.2);color:#FBBF24;border:1px solid #FBBF24;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:900;">
+                                Semáforo 100% Conectado! 🏆
+                            </span>
+                        </div>
+                        <p style="color:#E2E8F0;font-size:0.98rem;line-height:1.6;margin:0 0 12px;">
+                            Parabéns! Observe o resultado na sua frente: você tem uma <b>Protoboard com 3 LEDs, 3 Resistores e 4 Jumpers</b> perfeitamente integrados ao seu <b>Arduino UNO</b>!
+                        </p>
+                        <ul class="lab-desk-steps-list">
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-6">1</span>
+                                <div><b>Demonstração para a Turma:</b> Chame seu professor ou o colega de carteira ao lado para inspecionar seu circuito completo.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-6">2</span>
+                                <div><b>Rastreie o Circuito com o Dedo:</b> Mostre como a corrente sai dos <b>Pinos 13, 12 e 11</b> do Arduino ➔ entra nos <b>Ânodos (+) dos LEDs</b> ➔ passa pelos <b>Resistores</b> ➔ e retorna pelo <b>Pino GND</b>.</div>
+                            </li>
+                            <li class="lab-desk-step-item">
+                                <span class="lab-desk-step-num lvl-6">3</span>
+                                <div><b>Pronto para a Aula Seguinte:</b> Deixe a montagem física intacta na sua mesa! Na próxima etapa usaremos essa mesma placa para programar os tempos em C++!</div>
+                            </li>
+                        </ul>
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;">
+                            <span style="color:#94A3B8;font-size:0.85rem;">Agora dispute o Quiz e o Mini-Game da bancada para consolidar suas 3 estrelas de ouro!</span>
+                            <button type="button" class="lab-desk-btn-done" id="desk_btn_done_6" onclick="lab_toggleDeskCheck(6)">
+                                <i class="fa-regular fa-square"></i> Marcar como feito na minha carteira 🖐️
+                            </button>
                         </div>
                     </div>
 
@@ -2741,6 +3025,44 @@ function lab_initStepLocking() {
             }
             if (fb) fb.style.display = 'none';
         }
+    }
+
+    // Restaura estado dos botões dos Desafios Práticos na Carteira
+    for (let lvl = 1; lvl <= 6; lvl++) {
+        const dBtn = document.getElementById('desk_btn_done_' + lvl);
+        if (dBtn) {
+            const isDone = localStorage.getItem('lab_desk_step_' + lvl) === 'true';
+            dBtn.classList.toggle('checked', isDone);
+            if (isDone) {
+                dBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Concluí esse passo na minha mesa! 🖐️ ⭐';
+            } else {
+                dBtn.innerHTML = '<i class="fa-regular fa-square"></i> Marcar como feito na minha carteira 🖐️';
+            }
+        }
+    }
+}
+
+/* Alternar estado do Desafio Prático na Carteira */
+function lab_toggleDeskCheck(lvl) {
+    const btn = document.getElementById('desk_btn_done_' + lvl);
+    if (!btn) return;
+    const isChecked = btn.classList.contains('checked');
+    if (!isChecked) {
+        playSound('success');
+        btn.classList.add('checked');
+        btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Concluí esse passo na minha mesa! 🖐️ ⭐';
+        try {
+            localStorage.setItem('lab_desk_step_' + lvl, 'true');
+        } catch(e) {}
+        lab_showToast(`🖐️ Passo Físico ${lvl} concluído na sua carteira!`, '🛠️');
+        if (typeof triggerConfetti === 'function') triggerConfetti(1800);
+    } else {
+        playSound('click');
+        btn.classList.remove('checked');
+        btn.innerHTML = '<i class="fa-regular fa-square"></i> Marcar como feito na minha carteira 🖐️';
+        try {
+            localStorage.removeItem('lab_desk_step_' + lvl);
+        } catch(e) {}
     }
 }
 
@@ -5029,3 +5351,4 @@ window.lab_carousel_goto = lab_carousel_goto;
 window.lab_carousel_prev = lab_carousel_prev;
 window.lab_carousel_next = lab_carousel_next;
 window.lab_resetLevelProgress = lab_resetLevelProgress;
+window.lab_toggleDeskCheck = lab_toggleDeskCheck;

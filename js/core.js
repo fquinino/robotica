@@ -30,38 +30,61 @@ const safeStorage = {
 const localStorage = safeStorage;
 
 // ================= AUDIO SYSTEM =================
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let audioCtx = null;
+function getAudioCtx() {
+    if (!audioCtx) {
+        try {
+            const AudioClass = window.AudioContext || window.webkitAudioContext;
+            if (AudioClass) {
+                audioCtx = new AudioClass();
+            }
+        } catch(e) {
+            console.warn('Web Audio API indisponível:', e);
+        }
+    }
+    return audioCtx;
+}
+
 function playSound(type) {
-    if(audioCtx.state === 'suspended') audioCtx.resume();
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    osc.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    if(type === 'success') {
-        osc.type = 'sine'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
-        gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-    } else if(type === 'error') {
-        osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
-        gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-    } else if(type === 'click') {
-        osc.type = 'sine'; osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-    } else if(type === 'step') {
-        osc.type = 'triangle'; osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-        gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-    } else if(type === 'coin') {
-        osc.type = 'sine'; osc.frequency.setValueAtTime(987.77, audioCtx.currentTime);
-        osc.frequency.setValueAtTime(1318.51, audioCtx.currentTime + 0.08);
-        gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.35);
+    try {
+        const ctx = getAudioCtx();
+        if(!ctx) return;
+        if(ctx.state === 'suspended') {
+            ctx.resume().catch(() => {});
+        }
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        if(type === 'success') {
+            osc.type = 'sine'; osc.frequency.setValueAtTime(400, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(0.2, ctx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            osc.start(); osc.stop(ctx.currentTime + 0.3);
+        } else if(type === 'error') {
+            osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.2);
+            gainNode.gain.setValueAtTime(0.2, ctx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+            osc.start(); osc.stop(ctx.currentTime + 0.2);
+        } else if(type === 'click') {
+            osc.type = 'sine'; osc.frequency.setValueAtTime(600, ctx.currentTime);
+            gainNode.gain.setValueAtTime(0.1, ctx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+            osc.start(); osc.stop(ctx.currentTime + 0.1);
+        } else if(type === 'step') {
+            osc.type = 'triangle'; osc.frequency.setValueAtTime(300, ctx.currentTime);
+            gainNode.gain.setValueAtTime(0.05, ctx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+            osc.start(); osc.stop(ctx.currentTime + 0.05);
+        } else if(type === 'coin') {
+            osc.type = 'sine'; osc.frequency.setValueAtTime(987.77, ctx.currentTime);
+            osc.frequency.setValueAtTime(1318.51, ctx.currentTime + 0.08);
+            gainNode.gain.setValueAtTime(0.2, ctx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+            osc.start(); osc.stop(ctx.currentTime + 0.35);
+        }
+    } catch(e) {
+        // Ignora silenciosamente se o áudio falhar
     }
 }
+window.playSound = playSound;
 
 // ================= FOGOS & CONFETES ENGINE =================
 function triggerConfetti(durationMs = 3000) {
@@ -326,7 +349,7 @@ function showCertificateModal() {
     const totalStars = getLevels('semaforo_levels').length + getLevels('tesouro_levels').length + 
                        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
                        getLevels('jardim_levels').length + getLevels('arduino_levels').length +
-                       getLevels('variaveis_levels').length;
+                       getLevels('variaveis_levels').length + getLevels('eletronica_levels').length;
     const detail = document.getElementById('cert_stars_detail');
     if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 36 Estrelas Maker!`;
     modal.style.display = 'flex';
@@ -397,16 +420,17 @@ function openTab(tabId) {
         }
     }
     if (tabId === 'tab-arduino') {
-        if (typeof UNLOCKED_LESSONS !== 'undefined' && UNLOCKED_LESSONS < 8) {
-            if (typeof playSound === 'function') playSound('error');
-            alert('🔒 A Aula 8 (Oficina do Arduino) está trancada no momento!\n\nO foco atual é a Aula 7 (Bancada Protoboard Maker).');
-            return;
-        }
         if(!document.getElementById('arduino-loaded') && typeof loadArduino==='function') loadArduino();
         if(window.makerLeaderboard) {
             window.makerLeaderboard.ensureHUD('arduino', '#arduino-container');
             window.makerLeaderboard.startTimer('arduino', 1);
         }
+    }
+    if (tabId === 'tab-aula9') {
+        if(!document.getElementById('aula9-loaded') && typeof loadAula9==='function') loadAula9();
+    }
+    if (tabId === 'tab-aula10') {
+        if(!document.getElementById('aula10-loaded') && typeof loadAula10==='function') loadAula10();
     }
     if (tabId === 'tab-variaveis') {
         if(!document.getElementById('variaveis-loaded') && typeof loadVariaveis==='function') loadVariaveis();
