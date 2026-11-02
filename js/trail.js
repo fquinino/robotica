@@ -248,60 +248,136 @@ void loop() {
         jogo:'tab-arduino', btntext:'🎮 Abrir Laboratório da IDE & Drivers!'
     },
     9: {
-        emoji:'🔧', title:'Prática: Montagem Física do Semáforo', color:'#F59E0B',
-        objetivo:'📋 <b>Objetivo Prático:</b> Guia completo de montagem física de um semáforo de trânsito real utilizando 3 LEDs, 3 resistores e o Arduino UNO na protoboard.',
-        teoria:`<b>Esquema de Montagem Prática 🚦</b>
+        emoji:'🚗', title:'Prática Maker: A Garagem Inteligente do Futuro', color:'#F59E0B',
+        layout: 'stacked',
+        hideCodeInModal: true,
+        objetivo:'🚗 <b>Missão do Jovem Inventor (12 Anos):</b> Construir a <b>Garagem Inteligente do Futuro</b>! Já imaginou chegar em casa à noite de bicicleta ou com as mãos cheias de sacolas e a <b>luz do teto acender apenas batendo palmas (👏)</b>? E enquanto o carro manobra na vaga, um <b>sensor de ré ultrassônico mede a distância da parede</b> e um <b>painel LCD na parede avisa na hora: "Vaga: 25cm (OK)" ou "🚨 PARE!"</b>? Hoje você vai conectar tudo isso no mesmo Arduino!',
+        teoria:`<div style="background:linear-gradient(135deg, rgba(2, 132, 199, 0.12), rgba(15, 23, 42, 0.6)); border:1px solid #0284C7; border-radius:14px; padding:12px 16px; margin-bottom:14px;">
+    <p style="font-size:0.98rem; color:#E0F2FE; margin:0; line-height:1.6;">
+        🏠 <b>Por que juntamos esses componentes?</b> Imagine que você foi contratado para criar a automação de uma <b>casa e garagem moderna</b>. O carro precisa estacionar sem bater no muro, a pessoa precisa enxergar a garagem no escuro sem largar as coisas para apertar o interruptor, e tudo deve aparecer num painel claro! Veja o papel de cada peça:
+    </p>
+</div>
 
-Conecte os componentes na protoboard seguindo estas portas do Arduino:
-- 🔴 <b>LED Vermelho:</b> Anodo (+) no pino <b>13</b> | Catodo (-) no Resistor 220 ohms ➔ GND
-- 🟡 <b>LED Amarelo:</b> Anodo (+) no pino <b>12</b> | Catodo (-) no Resistor 220 ohms ➔ GND
-- 🟢 <b>LED Verde:</b> Anodo (+) no pino <b>11</b> | Catodo (-) no Resistor 220 ohms ➔ GND
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-bottom:14px;">
+    <!-- CARD 1: SENSOR DE RÉ / VAGA -->
+    <div style="background:#0F172A; border:2px solid #38BDF8; border-radius:14px; padding:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <span style="font-size:1.6rem;">🚗</span>
+            <div>
+                <strong style="color:#38BDF8; font-size:1rem; font-family:'Fredoka One',cursive;">1. Sensor de Ré / Vaga (HC-SR04)</strong>
+                <div style="color:#94A3B8; font-size:0.75rem;">O Olho de Morcego na Parede do Fundo</div>
+            </div>
+        </div>
+        <p style="color:#CBD5E1; font-size:0.88rem; line-height:1.55; margin:0 0 10px;">
+            Fica fixado na parede do fundo da vaga, na altura do para-choque. Ele funciona como o sonar dos morcegos e submarinos:
+            <br>• <b>Cilindro T (Trig):</b> Solta um grito ultrassônico no ar (nós humanos não ouvimos!).
+            <br>• <b>Cilindro R (Echo):</b> Escuta o eco bater no carro e voltar!
+            <br>• <b>A Função dele:</b> Mede quantos centímetros faltam para encostar no muro. Se estiver a menos de 15 cm, aciona o alerta de colisão ("PARE!").
+        </p>
+        <div style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.4); border-radius:8px; padding:8px 10px; font-size:0.78rem; color:#BAE6FD;">
+            🔌 <b>Conexões:</b> VCC ➔ 5V | GND ➔ Terra | Trig ➔ Pino 9 | Echo ➔ Pino 8
+        </div>
+    </div>
 
-Confira se todas as pernas menores (catodos) compartilham a linha do GND!`,
-        exemplo:`Porta 13 ➔ LED Vermelho (Anodo)
-Porta 12 ➔ LED Amarelo  (Anodo)
-Porta 11 ➔ LED Verde    (Anodo)
-GND      ➔ Barramento Negativo da Protoboard`,
-        dica:'💡 Dica Maker: Use fios coloridos para combinar com os LEDs (fio vermelho no LED vermelho, fio verde no LED verde)! Fica muito mais fácil de revisar.',
-        jogo:'tab-aula9', btntext:'📖 Ver Guia de Montagem!'
+    <!-- CARD 2: LUZ DA GARAGEM POR PALMAS -->
+    <div style="background:#0F172A; border:2px solid #EC4899; border-radius:14px; padding:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <span style="font-size:1.6rem;">👏</span>
+            <div>
+                <strong style="color:#F472B6; font-size:1rem; font-family:'Fredoka One',cursive;">2. Luz da Garagem por Palmas</strong>
+                <div style="color:#94A3B8; font-size:0.75rem;">Interruptor Mágico para Mãos Ocupadas</div>
+            </div>
+        </div>
+        <p style="color:#CBD5E1; font-size:0.88rem; line-height:1.55; margin:0 0 10px;">
+            Você chegou à noite de bicicleta ou carregando a mochila com as duas mãos cheias. Está tudo escuro e você não acha o interruptor na parede. O que você faz?
+            <br>• <b>Bate duas palmas (👏 👏)!</b> O sensor de som KY-038 capta a vibração do ar no microfone.
+            <br>• <b>O Arduino acende a lâmpada do teto (LED no pino 13)!</b>
+            <br>• Quando entrar em casa, bate palmas de novo e a luz apaga!
+        </p>
+        <div style="background:rgba(236,72,153,0.15); border:1px solid rgba(236,72,153,0.4); border-radius:8px; padding:8px 10px; font-size:0.78rem; color:#FBCFE8;">
+            🔌 <b>Conexões:</b> VCC ➔ 5V | GND ➔ Terra | DO ➔ Pino 2 | Lâmpada LED ➔ Pino 13 (com Resistor 220Ω)
+        </div>
+    </div>
+
+    <!-- CARD 3: PAINEL DIGITAL LCD -->
+    <div style="background:#0F172A; border:2px solid #10B981; border-radius:14px; padding:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <span style="font-size:1.6rem;">📟</span>
+            <div>
+                <strong style="color:#34D399; font-size:1rem; font-family:'Fredoka One',cursive;">3. Painel Digital da Garagem (LCD 16x2)</strong>
+                <div style="color:#94A3B8; font-size:0.75rem;">A Tela de Informações na Parede</div>
+            </div>
+        </div>
+        <p style="color:#CBD5E1; font-size:0.88rem; line-height:1.55; margin:0 0 10px;">
+            Uma telinha digital de alta visibilidade fixada na parede da garagem bem na frente do motorista. Com o chip I2C, usa apenas 4 fios para mostrar duas coisas ao mesmo tempo:
+            <br>• <b>Linha de Cima (Linha 0):</b> O status da luz (ex: <code>Luz: ACESA 💡</code> ou <code>Luz: APAGADA 🌑</code>).
+            <br>• <b>Linha de Baixo (Linha 1):</b> A distância da vaga (ex: <code>Vaga: 25cm (OK)</code> ou <code>🚨 PARE! 10cm!</code>).
+        </p>
+        <div style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); border-radius:8px; padding:8px 10px; font-size:0.78rem; color:#A7F3D0;">
+            🔌 <b>Conexões (I2C):</b> VCC ➔ 5V | GND ➔ Terra | SDA ➔ Pino Analógico A4 | SCL ➔ Pino Analógico A5
+        </div>
+    </div>
+
+    <!-- CARD 4: A GARAGEM INTELIGENTE COMPLETA -->
+    <div style="background:#0F172A; border:2px solid #F59E0B; border-radius:14px; padding:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <span style="font-size:1.6rem;">🚀</span>
+            <div>
+                <strong style="color:#FBBF24; font-size:1rem; font-family:'Fredoka One',cursive;">4. A Garagem Inteligente Completa!</strong>
+                <div style="color:#94A3B8; font-size:0.75rem;">Os 3 Módulos Trabalhando Juntos no Arduino</div>
+            </div>
+        </div>
+        <p style="color:#CBD5E1; font-size:0.88rem; line-height:1.55; margin:0 0 10px;">
+            Na bancada do laboratório, você vai montar os sensores e fios, bater palmas para acender a luz, mover o carro para testar a distância e ver a tela LCD atualizar tudo em tempo real!
+        </p>
+        <div style="background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); border-radius:8px; padding:8px 10px; font-size:0.78rem; color:#FDE68A;">
+            🛠️ <b>Você no comando:</b> Arraste as peças na bancada abaixo e viva a experiência de um engenheiro de verdade!
+        </div>
+    </div>
+</div>`,
+        dica:'💡 Dica Maker de Ouro: Na Garagem Inteligente, todos os sensores compartilham os mesmos 5V e GND da protoboard, enquanto cada um conversa com pinos diferentes do Arduino sem confusão!',
+        jogo:'tab-aula9', btntext:'🚗 Abrir a Garagem Inteligente & Começar a Montagem!'
     },
     10: {
-        emoji:'💻', title:'Prática: Programação C++ do Semáforo', color:'#10B981',
-        objetivo:'🚀 <b>Objetivo Final:</b> Código-fonte C++ completo do Semáforo Digital pronto para compilação e upload no Arduino IDE!',
-        teoria:`<b>Código-Fonte Completo do Semáforo C++ 🚦</b>
+        emoji:'🎓', title:'Mega Revisão: Funções C++ & Dicionário Maker', color:'#10B981',
+        objetivo:'🚀 <b>Objetivo Final:</b> O Grande Dicionário de Funções Essenciais do Arduino (<code>digitalWrite</code>, <code>digitalRead</code>, <code>pinMode</code>, <code>analogRead</code>, <code>analogWrite</code>, <code>delay</code>, <code>Serial</code>), estrutura <code>setup()</code> vs <code>loop()</code>, quiz de fixação e emissão do Certificado Maker!',
+        teoria:`<b>O Grande Almanaque das Funções C++ do Arduino 📖🤖</b>
 
-Este é o código que você vai carregar no Arduino IDE para automatizar seu semáforo real:`,
-        exemplo:`int ledVermelho = 13;
-int ledAmarelo  = 12;
-int ledVerde    = 11;
+Chegamos à grande formatura! Aqui você revisa todas as ferramentas mestras da programação de microcontroladores:
 
-void setup() {
-  pinMode(ledVermelho, OUTPUT);
-  pinMode(ledAmarelo,  OUTPUT);
-  pinMode(ledVerde,    OUTPUT);
+<b>1. pinMode(pino, MODO) 🛠️</b>
+Define o papel do pino: <code>OUTPUT</code> (para enviar 5V para LEDs e telas) ou <code>INPUT</code> (para escutar botões e sensores). Roda no <code>setup()</code>!
+
+<b>2. digitalWrite(pino, VALOR) ⚡</b>
+O interruptor liga/desliga! <code>HIGH</code> manda 5 Volts e <code>LOW</code> corta para 0 Volts (GND).
+
+<b>3. digitalRead(pino) 👂</b>
+Pergunta se o pino está recebendo 5V (HIGH) ou 0V (LOW).
+
+<b>4. analogRead(pino) 🎛️</b>
+Mede a intensidade analógica contínua (0 a 1023) nos pinos A0 a A5 para ler luz (LDR), temperatura ou potenciômetros.
+
+<b>5. analogWrite(pino, PWM) 🌊</b>
+Gera pulsos PWM de 0 a 255 nos pinos ~ para controlar brilho suave de LED ou velocidade de motor.
+
+<b>6. delay(ms) ⏱️</b>
+Pausa o código em milissegundos (1s = 1000 ms).
+
+<b>7. Serial.println() 💬</b>
+Conversa com o computador pelo cabo USB a 9600 baud!`,
+        exemplo:`void setup() {
+  pinMode(13, OUTPUT);  // Pino 13 configurado
+  Serial.begin(9600);   // Canal com PC aberto
 }
 
 void loop() {
-  // VERDE (5 segundos)
-  digitalWrite(ledVerde, HIGH);
-  digitalWrite(ledAmarelo, LOW);
-  digitalWrite(ledVermelho, LOW);
-  delay(5000);
-
-  // AMARELO (2 segundos)
-  digitalWrite(ledVerde, LOW);
-  digitalWrite(ledAmarelo, HIGH);
-  digitalWrite(ledVermelho, LOW);
-  delay(2000);
-
-  // VERMELHO (5 segundos)
-  digitalWrite(ledVerde, LOW);
-  digitalWrite(ledAmarelo, LOW);
-  digitalWrite(ledVermelho, HIGH);
-  delay(5000);
+  digitalWrite(13, HIGH); // Liga LED
+  delay(1000);            // Espera 1s
+  digitalWrite(13, LOW);  // Desliga LED
+  delay(1000);            // Espera 1s
 }`,
-        dica:'🎉 Parabéns! Você concluiu a Trilha Maker e agora domina a base de Programação C++ e Eletrônica com Arduino!',
-        jogo:'tab-aula10', btntext:'🚀 Ver Código & Fazer Upload!'
+        dica:'🎉 Parabéns! Você concluiu a Trilha Completa e agora domina a base de Programação C++ e Robótica com Arduino! Emita seu certificado!',
+        jogo:'tab-aula10', btntext:'🎓 Abrir Grande Revisão & Certificado!'
     }
 };
 
@@ -360,6 +436,13 @@ function showLessonModal(lessonNum) {
         return;
     }
 
+    // Aula 9 possui o Guia de Montagem Unificado & Expansível direto na bancada
+    if (lessonNum === 9) {
+        if (typeof playSound === 'function') playSound('click');
+        openTab('tab-aula9');
+        return;
+    }
+
     const modalBox = document.getElementById('lesson-modal-box');
     if (!modalBox) return;
 
@@ -373,22 +456,63 @@ function showLessonModal(lessonNum) {
             </div>
         </div>
         <div class="lesson-objetivo">${lesson.objetivo}</div>
-        <div class="lesson-modal-body-grid">
-            <div class="lesson-teoria">
-                <h4><i class="fa-solid fa-book-open"></i> Explicação Didática</h4>
-                <div class="lesson-teoria-content">${lesson.teoria.replace(/\n/g, '<br>')}</div>
-            </div>
-            <div class="lesson-exemplo-col">
-                <div class="lesson-exemplo">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1E293B;">
-                        <span style="color:#94A3B8;font-size:0.75rem;font-weight:800;font-family:'Fira Code',monospace;"><i class="fa-solid fa-code"></i> Código C/C++ (Arduino)</span>
-                        <span style="background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:800;font-family:'Fira Code',monospace;border:1px solid rgba(56,189,248,0.3);">exemplo.ino</span>
+        ${lesson.layout === 'stacked' ? `
+            <div class="lesson-modal-body-stacked" style="display:flex; flex-direction:column; gap:16px; margin-bottom:18px;">
+                <!-- 1. EXPLICAÇÃO DIDÁTICA COMPLETA EM CIMA (LARGURA TOTAL) -->
+                <div class="lesson-teoria" style="background:rgba(56,189,248,0.06); border-left:4px solid #38BDF8; border-radius:18px; padding:18px 22px;">
+                    <h4 style="color:#38BDF8; font-family:'Fredoka One',sans-serif; margin:0 0 12px; font-size:1.25rem; display:flex; align-items:center; gap:8px;">
+                        <i class="fa-solid fa-graduation-cap"></i> Explicação Didática Passo a Passo
+                    </h4>
+                    <div class="lesson-teoria-content" style="color:#E2E8F0; font-size:0.95rem; line-height:1.7;">
+                        ${lesson.teoria}
                     </div>
-                    <code>${lesson.exemplo}</code>
                 </div>
-                <div class="lesson-dica">${lesson.dica}</div>
+
+                <!-- 2. O QUE É O ARQUIVO .INO (ABAIXO DA EXPLICAÇÃO) -->
+                ${lesson.inoExplainer ? `
+                    <div class="lesson-ino-card" style="background:linear-gradient(135deg, rgba(2, 132, 199, 0.18), rgba(15, 23, 42, 0.95)); border:2px solid #0284C7; border-radius:18px; padding:18px 22px; box-shadow:0 8px 25px rgba(2,132,199,0.18);">
+                        ${lesson.inoExplainer}
+                    </div>
+                ` : ''}
+
+                <!-- 3. CÓDIGO .INO EXEMPLO + DICA MAKER (ABAIXO DA EXPLICAÇÃO) -->
+                <div class="lesson-exemplo-col" style="display:flex; flex-direction:column; gap:14px;">
+                    ${(!lesson.hideCodeInModal && lesson.exemplo) ? `
+                    <div class="lesson-exemplo" style="background:#070B13; border:2px solid #334155; border-radius:16px; padding:16px 20px; box-shadow:inset 0 0 25px rgba(0,0,0,0.7);">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid #1E293B; flex-wrap:wrap; gap:8px;">
+                            <span style="color:#CBD5E1; font-size:0.85rem; font-weight:800; font-family:'Fredoka One',sans-serif; display:flex; align-items:center; gap:8px;">
+                                <i class="fa-solid fa-code" style="color:#38BDF8;"></i> Exemplo do Código C++ Gravado no Arduino
+                            </span>
+                            <span style="background:rgba(56,189,248,0.18); color:#38BDF8; padding:3px 10px; border-radius:8px; font-size:0.75rem; font-weight:800; font-family:'Fira Code',monospace; border:1px solid rgba(56,189,248,0.4);">
+                                📄 ${lesson.filename || 'sketch.ino'}
+                            </span>
+                        </div>
+                        <code>${lesson.exemplo}</code>
+                    </div>
+                    ` : ''}
+                    <div class="lesson-dica" style="background:rgba(251,191,36,0.12); border:1px dashed #FBBF24; border-radius:14px; padding:14px 18px; color:#FDE68A; font-size:0.92rem; font-weight:700; line-height:1.6;">
+                        ${lesson.dica}
+                    </div>
+                </div>
             </div>
-        </div>
+        ` : `
+            <div class="lesson-modal-body-grid">
+                <div class="lesson-teoria">
+                    <h4><i class="fa-solid fa-book-open"></i> Explicação Didática</h4>
+                    <div class="lesson-teoria-content">${lesson.teoria.replace(/\n/g, '<br>')}</div>
+                </div>
+                <div class="lesson-exemplo-col">
+                    <div class="lesson-exemplo">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1E293B;">
+                            <span style="color:#94A3B8;font-size:0.75rem;font-weight:800;font-family:'Fira Code',monospace;"><i class="fa-solid fa-code"></i> Código C/C++ (Arduino)</span>
+                            <span style="background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:800;font-family:'Fira Code',monospace;border:1px solid rgba(56,189,248,0.3);">${lesson.filename || 'exemplo.ino'}</span>
+                        </div>
+                        <code>${lesson.exemplo}</code>
+                    </div>
+                    <div class="lesson-dica">${lesson.dica}</div>
+                </div>
+            </div>
+        `}
         <div class="lesson-modal-footer">
             <button class="lesson-btn" onclick="closeLessonModal(); openTab('${lesson.jogo}');">
                 ${lesson.btntext} <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i>

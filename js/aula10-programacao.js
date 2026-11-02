@@ -1,67 +1,171 @@
 /* ==========================================================================
-   AULA 10 — PRÁTICA: PROGRAMAÇÃO C++ DO SEMÁFORO NO ARDUINO IDE & CERTIFICADO
+   AULA 10 — O GRANDE ALMANAQUE DE FUNÇÕES & MEGA REVISÃO DE PROGRAMAÇÃO C++
+   Dicionário Oficial: digitalWrite, digitalRead, pinMode, analogRead, delay, Serial
+   Playground Interativo de Funções, Quiz Maker & Emissão de Certificado
    ========================================================================== */
 
-let a10_isCompiling = false;
-let a10_isUploading = false;
-let a10_isUploaded = false;
-let a10_trafficInterval = null;
-let a10_cycleStep = 0; // 0=Green, 1=Yellow, 2=Red
-let a10_secondsLeft = 5;
+let a10_quizAnswers = {};
+let a10_pwmVal = 180;
+let a10_led13State = false;
 
-const a10_sourceCode = `/*
- * PROJETO: Semáforo Digital Inteligente
- * CURSO: Criadores de Código — Laboratório Maker
- * HARDWARE: Arduino UNO + Protoboard + 3 LEDs + 3 Resistores de 220 Ohms
- */
+function a10_testDigitalWrite(val) {
+    a10_led13State = val === 'HIGH';
+    const led = document.getElementById('a10-play-led13');
+    const status = document.getElementById('a10-play-status-text');
+    const codeView = document.getElementById('a10-play-executed-code');
 
-// 1. DEFINIÇÃO DOS PINOS DIGITAIS
-const int pinoVermelho = 13;
-const int pinoAmarelo  = 12;
-const int pinoVerde    = 11;
-
-// 2. CONFIGURAÇÃO INICIAL (Executa apenas uma vez ao ligar a placa)
-void setup() {
-  // Inicializa a comunicação serial para enviar mensagens ao computador
-  Serial.begin(9600);
-  Serial.println("🚦 Sistema do Semáforo Iniciado com Sucesso!");
-
-  // Configura os 3 pinos digitais como SAÍDAS (OUTPUT) de 5V
-  pinMode(pinoVermelho, OUTPUT);
-  pinMode(pinoAmarelo,  OUTPUT);
-  pinMode(pinoVerde,    OUTPUT);
+    if (led) {
+        led.setAttribute('fill', a10_led13State ? '#10B981' : '#334155');
+        if (a10_led13State) {
+            led.setAttribute('filter', 'drop-shadow(0 0 10px #10B981)');
+        } else {
+            led.removeAttribute('filter');
+        }
+    }
+    if (codeView) {
+        codeView.innerText = `digitalWrite(13, ${val}); // Pino 13 colocado em ${val === 'HIGH' ? '5.0V (Energizado)' : '0.0V (Desligado)'}`;
+    }
+    if (status) {
+        status.innerHTML = a10_led13State ?
+            '<span style="color:#10B981;font-weight:900;">🟢 LED do Pino 13 ACESO (5V em nível HIGH)!</span>' :
+            '<span style="color:#94A3B8;font-weight:bold;">⚪ LED do Pino 13 APAGADO (0V em nível LOW).</span>';
+    }
+    try {
+        if (typeof playSound === 'function') playSound(a10_led13State ? 'step' : 'click');
+    } catch(e) {}
 }
 
-// 3. LAÇO PRINCIPAL (Repete continuamente sem parar)
-void loop() {
-  // 🟢 FASE 1: SINAL VERDE — TRÁFEGO LIBERADO (5 segundos)
-  Serial.println("🟢 [VERDE]: Motoristas podem seguir!");
-  digitalWrite(pinoVerde, HIGH);     // Liga LED Verde (5V)
-  digitalWrite(pinoAmarelo, LOW);    // Garante Amarelo desligado
-  digitalWrite(pinoVermelho, LOW);   // Garante Vermelho desligado
-  delay(5000);                       // Aguarda 5.000 milissegundos (5s)
+function a10_testAnalogWrite(val) {
+    a10_pwmVal = parseInt(val, 10);
+    const led = document.getElementById('a10-play-led-pwm');
+    const label = document.getElementById('a10-play-pwm-label');
+    const codeView = document.getElementById('a10-play-executed-code');
+    const voltLabel = document.getElementById('a10-play-pwm-volt');
 
-  // 🟡 FASE 2: SINAL AMARELO — ATENÇÃO / TRANSIÇÃO (2 segundos)
-  Serial.println("🟡 [AMARELO]: Atenção! O sinal vai fechar...");
-  digitalWrite(pinoVerde, LOW);      // Desliga LED Verde
-  digitalWrite(pinoAmarelo, HIGH);   // Liga LED Amarelo (5V)
-  digitalWrite(pinoVermelho, LOW);   // Mantém Vermelho desligado
-  delay(2000);                       // Aguarda 2.000 milissegundos (2s)
+    const opacity = (a10_pwmVal / 255);
+    const volts = ((a10_pwmVal / 255) * 5.0).toFixed(2);
 
-  // 🔴 FASE 3: SINAL VERMELHO — PARADA OBRIGATÓRIA (5 segundos)
-  Serial.println("🔴 [VERMELHO]: Pare imediatamente!");
-  digitalWrite(pinoVerde, LOW);      // Mantém Verde desligado
-  digitalWrite(pinoAmarelo, LOW);    // Desliga Amarelo
-  digitalWrite(pinoVermelho, HIGH);  // Liga LED Vermelho (5V)
-  delay(5000);                       // Aguarda 5.000 milissegundos (5s)
+    if (label) label.innerText = `${a10_pwmVal} / 255`;
+    if (voltLabel) voltLabel.innerText = `${volts}V médios (PWM)`;
+    if (led) {
+        led.setAttribute('fill', '#38BDF8');
+        led.setAttribute('opacity', Math.max(0.15, opacity));
+        if (a10_pwmVal > 30) {
+            led.setAttribute('filter', `drop-shadow(0 0 ${Math.round(opacity * 14)}px #38BDF8)`);
+        } else {
+            led.removeAttribute('filter');
+        }
+    }
+    if (codeView) {
+        codeView.innerText = `analogWrite(11, ${a10_pwmVal}); // Sinal PWM com duty cycle de ${Math.round(opacity * 100)}% (${volts}V médios)`;
+    }
 }
-`;
+
+function a10_testAnalogRead() {
+    const randomVal = Math.floor(Math.random() * 600) + 200;
+    const volts = ((randomVal / 1023) * 5.0).toFixed(2);
+    const codeView = document.getElementById('a10-play-executed-code');
+    const status = document.getElementById('a10-play-status-text');
+
+    if (codeView) {
+        codeView.innerText = `int leitura = analogRead(A0); // Valor lido: ${randomVal} (tensão de ${volts}V)`;
+    }
+    if (status) {
+        status.innerHTML = `<span style="color:#FBBF24;font-weight:900;">🎛️ analogRead(A0) retornou: <b>${randomVal}</b> de 1023 (Tensão de ${volts}V no sensor)!</span>`;
+    }
+    try {
+        if (typeof playSound === 'function') playSound('step');
+    } catch(e) {}
+}
+
+function a10_testSerialPrint(text) {
+    const monitor = document.getElementById('a10-play-serial-console');
+    const codeView = document.getElementById('a10-play-executed-code');
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0];
+
+    if (codeView) {
+        codeView.innerText = `Serial.println("${text}"); // Mensagem enviada pelo cabo USB a 9600 bps`;
+    }
+    if (monitor) {
+        monitor.innerHTML += `<div style="color:#38BDF8;font-size:0.84rem;font-family:monospace;">[${timeStr}] ➔ ${text}</div>`;
+        monitor.scrollTop = monitor.scrollHeight;
+    }
+    try {
+        if (typeof playSound === 'function') playSound('click');
+    } catch(e) {}
+}
+
+function a10_clearSerial() {
+    const monitor = document.getElementById('a10-play-serial-console');
+    if (monitor) monitor.innerHTML = '<span style="color:#64748B;">Monitor Serial limpo. Pronto para receber mensagens...</span>';
+}
+
+function a10_answerQuiz(qNum, selectedOption, isCorrect) {
+    a10_quizAnswers[qNum] = isCorrect;
+    
+    // Atualiza botões
+    const parent = document.getElementById(`a10-quiz-q${qNum}`);
+    if (parent) {
+        const btns = parent.querySelectorAll('.a10-quiz-opt');
+        btns.forEach(b => {
+            b.style.pointerEvents = 'none';
+            b.style.opacity = '0.7';
+        });
+        const clicked = document.getElementById(`a10-q${qNum}-opt${selectedOption}`);
+        if (clicked) {
+            clicked.style.opacity = '1';
+            clicked.style.background = isCorrect ? '#064E3B' : '#7F1D1D';
+            clicked.style.borderColor = isCorrect ? '#10B981' : '#EF4444';
+            clicked.style.color = isCorrect ? '#A7F3D0' : '#FECACA';
+            clicked.innerHTML += isCorrect ? ' ✅ <b>Correto!</b>' : ' ❌ <b>Incorreto</b>';
+        }
+        const feedback = document.getElementById(`a10-feedback-q${qNum}`);
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.innerHTML = isCorrect ?
+                '<span style="color:#10B981;font-weight:bold;">🎉 Parabéns, você acertou em cheio!</span>' :
+                '<span style="color:#F87171;font-weight:bold;">💡 Quase lá! Revise o cartão desta função no dicionário acima!</span>';
+        }
+    }
+
+    try {
+        if (typeof playSound === 'function') playSound(isCorrect ? 'success' : 'error');
+    } catch(e) {}
+
+    // Checa total
+    const totalAnswered = Object.keys(a10_quizAnswers).length;
+    if (totalAnswered === 5) {
+        const correctCount = Object.values(a10_quizAnswers).filter(Boolean).length;
+        const scoreBox = document.getElementById('a10-quiz-final-score');
+        if (scoreBox) {
+            scoreBox.style.display = 'block';
+            scoreBox.innerHTML = `
+                <div style="background:#1E293B;border:3px solid #F59E0B;border-radius:16px;padding:20px;text-align:center;box-shadow:0 8px 30px rgba(245,158,11,0.25);">
+                    <div style="font-size:2.4rem;">🏆</div>
+                    <h3 style="font-family:'Fredoka One';color:white;margin:6px 0;font-size:1.6rem;">
+                        Resultado do Quiz: ${correctCount} de 5 Acertos!
+                    </h3>
+                    <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 14px;">
+                        ${correctCount >= 4 ?
+                            'Sensacional! Você é um verdadeiro mestre das funções do Arduino e da linguagem C++!' :
+                            'Bom trabalho! Revise os conceitos do dicionário para fixar 100% o conhecimento!'}
+                    </p>
+                    <button onclick="openCertificateModal()" style="background:#F59E0B;color:#0F172A;border:none;padding:12px 24px;border-radius:12px;font-weight:900;font-size:1rem;cursor:pointer;">
+                        <i class="fa-solid fa-award"></i> Emitir Meu Certificado de Conclusão Maker
+                    </button>
+                </div>
+            `;
+        }
+        if (correctCount >= 4 && typeof fireConfetti === 'function') {
+            fireConfetti();
+        }
+    }
+}
 
 function loadAula10() {
     const container = document.getElementById('aula10-container');
     if (!container) return;
-
-    const isCompleted = localStorage.getItem('aula10_completed') === 'true';
 
     container.innerHTML = `
         <div id="aula10-loaded" class="a10-wrap">
@@ -69,16 +173,16 @@ function loadAula10() {
                 .a10-wrap {
                     color: #CBD5E1;
                     font-family: 'Nunito', sans-serif;
-                    max-width: 1060px;
+                    max-width: 1080px;
                     margin: 0 auto;
                 }
                 .a10-hero {
-                    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(15, 23, 42, 0.95));
+                    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(15, 23, 42, 0.98));
                     border: 2px solid #10B981;
                     border-radius: 24px;
-                    padding: 24px 26px;
+                    padding: 26px 28px;
                     margin-bottom: 24px;
-                    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+                    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
@@ -87,7 +191,7 @@ function loadAula10() {
                 }
                 .a10-hero-title h2 {
                     font-family: 'Fredoka One', cursive;
-                    font-size: 1.85rem;
+                    font-size: 1.95rem;
                     color: white;
                     margin: 0 0 6px;
                     display: flex;
@@ -97,555 +201,537 @@ function loadAula10() {
                 .a10-hero-title p {
                     color: #A7F3D0;
                     margin: 0;
-                    font-size: 0.95rem;
+                    font-size: 1rem;
                     font-weight: 700;
+                    line-height: 1.5;
                 }
-                .a10-cert-badge {
-                    background: rgba(245, 158, 11, 0.15);
-                    border: 1px solid #F59E0B;
-                    color: #FBBF24;
-                    padding: 8px 18px;
-                    border-radius: 14px;
-                    font-weight: 800;
-                    font-size: 0.9rem;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 8px;
-                }
-
-                /* Container da IDE Arduino */
-                .a10-ide-window {
-                    background: #18232c;
-                    border: 2px solid #00979d;
-                    border-radius: 20px;
-                    overflow: hidden;
-                    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-                    margin-bottom: 26px;
-                }
-                .a10-ide-toolbar {
-                    background: #00797f;
-                    padding: 10px 18px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    flex-wrap: wrap;
-                    gap: 12px;
-                }
-                .a10-ide-btns {
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                }
-                .a10-ide-btn {
-                    background: #005f63;
-                    border: 1px solid #00979d;
-                    color: white;
-                    padding: 8px 14px;
-                    border-radius: 10px;
-                    font-weight: 800;
-                    font-size: 0.86rem;
-                    cursor: pointer;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 6px;
-                    transition: all 0.2s;
-                }
-                .a10-ide-btn:hover {
-                    background: #00878d;
-                    transform: translateY(-1px);
-                }
-                .a10-ide-btn.upload {
-                    background: #10B981;
-                    border-color: #34D399;
-                    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
-                }
-                .a10-ide-btn.upload:hover {
-                    background: #059669;
-                }
-                .a10-tab-title {
-                    color: #E0F2FE;
-                    font-family: 'Fira Code', monospace;
-                    font-size: 0.88rem;
-                    font-weight: 700;
-                    display: flex;
-                    align-items: center;
-                    gap: 6px;
-                }
-
-                /* Editor de Código */
-                .a10-code-body {
-                    display: flex;
-                    background: #0F172A;
-                    font-family: 'Fira Code', monospace;
-                    font-size: 0.86rem;
-                    line-height: 1.6;
-                    max-height: 380px;
-                    overflow-y: auto;
-                }
-                .a10-code-numbers {
-                    background: #090D16;
-                    color: #475569;
-                    padding: 16px 12px;
-                    text-align: right;
-                    user-select: none;
-                    border-right: 1px solid #1E293B;
-                }
-                .a10-code-content {
-                    padding: 16px 18px;
-                    color: #E2E8F0;
-                    white-space: pre;
-                    flex: 1;
-                    overflow-x: auto;
-                }
-
-                /* Console da IDE */
-                .a10-ide-console {
-                    background: #0a0f18;
-                    border-top: 1px solid #1E293B;
-                    padding: 12px 18px;
-                    font-family: 'Fira Code', monospace;
+                .a10-badge {
+                    background: rgba(16, 185, 129, 0.15);
+                    border: 1px solid #10B981;
+                    color: #6EE7B7;
+                    padding: 6px 14px;
+                    border-radius: 12px;
                     font-size: 0.82rem;
-                    color: #38BDF8;
-                    min-height: 70px;
-                    max-height: 140px;
-                    overflow-y: auto;
+                    font-weight: 800;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
                 }
-
-                /* Simulador de Hardware e Semáforo Ativo */
-                .a10-sim-grid {
+                .a10-dict-grid {
                     display: grid;
-                    grid-template-columns: 1.1fr 1fr;
-                    gap: 20px;
+                    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                    gap: 16px;
                     margin-bottom: 24px;
                 }
-                @media (max-width: 820px) {
-                    .a10-sim-grid { grid-template-columns: 1fr; }
-                }
-
-                .a10-sim-card {
-                    background: #1E293B;
-                    border: 2px solid #334155;
-                    border-radius: 20px;
-                    padding: 22px;
-                }
-
-                /* Caixa do Semáforo Físico */
-                .a10-traffic-post {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 30px;
-                    margin: 15px 0;
-                }
-                .a10-traffic-housing {
-                    background: #0B0F19;
-                    border: 3px solid #334155;
-                    border-radius: 40px;
-                    padding: 16px 14px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 14px;
-                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-                }
-                .a10-sim-light {
-                    width: 52px;
-                    height: 52px;
-                    border-radius: 50%;
-                    background: #1E293B;
-                    border: 2px solid #334155;
-                    transition: all 0.25s ease;
-                }
-                .a10-sim-light.red.on {
-                    background: radial-gradient(circle at 35% 35%, #FCA5A5, #EF4444);
-                    box-shadow: 0 0 25px #EF4444, 0 0 50px rgba(239, 68, 68, 0.7);
-                    border-color: #FECACA;
-                }
-                .a10-sim-light.yellow.on {
-                    background: radial-gradient(circle at 35% 35%, #FEF08A, #F59E0B);
-                    box-shadow: 0 0 25px #F59E0B, 0 0 50px rgba(245, 158, 11, 0.7);
-                    border-color: #FEF9C3;
-                }
-                .a10-sim-light.green.on {
-                    background: radial-gradient(circle at 35% 35%, #A7F3D0, #10B981);
-                    box-shadow: 0 0 25px #10B981, 0 0 50px rgba(16, 185, 129, 0.7);
-                    border-color: #D1FAE5;
-                }
-
-                .a10-status-badge {
+                .a10-fn-card {
                     background: #0F172A;
-                    border: 1px solid #334155;
-                    border-radius: 14px;
-                    padding: 12px 16px;
-                    text-align: center;
-                }
-                .a10-countdown-number {
-                    font-family: 'Fredoka One', cursive;
-                    font-size: 2.4rem;
-                    color: #FBBF24;
-                    line-height: 1;
-                    margin: 4px 0;
-                }
-
-                /* Monitor Serial */
-                .a10-serial-box {
-                    background: #0B0F19;
-                    border: 1px solid #1E293B;
-                    border-radius: 14px;
-                    height: 190px;
-                    padding: 12px;
-                    font-family: 'Fira Code', monospace;
-                    font-size: 0.8rem;
-                    color: #34D399;
-                    overflow-y: auto;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 4px;
-                }
-
-                /* Conquista Final e Certificado */
-                .a10-finish-card {
-                    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
-                    border: 2px solid #F59E0B;
-                    border-radius: 24px;
-                    padding: 28px;
-                    text-align: center;
-                    box-shadow: 0 10px 40px rgba(245, 158, 11, 0.2);
-                }
-                .a10-cert-btn {
-                    background: linear-gradient(135deg, #F59E0B, #D97706);
-                    border: none;
-                    color: #0F172A;
-                    font-weight: 900;
-                    padding: 16px 36px;
+                    border: 2px solid #1E293B;
                     border-radius: 18px;
-                    font-size: 1.2rem;
-                    cursor: pointer;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 10px;
-                    box-shadow: 0 6px 25px rgba(245, 158, 11, 0.4);
-                    transition: transform 0.2s ease;
+                    padding: 20px;
+                    transition: transform 0.2s, border-color 0.2s;
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
                 }
-                .a10-cert-btn:hover {
-                    transform: scale(1.04);
+                .a10-fn-card:hover {
+                    transform: translateY(-3px);
+                    border-color: #38BDF8;
+                }
+                .a10-fn-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    margin-bottom: 12px;
+                    border-bottom: 1px solid #1E293B;
+                    padding-bottom: 10px;
+                }
+                .a10-fn-name {
+                    font-family: 'Consolas', 'Courier New', monospace;
+                    font-size: 1.15rem;
+                    font-weight: 900;
+                    color: #38BDF8;
+                }
+                .a10-analogy-box {
+                    background: rgba(251, 191, 36, 0.1);
+                    border-left: 3px solid #F59E0B;
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    font-size: 0.85rem;
+                    color: #FDE68A;
+                    margin: 10px 0;
+                    line-height: 1.5;
+                }
+                .a10-fn-code {
+                    background: #050B14;
+                    border: 1px solid #1E293B;
+                    border-radius: 8px;
+                    padding: 10px 12px;
+                    font-family: 'Consolas', monospace;
+                    font-size: 0.82rem;
+                    color: #A7F3D0;
+                    white-space: pre-wrap;
+                    line-height: 1.4;
+                    margin-top: 8px;
+                }
+                .a10-quiz-card {
+                    background: #0F172A;
+                    border: 2px solid #334155;
+                    border-radius: 18px;
+                    padding: 20px;
+                    margin-bottom: 16px;
+                }
+                .a10-quiz-opt {
+                    background: #1E293B;
+                    border: 1px solid #334155;
+                    color: #E2E8F0;
+                    padding: 12px 16px;
+                    border-radius: 12px;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    text-align: left;
+                    width: 100%;
+                    margin-bottom: 8px;
+                    transition: 0.2s;
+                    font-family: 'Nunito', sans-serif;
+                    font-weight: bold;
+                }
+                .a10-quiz-opt:hover {
+                    background: #334155;
+                    border-color: #38BDF8;
+                    color: white;
                 }
             </style>
 
+            <!-- HERO HEADER -->
             <div class="a10-hero">
                 <div class="a10-hero-title">
-                    <h2><span style="color:#10B981;">💻</span> Aula 10: Programação C++ & Upload</h2>
-                    <p>Compilação e Envio do Código C++ para o Arduino UNO + Emissão do Certificado Maker</p>
+                    <span class="a10-badge"><i class="fa-solid fa-graduation-cap"></i> Aula 10 • Grande Almanaque &amp; Revisão Geral</span>
+                    <h2>💻 Dicionário de Funções C++ &amp; Mega Revisão Maker</h2>
+                    <p>O guia de cabeceira definitivo que você sempre sonhou! Domine para sempre as 7 funções de ouro do Arduino (digitalWrite, digitalRead, pinMode, analogRead, delay, Serial) e celebre sua conclusão com o Certificado Maker!</p>
                 </div>
-                <div class="a10-cert-badge">
-                    <i class="fa-solid fa-award"></i>
-                    <span>Conclusão Oficial da Trilha</span>
-                </div>
-            </div>
-
-            <!-- SIMULADOR DA IDE ARDUINO -->
-            <div class="a10-ide-window">
-                <div class="a10-ide-toolbar">
-                    <div class="a10-tab-title">
-                        <i class="fa-solid fa-code" style="color:#38BDF8;"></i> semaforo_maker.ino | Arduino UNO no COM3
-                    </div>
-                    <div class="a10-ide-btns">
-                        <button class="a10-ide-btn" onclick="a10_verifyCode()">
-                            <i class="fa-solid fa-check" style="color:#34D399;"></i> Verificar
-                        </button>
-                        <button class="a10-ide-btn upload" onclick="a10_uploadCode()">
-                            <i class="fa-solid fa-arrow-right"></i> Carregar (Upload)
-                        </button>
-                        <button class="a10-ide-btn" onclick="a10_copyCode()">
-                            <i class="fa-regular fa-copy"></i> Copiar Código
-                        </button>
-                        <button class="a10-ide-btn" onclick="a10_resetSimulation()">
-                            <i class="fa-solid fa-rotate-left"></i> Reiniciar
-                        </button>
-                    </div>
-                </div>
-
-                <div class="a10-code-body">
-                    <div class="a10-code-numbers" id="a10-code-lines"></div>
-                    <div class="a10-code-content" id="a10-code-text"></div>
-                </div>
-
-                <div class="a10-ide-console" id="a10-ide-log">
-                    [IDE] Pronto. Clique em "Verificar" (✔) para compilar ou "Carregar" (➔) para gravar na placa.
+                <div>
+                    <button onclick="openCertificateModal()" style="background:#F59E0B;color:#0F172A;border:none;padding:14px 24px;border-radius:16px;font-family:'Fredoka One';font-size:1.05rem;cursor:pointer;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(245,158,11,0.35);">
+                        <i class="fa-solid fa-award" style="font-size:1.3rem;"></i> Emitir Certificado Maker
+                    </button>
                 </div>
             </div>
 
-            <!-- HARDWARE EM TEMPO REAL & MONITOR SERIAL -->
-            <div class="a10-sim-grid">
-                <!-- Painel do Semáforo Ativo -->
-                <div class="a10-sim-card">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                        <h3 style="color:white;font-family:'Fredoka One';margin:0;font-size:1.2rem;">
-                            <i class="fa-solid fa-traffic-light" style="color:#F59E0B;"></i> Semáforo em Execução
+            <!-- ESTRUTURA MÃE: SETUP VS LOOP -->
+            <div style="background:#0F172A;border:2px solid #0284C7;border-radius:20px;padding:22px;margin-bottom:24px;">
+                <h3 style="color:#38BDF8;font-family:'Fredoka One';margin:0 0 12px;font-size:1.35rem;display:flex;align-items:center;gap:10px;">
+                    <span>🏛️</span> A Estrutura Mãe de Qualquer Programa Arduino:
+                </h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;">
+                    <div style="background:#1E293B;padding:16px;border-radius:14px;border-top:4px solid #F59E0B;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                            <span style="font-size:1.3rem;">🎬</span>
+                            <strong style="color:#FBBF24;font-size:1.05rem;font-family:'Consolas',monospace;">void setup() { ... }</strong>
+                        </div>
+                        <p style="color:#CBD5E1;font-size:0.88rem;line-height:1.6;margin:0 0 10px;">
+                            <b>O que é:</b> É o ritual de abertura da placa!
+                            <br>
+                            <b>Quantas vezes roda:</b> Roda <b>EXATAMENTE 1 VEZ</b> no milissegundo em que o Arduino recebe energia pelo cabo USB ou o botão RESET é pressionado.
+                            <br>
+                            <b>Para que serve:</b> Configurar os pinos (se são entradas ou saídas) e iniciar a comunicação Serial com o computador!
+                        </p>
+                        <div class="a10-fn-code">void setup() {
+  pinMode(13, OUTPUT); // Configura o pino 13 como saída
+  Serial.begin(9600);  // Abre o canal com o PC
+}</div>
+                    </div>
+
+                    <div style="background:#1E293B;padding:16px;border-radius:14px;border-top:4px solid #10B981;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                            <span style="font-size:1.3rem;">🔄</span>
+                            <strong style="color:#34D399;font-size:1.05rem;font-family:'Consolas',monospace;">void loop() { ... }</strong>
+                        </div>
+                        <p style="color:#CBD5E1;font-size:0.88rem;line-height:1.6;margin:0 0 10px;">
+                            <b>O que é:</b> É o motor eterno do microcontrolador!
+                            <br>
+                            <b>Quantas vezes roda:</b> Repete <b>PARA SEMPRE</b> sem parar! Quando a execução chega na última chave <code>}</code>, ela volta imediatamente para a primeira linha do loop!
+                            <br>
+                            <b>Para que serve:</b> É aqui dentro que seu projeto vive: ler sensores, piscar LEDs, tomar decisões e mover motores!
+                        </p>
+                        <div class="a10-fn-code">void loop() {
+  digitalWrite(13, HIGH); // Liga LED
+  delay(1000);            // Espera 1s
+  digitalWrite(13, LOW);  // Desliga LED
+  delay(1000);            // Espera 1s e repete!
+}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- O DICIONÁRIO DAS 7 FUNÇÕES DE OURO -->
+            <div style="margin-bottom:18px;">
+                <h3 style="color:white;font-family:'Fredoka One';margin:0 0 6px;font-size:1.5rem;display:flex;align-items:center;gap:10px;">
+                    <span>📖</span> O Grande Dicionário das Funções Essenciais do Arduino
+                </h3>
+                <p style="color:#94A3B8;margin:0;font-size:0.95rem;">Clique e aprenda o que cada comando faz, com analogias simples que nunca mais saem da cabeça:</p>
+            </div>
+
+            <div class="a10-dict-grid">
+                <!-- 1. pinMode -->
+                <div class="a10-fn-card" style="border-top:4px solid #38BDF8;">
+                    <div class="a10-fn-header">
+                        <span style="font-size:1.5rem;">🛠️</span>
+                        <div>
+                            <div class="a10-fn-name">pinMode(pino, MODO);</div>
+                            <span style="font-size:0.75rem;background:#0284C7;color:white;padding:2px 8px;border-radius:6px;font-weight:bold;">Configuração</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.86rem;line-height:1.5;margin:0;">
+                        <b>O que faz:</b> Define se o pino do Arduino vai <b>enviar energia</b> ou <b>ouvir sinais</b>.
+                    </p>
+                    <div class="a10-analogy-box">
+                        <b>Analogia Maker:</b> É como decidir se um soldado vai usar um megafone para <b>falar</b> (<code>OUTPUT</code>) ou um fone de ouvido para <b>escutar</b> (<code>INPUT</code>).
+                    </div>
+                    <p style="font-size:0.82rem;color:#CBD5E1;margin:4px 0;">
+                        • <code>OUTPUT:</code> Saída de 5V (para acender LEDs, ligar buzzers ou telas).<br>
+                        • <code>INPUT:</code> Entrada para escutar botões e sensores.<br>
+                        • <code>INPUT_PULLUP:</code> Entrada com resistor interno ligado em 5V.
+                    </p>
+                    <div class="a10-fn-code">pinMode(13, OUTPUT); // Pino 13 vira saída de 5V
+pinMode(2, INPUT);   // Pino 2 ouve botão</div>
+                </div>
+
+                <!-- 2. digitalWrite -->
+                <div class="a10-fn-card" style="border-top:4px solid #EF4444;">
+                    <div class="a10-fn-header">
+                        <span style="font-size:1.5rem;">⚡</span>
+                        <div>
+                            <div class="a10-fn-name">digitalWrite(pino, VALOR);</div>
+                            <span style="font-size:0.75rem;background:#DC2626;color:white;padding:2px 8px;border-radius:6px;font-weight:bold;">Saída Digital</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.86rem;line-height:1.5;margin:0;">
+                        <b>O que faz:</b> Liga ou desliga totalmente a eletricidade de um pino digital configurado como OUTPUT.
+                    </p>
+                    <div class="a10-analogy-box">
+                        <b>Analogia Maker:</b> É igualzinho ao interruptor da lâmpada do seu quarto: ou a luz está totalmente acesa (HIGH) ou apagada (LOW)!
+                    </div>
+                    <p style="font-size:0.82rem;color:#CBD5E1;margin:4px 0;">
+                        • <code>HIGH:</code> Envia força total de <b>5.0 Volts</b>.<br>
+                        • <code>LOW:</code> Corta a energia para <b>0.0 Volts</b> (GND).
+                    </p>
+                    <div class="a10-fn-code">digitalWrite(13, HIGH); // Manda 5V (Acende o LED!)
+digitalWrite(13, LOW);  // Corta para 0V (Apaga o LED!)</div>
+                </div>
+
+                <!-- 3. digitalRead -->
+                <div class="a10-fn-card" style="border-top:4px solid #10B981;">
+                    <div class="a10-fn-header">
+                        <span style="font-size:1.5rem;">👂</span>
+                        <div>
+                            <div class="a10-fn-name">digitalRead(pino);</div>
+                            <span style="font-size:0.75rem;background:#059669;color:white;padding:2px 8px;border-radius:6px;font-weight:bold;">Entrada Digital</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.86rem;line-height:1.5;margin:0;">
+                        <b>O que faz:</b> Pergunta se um pino digital está recebendo 5V ou 0V naquele exato milissegundo.
+                    </p>
+                    <div class="a10-analogy-box">
+                        <b>Analogia Maker:</b> É como abrir os olhos e checar se o semáforo da esquina está com a luz acesa ou apagada. Devolve apenas duas respostas: Sim ou Não!
+                    </div>
+                    <p style="font-size:0.82rem;color:#CBD5E1;margin:4px 0;">
+                        • Retorna <code>HIGH</code> se houver 5V conectado.<br>
+                        • Retorna <code>LOW</code> se estiver em 0V.
+                    </p>
+                    <div class="a10-fn-code">int estadoBotao = digitalRead(2);
+if (estadoBotao == HIGH) {
+  // O botão está apertado!
+}</div>
+                </div>
+
+                <!-- 4. analogRead -->
+                <div class="a10-fn-card" style="border-top:4px solid #F59E0B;">
+                    <div class="a10-fn-header">
+                        <span style="font-size:1.5rem;">🎛️</span>
+                        <div>
+                            <div class="a10-fn-name">analogRead(pinoAnalógico);</div>
+                            <span style="font-size:0.75rem;background:#D97706;color:white;padding:2px 8px;border-radius:6px;font-weight:bold;">Entrada Analógica</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.86rem;line-height:1.5;margin:0;">
+                        <b>O que faz:</b> Lê valores intermediários contínuos nos pinos analógicos (<b>A0 a A5</b>).
+                    </p>
+                    <div class="a10-analogy-box">
+                        <b>Analogia Maker:</b> Em vez de só ligado/desligado, é como um termômetro com escala graduada que mede qualquer temperatura entre frio e calor!
+                    </div>
+                    <p style="font-size:0.82rem;color:#CBD5E1;margin:4px 0;">
+                        • O chip converte a tensão de 0V a 5V em números de <b>0 a 1023</b> (1024 níveis!).
+                    </p>
+                    <div class="a10-fn-code">int luz = analogRead(A1); // Lê o sensor LDR
+if (luz < 400) {
+  // Está escuro! Acenda a luz!
+}</div>
+                </div>
+
+                <!-- 5. analogWrite (PWM) -->
+                <div class="a10-fn-card" style="border-top:4px solid #A855F7;">
+                    <div class="a10-fn-header">
+                        <span style="font-size:1.5rem;">🌊</span>
+                        <div>
+                            <div class="a10-fn-name">analogWrite(pinoPWM, valor);</div>
+                            <span style="font-size:0.75rem;background:#7E22CE;color:white;padding:2px 8px;border-radius:6px;font-weight:bold;">Modulação PWM</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.86rem;line-height:1.5;margin:0;">
+                        <b>O que faz:</b> Simula uma voltagem intermediária nos pinos com o símbolo <b>~ (3, 5, 6, 9, 10, 11)</b>.
+                    </p>
+                    <div class="a10-analogy-box">
+                        <b>Analogia Maker:</b> É o botão regulador (dimmer) de ventilador de teto ou de brilho de lâmpada: você escolhe a intensidade suave de 0 a 255!
+                    </div>
+                    <p style="font-size:0.82rem;color:#CBD5E1;margin:4px 0;">
+                        • <code>0:</code> Totalmente apagado (0% PWM).<br>
+                        • <code>128:</code> Meio brilho (50% PWM, 2.5V médios).<br>
+                        • <code>255:</code> Força máxima (100% PWM, 5.0V).
+                    </p>
+                    <div class="a10-fn-code">analogWrite(9, 64);  // LED brilhando fraquinho
+analogWrite(9, 255); // LED no brilho máximo</div>
+                </div>
+
+                <!-- 6. delay -->
+                <div class="a10-fn-card" style="border-top:4px solid #EC4899;">
+                    <div class="a10-fn-header">
+                        <span style="font-size:1.5rem;">⏱️</span>
+                        <div>
+                            <div class="a10-fn-name">delay(milissegundos);</div>
+                            <span style="font-size:0.75rem;background:#BE185D;color:white;padding:2px 8px;border-radius:6px;font-weight:bold;">Temporização</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.86rem;line-height:1.5;margin:0;">
+                        <b>O que faz:</b> Pausa a execução do programa e congela o microcontrolador durante um tempo pré-definido.
+                    </p>
+                    <div class="a10-analogy-box">
+                        <b>Analogia Maker:</b> É a soneca rápida do robô! Lembre-se: robôs contam o tempo em <b>milissegundos (ms)</b>.
+                    </div>
+                    <p style="font-size:0.82rem;color:#CBD5E1;margin:4px 0;">
+                        • <b>Regra de Ouro:</b> 1 segundo = 1.000 ms.<br>
+                        • 2 segundos = 2.000 ms | Meio segundo = 500 ms.
+                    </p>
+                    <div class="a10-fn-code">delay(1000); // Espera 1 segundo
+delay(500);  // Espera meio segundo</div>
+                </div>
+
+                <!-- 7. Serial -->
+                <div class="a10-fn-card" style="border-top:4px solid #14B8A6;">
+                    <div class="a10-fn-header">
+                        <span style="font-size:1.5rem;">💬</span>
+                        <div>
+                            <div class="a10-fn-name">Serial.println(mensagem);</div>
+                            <span style="font-size:0.75rem;background:#0F766E;color:white;padding:2px 8px;border-radius:6px;font-weight:bold;">Comunicação Serial</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.86rem;line-height:1.5;margin:0;">
+                        <b>O que faz:</b> Envia mensagens de texto e números do Arduino para a tela do computador pelo cabo USB.
+                    </p>
+                    <div class="a10-analogy-box">
+                        <b>Analogia Maker:</b> É o rádio walkie-talkie da placa! O Arduino fala e o computador escuta na janela do Monitor Serial!
+                    </div>
+                    <p style="font-size:0.82rem;color:#CBD5E1;margin:4px 0;">
+                        • Exige <code>Serial.begin(9600);</code> no setup!<br>
+                        • <code>print:</code> Escreve sem pular linha.<br>
+                        • <code>println:</code> Escreve e pula para a próxima linha!
+                    </p>
+                    <div class="a10-fn-code">Serial.begin(9600); // No setup
+Serial.print("Temperatura: ");
+Serial.println(25.4); // No loop</div>
+                </div>
+            </div>
+
+            <!-- PLAYGROUND INTERATIVO DE FUNÇÕES (LABORATÓRIO TÁTIL) -->
+            <div style="background:#0F172A;border:2px solid #38BDF8;border-radius:20px;padding:22px;margin-bottom:24px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid #1E293B;padding-bottom:10px;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <span style="font-size:1.5rem;">🎮</span>
+                        <h3 style="color:white;font-family:'Fredoka One';margin:0;font-size:1.35rem;">
+                            Playground Interativo: Teste as Funções ao Vivo!
                         </h3>
-                        <span id="a10-state-label" style="background:#0F172A;border:1px solid #334155;color:#94A3B8;padding:4px 10px;border-radius:10px;font-size:0.8rem;font-weight:800;">Aguardando Upload</span>
                     </div>
+                    <span style="color:#38BDF8;font-size:0.82rem;font-weight:bold;background:#034262;padding:4px 12px;border-radius:8px;">
+                        Simulação em Tempo Real no Navegador
+                    </span>
+                </div>
 
-                    <div class="a10-traffic-post">
-                        <div class="a10-traffic-housing">
-                            <div class="a10-sim-light red" id="a10-light-red"></div>
-                            <div class="a10-sim-light yellow" id="a10-light-yellow"></div>
-                            <div class="a10-sim-light green" id="a10-light-green"></div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+                    <!-- Coluna de Controles -->
+                    <div>
+                        <strong style="color:#BAE6FD;font-size:0.9rem;">1. Testar <code>digitalWrite(13, ...)</code>:</strong>
+                        <div style="display:flex;gap:8px;margin:8px 0 16px;">
+                            <button onclick="a10_testDigitalWrite('HIGH')" style="flex:1;background:#064E3B;color:#34D399;border:1px solid #10B981;padding:8px;border-radius:8px;font-weight:bold;cursor:pointer;">
+                                💡 digitalWrite(13, HIGH)
+                            </button>
+                            <button onclick="a10_testDigitalWrite('LOW')" style="flex:1;background:#7F1D1D;color:#FCA5A5;border:1px solid #EF4444;padding:8px;border-radius:8px;font-weight:bold;cursor:pointer;">
+                                🌑 digitalWrite(13, LOW)
+                            </button>
                         </div>
 
-                        <div class="a10-status-badge">
-                            <div style="font-size:0.8rem;color:#94A3B8;font-weight:800;">TEMPO RESTANTE:</div>
-                            <div class="a10-countdown-number" id="a10-countdown">--</div>
-                            <div style="font-size:0.75rem;color:#64748B;" id="a10-pin-active">Pinos LOW</div>
+                        <strong style="color:#BAE6FD;font-size:0.9rem;">2. Testar <code>analogWrite(11, PWM)</code>:</strong>
+                        <div style="margin:8px 0 16px;">
+                            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#94A3B8;margin-bottom:4px;">
+                                <span>Brilho Suave: <b id="a10-play-pwm-label" style="color:#38BDF8;">180 / 255</b></span>
+                                <span id="a10-play-pwm-volt" style="color:#A7F3D0;">3.53V médios</span>
+                            </div>
+                            <input type="range" min="0" max="255" value="180" style="width:100%;cursor:pointer;" oninput="a10_testAnalogWrite(this.value)">
+                        </div>
+
+                        <strong style="color:#BAE6FD;font-size:0.9rem;">3. Testar <code>analogRead(A0)</code>:</strong>
+                        <div style="margin:8px 0 16px;">
+                            <button onclick="a10_testAnalogRead()" style="width:100%;background:#78350F;color:#FDE68A;border:1px solid #F59E0B;padding:8px;border-radius:8px;font-weight:bold;cursor:pointer;">
+                                🎛️ Ler Sensor Analógico: analogRead(A0)
+                            </button>
+                        </div>
+
+                        <strong style="color:#BAE6FD;font-size:0.9rem;">4. Testar <code>Serial.println()</code>:</strong>
+                        <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
+                            <button onclick="a10_testSerialPrint('Olá PC! Sou o Arduino!')" style="background:#0F172A;border:1px solid #14B8A6;color:#5EEAD4;padding:6px 10px;border-radius:6px;font-size:0.78rem;cursor:pointer;">"Olá PC!"</button>
+                            <button onclick="a10_testSerialPrint('Sensor de Luz = 512')" style="background:#0F172A;border:1px solid #14B8A6;color:#5EEAD4;padding:6px 10px;border-radius:6px;font-size:0.78rem;cursor:pointer;">"Sensor = 512"</button>
+                            <button onclick="a10_testSerialPrint('ALERTA: Motor Ligado')" style="background:#0F172A;border:1px solid #14B8A6;color:#5EEAD4;padding:6px 10px;border-radius:6px;font-size:0.78rem;cursor:pointer;">"Motor Ligado"</button>
+                            <button onclick="a10_clearSerial()" style="background:#334155;border:none;color:white;padding:6px 10px;border-radius:6px;font-size:0.78rem;cursor:pointer;">Limpar</button>
+                        </div>
+                    </div>
+
+                    <!-- Coluna de Feedback Visual da Placa Virtual -->
+                    <div style="background:#080E1E;border-radius:14px;padding:16px;border:1px solid #1E293B;display:flex;flex-direction:column;justify-content:space-between;">
+                        <div>
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                                <span style="font-size:0.8rem;color:#94A3B8;font-weight:bold;">PLACA ARDUINO VIRTUAL:</span>
+                                <span style="font-size:0.75rem;background:#064E3B;color:#34D399;padding:2px 8px;border-radius:4px;">5.0V ATIVO</span>
+                            </div>
+
+                            <!-- Placa SVG Simplificada -->
+                            <svg viewBox="0 0 320 120" style="width:100%;height:auto;display:block;">
+                                <rect x="10" y="10" width="300" height="100" rx="10" fill="#008184" stroke="#00979D" stroke-width="2"/>
+                                <!-- Chip ATmega -->
+                                <rect x="80" y="35" width="100" height="45" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+                                <text x="130" y="62" text-anchor="middle" fill="#E2E8F0" font-size="9" font-family="monospace">ATmega328P</text>
+
+                                <!-- LED 13 Digital -->
+                                <circle id="a10-play-led13" cx="210" cy="45" r="9" fill="#334155"/>
+                                <text x="210" y="70" text-anchor="middle" fill="#BAE6FD" font-size="8" font-weight="bold">LED D13</text>
+
+                                <!-- LED PWM 11 -->
+                                <circle id="a10-play-led-pwm" cx="255" cy="45" r="9" fill="#38BDF8" opacity="0.7"/>
+                                <text x="255" y="70" text-anchor="middle" fill="#BAE6FD" font-size="8" font-weight="bold">PWM ~11</text>
+                            </svg>
+
+                            <div id="a10-play-status-text" style="margin-top:10px;font-size:0.85rem;min-height:22px;">
+                                <span style="color:#94A3B8;">Clique em qualquer comando ao lado para testar!</span>
+                            </div>
+                        </div>
+
+                        <!-- Monitor Serial Virtual Pequeno -->
+                        <div style="margin-top:12px;background:#0F172A;border:1px solid #334155;border-radius:8px;padding:8px 12px;">
+                            <div style="font-size:0.75rem;color:#94A3B8;font-weight:bold;margin-bottom:4px;">MONITOR SERIAL (COM3 - 9600 BAUD):</div>
+                            <div id="a10-play-serial-console" style="height:60px;overflow-y:auto;font-family:monospace;font-size:0.78rem;">
+                                <span style="color:#64748B;">Aguardando Serial.println()...</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Monitor Serial -->
-                <div class="a10-sim-card">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                        <h3 style="color:white;font-family:'Fredoka One';margin:0;font-size:1.2rem;">
-                            <i class="fa-solid fa-terminal" style="color:#38BDF8;"></i> Monitor Serial (9600 baud)
-                        </h3>
-                        <button onclick="a10_clearSerial()" style="background:#0F172A;border:1px solid #334155;color:#94A3B8;padding:4px 10px;border-radius:8px;font-size:0.75rem;cursor:pointer;font-weight:800;">Limpar</button>
-                    </div>
-
-                    <div class="a10-serial-box" id="a10-serial-output">
-                        <div style="color:#64748B;">// As mensagens enviadas via Serial.println() aparecerão aqui...</div>
+                <!-- Linha de Código Executada -->
+                <div style="margin-top:14px;background:#050B14;border-radius:10px;padding:10px 14px;border:1px solid #1E293B;">
+                    <span style="color:#64748B;font-size:0.76rem;text-transform:uppercase;font-weight:bold;">Comando Executado:</span>
+                    <div id="a10-play-executed-code" style="color:#38BDF8;font-family:monospace;font-size:0.88rem;margin-top:2px;">
+                        // Escolha uma função acima para ver a linha correspondente em C++
                     </div>
                 </div>
             </div>
 
-            <!-- CARD DE CERTIFICADO E FINALIZAÇÃO -->
-            <div class="a10-finish-card">
-                <i class="fa-solid fa-graduation-cap" style="font-size:3.5rem;color:#F59E0B;margin-bottom:10px;"></i>
-                <h3 style="font-family:'Fredoka One';color:white;font-size:2rem;margin:0 0 8px;">Parabéns, Futuro Engenheiro Maker! 🎓</h3>
-                <p style="color:#CBD5E1;font-size:1.05rem;max-width:700px;margin:0 auto 20px;line-height:1.6;">
-                    Você completou toda a jornada educacional de lógica de programação, algoritmos, loops, variáveis, circuitos elétricos, protoboard e Arduino!
+            <!-- MEGA QUIZ DE FIXAÇÃO DAS FUNÇÕES (5 PERGUNTAS) -->
+            <div style="background:#0F172A;border:2px solid #F59E0B;border-radius:20px;padding:22px;margin-bottom:24px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                    <span style="font-size:1.6rem;">🏆</span>
+                    <div>
+                        <h3 style="color:#FBBF24;font-family:'Fredoka One';margin:0;font-size:1.4rem;">
+                            Mega Desafio Maker: Quiz de Fixação das Funções
+                        </h3>
+                        <p style="color:#CBD5E1;font-size:0.88rem;margin:2px 0 0;">
+                            Responda às 5 perguntas rápidas para provar que domina a programação de microcontroladores!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Questão 1 -->
+                <div class="a10-quiz-card" id="a10-quiz-q1">
+                    <strong style="color:white;font-size:0.95rem;">1. Qual função usamos para mandar 5 Volts e acender uma lâmpada ou LED no pino digital 13?</strong>
+                    <div style="margin-top:10px;">
+                        <button class="a10-quiz-opt" id="a10-q1-opt1" onclick="a10_answerQuiz(1, 1, true)">A) digitalWrite(13, HIGH);</button>
+                        <button class="a10-quiz-opt" id="a10-q1-opt2" onclick="a10_answerQuiz(1, 2, false)">B) pinMode(13, INPUT);</button>
+                        <button class="a10-quiz-opt" id="a10-q1-opt3" onclick="a10_answerQuiz(1, 3, false)">C) analogRead(13);</button>
+                    </div>
+                    <div id="a10-feedback-q1" style="display:none;margin-top:6px;font-size:0.85rem;"></div>
+                </div>
+
+                <!-- Questão 2 -->
+                <div class="a10-quiz-card" id="a10-quiz-q2">
+                    <strong style="color:white;font-size:0.95rem;">2. Onde devemos colocar o comando pinMode() para configurar se um pino é entrada ou saída?</strong>
+                    <div style="margin-top:10px;">
+                        <button class="a10-quiz-opt" id="a10-q2-opt1" onclick="a10_answerQuiz(2, 1, false)">A) No meio do void loop(), repetindo várias vezes</button>
+                        <button class="a10-quiz-opt" id="a10-q2-opt2" onclick="a10_answerQuiz(2, 2, true)">B) Dentro do void setup(), pois roda apenas 1 vez ao ligar</button>
+                        <button class="a10-quiz-opt" id="a10-q2-opt3" onclick="a10_answerQuiz(2, 3, false)">C) Não precisa usar pinMode em nenhum lugar</button>
+                    </div>
+                    <div id="a10-feedback-q2" style="display:none;margin-top:6px;font-size:0.85rem;"></div>
+                </div>
+
+                <!-- Questão 3 -->
+                <div class="a10-quiz-card" id="a10-quiz-q3">
+                    <strong style="color:white;font-size:0.95rem;">3. Qual função mede valores graduados de 0 a 1023 em sensores como potenciômetro e sensor LDR?</strong>
+                    <div style="margin-top:10px;">
+                        <button class="a10-quiz-opt" id="a10-q3-opt1" onclick="a10_answerQuiz(3, 1, false)">A) delay(1000);</button>
+                        <button class="a10-quiz-opt" id="a10-q3-opt2" onclick="a10_answerQuiz(3, 2, true)">B) analogRead(A0);</button>
+                        <button class="a10-quiz-opt" id="a10-q3-opt3" onclick="a10_answerQuiz(3, 3, false)">C) digitalRead(13);</button>
+                    </div>
+                    <div id="a10-feedback-q3" style="display:none;margin-top:6px;font-size:0.85rem;"></div>
+                </div>
+
+                <!-- Questão 4 -->
+                <div class="a10-quiz-card" id="a10-quiz-q4">
+                    <strong style="color:white;font-size:0.95rem;">4. Quantos milissegundos devemos escrever no delay() para pausar o código por 3 segundos inteiros?</strong>
+                    <div style="margin-top:10px;">
+                        <button class="a10-quiz-opt" id="a10-q4-opt1" onclick="a10_answerQuiz(4, 1, true)">A) delay(3000);</button>
+                        <button class="a10-quiz-opt" id="a10-q4-opt2" onclick="a10_answerQuiz(4, 2, false)">B) delay(3);</button>
+                        <button class="a10-quiz-opt" id="a10-q4-opt3" onclick="a10_answerQuiz(4, 3, false)">C) delay(30);</button>
+                    </div>
+                    <div id="a10-feedback-q4" style="display:none;margin-top:6px;font-size:0.85rem;"></div>
+                </div>
+
+                <!-- Questão 5 -->
+                <div class="a10-quiz-card" id="a10-quiz-q5">
+                    <strong style="color:white;font-size:0.95rem;">5. Para que serve a função Serial.println("Texto")?</strong>
+                    <div style="margin-top:10px;">
+                        <button class="a10-quiz-opt" id="a10-q5-opt1" onclick="a10_answerQuiz(5, 1, false)">A) Para queimar o microcontrolador</button>
+                        <button class="a10-quiz-opt" id="a10-q5-opt2" onclick="a10_answerQuiz(5, 2, false)">B) Para ligar os motores com força total</button>
+                        <button class="a10-quiz-opt" id="a10-q5-opt3" onclick="a10_answerQuiz(5, 3, true)">C) Para enviar mensagens do Arduino para o computador pelo cabo USB</button>
+                    </div>
+                    <div id="a10-feedback-q5" style="display:none;margin-top:6px;font-size:0.85rem;"></div>
+                </div>
+
+                <div id="a10-quiz-final-score" style="display:none;margin-top:14px;"></div>
+            </div>
+
+            <!-- BOTÃO DE CELEBRAÇÃO & CERTIFICADO FINAL -->
+            <div style="background:linear-gradient(135deg,#1E293B,#0F172A);border:3px solid #10B981;border-radius:24px;padding:30px;text-align:center;box-shadow:0 12px 35px rgba(16,185,129,0.25);">
+                <div style="font-size:3rem;margin-bottom:8px;">🎓⭐</div>
+                <h2 style="font-family:'Fredoka One';color:white;font-size:2rem;margin:0 0 10px;">
+                    Parabéns, Futuro Engenheiro Maker!
+                </h2>
+                <p style="color:#A7F3D0;font-size:1.05rem;max-width:680px;margin:0 auto 20px;line-height:1.6;">
+                    Você concluiu com maestria a Trilha Completa de 10 Aulas do <b>Laboratório Maker de Robótica &amp; Arduino</b>! Você aprendeu algoritmos, loops, decisões, variáveis, circuitos elétricos, protoboard, o chip ATmega328P, sensores e telas!
                 </p>
-
-                <button class="a10-cert-btn" onclick="a10_claimCertificate()">
-                    <i class="fa-solid fa-award"></i> Emitir Meu Certificado Oficial Maker
+                <button onclick="openCertificateModal()" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:#0F172A;border:none;padding:16px 36px;border-radius:50px;font-family:'Fredoka One';font-size:1.2rem;cursor:pointer;box-shadow:0 8px 30px rgba(245,158,11,0.4);border-bottom:4px solid #B45309;transition:0.2s;">
+                    <i class="fa-solid fa-award"></i> GERAR MEU CERTIFICADO OFICIAL AGORA! 🏆
                 </button>
-                <div style="margin-top:12px;font-size:0.85rem;color:#94A3B8;">
-                    ⭐ Você pode digitar seu nome completo e salvar ou imprimir seu certificado em PDF!
-                </div>
             </div>
         </div>
     `;
-
-    // Renderiza o código com numeração de linhas
-    const lines = a10_sourceCode.trim().split('\n');
-    const numbersEl = document.getElementById('a10-code-lines');
-    const textEl = document.getElementById('a10-code-text');
-    if (numbersEl) {
-        numbersEl.innerHTML = lines.map((_, i) => i + 1).join('<br>');
-    }
-    if (textEl) {
-        textEl.innerText = a10_sourceCode;
-    }
-
-    if (isCompleted) {
-        // Se já havia completado, inicia em estado demonstrativo
-        a10_uploadCode(true);
-    }
 }
 
-function a10_logConsole(msg, isSuccess = true) {
-    const logEl = document.getElementById('a10-ide-log');
-    if (!logEl) return;
-    const time = new Date().toLocaleTimeString();
-    logEl.innerHTML = `<span style="color:#94A3B8;">[${time}]</span> ${msg}`;
-}
-
-function a10_appendSerial(msg) {
-    const serialEl = document.getElementById('a10-serial-output');
-    if (!serialEl) return;
-    const time = new Date().toLocaleTimeString();
-    const line = document.createElement('div');
-    line.innerHTML = `<span style="color:#64748B;">[${time}]</span> ${msg}`;
-    serialEl.appendChild(line);
-    serialEl.scrollTop = serialEl.scrollHeight;
-}
-
-function a10_clearSerial() {
-    const serialEl = document.getElementById('a10-serial-output');
-    if (serialEl) serialEl.innerHTML = '';
-}
-
-function a10_verifyCode() {
-    if (a10_isCompiling) return;
-    a10_isCompiling = true;
-    if (typeof playSound === 'function') playSound('click');
-    a10_logConsole('<span style="color:#FBBF24;">Compilando sketch semaforo_maker.ino...</span>');
-
-    setTimeout(() => {
-        a10_isCompiling = false;
-        if (typeof playSound === 'function') playSound('success');
-        a10_logConsole(`
-            <span style="color:#34D399;font-weight:bold;">✔ Compilação concluída com sucesso!</span><br>
-            <span style="color:#94A3B8;font-size:0.78rem;">O sketch usa 924 bytes (2%) do espaço de armazenamento. O máximo são 32.256 bytes.<br>
-            Variáveis globais usam 9 bytes (0%) de memória dinâmica.</span>
-        `);
-    }, 1100);
-}
-
-function a10_uploadCode(silent = false) {
-    if (a10_isUploading) return;
-    a10_isUploading = true;
-    if (!silent && typeof playSound === 'function') playSound('step');
-
-    a10_logConsole('<span style="color:#38BDF8;">Conectando ao programador na porta COM3 (Arduino UNO)...</span>');
-
-    setTimeout(() => {
-        a10_logConsole('<span style="color:#FBBF24;">Gravando memória flash: [##########] 100% OK!</span>');
-
-        setTimeout(() => {
-            a10_isUploading = false;
-            a10_isUploaded = true;
-            if (!silent && typeof playSound === 'function') playSound('success');
-            a10_logConsole('<span style="color:#34D399;font-weight:bold;">🎉 Carregamento Concluído! O programa agora está rodando no Arduino UNO.</span>');
-
-            a10_appendSerial('<b style="color:#38BDF8;">--- ARDUINO REINICIADO (RESET) ---</b>');
-            a10_appendSerial('🚦 Sistema do Semáforo Iniciado com Sucesso!');
-            a10_startTrafficEngine();
-        }, 900);
-    }, 1200);
-}
-
-function a10_copyCode() {
-    if (typeof playSound === 'function') playSound('click');
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(a10_sourceCode).then(() => {
-            if (typeof playSound === 'function') playSound('success');
-            alert('📋 Código C++ do Semáforo copiado com sucesso para sua área de transferência!');
-        });
-    } else {
-        alert('Código selecionado!');
-    }
-}
-
-function a10_resetSimulation() {
-    if (a10_trafficInterval) {
-        clearInterval(a10_trafficInterval);
-        a10_trafficInterval = null;
-    }
-    if (typeof playSound === 'function') playSound('click');
-
-    const redBulb = document.getElementById('a10-light-red');
-    const yellowBulb = document.getElementById('a10-light-yellow');
-    const greenBulb = document.getElementById('a10-light-green');
-    if (redBulb) redBulb.className = 'a10-sim-light red';
-    if (yellowBulb) yellowBulb.className = 'a10-sim-light yellow';
-    if (greenBulb) greenBulb.className = 'a10-sim-light green';
-
-    const lbl = document.getElementById('a10-state-label');
-    const cnt = document.getElementById('a10-countdown');
-    const pin = document.getElementById('a10-pin-active');
-    if (lbl) lbl.innerText = 'Reiniciado';
-    if (cnt) cnt.innerText = '--';
-    if (pin) pin.innerText = 'Pinos LOW';
-
-    a10_appendSerial('<span style="color:#F87171;">Simulação pausada. Clique em Carregar para iniciar de novo.</span>');
-}
-
-function a10_startTrafficEngine() {
-    if (a10_trafficInterval) {
-        clearInterval(a10_trafficInterval);
-    }
-
-    a10_cycleStep = 0; // 0=Green(5s), 1=Yellow(2s), 2=Red(5s)
-    a10_secondsLeft = 5;
-
-    function applyState() {
-        const redBulb = document.getElementById('a10-light-red');
-        const yellowBulb = document.getElementById('a10-light-yellow');
-        const greenBulb = document.getElementById('a10-light-green');
-        const lbl = document.getElementById('a10-state-label');
-        const cnt = document.getElementById('a10-countdown');
-        const pin = document.getElementById('a10-pin-active');
-
-        if (cnt) cnt.innerText = `${a10_secondsLeft}s`;
-
-        if (a10_cycleStep === 0) {
-            // VERDE (5s)
-            if (redBulb) redBulb.className = 'a10-sim-light red';
-            if (yellowBulb) yellowBulb.className = 'a10-sim-light yellow';
-            if (greenBulb) greenBulb.className = 'a10-sim-light green on';
-            if (lbl) {
-                lbl.innerText = '🟢 SINAL VERDE';
-                lbl.style.color = '#34D399';
-                lbl.style.borderColor = '#10B981';
-            }
-            if (pin) pin.innerHTML = 'Pino 11: <b style="color:#34D399;">HIGH</b> | Pinos 12, 13: LOW';
-        } else if (a10_cycleStep === 1) {
-            // AMARELO (2s)
-            if (redBulb) redBulb.className = 'a10-sim-light red';
-            if (yellowBulb) yellowBulb.className = 'a10-sim-light yellow on';
-            if (greenBulb) greenBulb.className = 'a10-sim-light green';
-            if (lbl) {
-                lbl.innerText = '🟡 SINAL AMARELO';
-                lbl.style.color = '#FBBF24';
-                lbl.style.borderColor = '#F59E0B';
-            }
-            if (pin) pin.innerHTML = 'Pino 12: <b style="color:#FBBF24;">HIGH</b> | Pinos 11, 13: LOW';
-        } else if (a10_cycleStep === 2) {
-            // VERMELHO (5s)
-            if (redBulb) redBulb.className = 'a10-sim-light red on';
-            if (yellowBulb) yellowBulb.className = 'a10-sim-light yellow';
-            if (greenBulb) greenBulb.className = 'a10-sim-light green';
-            if (lbl) {
-                lbl.innerText = '🔴 SINAL VERMELHO';
-                lbl.style.color = '#F87171';
-                lbl.style.borderColor = '#EF4444';
-            }
-            if (pin) pin.innerHTML = 'Pino 13: <b style="color:#F87171;">HIGH</b> | Pinos 11, 12: LOW';
-        }
-    }
-
-    // Primeira emissão no serial
-    a10_appendSerial('🟢 [VERDE]: Motoristas podem seguir! (5s)');
-    applyState();
-
-    a10_trafficInterval = setInterval(() => {
-        a10_secondsLeft--;
-
-        if (a10_secondsLeft <= 0) {
-            if (a10_cycleStep === 0) {
-                // Passa para Amarelo
-                a10_cycleStep = 1;
-                a10_secondsLeft = 2;
-                a10_appendSerial('🟡 [AMARELO]: Atenção! O sinal vai fechar... (2s)');
-            } else if (a10_cycleStep === 1) {
-                // Passa para Vermelho
-                a10_cycleStep = 2;
-                a10_secondsLeft = 5;
-                a10_appendSerial('🔴 [VERMELHO]: Pare imediatamente! (5s)');
-            } else {
-                // Volta para Verde
-                a10_cycleStep = 0;
-                a10_secondsLeft = 5;
-                a10_appendSerial('🟢 [VERDE]: Motoristas podem seguir! (5s)');
-            }
-        }
-
-        applyState();
-    }, 1000);
-}
-
-function a10_claimCertificate() {
-    localStorage.setItem('aula10_completed', 'true');
-    if (typeof playSound === 'function') playSound('success');
-    if (typeof triggerConfetti === 'function') triggerConfetti(4000);
-
-    if (typeof showCertificateModal === 'function') {
-        showCertificateModal();
-    }
-}
-
+// Exportações globais para a SPA
 window.loadAula10 = loadAula10;
-window.a10_verifyCode = a10_verifyCode;
-window.a10_uploadCode = a10_uploadCode;
-window.a10_copyCode = a10_copyCode;
-window.a10_resetSimulation = a10_resetSimulation;
+window.a10_testDigitalWrite = a10_testDigitalWrite;
+window.a10_testAnalogWrite = a10_testAnalogWrite;
+window.a10_testAnalogRead = a10_testAnalogRead;
+window.a10_testSerialPrint = a10_testSerialPrint;
 window.a10_clearSerial = a10_clearSerial;
-window.a10_claimCertificate = a10_claimCertificate;
+window.a10_answerQuiz = a10_answerQuiz;

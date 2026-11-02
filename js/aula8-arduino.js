@@ -2248,11 +2248,14 @@ function loadArduino() {
                         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
                             <span style="color:#64748B;font-weight:bold;font-size:0.76rem;">Esboços Rápidos:</span>
                             <button type="button" onclick="ard_loadSketch('semaforo_maker.ino')" class="ard-sketch-quickbtn active" id="btn-quick-semaforo" title="Carregar Semáforo Inteligente">🚦 Semáforo</button>
-                            <button type="button" onclick="ard_loadSketch('Blink.ino')" class="ard-sketch-quickbtn" id="btn-quick-blink" title="Carregar Pisca LED (Blink Oficial)">💡 Blink</button>
-                            <button type="button" onclick="ard_loadSketch('LeituraSerial.ino')" class="ard-sketch-quickbtn" id="btn-quick-serial" title="Carregar Leitura Serial Potenciômetro">🕹️ Leitura Serial</button>
-                            <button type="button" onclick="ard_loadSketch('BareMinimum.ino')" class="ard-sketch-quickbtn" id="btn-quick-bare" title="Carregar Código Vazio para Zerar e Limpar">🧹 BareMinimum</button>
-                            <button type="button" onclick="ard_loadSketch('Pisca_Alerta_Duplo.ino')" class="ard-sketch-quickbtn" id="btn-quick-alerta" title="Carregar Pisca Alerta Duplo Alternado">⚡ Alerta Duplo</button>
+                            <button type="button" onclick="ard_loadSketch('Sensor_Ultrassonico_Distancia.ino')" class="ard-sketch-quickbtn" id="btn-quick-ultra" title="Carregar Sensor Ultrassônico de Distância HC-SR04">📏 Sensor Distância</button>
+                            <button type="button" onclick="ard_loadSketch('Interruptor_Palmas.ino')" class="ard-sketch-quickbtn" id="btn-quick-clap" title="Carregar Luz Automática por Palmas (Clap Switch)">👏 Luz por Palmas</button>
+                            <button type="button" onclick="ard_loadSketch('Display_LCD_Mensagem.ino')" class="ard-sketch-quickbtn" id="btn-quick-lcd" title="Carregar Display LCD 16x2 I2C">📟 Display LCD</button>
+                            <button type="button" onclick="ard_loadSketch('Radar_Com_Display.ino')" class="ard-sketch-quickbtn" id="btn-quick-radar" title="Carregar Sensor Ultrassônico + Display LCD Juntos">🚀 Sensor + Display</button>
                             <button type="button" onclick="ard_loadSketch('Sensor_LDR_Luz.ino')" class="ard-sketch-quickbtn" id="btn-quick-ldr" title="Carregar Sensor de Luminosidade LDR">☀️ Sensor LDR</button>
+                            <button type="button" onclick="ard_loadSketch('Blink.ino')" class="ard-sketch-quickbtn" id="btn-quick-blink" title="Carregar Pisca LED (Blink Oficial)">💡 Blink</button>
+                            <button type="button" onclick="ard_loadSketch('LeituraSerial.ino')" class="ard-sketch-quickbtn" id="btn-quick-serial" title="Carregar Leitura Serial Potenciômetro">🕹️ Serial</button>
+                            <button type="button" onclick="ard_loadSketch('BareMinimum.ino')" class="ard-sketch-quickbtn" id="btn-quick-bare" title="Carregar Código Vazio para Zerar e Limpar">🧹 BareMinimum</button>
                             <button type="button" onclick="ard_autoFormatCode()" class="ard-sketch-quickbtn" style="color:#0284C7;border-color:#38BDF8;" title="Auto-Formatar Código (Ctrl+T)"><i class="fa-solid fa-wand-magic-sparkles"></i> Formatar</button>
                         </div>
                         <div class="ard-syntax-legend">
@@ -2406,12 +2409,24 @@ Variáveis globais usam 194 bytes (9%) de memória dinâmica, deixando 1.854 byt
                     <div style="font-size:0.88rem;color:#E2E8F0;">
                         📄 <b>Escolha qual código enviar para a placa:</b>
                     </div>
-                    <div style="display:flex;gap:8px;">
-                        <button onclick="ard_selectUploadSketch('semaforo_maker.ino')" id="btn-sketch-traffic" style="background:#0284C7;color:white;border:none;padding:7px 14px;border-radius:8px;font-weight:bold;font-size:0.82rem;cursor:pointer;">
-                            🚦 semaforo_maker.ino (Código do Semáforo)
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button onclick="ard_selectUploadSketch('semaforo_maker.ino')" id="btn-sketch-traffic" style="background:#0284C7;color:white;border:none;padding:7px 12px;border-radius:8px;font-weight:bold;font-size:0.8rem;cursor:pointer;">
+                            🚦 Semáforo
                         </button>
-                        <button onclick="ard_selectUploadSketch('BareMinimum.ino')" id="btn-sketch-bare" style="background:#334155;color:#A7F3D0;border:1px solid #10B981;padding:7px 14px;border-radius:8px;font-weight:bold;font-size:0.82rem;cursor:pointer;">
-                            🧹 BareMinimum.ino (Zerar a Placa)
+                        <button onclick="ard_selectUploadSketch('Sensor_Ultrassonico_Distancia.ino')" id="btn-sketch-ultra" style="background:#1E293B;color:#38BDF8;border:1px solid #0284C7;padding:7px 12px;border-radius:8px;font-weight:bold;font-size:0.8rem;cursor:pointer;">
+                            📏 Sensor Distância
+                        </button>
+                        <button onclick="ard_selectUploadSketch('Interruptor_Palmas.ino')" id="btn-sketch-clap" style="background:#1E293B;color:#EC4899;border:1px solid #DB2777;padding:7px 12px;border-radius:8px;font-weight:bold;font-size:0.8rem;cursor:pointer;">
+                            👏 Luz por Palmas
+                        </button>
+                        <button onclick="ard_selectUploadSketch('Display_LCD_Mensagem.ino')" id="btn-sketch-lcd" style="background:#1E293B;color:#34D399;border:1px solid #10B981;padding:7px 12px;border-radius:8px;font-weight:bold;font-size:0.8rem;cursor:pointer;">
+                            📟 Display LCD
+                        </button>
+                        <button onclick="ard_selectUploadSketch('Radar_Com_Display.ino')" id="btn-sketch-radar" style="background:#1E293B;color:#FBBF24;border:1px solid #F59E0B;padding:7px 12px;border-radius:8px;font-weight:bold;font-size:0.8rem;cursor:pointer;">
+                            🚀 Sensor + Display
+                        </button>
+                        <button onclick="ard_selectUploadSketch('BareMinimum.ino')" id="btn-sketch-bare" style="background:#334155;color:#A7F3D0;border:1px solid #10B981;padding:7px 12px;border-radius:8px;font-weight:bold;font-size:0.8rem;cursor:pointer;">
+                            🧹 BareMinimum
                         </button>
                     </div>
                 </div>
@@ -3465,6 +3480,151 @@ void loop() {
     digitalWrite(pinoLed, LOW);
   }
   delay(200);
+}`,
+    'Sensor_Ultrassonico_Distancia.ino': `// Projeto: Sensor de Distância Ultrassônico HC-SR04 (Radar Maker)
+const int pinoTrig = 9;   // Dispara o pulso de som (Saída)
+const int pinoEcho = 8;   // Escuta o eco refletido (Entrada)
+const int pinoAlerta = 13; // LED de aviso de proximidade
+
+long tempoEco = 0;
+int distanciaCm = 0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(pinoTrig, OUTPUT);
+  pinMode(pinoEcho, INPUT);
+  pinMode(pinoAlerta, OUTPUT);
+  Serial.println("📡 Radar Ultrassônico HC-SR04 Ativado!");
+}
+
+void loop() {
+  // Dispara um pulso ultrassônico limpo de 10 microssegundos
+  digitalWrite(pinoTrig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(pinoTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(pinoTrig, LOW);
+
+  // pulseIn() mede o tempo que o pino Echo ficou em nível HIGH (tempo de ida e volta)
+  tempoEco = pulseIn(pinoEcho, HIGH);
+  // Velocidade do som no ar: 0.034 cm/us. Dividimos por 2 (ida e volta)
+  distanciaCm = tempoEco * 0.034 / 2;
+
+  Serial.print("Distância do Obstáculo: ");
+  Serial.print(distanciaCm);
+  Serial.println(" cm");
+
+  // Se o objeto estiver a menos de 15 cm, acende o LED de alerta!
+  if (distanciaCm > 0 && distanciaCm < 15) {
+    digitalWrite(pinoAlerta, HIGH); // 🚨 PERIGO DE COLISÃO!
+  } else {
+    digitalWrite(pinoAlerta, LOW);  // Caminho livre
+  }
+
+  delay(150); // Pausa suave antes da próxima leitura
+}`,
+    'Display_LCD_Mensagem.ino': `// Projeto: Display LCD 16x2 com Módulo I2C (Apenas 4 Fios!)
+// Conexão I2C: SDA no pino A4, SCL no pino A5, VCC no 5V, GND no GND
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// Endereço 0x27, tela com 16 colunas e 2 linhas
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();      // Inicializa o circuito do LCD
+  lcd.backlight(); // Liga a luz de fundo azul/verde
+
+  // Escreve na Linha 0 (Superior): Coluna 0, Linha 0
+  lcd.setCursor(0, 0);
+  lcd.print("CRIADORES CODIGO");
+
+  // Escreve na Linha 1 (Inferior): Coluna 0, Linha 1
+  lcd.setCursor(0, 1);
+  lcd.print("Lab Maker Ativo!");
+}
+
+void loop() {
+  // A mensagem fica acesa continuamente na tela
+  delay(1000);
+}`,
+    'Radar_Com_Display.ino': `// Super Projeto: Sensor Ultrassônico + Display LCD I2C Juntos!
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+const int pinoTrig = 9;
+const int pinoEcho = 8;
+const int pinoLedAlerta = 13;
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  pinMode(pinoTrig, OUTPUT);
+  pinMode(pinoEcho, INPUT);
+  pinMode(pinoLedAlerta, OUTPUT);
+
+  // Cabeçalho fixo no LCD
+  lcd.setCursor(0, 0);
+  lcd.print("RADAR MAKER UNO");
+}
+
+void loop() {
+  digitalWrite(pinoTrig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(pinoTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(pinoTrig, LOW);
+
+  long tempo = pulseIn(pinoEcho, HIGH);
+  int distancia = tempo * 0.034 / 2;
+
+  // Exibe a distância em tempo real no Display LCD
+  lcd.setCursor(0, 1);
+  lcd.print("Dist: ");
+  lcd.print(distancia);
+  lcd.print(" cm   "); // Espaços extras limpam números antigos
+
+  if (distancia > 0 && distancia < 15) {
+    digitalWrite(pinoLedAlerta, HIGH); // Alerta no LED!
+  } else {
+    digitalWrite(pinoLedAlerta, LOW);
+  }
+
+  delay(200);
+}`,
+    'Interruptor_Palmas.ino': `// Projeto: Luz Automática por Palmas (Clap Switch)
+// Hardware: Arduino UNO + Módulo Sensor de Som KY-038 + LED/Relé no Pino 13
+
+const int pinoMicrofone = 2; // Pino Digital 2 conectado na saída DO do sensor de som
+const int pinoLuz       = 13; // Pino Digital 13 controla a lâmpada/LED
+
+bool luzAcesa = false;
+unsigned long ultimaPalma = 0;
+const unsigned long tempoDebounce = 250; // Tempo mínimo entre palmas para evitar falso eco
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(pinoMicrofone, INPUT); // O sensor envia pulso digital ao ouvir som
+  pinMode(pinoLuz, OUTPUT);       // O pino 13 envia 5V para acender a luz
+  digitalWrite(pinoLuz, LOW);     // Inicia com a luz apagada
+
+  Serial.println("👏 Sistema de Palmas Ativado! Bata palma para ligar/desligar!");
+}
+
+void loop() {
+  // A maioria dos módulos de som envia LOW quando o som ultrapassa o volume do trimpot
+  int estadoSom = digitalRead(pinoMicrofone);
+
+  if (estadoSom == LOW && (millis() - ultimaPalma > tempoDebounce)) {
+    luzAcesa = !luzAcesa; // Inverte o estado da luz (Liga <-> Desliga)
+    digitalWrite(pinoLuz, luzAcesa ? HIGH : LOW);
+
+    Serial.print("👏 Palma ouvida! Luz ");
+    Serial.println(luzAcesa ? "LIGADA 💡" : "APAGADA 🌑");
+
+    ultimaPalma = millis(); // Registra o horário da palma
+  }
 }`
 };
 
@@ -3565,11 +3725,15 @@ function ard_loadSketch(sketchName) {
 
     const btnMap = {
         'semaforo_maker.ino': 'btn-quick-semaforo',
+        'Sensor_Ultrassonico_Distancia.ino': 'btn-quick-ultra',
+        'Interruptor_Palmas.ino': 'btn-quick-clap',
+        'Display_LCD_Mensagem.ino': 'btn-quick-lcd',
+        'Radar_Com_Display.ino': 'btn-quick-radar',
+        'Sensor_LDR_Luz.ino': 'btn-quick-ldr',
         'Blink.ino': 'btn-quick-blink',
         'LeituraSerial.ino': 'btn-quick-serial',
         'BareMinimum.ino': 'btn-quick-bare',
-        'Pisca_Alerta_Duplo.ino': 'btn-quick-alerta',
-        'Sensor_LDR_Luz.ino': 'btn-quick-ldr'
+        'Pisca_Alerta_Duplo.ino': 'btn-quick-alerta'
     };
 
     document.querySelectorAll('.ard-sketch-quickbtn').forEach(b => {
@@ -4907,55 +5071,52 @@ function ard_selectUploadSketch(sketchName) {
     ard_uploadActiveSketch = sketchName;
 
     const btnTraffic = document.getElementById('btn-sketch-traffic');
+    const btnUltra = document.getElementById('btn-sketch-ultra');
+    const btnClap = document.getElementById('btn-sketch-clap');
+    const btnLcd = document.getElementById('btn-sketch-lcd');
+    const btnRadar = document.getElementById('btn-sketch-radar');
     const btnBare = document.getElementById('btn-sketch-bare');
+
+    [btnTraffic, btnUltra, btnClap, btnLcd, btnRadar, btnBare].forEach(b => {
+        if (b) { b.style.background = '#1E293B'; b.style.color = '#CBD5E1'; }
+    });
+
+    const activeMap = {
+        'semaforo_maker.ino': btnTraffic,
+        'Sensor_Ultrassonico_Distancia.ino': btnUltra,
+        'Interruptor_Palmas.ino': btnClap,
+        'Display_LCD_Mensagem.ino': btnLcd,
+        'Radar_Com_Display.ino': btnRadar,
+        'BareMinimum.ino': btnBare
+    };
+    if (activeMap[sketchName]) {
+        activeMap[sketchName].style.background = '#0284C7';
+        activeMap[sketchName].style.color = '#FFFFFF';
+    }
+
     const codeArea = document.getElementById('ard-upload-code-text');
     const titleTab = document.getElementById('ard-upload-tab-name');
     const winTitle = document.getElementById('ard-upload-window-title');
     const msg = document.getElementById('ard-upload-msg-text');
     const uploadGutter = document.getElementById('ard-upload-gutter');
 
-    if (sketchName === 'BareMinimum.ino') {
-        if (btnTraffic) { btnTraffic.style.background = '#334155'; }
-        if (btnBare) { btnBare.style.background = '#064E3B'; }
-        if (titleTab) titleTab.innerText = 'BareMinimum.ino';
-        if (winTitle) winTitle.innerText = 'BareMinimum | Arduino 1.8.19';
-        if (msg) msg.innerText = 'BareMinimum pronto. Clique em Carregar (➔) para ZERAR a memória do Arduino.';
-        if (codeArea) {
-            codeArea.innerHTML = `<span class="syn-cm">// Código Neutro BareMinimum (Zera e limpa o Arduino)</span>
-<span class="syn-kw">void</span> <span class="syn-fn">setup</span>() {
-  <span class="syn-cm">// Configurações vazias</span>
-}
+    if (titleTab) titleTab.innerText = sketchName;
+    if (winTitle) winTitle.innerText = `${sketchName.replace('.ino', '')} | Arduino 1.8.19`;
+    if (msg) msg.innerText = sketchName === 'BareMinimum.ino' ?
+        'BareMinimum pronto. Clique em Carregar (➔) para ZERAR a memória do Arduino.' :
+        `Esboço "${sketchName}" pronto. Clique em Carregar (➔) para gravar na placa.`;
 
-<span class="syn-kw">void</span> <span class="syn-fn">loop</span>() {
-  <span class="syn-cm">// Laço vazio: o microcontrolador fica em repouso</span>
-}`;
+    const code = ard_sketches[sketchName] || ard_sketches['semaforo_maker.ino'];
+    if (codeArea) {
+        codeArea.innerHTML = ard_highlightArduinoSyntax(code);
+    }
+    if (uploadGutter) {
+        const lineCount = (code || '').split('\n').length;
+        let nums = '';
+        for (let i = 1; i <= lineCount; i++) {
+            nums += i + (i < lineCount ? '<br>' : '');
         }
-        if (uploadGutter) {
-            uploadGutter.innerHTML = '1<br>2<br>3<br>4<br>5<br>6<br>7<br>8';
-        }
-    } else {
-        if (btnTraffic) { btnTraffic.style.background = '#0284C7'; }
-        if (btnBare) { btnBare.style.background = '#334155'; }
-        if (titleTab) titleTab.innerText = 'semaforo_maker.ino';
-        if (winTitle) winTitle.innerText = 'semaforo_maker | Arduino 1.8.19';
-        if (msg) msg.innerText = 'Pronto. Clique em "Carregar" (➔) para gravar o semáforo na placa.';
-        if (codeArea) {
-            codeArea.innerHTML = `<span class="syn-cm">// Código do Semáforo Maker (Pronto para Gravação)</span>
-<span class="syn-kw">void</span> <span class="syn-fn">setup</span>() {
-  <span class="syn-fn">pinMode</span>(<span class="syn-nm">12</span>, <span class="syn-cn">OUTPUT</span>); <span class="syn-cm">// LED Vermelho</span>
-  <span class="syn-fn">pinMode</span>(<span class="syn-nm">11</span>, <span class="syn-cn">OUTPUT</span>); <span class="syn-cm">// LED Amarelo</span>
-  <span class="syn-fn">pinMode</span>(<span class="syn-nm">10</span>, <span class="syn-cn">OUTPUT</span>); <span class="syn-cm">// LED Verde</span>
-}
-
-<span class="syn-kw">void</span> <span class="syn-fn">loop</span>() {
-  <span class="syn-fn">digitalWrite</span>(<span class="syn-nm">10</span>, <span class="syn-cn">HIGH</span>); <span class="syn-fn">delay</span>(<span class="syn-nm">3000</span>); <span class="syn-cm">// Verde</span>
-  <span class="syn-fn">digitalWrite</span>(<span class="syn-nm">10</span>, <span class="syn-cn">LOW</span>);  <span class="syn-fn">digitalWrite</span>(<span class="syn-nm">11</span>, <span class="syn-cn">HIGH</span>); <span class="syn-fn">delay</span>(<span class="syn-nm">1200</span>); <span class="syn-cm">// Amarelo</span>
-  <span class="syn-fn">digitalWrite</span>(<span class="syn-nm">11</span>, <span class="syn-cn">LOW</span>);  <span class="syn-fn">digitalWrite</span>(<span class="syn-nm">12</span>, <span class="syn-cn">HIGH</span>); <span class="syn-fn">delay</span>(<span class="syn-nm">3000</span>); <span class="syn-cm">// Vermelho</span>
-}`;
-        }
-        if (uploadGutter) {
-            uploadGutter.innerHTML = '1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12';
-        }
+        uploadGutter.innerHTML = nums;
     }
 }
 

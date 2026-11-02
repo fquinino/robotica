@@ -79,6 +79,11 @@ function playSound(type) {
             osc.frequency.setValueAtTime(1318.51, ctx.currentTime + 0.08);
             gainNode.gain.setValueAtTime(0.2, ctx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
             osc.start(); osc.stop(ctx.currentTime + 0.35);
+        } else if(type === 'clap') {
+            osc.type = 'triangle'; osc.frequency.setValueAtTime(450, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.08);
+            gainNode.gain.setValueAtTime(0.35, ctx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.005, ctx.currentTime + 0.1);
+            osc.start(); osc.stop(ctx.currentTime + 0.1);
         }
     } catch(e) {
         // Ignora silenciosamente se o áudio falhar

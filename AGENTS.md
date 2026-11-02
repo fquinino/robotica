@@ -46,8 +46,8 @@ A aplicação é construída como uma **Single-Page Application (SPA)** autocont
 6. **Aula 6 — Introdução à Eletrônica:** Tensão ($V$), Corrente ($I$), Resistência ($R$) e Lei de Ohm ($V = R \cdot I$) (Módulo: *Eletrônica & Lei de Ohm — js/aula6-eletronica.js*).
 7. **Aula 7 — Circuitos e Protoboard:** Barramentos de alimentação, colunas interligadas e polaridade de componentes (Módulo: *Bancada Protoboard Maker*).
 8. **Aula 8 — Arduino e Linguagem C++:** Anatomia da placa UNO, pinos digitais/analógicos/PWM, funções `setup()` e `loop()` (Módulo: *Oficina do Arduino & Quiz*).
-9. **Aula 9 — Prática: Montagem do Semáforo:** Guia físico de montagem com protoboard real, 3 LEDs, 3 resistores de 220Ω e Arduino UNO (Módulo: `#tab-aula9`).
-10. **Aula 10 — Prática: Programação do Semáforo:** Código fonte Arduino C++ completo, configuração no Arduino IDE e processo de upload (Módulo: `#tab-aula10`).
+9. **Aula 9 — Prática Avançada Maker: Montagem de Sensores, Palmas & Display:** Guia físico de montagem na protoboard com Sensor Ultrassônico HC-SR04, Sensor de Som KY-038 (Luz por Palmas / Clap Switch) e Display LCD 16x2 com I2C, simuladores táteis e códigos C++ exemplo (Módulo: `#tab-aula9`).
+10. **Aula 10 — Grande Almanaque de Funções & Mega Revisão C++:** Dicionário interativo de funções (`digitalWrite`, `digitalRead`, `pinMode`, `analogRead`, `analogWrite`, `delay`, `Serial`), estrutura `setup()` vs `loop()`, playground interativo, quiz maker e Certificado de Conclusão (Módulo: `#tab-aula10`).
 
 ---
 
