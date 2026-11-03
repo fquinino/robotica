@@ -133,10 +133,29 @@ function a10_answerQuiz(qNum, selectedOption, isCorrect) {
         if (typeof playSound === 'function') playSound(isCorrect ? 'success' : 'error');
     } catch(e) {}
 
+    // Salva estrela conquistada no aula10_levels
+    if (isCorrect) {
+        try {
+            let saved = JSON.parse(localStorage.getItem('aula10_levels') || '[]');
+            if (!saved.includes(qNum)) {
+                saved.push(qNum);
+                localStorage.setItem('aula10_levels', JSON.stringify(saved));
+                if (typeof updateHubProgress === 'function') updateHubProgress();
+                if (typeof updateTrail === 'function') updateTrail();
+            }
+        } catch(e) {}
+    }
+
     // Checa total
     const totalAnswered = Object.keys(a10_quizAnswers).length;
     if (totalAnswered === 5) {
         const correctCount = Object.values(a10_quizAnswers).filter(Boolean).length;
+        if (correctCount >= 3) {
+            localStorage.setItem('aula10_completed', 'true');
+            if (typeof play8BitFanfare === 'function') {
+                play8BitFanfare();
+            }
+        }
         const scoreBox = document.getElementById('a10-quiz-final-score');
         if (scoreBox) {
             scoreBox.style.display = 'block';
@@ -144,7 +163,7 @@ function a10_answerQuiz(qNum, selectedOption, isCorrect) {
                 <div style="background:#1E293B;border:3px solid #F59E0B;border-radius:16px;padding:20px;text-align:center;box-shadow:0 8px 30px rgba(245,158,11,0.25);">
                     <div style="font-size:2.4rem;">🏆</div>
                     <h3 style="font-family:'Fredoka One';color:white;margin:6px 0;font-size:1.6rem;">
-                        Resultado do Quiz: ${correctCount} de 5 Acertos!
+                        Resultado do Quiz: ${correctCount} de 5 Acertos! ⭐
                     </h3>
                     <p style="color:#CBD5E1;font-size:0.95rem;margin:0 0 14px;">
                         ${correctCount >= 4 ?
@@ -160,6 +179,8 @@ function a10_answerQuiz(qNum, selectedOption, isCorrect) {
         if (correctCount >= 4 && typeof fireConfetti === 'function') {
             fireConfetti();
         }
+        if (typeof updateHubProgress === 'function') updateHubProgress();
+        if (typeof updateTrail === 'function') updateTrail();
     }
 }
 

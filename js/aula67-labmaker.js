@@ -139,11 +139,56 @@ function loadLabmaker() {
             .bb-pin-hole { width:18px; height:18px; background:#1E293B; border-radius:50%; border:2px solid #94A3B8; cursor:pointer; transition:0.15s all; position:relative; }
             .bb-pin-hole:hover { transform:scale(1.35); border-color:#38BDF8; background:#0284C7; box-shadow:0 0 10px #38BDF8; z-index:40; }
             .bb-pin-hole.glow-net { border-color:#10B981; background:#059669; box-shadow:0 0 8px #10B981; }
+            .bb-pin-hole.glow-waiting {
+                border-color: #F59E0B;
+                background: rgba(245, 158, 11, 0.4);
+                box-shadow: 0 0 12px #F59E0B;
+                animation: bbHolePulse 0.9s infinite alternate;
+            }
+            @keyframes bbHolePulse {
+                from { box-shadow: 0 0 4px #F59E0B; transform: scale(1); }
+                to { box-shadow: 0 0 16px #EF4444; transform: scale(1.3); }
+            }
+            .vg-mini-pin-glow {
+                animation: vgMiniPinGlow 0.85s infinite alternate;
+            }
+            @keyframes vgMiniPinGlow {
+                from { filter: drop-shadow(0 0 4px #F59E0B); stroke: #FDE68A; stroke-width: 2.5; }
+                to { filter: drop-shadow(0 0 12px #EF4444); stroke: #EF4444; stroke-width: 4.5; }
+            }
 
             .bb-svg-overlay { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:30; }
             .bb-comp-interactive { pointer-events:all; cursor:pointer; }
             .bb-comp-interactive:hover { filter:drop-shadow(0 0 10px #38BDF8) brightness(1.25); }
             .bb-comp-interactive.active-inspect { filter:drop-shadow(0 0 14px #F59E0B) brightness(1.35); }
+
+            /* Visão Raio-X da Protoboard */
+            .bb-body.xray-active {
+                background: rgba(15, 23, 42, 0.95) !important;
+                border-color: #8B5CF6 !important;
+                box-shadow: 0 0 35px rgba(139, 92, 246, 0.6) !important;
+            }
+            .bb-body.xray-active .bb-title-label {
+                color: #C4B5FD !important;
+            }
+            .bb-body.xray-active .bb-power-strip {
+                background: rgba(30, 41, 59, 0.9) !important;
+                border-color: #475569 !important;
+            }
+            .bb-body.xray-active .bb-matrix-row {
+                background: linear-gradient(180deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.25)) !important;
+                border-radius: 4px;
+            }
+            .bb-body.xray-active .bb-pin-hole {
+                border-color: #F59E0B !important;
+                background: #0F172A !important;
+            }
+            .xray-electron {
+                animation: xrayElectronDash 0.8s linear infinite;
+            }
+            @keyframes xrayElectronDash {
+                to { stroke-dashoffset: -30; }
+            }
 
             /* Tooltip Dinâmica Flutuante da Bancada */
             .lab-bench-tooltip {
@@ -2030,6 +2075,9 @@ function loadLabmaker() {
                                 </div>
                             </div>
                             <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                                <button type="button" class="lab-btn-test" id="lab_xray_toggle_btn" onclick="lab_toggleXRayMode()" style="background:#7C3AED;color:white;" title="Mostrar lâminas metálicas internas por baixo da protoboard e fluxo de elétrons">
+                                    🩻 <span id="lab_xray_btn_text">Visão Raio-X: OFF</span>
+                                </button>
                                 <button type="button" class="lab-btn-test" id="lab_labels_toggle_btn" onclick="lab_toggleVisualLabels()" style="background:#0284C7;color:white;" title="Mostrar ou ocultar etiquetas visuais flutuantes nos componentes">
                                     <i class="fa-solid fa-tags"></i> <span id="lab_labels_btn_text">Etiquetas Visuais: LIGADAS</span>
                                 </button>
@@ -3986,6 +4034,30 @@ function lab_renderCircuit() {
             svg.appendChild(compG);
         }
     });
+
+    // Se a Visão Raio-X estiver ativa e o USB estiver LIGADO: animar o fluxo de elétrons nos circuitos ativos
+    if (lab_xrayMode && lab_usbPower) {
+        const electronOverlay = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        electronOverlay.setAttribute('class', 'xray-electrons-layer');
+        [13, 12, 11].forEach(pin => {
+            if (lab_pinsState[pin]) {
+                const jumperG = svg.querySelector(`[data-comp-id="j_${pin}"] path`);
+                if (jumperG) {
+                    const d = jumperG.getAttribute('d');
+                    const flowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    flowPath.setAttribute('d', d);
+                    flowPath.setAttribute('fill', 'none');
+                    flowPath.setAttribute('stroke', '#38BDF8');
+                    flowPath.setAttribute('stroke-width', '4');
+                    flowPath.setAttribute('stroke-dasharray', '5 10');
+                    flowPath.setAttribute('class', 'xray-electron');
+                    flowPath.setAttribute('filter', 'drop-shadow(0 0 6px #38BDF8)');
+                    electronOverlay.appendChild(flowPath);
+                }
+            }
+        });
+        svg.appendChild(electronOverlay);
+    }
 }
 
 /* ================= SISTEMA DE TOOLTIPS & LEGENDAS DINÂMICAS ================= */

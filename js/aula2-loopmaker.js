@@ -227,7 +227,7 @@
                 <!-- CONTEÚDO NÍVEL 1: FÁBRICA DE LOOPS -->
                 <div id="l2_view_lvl1">
                     <div class="loop-factory-scene">
-                        <div class="loop-factory-hud">Loop: <span id="l_hud-count">0</span></div>
+                        <div class="loop-factory-hud" id="l_giant_counter_box" style="position:absolute;top:12px;right:15px;background:rgba(15,23,42,0.95);padding:8px 20px;border-radius:30px;border:3px solid #8B5CF6;color:white;font-weight:900;z-index:20;display:flex;align-items:center;gap:8px;box-shadow:0 0 25px rgba(139,92,246,0.5);transition:transform 0.2s cubic-bezier(0.175,0.885,0.32,1.275);"><span style="color:#C4B5FD;font-size:1.05rem;font-family:'Fredoka One',cursive;">🔄 Volta Atual:</span><span id="l_hud-count" style="color:#F59E0B;font-size:1.5rem;font-family:'Fredoka One',cursive;text-shadow:0 0 10px #F59E0B;">i = 0</span></div>
                         <div class="loop-stamper-base"></div>
                         <div class="loop-stamper-arm" id="l_stamper-arm"><div class="loop-stamper-head"></div></div>
                         <div class="loop-boxes-track" id="l_boxes-track"></div>
@@ -656,7 +656,13 @@
         let currentPos = 0;
 
         for(let i=1; i<=count; i++) {
-            document.getElementById('l_hud-count').innerText = i;
+            const hudCount = document.getElementById('l_hud-count');
+            if (hudCount) hudCount.innerText = `i = ${i}`;
+            const giantBox = document.getElementById('l_giant_counter_box');
+            if (giantBox) {
+                giantBox.style.transform = 'scale(1.15)';
+                setTimeout(() => { if (giantBox) giantBox.style.transform = 'scale(1)'; }, 220);
+            }
             const codeLine = document.getElementById('l_code_line_carimbar');
             if(codeLine) codeLine.classList.add('active');
 

@@ -434,6 +434,13 @@ function loadJardim() {
                         Sensor Ultrassônico: <span id="if_sensor_reading_text">BARREIRA (true)</span>
                     </div>
 
+                    <!-- BIFURCAÇÃO VISUAL DE TRILHO DE TREM (IF / ELSE) -->
+                    <div id="if_railway_switch_indicator" style="position:absolute;bottom:12px;left:15px;background:rgba(15,23,42,0.95);border:2px solid #334155;border-radius:14px;padding:6px 14px;font-size:0.8rem;z-index:50;display:flex;align-items:center;gap:10px;font-family:'Fira Code',monospace;box-shadow:0 4px 15px rgba(0,0,0,0.5);">
+                        <span style="color:#94A3B8;font-weight:900;">🔀 Trilhos:</span>
+                        <span id="if_track_top" style="padding:2px 8px;border-radius:6px;background:#090D16;border:1px solid #334155;color:#64748B;transition:all 0.3s;">🚂 Linha Direta [else: false]</span>
+                        <span id="if_track_bottom" style="padding:2px 8px;border-radius:6px;background:rgba(239,68,68,0.25);border:1px solid #EF4444;color:#FCA5A5;font-weight:900;transition:all 0.3s;box-shadow:0 0 10px rgba(239,68,68,0.4);">⚡ Desvio [if: true]</span>
+                    </div>
+
                     <div class="if-3d-world" id="if_3d_world">
                         <!-- Tabuleiro Isométrico Amplo de 5x2 Ladrilhos 3D -->
                         <div class="if-3d-grid" id="if_3d_grid_tiles">
@@ -1094,6 +1101,10 @@ function if_n1_setObstacle(has) {
             reading.innerText = 'BARREIRA (true)';
             reading.style.color = '#EF4444';
         }
+        const trTop = document.getElementById('if_track_top');
+        const trBot = document.getElementById('if_track_bottom');
+        if (trTop) { trTop.style.background = '#090D16'; trTop.style.borderColor = '#334155'; trTop.style.color = '#64748B'; trTop.style.boxShadow = 'none'; }
+        if (trBot) { trBot.style.background = 'rgba(239,68,68,0.25)'; trBot.style.borderColor = '#EF4444'; trBot.style.color = '#FCA5A5'; trBot.style.boxShadow = '0 0 10px rgba(239,68,68,0.4)'; }
     } else {
         if(obs) obs.style.display = 'none';
         if(target) target.style.display = 'block';
@@ -1107,6 +1118,10 @@ function if_n1_setObstacle(has) {
             reading.innerText = 'PISTA LIVRE (false)';
             reading.style.color = '#34D399';
         }
+        const trTop = document.getElementById('if_track_top');
+        const trBot = document.getElementById('if_track_bottom');
+        if (trTop) { trTop.style.background = 'rgba(16,185,129,0.25)'; trTop.style.borderColor = '#10B981'; trTop.style.color = '#6EE7B7'; trTop.style.boxShadow = '0 0 10px rgba(16,185,129,0.4)'; }
+        if (trBot) { trBot.style.background = '#090D16'; trBot.style.borderColor = '#334155'; trBot.style.color = '#64748B'; trBot.style.boxShadow = 'none'; }
     }
     if_updateLiveCpp();
 }

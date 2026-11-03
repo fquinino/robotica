@@ -29,6 +29,41 @@ const safeStorage = {
 };
 const localStorage = safeStorage;
 
+// ================= DATA & STAR SYSTEM =================
+const getLevels = key => {
+    try {
+        return JSON.parse(safeStorage.getItem(key) || '[]');
+    } catch(e) {
+        return [];
+    }
+};
+window.getLevels = getLevels;
+
+const LESSON_MODULES = [
+    { key: 'tesouro_levels', max: 3, name: 'Caça ao Tesouro (Aula 1)', tab: 'tab-tesouro', category: 'robot' },
+    { key: 'loopmaker_levels', max: 4, name: 'Máquina de Loops (Aula 2)', tab: 'tab-loopmaker', category: 'code' },
+    { key: 'jardim_levels', max: 4, name: 'Decisões IF/ELSE (Aula 3)', tab: 'tab-jardim', category: 'robot' },
+    { key: 'semaforo_levels', max: 5, name: 'Semáforo Digital (Aula 4)', tab: 'tab-semaforo', category: 'code' },
+    { key: 'variaveis_levels', max: 8, name: 'Laboratório de Variáveis (Aula 5)', tab: 'tab-variaveis', category: 'code' },
+    { key: 'eletronica_levels', max: 6, name: 'Eletrônica & Lei de Ohm (Aula 6)', tab: 'tab-eletronica', category: 'electronics' },
+    { key: 'labmaker_levels', max: 3, name: 'Bancada Protoboard (Aula 7)', tab: 'tab-labmaker', category: 'electronics' },
+    { key: 'arduino_levels', max: 3, name: 'Arduino IDE & Drivers (Aula 8)', tab: 'tab-arduino', category: 'code' },
+    { key: 'aula9_levels', max: 3, name: 'Oficina Garagem Inteligente (Aula 9)', tab: 'tab-aula9', category: 'electronics' },
+    { key: 'aula10_levels', max: 5, name: 'Oficina Dr. Bug (Aula 10)', tab: 'tab-aula10', category: 'code' }
+];
+window.LESSON_MODULES = LESSON_MODULES;
+window.totalMaxStars = LESSON_MODULES.reduce((acc, m) => acc + m.max, 0); // 44 estrelas
+
+function getTotalStudentStars() {
+    return LESSON_MODULES.reduce((sum, m) => sum + getLevels(m.key).length, 0);
+}
+window.getTotalStudentStars = getTotalStudentStars;
+
+function getTotalCompletedPhases() {
+    return getTotalStudentStars();
+}
+window.getTotalCompletedPhases = getTotalCompletedPhases;
+
 // ================= AUDIO SYSTEM =================
 let audioCtx = null;
 function getAudioCtx() {
@@ -45,12 +80,50 @@ function getAudioCtx() {
     return audioCtx;
 }
 
+function play8BitFanfare() {
+    try {
+        const ctx = getAudioCtx();
+        if(!ctx) return;
+        if(ctx.state === 'suspended') ctx.resume().catch(() => {});
+
+        const notes = [
+            { f: 523.25, d: 0.12 }, // C5
+            { f: 659.25, d: 0.12 }, // E5
+            { f: 783.99, d: 0.12 }, // G5
+            { f: 1046.50, d: 0.18 }, // C6
+            { f: 880.00, d: 0.12 }, // A5
+            { f: 1046.50, d: 0.12 }, // C6
+            { f: 1318.51, d: 0.45 }  // E6 vitória
+        ];
+
+        let now = ctx.currentTime + 0.02;
+        notes.forEach(n => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(n.f, now);
+            gain.gain.setValueAtTime(0.18, now);
+            gain.gain.exponentialRampToValueAtTime(0.005, now + n.d);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + n.d);
+            now += n.d * 0.95;
+        });
+    } catch(e) {}
+}
+window.play8BitFanfare = play8BitFanfare;
+
 function playSound(type) {
     try {
         const ctx = getAudioCtx();
         if(!ctx) return;
         if(ctx.state === 'suspended') {
             ctx.resume().catch(() => {});
+        }
+        if(type === 'fanfare') {
+            play8BitFanfare();
+            return;
         }
         const osc = ctx.createOscillator();
         const gainNode = ctx.createGain();
@@ -178,6 +251,35 @@ function triggerErrorSplash(title, message, hint = '', icon = '💥', solutionCo
     playSound('error');
     const modal = document.getElementById('error-splash-modal');
     if (!modal) return;
+
+    // Detecção dinâmica do contexto da aula ativa
+    let activeTabId = '';
+    const activePanel = document.querySelector('.game-panel.active');
+    if (activePanel) activeTabId = activePanel.id;
+
+    const isRobotLesson = activeTabId === 'tab-tesouro' || activeTabId === 'tab-jardim' || attemptKey.includes('tesouro') || attemptKey.includes('jardim');
+    const isElectronicsLesson = activeTabId === 'tab-labmaker' || activeTabId === 'tab-eletronica' || activeTabId === 'tab-aula9' || attemptKey.includes('lab') || attemptKey.includes('elet') || attemptKey.includes('aula9');
+    const isCodeLesson = activeTabId === 'tab-semaforo' || activeTabId === 'tab-loopmaker' || activeTabId === 'tab-variaveis' || activeTabId === 'tab-arduino' || activeTabId === 'tab-aula10' || attemptKey.includes('sem') || attemptKey.includes('loop') || attemptKey.includes('vars') || attemptKey.includes('ard') || attemptKey.includes('aula10');
+
+    if (isElectronicsLesson) {
+        if (!title || title.includes('Robô') || title === 'Ops!') {
+            title = '⚡ Curto-Circuito na Bancada!';
+            icon = '⚡';
+            if (!hint) hint = 'Verifique se os fios positivo (+5V) e negativo (GND) estão bem ligados e se os resistores protegem os componentes!';
+        }
+    } else if (isCodeLesson) {
+        if (!title || title.includes('Robô') || title === 'Ops!') {
+            title = '🧩 Bug no Código!';
+            icon = '🧩';
+            if (!hint) hint = 'Confira os tipos de dados, chaves {}, ponto e vírgula (;) e os tempos em delay()!';
+        }
+    } else if (isRobotLesson) {
+        if (!title) {
+            title = '💥 Ops! O Robô bateu!';
+            icon = '💥';
+            if (!hint) hint = 'Revise a ordem dos passos para o robô contornar os obstáculos!';
+        }
+    }
 
     if (!currentAttemptsMap[attemptKey]) currentAttemptsMap[attemptKey] = 0;
     currentAttemptsMap[attemptKey]++;
@@ -343,20 +445,17 @@ function closeErrorSplash() {
 
 // ================= CERTIFICADO MAKER (EXCLUSIVO DA AULA 10) =================
 function showCertificateModal() {
-    const isAula10Done = localStorage.getItem('aula10_completed') === 'true';
+    const isAula10Done = (localStorage.getItem('aula10_completed') === 'true') || (getLevels('aula10_levels').length >= 5);
     if (!isAula10Done) {
         if (typeof playSound === 'function') playSound('error');
-        alert('🎓 O Certificado Oficial Maker será emitido e liberado exclusivamente na conclusão da Aula 10 (Programação & Upload no Arduino IDE)!');
+        alert('🎓 O Certificado Oficial Maker será emitido e liberado exclusivamente na conclusão dos desafios da Aula 10!');
         return;
     }
     const modal = document.getElementById('cert_modal');
     if(!modal) return;
-    const totalStars = getLevels('semaforo_levels').length + getLevels('tesouro_levels').length + 
-                       getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
-                       getLevels('jardim_levels').length + getLevels('arduino_levels').length +
-                       getLevels('variaveis_levels').length + getLevels('eletronica_levels').length;
+    const totalStars = getTotalStudentStars();
     const detail = document.getElementById('cert_stars_detail');
-    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de 36 Estrelas Maker!`;
+    if(detail) detail.innerHTML = `⭐ Conquistou ${totalStars} de ${window.totalMaxStars} Estrelas Maker!`;
     modal.style.display = 'flex';
 }
 
@@ -368,13 +467,17 @@ function closeCertificateModal() {
 // ================= CONTROLE DE ABAS E ROUTER =================
 function openTab(tabId) {
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.lesson-nav-btn').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.game-panel').forEach(p=>p.classList.remove('active'));
     
     const panel = document.getElementById(tabId);
     if(panel) panel.classList.add('active');
     
-    const btn = document.querySelector(`.tab-btn[data-tab=${tabId}]`);
+    const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
     if(btn) btn.classList.add('active');
+
+    const lessonBtn = document.querySelector(`.lesson-nav-btn[data-lesson-tab="${tabId}"]`);
+    if(lessonBtn) lessonBtn.classList.add('active');
 
     if (tabId === 'tab-trail') { if(typeof updateTrail==='function') updateTrail(); return; }
     if (tabId === 'tab-hub') { if(typeof updateHubProgress==='function') updateHubProgress(); return; }
@@ -465,7 +568,8 @@ function resetAllProgress() {
         [
             'semaforo_levels','tesouro_levels','labmaker_levels','loopmaker_levels',
             'jardim_levels','arduino_levels','variaveis_levels','eletronica_levels',
-            'lab_challenges_done','lab_unlocked_step','lab_minigame_won','aula10_completed'
+            'aula9_levels','aula10_levels','aula9_completed','aula10_completed',
+            'lab_challenges_done','lab_unlocked_step','lab_minigame_won'
         ].forEach(k => localStorage.removeItem(k));
         alert('Progresso zerado! Vamos começar de novo!');
         if(typeof updateTrail==='function') updateTrail();
@@ -479,6 +583,7 @@ function resetAllProgress() {
         if(typeof sem_switchLevel==='function') sem_switchLevel(1);
         if(typeof vars_switchLevel==='function') vars_switchLevel(1);
         if(typeof elet_switchLevel==='function') elet_switchLevel(1);
+        if(typeof a10_init=== 'function') a10_init();
     }
 }
 

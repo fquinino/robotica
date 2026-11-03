@@ -58,7 +58,19 @@
         // AULA 8: OFICINA DO ARDUINO (3 Níveis)
         { id: 'arduino_1', module: 'arduino', moduleName: 'Aula 8: Oficina do Arduino', num: 1, name: 'Lei de Ohm & Tubo de Elétrons', icon: '🧪', benchmarkTime: 10.0, benchmarkPlayer: 'Robô Alfa' },
         { id: 'arduino_2', module: 'arduino', moduleName: 'Aula 8: Oficina do Arduino', num: 2, name: 'Modulação PWM & Osciloscópio', icon: '🌊', benchmarkTime: 12.5, benchmarkPlayer: 'ByteMaster' },
-        { id: 'arduino_3', module: 'arduino', moduleName: 'Aula 8: Oficina do Arduino', num: 3, name: 'Quiz Maker de Eletrônica', icon: '🏆', benchmarkTime: 18.0, benchmarkPlayer: 'Ana Dev' }
+        { id: 'arduino_3', module: 'arduino', moduleName: 'Aula 8: Oficina do Arduino', num: 3, name: 'Quiz Maker de Eletrônica', icon: '🏆', benchmarkTime: 18.0, benchmarkPlayer: 'Ana Dev' },
+
+        // AULA 9: SENSORES, PALMAS & DISPLAY (3 Níveis)
+        { id: 'aula9_1', module: 'aula9', moduleName: 'Aula 9: Prática Maker', num: 1, name: 'Luz da Garagem por Palmas', icon: '👏', benchmarkTime: 12.0, benchmarkPlayer: 'Robô Alfa' },
+        { id: 'aula9_2', module: 'aula9', moduleName: 'Aula 9: Prática Maker', num: 2, name: 'Painel Digital LCD 16x2', icon: '📟', benchmarkTime: 15.0, benchmarkPlayer: 'DevKid' },
+        { id: 'aula9_3', module: 'aula9', moduleName: 'Aula 9: Prática Maker', num: 3, name: 'Sensor de Ré com Buzzer', icon: '🚗', benchmarkTime: 20.0, benchmarkPlayer: 'SpeedDev' },
+
+        // AULA 10: OFICINA DR. BUG (5 Níveis)
+        { id: 'aula10_1', module: 'aula10', moduleName: 'Aula 10: Oficina Dr. Bug', num: 1, name: 'Robô Pula-Linha (delay)', icon: '⏱️', benchmarkTime: 9.0, benchmarkPlayer: 'Robô Alfa' },
+        { id: 'aula10_2', module: 'aula10', moduleName: 'Aula 10: Oficina Dr. Bug', num: 2, name: 'Robô Cego (pinMode INPUT)', icon: '🔌', benchmarkTime: 11.0, benchmarkPlayer: 'Ana Dev' },
+        { id: 'aula10_3', module: 'aula10', moduleName: 'Aula 10: Oficina Dr. Bug', num: 3, name: 'Robô Desgovernado (Ponto e Vírgula ;)', icon: '🐞', benchmarkTime: 13.0, benchmarkPlayer: 'ByteMaster' },
+        { id: 'aula10_4', module: 'aula10', moduleName: 'Aula 10: Oficina Dr. Bug', num: 4, name: 'Robô Travado no Loop (i++)', icon: '🔄', benchmarkTime: 16.0, benchmarkPlayer: 'CyberMaker' },
+        { id: 'aula10_5', module: 'aula10', moduleName: 'Aula 10: Oficina Dr. Bug', num: 5, name: 'Robô Guarda-Chuva (Condicional IF)', icon: '☔', benchmarkTime: 22.0, benchmarkPlayer: 'SpeedDev' }
     ];
 
     const STORAGE_KEY = 'maker_leaderboard';
@@ -364,6 +376,10 @@
                 if (levelNum === 1) window.ard_switchSubTab('ard-tab-ohm');
                 else if (levelNum === 2) window.ard_switchSubTab('ard-tab-pwm');
                 else window.ard_switchSubTab('ard-tab-quiz');
+            } else if (moduleKey === 'aula9') {
+                if (typeof window.openTab === 'function') window.openTab('tab-aula9');
+            } else if (moduleKey === 'aula10') {
+                if (typeof window.openTab === 'function') window.openTab('tab-aula10');
             }
             startTimer(moduleKey, levelNum);
         }, 150);
@@ -443,13 +459,13 @@
         }
 
         const statRecordsEl = document.getElementById('lb_stat_records');
-        if (statRecordsEl) statRecordsEl.innerText = `${userRecordsCount} de 30`;
+        if (statRecordsEl) statRecordsEl.innerText = `${userRecordsCount} de ${ALL_LEVELS_METADATA.length}`;
 
         const statTotalTimeEl = document.getElementById('lb_stat_total_time');
         if (statTotalTimeEl) statTotalTimeEl.innerText = formatTime(totalBestSeconds);
 
         const statCompletedEl = document.getElementById('lb_stat_completed');
-        if (statCompletedEl) statCompletedEl.innerText = `${totalCompleted} / 30 Fases`;
+        if (statCompletedEl) statCompletedEl.innerText = `${totalCompleted} / ${ALL_LEVELS_METADATA.length} Fases`;
 
         // Filtro de Níveis
         const filteredLevels = ALL_LEVELS_METADATA.filter(lvl => {
@@ -471,7 +487,7 @@
                         ${currentFilter === 'my_records' ? 'Você ainda não assumiu a 1ª posição em nenhuma fase deste filtro. Desafie os recordistas e marque seu codinome no topo!' : 'Nenhum nível correspondente encontrado.'}
                     </p>
                     <button type="button" class="lb-play-btn" style="max-width:240px; margin:0 auto;" onclick="makerLeaderboard.setFilter('all'); document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); document.querySelector('.lb-filter-btn')?.classList.add('active');">
-                        Ver Todas as 30 Fases
+                        Ver Todas as ${ALL_LEVELS_METADATA.length} Fases
                     </button>
                 </div>
             `;

@@ -2250,7 +2250,7 @@ function loadArduino() {
                             <button type="button" onclick="ard_loadSketch('semaforo_maker.ino')" class="ard-sketch-quickbtn active" id="btn-quick-semaforo" title="Carregar Semáforo Inteligente">🚦 Semáforo</button>
                             <button type="button" onclick="ard_loadSketch('Sensor_Ultrassonico_Distancia.ino')" class="ard-sketch-quickbtn" id="btn-quick-ultra" title="Carregar Sensor Ultrassônico de Distância HC-SR04">📏 Sensor Distância</button>
                             <button type="button" onclick="ard_loadSketch('Interruptor_Palmas.ino')" class="ard-sketch-quickbtn" id="btn-quick-clap" title="Carregar Luz Automática por Palmas (Clap Switch)">👏 Luz por Palmas</button>
-                            <button type="button" onclick="ard_loadSketch('Display_LCD_Mensagem.ino')" class="ard-sketch-quickbtn" id="btn-quick-lcd" title="Carregar Display LCD 16x2 I2C">📟 Display LCD</button>
+                            <button type="button" onclick="ard_loadSketch('Display_LCD_Mensagem.ino')" class="ard-sketch-quickbtn" id="btn-quick-lcd" title="Carregar Display LCD 16x2 Direto">📟 Display LCD</button>
                             <button type="button" onclick="ard_loadSketch('Radar_Com_Display.ino')" class="ard-sketch-quickbtn" id="btn-quick-radar" title="Carregar Sensor Ultrassônico + Display LCD Juntos">🚀 Sensor + Display</button>
                             <button type="button" onclick="ard_loadSketch('Sensor_LDR_Luz.ino')" class="ard-sketch-quickbtn" id="btn-quick-ldr" title="Carregar Sensor de Luminosidade LDR">☀️ Sensor LDR</button>
                             <button type="button" onclick="ard_loadSketch('Blink.ino')" class="ard-sketch-quickbtn" id="btn-quick-blink" title="Carregar Pisca LED (Blink Oficial)">💡 Blink</button>
@@ -3523,17 +3523,16 @@ void loop() {
 
   delay(150); // Pausa suave antes da próxima leitura
 }`,
-    'Display_LCD_Mensagem.ino': `// Projeto: Display LCD 16x2 com Módulo I2C (Apenas 4 Fios!)
-// Conexão I2C: SDA no pino A4, SCL no pino A5, VCC no 5V, GND no GND
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+    'Display_LCD_Mensagem.ino': `// Projeto: Display LCD 16x2 Direto (Sem I2C e Sem Potenciômetro!)
+// Pinos: RS=12, E=11, D4=5, D5=4, D6=3, D7=2
+// VSS, V0 (Contraste fixo) e RW ligados no GND (-) dispensando o potenciômetro!
+// VDD e A (Luz de fundo) ligados no 5V (+)
+#include <LiquidCrystal.h>
 
-// Endereço 0x27, tela com 16 colunas e 2 linhas
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 void setup() {
-  lcd.init();      // Inicializa o circuito do LCD
-  lcd.backlight(); // Liga a luz de fundo azul/verde
+  lcd.begin(16, 2); // Inicia tela com 16 colunas e 2 linhas
 
   // Escreve na Linha 0 (Superior): Coluna 0, Linha 0
   lcd.setCursor(0, 0);
@@ -3548,18 +3547,17 @@ void loop() {
   // A mensagem fica acesa continuamente na tela
   delay(1000);
 }`,
-    'Radar_Com_Display.ino': `// Super Projeto: Sensor Ultrassônico + Display LCD I2C Juntos!
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+    'Radar_Com_Display.ino': `// Super Projeto: Sensor Ultrassônico + Display LCD 16x2 Juntos!
+// Sem I2C e Sem Potenciômetro (LiquidCrystal Oficial)
+#include <LiquidCrystal.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 const int pinoTrig = 9;
 const int pinoEcho = 8;
-const int pinoLedAlerta = 13;
+const int pinoLedAlerta = 10;
 
 void setup() {
-  lcd.init();
-  lcd.backlight();
+  lcd.begin(16, 2);
   pinMode(pinoTrig, OUTPUT);
   pinMode(pinoEcho, INPUT);
   pinMode(pinoLedAlerta, OUTPUT);

@@ -14,9 +14,71 @@
     <p class="subtitle">🧩 Aprenda Lógica de Programação e Arduino passo a passo — 10 aulas para virar um Maker!</p>
     
     <div class="tabs">
-        <button class="tab-btn active" data-tab="tab-trail">📚 Aulas</button>
-        <button class="tab-btn" data-tab="tab-hub">🏆 Conquistas</button>
+        <button class="tab-btn active" data-tab="tab-trail"><i class="fa-solid fa-map"></i> 🗺️ Trilha Completa</button>
+        <button class="tab-btn" data-tab="tab-hub"><i class="fa-solid fa-trophy"></i> 🏆 Conquistas & Painel</button>
         <button class="tab-btn" data-tab="tab-leaderboard"><i class="fa-solid fa-bolt" style="color:#FBBF24;"></i> ⚡ Recordes & Speedrun</button>
+    </div>
+
+    <!-- MENU DE ACESSO DIRETO A CADA AULA (AULAS 1 A 10) -->
+    <div class="quick-lessons-nav">
+        <div class="quick-lessons-header">
+            <span class="quick-lessons-title">
+                <i class="fa-solid fa-layer-group" style="color:#FBBF24;"></i> Menu de Aulas — Escolha e Entre Direto na Bancada:
+            </span>
+            <span class="quick-lessons-badge">10 Aulas Disponíveis • 44 Missões ⭐</span>
+        </div>
+        <div class="lessons-grid-nav">
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-tesouro" onclick="openTab('tab-tesouro')" title="Aula 1: Algoritmos e Caça ao Tesouro">
+                <span class="lnav-icon">🤖</span>
+                <span class="lnav-text">Aula 1</span>
+                <small class="lnav-sub">Tesouro</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-loopmaker" onclick="openTab('tab-loopmaker')" title="Aula 2: Laço FOR e Máquina de Loops">
+                <span class="lnav-icon">🔄</span>
+                <span class="lnav-text">Aula 2</span>
+                <small class="lnav-sub">Loops</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-jardim" onclick="openTab('tab-jardim')" title="Aula 3: Condicionais IF/ELSE">
+                <span class="lnav-icon">🌱</span>
+                <span class="lnav-text">Aula 3</span>
+                <small class="lnav-sub">IF/ELSE</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-semaforo" onclick="openTab('tab-semaforo')" title="Aula 4: Sequências Temporizadas & Semáforo">
+                <span class="lnav-icon">🚦</span>
+                <span class="lnav-text">Aula 4</span>
+                <small class="lnav-sub">Semáforo</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-variaveis" onclick="openTab('tab-variaveis')" title="Aula 5: Variáveis & Tipos de Dados">
+                <span class="lnav-icon">🧮</span>
+                <span class="lnav-text">Aula 5</span>
+                <small class="lnav-sub">Variáveis</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-eletronica" onclick="openTab('tab-eletronica')" title="Aula 6: Eletrônica & Lei de Ohm">
+                <span class="lnav-icon">⚡</span>
+                <span class="lnav-text">Aula 6</span>
+                <small class="lnav-sub">Eletrônica</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-labmaker" onclick="openTab('tab-labmaker')" title="Aula 7: Circuitos & Protoboard">
+                <span class="lnav-icon">🔌</span>
+                <span class="lnav-text">Aula 7</span>
+                <small class="lnav-sub">Protoboard</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-arduino" onclick="openTab('tab-arduino')" title="Aula 8: Arduino IDE, Drivers & Placa">
+                <span class="lnav-icon">🛠️</span>
+                <span class="lnav-text">Aula 8</span>
+                <small class="lnav-sub">Arduino</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-aula9" onclick="openTab('tab-aula9')" title="Aula 9: Sensores, Palmas & Display">
+                <span class="lnav-icon">🚗</span>
+                <span class="lnav-text">Aula 9</span>
+                <small class="lnav-sub">Garagem</small>
+            </button>
+            <button type="button" class="lesson-nav-btn" data-lesson-tab="tab-aula10" onclick="openTab('tab-aula10')" title="Aula 10: Almanaque, Dr. Bug & Certificado">
+                <span class="lnav-icon">🎓</span>
+                <span class="lnav-text">Aula 10</span>
+                <small class="lnav-sub">Revisão</small>
+            </button>
+        </div>
     </div>
 
     <!-- TRILHA DE APRENDIZAGEM -->
@@ -28,7 +90,7 @@
                 <p>10 aulas do zero até o Arduino real. Cada aula tem 🎯 conceito + 🎮 jogo prático!</p>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 6px;">
                     <span style="color:#94A3B8;font-size:0.85rem;font-weight:800;">Progresso Geral</span>
-                    <span id="trail-star-count" style="color:#F59E0B;font-weight:900;font-size:0.95rem;">0 / 21 ⭐</span>
+                    <span id="trail-star-count" style="color:#F59E0B;font-weight:900;font-size:0.95rem;">0 / 44 ⭐</span>
                 </div>
                 <div class="trail-progress-bar-wrap"><div class="trail-progress-bar-inner" id="trail-progress-bar"></div></div>
             </div>
@@ -47,7 +109,7 @@
             <div style="flex:1;min-width:260px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                     <span style="font-weight:900;color:#38BDF8;font-size:1.15rem;"><i class="fa-solid fa-trophy"></i> Progresso Maker Geral</span>
-                    <span id="hub-star-count" style="font-weight:900;color:#F59E0B;font-size:1.15rem;">0 / 36 ⭐</span>
+                    <span id="hub-star-count" style="font-weight:900;color:#F59E0B;font-size:1.15rem;">0 / 44 ⭐</span>
                 </div>
                 <div style="background:#1E293B;height:16px;border-radius:12px;overflow:hidden;border:1px solid #334155;padding:2px;">
                     <div id="hub-progress-bar" style="background:linear-gradient(90deg,#38BDF8,#10B981);height:100%;width:0%;border-radius:10px;transition:width 0.5s ease;"></div>
@@ -113,20 +175,20 @@
             <div class="hub-card" onclick="openTab('tab-aula9')" style="background:#1E293B;padding:22px;border-radius:24px;border:2px solid #F59E0B;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
                 <i class="fa-solid fa-microchip" style="font-size:3rem;color:#F59E0B;margin-bottom:10px;"></i>
                 <h3 style="color:white;font-family:'Fredoka One';">Sensores, Palmas &amp; Display</h3>
-                <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Bancadas interativas na protoboard: Ultrassônico HC-SR04, Luz por Palmas e Display LCD I2C</p>
-                <div id="badge-aula9" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F59E0B;font-size:0.9rem;">Prática Maker 🛠️</div>
+                <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Bancadas interativas na protoboard: Ultrassônico HC-SR04, Luz por Palmas e Display LCD 16x2 Direto</p>
+                <div id="badge-aula9" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#F59E0B;font-size:0.9rem;">0/3 Missões ⭐</div>
             </div>
             <div class="hub-card" onclick="openTab('tab-aula10')" style="background:#1E293B;padding:22px;border-radius:24px;border:2px solid #10B981;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
                 <i class="fa-solid fa-code" style="font-size:3rem;color:#10B981;margin-bottom:10px;"></i>
                 <h3 style="color:white;font-family:'Fredoka One';">Almanaque de Funções &amp; Revisão</h3>
                 <p style="color:#94A3B8;font-size:0.9rem;margin:6px 0 12px;">Dicionário interativo de funções C++, Playground, Quiz Maker e Certificado Oficial</p>
-                <div id="badge-aula10" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#10B981;font-size:0.9rem;">Certificado Maker 🎓</div>
+                <div id="badge-aula10" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#10B981;font-size:0.9rem;">0/5 Desafios ⭐</div>
             </div>
             <div class="hub-card" onclick="openTab('tab-leaderboard')" style="background:linear-gradient(135deg,#1E1B4B,#1E293B);padding:22px;border-radius:24px;border:2px solid #F59E0B;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;text-align:center;">
                 <i class="fa-solid fa-ranking-star" style="font-size:3rem;color:#FBBF24;margin-bottom:10px;"></i>
                 <h3 style="color:#FBBF24;font-family:'Fredoka One';">Placar de Recordes</h3>
                 <p style="color:#CBD5E1;font-size:0.9rem;margin:6px 0 12px;">Menores tempos de conclusão por fase — Desafie seus colegas no Speedrun!</p>
-                <div id="badge-hub-leaderboard" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#FBBF24;font-size:0.9rem;">⚡ 36 Fases Speedrun</div>
+                <div id="badge-hub-leaderboard" style="background:#0F172A;padding:6px 14px;border-radius:12px;display:inline-block;font-weight:800;color:#FBBF24;font-size:0.9rem;">⚡ 44 Fases Speedrun</div>
             </div>
         </div>
     </div>
@@ -136,7 +198,7 @@
         <div class="lb-hero-banner">
             <h2 class="lb-hero-title"><i class="fa-solid fa-bolt" style="color:#FBBF24;"></i> ⚡ Placar dos Campeões Maker</h2>
             <p class="lb-hero-subtitle">
-                Rastreamento do <b>Menor Tempo de Conclusão</b> em cada fase! Programe com agilidade, teste sua lógica e tente conquistar o 1º Lugar em todas as 30 missões da plataforma!
+                Rastreamento do <b>Menor Tempo de Conclusão</b> em cada fase! Programe com agilidade, teste sua lógica e tente conquistar o 1º Lugar em todas as 44 missões da plataforma!
             </p>
 
             <div class="lb-player-bar">
@@ -150,7 +212,7 @@
         <div class="lb-stats-grid">
             <div class="lb-stat-box highlight">
                 <div class="lb-stat-label">👑 Seus Recordes (1º Lugar)</div>
-                <div class="lb-stat-val" id="lb_stat_records">0 de 36</div>
+                <div class="lb-stat-val" id="lb_stat_records">0 de 44</div>
             </div>
             <div class="lb-stat-box">
                 <div class="lb-stat-label">⏱️ Tempo Total Speedrun</div>
@@ -158,13 +220,13 @@
             </div>
             <div class="lb-stat-box">
                 <div class="lb-stat-label">⭐ Níveis Registrados</div>
-                <div class="lb-stat-val" id="lb_stat_completed" style="color:#34D399;">36 / 36 Fases</div>
+                <div class="lb-stat-val" id="lb_stat_completed" style="color:#34D399;">0 / 44 Fases</div>
             </div>
         </div>
 
         <!-- FILTROS POR AULA -->
         <div class="lb-filters-bar">
-            <button class="lb-filter-btn active" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('all');">🌟 Todas as Aulas (36)</button>
+            <button class="lb-filter-btn active" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('all');">🌟 Todas as Aulas (44)</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('my_records');" style="color:#FBBF24;border-color:#F59E0B;">👑 Seus Recordes</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('tesouro');">🤖 Aula 1: Tesouro</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('loopmaker');">🔄 Aula 2: Loops</button>
@@ -174,6 +236,8 @@
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('eletronica');">⚡ Aula 6: Eletrônica</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('labmaker');">🔌 Aula 7: Protoboard</button>
             <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('arduino');">🤖 Aula 8: Arduino</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('aula9');">🚗 Aula 9: Garagem</button>
+            <button class="lb-filter-btn" onclick="document.querySelectorAll('.lb-filter-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); makerLeaderboard.setFilter('aula10');">🎓 Aula 10: Dr. Bug</button>
         </div>
 
         <!-- CONTAINER DOS CARDS DE NÍVEIS -->
@@ -286,7 +350,7 @@
         <div id="aula10-container"></div>
     </div>
 
-    <div class="footer">⭐ 3 ou 4 estrelas por módulo = 100% completo!</div>
+    <div class="footer">⭐ Conclua todos os níveis e missões de cada módulo para atingir 100% e liberar todas as conquistas!</div>
 
     <!-- MODAL DE AULA TEÓRICA -->
     <div class="lesson-modal" id="lesson-modal">

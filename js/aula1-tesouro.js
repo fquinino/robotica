@@ -52,6 +52,14 @@
                 .tesouro-wrapper .cell.ladder.ladder-down::before { content:'⬇'; position:absolute; top:2px; right:3px; font-size:0.7rem; color:#EF4444; z-index:3; }
                 @keyframes ladderPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
 
+                /* Indicador de direção e rastro de pegadas brilhantes */
+                .t-robot-dir-indicator { position:absolute; font-size:13px; font-weight:900; color:#FCD34D; filter:drop-shadow(0 0 5px #F59E0B); pointer-events:none; z-index:12; transition:all 0.18s ease; }
+                .t-robot-dir-indicator.dir-right { right:1px; top:50%; transform:translateY(-50%) rotate(0deg); }
+                .t-robot-dir-indicator.dir-down { bottom:1px; left:50%; transform:translateX(-50%) rotate(90deg); }
+                .t-robot-dir-indicator.dir-left { left:1px; top:50%; transform:translateY(-50%) rotate(180deg); }
+                .t-robot-dir-indicator.dir-up { top:1px; left:50%; transform:translateX(-50%) rotate(270deg); }
+                .t-footprint-marker { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:0.85rem; color:#38BDF8; opacity:0.75; text-shadow:0 0 8px rgba(56,189,248,0.8); pointer-events:none; z-index:1; animation:ardFadeIn 0.25s ease; }
+
                 /* Caminho solução */
                 .tesouro-wrapper .cell.solution-path { background:rgba(56,189,248,0.22) !important; border-color:#38BDF8 !important; }
                 .tesouro-wrapper .cell.solution-path::before { content:attr(data-step); position:absolute; font-size:0.7rem; font-weight:900; color:#38BDF8; top:2px; left:4px; z-index:5; }
@@ -369,6 +377,7 @@
 
     let t_level = 1, t_seq = [], t_running = false, t_robotPos = {x:0,y:0,z:0}, t_treasurePos = {x:4,y:4,z:0}, t_floors = [], t_gridSize = 5;
     let t_errors = 0, t_codePanelOpen = false;
+    let t_visitedFootprints = [], t_robotDir = 'RIGHT';
 
     const T_ROBOT_SVG = `<svg class="robot-svg" width="32" height="38" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="8" y="10" width="16" height="14" rx="4" fill="#60A5FA" stroke="#3B82F6" stroke-width="1.5"/>
@@ -1182,10 +1191,17 @@
                     if(t_robotPos.z > 0) cell.classList.add('elevated');
                     cell.innerHTML = T_TREASURE_SVG;
                 }
+                const hasFootprint = t_visitedFootprints.some(f => f.x === x && f.y === y && f.z === t_robotPos.z);
+                if(hasFootprint && !isObs && !isTreas) {
+                    const foot = document.createElement('div');
+                    foot.className = 't-footprint-marker';
+                    foot.innerHTML = '🐾';
+                    cell.appendChild(foot);
+                }
                 board.appendChild(cell);
             }
         }
-        t_drawRobot(t_robotPos.x, t_robotPos.y);
+        t_drawRobot(t_robotPos.x, t_robotPos.y, '', t_robotDir);
         t_updateFloorBar();
     }
     
@@ -1325,7 +1341,7 @@
         overlay.classList.remove('show');
     }
 
-    function t_drawRobot(x, y, status='') {
+    function t_drawRobot(x, y, status='', dir=t_robotDir) {
         document.querySelectorAll('.tesouro-wrapper .robot').forEach(el => {
             el.classList.remove('robot','crash','win','moving');
             el.innerHTML = el.classList.contains('treasure') ? T_TREASURE_SVG : '';
@@ -1334,7 +1350,8 @@
         if(cell) {
             cell.classList.add('robot');
             if(status) cell.classList.add(status);
-            cell.innerHTML = T_ROBOT_SVG;
+            const dirClass = (dir || t_robotDir || 'RIGHT').toLowerCase();
+            cell.innerHTML = T_ROBOT_SVG + `<div class="t-robot-dir-indicator dir-${dirClass}">➤</div>`;
         }
     }
 
@@ -1372,6 +1389,8 @@
         const area = document.getElementById('t_codeArea');
         if(area) area.innerHTML = '<span style="color:#64748B;">Adicione comandos...</span>';
         t_robotPos={x:0,y:0,z:0};
+        t_visitedFootprints = [];
+        t_robotDir = 'RIGHT';
         t_renderBoard();
         t_updateArduinoCode();
         const box = document.getElementById('t_solution_box');
@@ -1448,41 +1467,55 @@
         playSound('click');
         t_running = true;
         t_robotPos = {x:0,y:0,z:0};
+        t_visitedFootprints = [];
+        t_robotDir = 'RIGHT';
         t_renderBoard();
         for(let i=0; i<t_seq.length; i++) {
             await t_sleep(450);
             const cmd = t_seq[i];
             let nx=t_robotPos.x, ny=t_robotPos.y, nz=t_robotPos.z;
             const floor = t_floors[nz];
-            if(cmd==='UP') ny--; if(cmd==='DOWN') ny++; if(cmd==='LEFT') nx--; if(cmd==='RIGHT') nx++;
+            if(cmd==='UP') { ny--; t_robotDir = 'UP'; }
+            if(cmd==='DOWN') { ny++; t_robotDir = 'DOWN'; }
+            if(cmd==='LEFT') { nx--; t_robotDir = 'LEFT'; }
+            if(cmd==='RIGHT') { nx++; t_robotDir = 'RIGHT'; }
             if(cmd==='SUBIR'||cmd==='DESCER') {
                 if(floor.ladders.some(l=>l.x===t_robotPos.x&&l.y===t_robotPos.y)) {
                     if(cmd==='SUBIR'&&nz<t_floors.length-1) nz++;
                     else if(cmd==='DESCER'&&nz>0) nz--;
-                    else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_triggerError('Sem saída!','Não há mais andares nessa direção!','Use a escada 🪜 na posição certa.'); return; }
+                    else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash',t_robotDir); t_triggerError('Sem saída!','Não há mais andares nessa direção!','Use a escada 🪜 na posição certa.'); return; }
                     const dir = cmd==='SUBIR'?'up':'down';
                     playSound('success');
                     t_robotPos={x:t_robotPos.x,y:t_robotPos.y,z:nz};
                     await t_showFloorTransition(dir, t_robotPos.z, nz);
                     continue;
-                } else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_triggerError('Sem escada!','Você precisa estar sobre a escada 🪜 para subir ou descer!','Posicione o robô exatamente no quadrado com a escada.'); return; }
+                } else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash',t_robotDir); t_triggerError('Sem escada!','Você precisa estar sobre a escada 🪜 para subir ou descer!','Posicione o robô exatamente no quadrado com a escada.'); return; }
             }
             if(nx<0||nx>=t_gridSize||ny<0||ny>=t_gridSize) {
-                t_drawRobot(t_robotPos.x,t_robotPos.y,'crash'); t_triggerError('Saiu do mapa!','O robô foi além dos limites do grid.','Ajuste a quantidade de passos para não passar dos limites.'); return;
+                t_drawRobot(t_robotPos.x,t_robotPos.y,'crash',t_robotDir); t_triggerError('Saiu do mapa!','O robô foi além dos limites do grid.','Ajuste a quantidade de passos para não passar dos limites.'); return;
             }
             if(floor.obstacles.some(o=>o.x===nx&&o.y===ny)) {
-                t_robotPos={x:nx,y:ny,z:nz}; t_drawRobot(nx,ny,'crash'); t_triggerError('Bloqueado!','O robô bateu num obstáculo ✖!','Planeje uma rota desviando das barreiras.'); return;
+                t_robotPos={x:nx,y:ny,z:nz}; t_drawRobot(nx,ny,'crash',t_robotDir); t_triggerError('Bloqueado!','O robô bateu num obstáculo ✖!','Planeje uma rota desviando das barreiras.'); return;
             }
             const prevX=t_robotPos.x, prevY=t_robotPos.y;
+            t_visitedFootprints.push({x: prevX, y: prevY, z: nz});
             t_robotPos={x:nx,y:ny,z:nz};
             playSound('step');
             const prevCell = document.getElementById(`tc-${prevX}-${prevY}`);
-            if(prevCell) { prevCell.classList.remove('robot'); prevCell.innerHTML = ''; }
+            if(prevCell) {
+                prevCell.classList.remove('robot');
+                prevCell.innerHTML = '<div class="t-footprint-marker">🐾</div>';
+            }
             const newCell = document.getElementById(`tc-${nx}-${ny}`);
-            if(newCell) { newCell.classList.add('robot','moving'); newCell.innerHTML = T_ROBOT_SVG; setTimeout(()=>newCell.classList.remove('moving'),300); }
+            if(newCell) {
+                newCell.classList.add('robot','moving');
+                const dirClass = (t_robotDir || 'RIGHT').toLowerCase();
+                newCell.innerHTML = T_ROBOT_SVG + `<div class="t-robot-dir-indicator dir-${dirClass}">➤</div>`;
+                setTimeout(()=>newCell.classList.remove('moving'),300);
+            }
         }
         if(t_robotPos.x===t_treasurePos.x&&t_robotPos.y===t_treasurePos.y&&t_robotPos.z===t_treasurePos.z) {
-            t_drawRobot(t_robotPos.x,t_robotPos.y,'win');
+            t_drawRobot(t_robotPos.x,t_robotPos.y,'win',t_robotDir);
             t_spawnConfetti();
             const nextMsg = t_level < 3 ? `<br><br><span style="color:#38BDF8;font-size:0.9rem;">Nível ${t_level+1} desbloqueado em 3 segundos...</span>` : '';
             t_showModal('🏆','Tesouro Encontrado! 🎉','O robô chegou ao pote de ouro! Incrível!'+nextMsg);

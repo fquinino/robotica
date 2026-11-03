@@ -4,7 +4,10 @@
 
 const UNLOCKED_LESSONS = 10; // Todas as 10 Aulas liberadas para acesso e exploração completa!
 
-const getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
+// getLevels is provided globally by core.js
+if (typeof window.getLevels === 'undefined') {
+    window.getLevels = key => { try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; } };
+}
 
 // ================= CONTEÚDO DAS 10 AULAS (LÚDICO PARA CRIANÇAS) =================
 const lessonContents = {
@@ -275,7 +278,7 @@ void loop() {
             <br>• <b>A Função dele:</b> Mede quantos centímetros faltam para encostar no muro. Se estiver a menos de 15 cm, aciona o alerta de colisão ("PARE!").
         </p>
         <div style="background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.4); border-radius:8px; padding:8px 10px; font-size:0.78rem; color:#BAE6FD;">
-            🔌 <b>Conexões:</b> VCC ➔ 5V | GND ➔ Terra | Trig ➔ Pino 9 | Echo ➔ Pino 8
+            🔌 <b>Conexões:</b> VCC ➔ 5V | GND ➔ Terra | Trig ➔ Pino 6 | Echo ➔ Pino 5
         </div>
     </div>
 
@@ -295,26 +298,27 @@ void loop() {
             <br>• Quando entrar em casa, bate palmas de novo e a luz apaga!
         </p>
         <div style="background:rgba(236,72,153,0.15); border:1px solid rgba(236,72,153,0.4); border-radius:8px; padding:8px 10px; font-size:0.78rem; color:#FBCFE8;">
-            🔌 <b>Conexões:</b> VCC ➔ 5V | GND ➔ Terra | DO ➔ Pino 2 | Lâmpada LED ➔ Pino 13 (com Resistor 220Ω)
+            🔌 <b>Conexões:</b> VCC ➔ 5V | GND ➔ Terra | OUT ➔ Pino A0 | Lâmpada LED ➔ Pino 13 (com Resistor 220Ω)
         </div>
     </div>
 
-    <!-- CARD 3: PAINEL DIGITAL LCD -->
+    <!-- CARD 3: PAINEL DIGITAL LCD DIRETO -->
     <div style="background:#0F172A; border:2px solid #10B981; border-radius:14px; padding:14px;">
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
             <span style="font-size:1.6rem;">📟</span>
             <div>
-                <strong style="color:#34D399; font-size:1rem; font-family:'Fredoka One',cursive;">3. Painel Digital da Garagem (LCD 16x2)</strong>
-                <div style="color:#94A3B8; font-size:0.75rem;">A Tela de Informações na Parede</div>
+                <strong style="color:#34D399; font-size:1rem; font-family:'Fredoka One',cursive;">3. Painel Digital da Garagem (LCD 16x2 Direto)</strong>
+                <div style="color:#94A3B8; font-size:0.75rem;">Sem I2C, Sem Potenciômetro e Sem Dimmer!</div>
             </div>
         </div>
         <p style="color:#CBD5E1; font-size:0.88rem; line-height:1.55; margin:0 0 10px;">
-            Uma telinha digital de alta visibilidade fixada na parede da garagem bem na frente do motorista. Com o chip I2C, usa apenas 4 fios para mostrar duas coisas ao mesmo tempo:
-            <br>• <b>Linha de Cima (Linha 0):</b> O status da luz (ex: <code>Luz: ACESA 💡</code> ou <code>Luz: APAGADA 🌑</code>).
-            <br>• <b>Linha de Baixo (Linha 1):</b> A distância da vaga (ex: <code>Vaga: 25cm (OK)</code> ou <code>🚨 PARE! 10cm!</code>).
+            Telinha digital de alta visibilidade fixada na frente do motorista. Ligação direta 4-bits no Arduino, dispensando qualquer módulo I2C e qualquer potenciômetro:
+            <br>• <b>Sem Potenciômetro no Contraste:</b> Ligue o <b>Pino 3 (V0) direto no GND</b>! Isso trava o contraste no nível máximo nítido e perfeito!
+            <br>• <b>Sem Dimmer na Luz de Fundo:</b> Ligue o <b>Pino 15 (A) no 5V</b> e o <b>Pino 16 (K) no GND</b> para brilho estável permanente!
+            <br>• <b>Status no Visor:</b> Linha 0 mostra a luz (<code>Luz: ACESA 💡</code>) e Linha 1 a vaga (<code>Vaga: 25cm (OK)</code> ou <code>🚨 PARE!</code>).
         </p>
-        <div style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); border-radius:8px; padding:8px 10px; font-size:0.78rem; color:#A7F3D0;">
-            🔌 <b>Conexões (I2C):</b> VCC ➔ 5V | GND ➔ Terra | SDA ➔ Pino Analógico A4 | SCL ➔ Pino Analógico A5
+        <div style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); border-radius:8px; padding:8px 10px; font-size:0.78rem; color:#A7F3D0; line-height:1.5;">
+            🔌 <b>Pinagem Física:</b> GND ➔ Pinos 1(VSS), 3(V0), 5(RW) e 16(K) | 5V ➔ Pinos 2(VDD) e 15(A) | Arduino ➔ RS=12, EN=11, D4=10, D5=9, D6=8, D7=7 (Pinos D0..D3 livres!)
         </div>
     </div>
 
@@ -386,15 +390,19 @@ function updateTrail() {
     const list = document.getElementById('trail-nodes-list');
     if (!list) return;
 
-    const totalStars = getLevels('semaforo_levels').length + getLevels('tesouro_levels').length + 
-                       getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
-                       getLevels('jardim_levels').length + getLevels('arduino_levels').length +
-                       getLevels('variaveis_levels').length + getLevels('eletronica_levels').length;
+    const maxStars = window.totalMaxStars || 44;
+    const totalStars = (typeof getTotalStudentStars === 'function') ? getTotalStudentStars() : (
+        getLevels('semaforo_levels').length + getLevels('tesouro_levels').length + 
+        getLevels('labmaker_levels').length + getLevels('loopmaker_levels').length + 
+        getLevels('jardim_levels').length + getLevels('arduino_levels').length +
+        getLevels('variaveis_levels').length + getLevels('eletronica_levels').length +
+        getLevels('aula9_levels').length + getLevels('aula10_levels').length
+    );
 
-    const percent = Math.min(100, Math.round((totalStars / 36) * 100));
+    const percent = Math.min(100, Math.round((totalStars / maxStars) * 100));
     const starCountEl = document.getElementById('trail-star-count');
     const progressBarEl = document.getElementById('trail-progress-bar');
-    if (starCountEl) starCountEl.innerText = `${totalStars} / 36 ⭐`;
+    if (starCountEl) starCountEl.innerText = `${totalStars} / ${maxStars} ⭐`;
     if (progressBarEl) progressBarEl.style.width = `${percent}%`;
 
     let html = '';
@@ -551,35 +559,32 @@ function updateHubProgress() {
     const ard = getLevels('arduino_levels');
     const vars = getLevels('variaveis_levels');
     const elet = getLevels('eletronica_levels');
+    const a9 = getLevels('aula9_levels');
+    const a10 = getLevels('aula10_levels');
 
     setBadge('badge-semaforo', sem, 5);
     setBadge('badge-tesouro', tes);
     setBadge('badge-labmaker', lab);
     setBadge('badge-loopmaker', loo, 4);
     setBadge('badge-jardim', jar, 4);
-    if (typeof UNLOCKED_LESSONS !== 'undefined' && UNLOCKED_LESSONS < 8) {
-        const ardBadge = document.getElementById('badge-arduino');
-        if (ardBadge) {
-            ardBadge.innerText = '🔒 Trancada (Aula 8)';
-            ardBadge.style.background = '#1E293B';
-            ardBadge.style.color = '#94A3B8';
-            ardBadge.style.border = '1px dashed #475569';
-        }
-    } else {
-        setBadge('badge-arduino', ard);
-    }
+    setBadge('badge-arduino', ard);
     setBadge('badge-variaveis', vars, 8);
     setBadge('badge-eletronica', elet, 6);
+    setBadge('badge-aula9', a9, 3);
+    setBadge('badge-aula10', a10, 5);
 
-    const totalStars = sem.length + tes.length + lab.length + loo.length + jar.length + ard.length + vars.length + elet.length;
+    const maxStars = window.totalMaxStars || 44;
+    const totalStars = (typeof getTotalStudentStars === 'function') ? getTotalStudentStars() : (
+        sem.length + tes.length + lab.length + loo.length + jar.length + ard.length + vars.length + elet.length + a9.length + a10.length
+    );
     const countEl = document.getElementById('hub-star-count');
     const barEl = document.getElementById('hub-progress-bar');
-    if (countEl) countEl.innerText = `${totalStars} / 36 ⭐`;
-    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / 36) * 100))}%`;
+    if (countEl) countEl.innerText = `${totalStars} / ${maxStars} ⭐`;
+    if (barEl) barEl.style.width = `${Math.min(100, Math.round((totalStars / maxStars) * 100))}%`;
 
     const lbBadge = document.getElementById('badge-hub-leaderboard');
     if (lbBadge && window.makerLeaderboard && typeof window.makerLeaderboard.getSummaryStats === 'function') {
         const stats = window.makerLeaderboard.getSummaryStats();
-        lbBadge.innerText = stats.userRecords > 0 ? `👑 ${stats.userRecords} Recordes ⚡` : `⚡ 36 Fases Speedrun`;
+        lbBadge.innerText = stats.userRecords > 0 ? `👑 ${stats.userRecords} Recordes ⚡` : `⚡ ${maxStars} Fases Speedrun`;
     }
 }

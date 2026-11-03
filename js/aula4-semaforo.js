@@ -1323,7 +1323,30 @@ function sem_updateLiveCpp() {
     const el = document.getElementById('sem_arduino_code');
     if (!el) return;
 
-    let loopBody = '';
+    // Atualiza badges amigáveis de tradução de delay(ms) -> segundos
+    const updateBadge = (inputId, badgeId) => {
+        const inp = document.getElementById(inputId);
+        let badge = document.getElementById(badgeId);
+        if (inp) {
+            const ms = parseInt(inp.value, 10) || 0;
+            const sec = (ms / 1000).toFixed(1).replace('.0', '');
+            const txt = `⏱️ ${sec} ${sec === '1' ? 'segundo' : 'segundos'}`;
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.id = badgeId;
+                badge.className = 'sem-delay-badge';
+                badge.style.cssText = 'background:rgba(245,158,11,0.18);border:1px solid #F59E0B;color:#FBBF24;padding:3px 9px;border-radius:10px;font-size:0.78rem;font-weight:900;margin-left:8px;font-family:\'Nunito\',sans-serif;display:inline-flex;align-items:center;gap:4px;vertical-align:middle;box-shadow:0 0 10px rgba(245,158,11,0.3);';
+                inp.parentNode.insertBefore(badge, inp.nextSibling);
+            }
+            badge.innerHTML = txt;
+        }
+    };
+
+    updateBadge('sem_n1_delay1', 'badge_sem_n1_delay1');
+    updateBadge('sem_n1_delay2', 'badge_sem_n1_delay2');
+    updateBadge('sem_n2_delay1', 'badge_sem_n2_delay1');
+    updateBadge('sem_n2_delay2', 'badge_sem_n2_delay2');
+    updateBadge('sem_n3_delay1', 'badge_sem_n3_delay1');
 
     if (sem_level === 1) {
         const c1 = document.getElementById('sem_n1_cmd1')?.value || 'digitalWrite(PIN_SEM1_VERDE, HIGH)';
