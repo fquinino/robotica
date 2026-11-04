@@ -1272,6 +1272,160 @@ function a9_renderAssemblyBench() {
             </div>
         </div>
 
+        <!-- GUIA & TABELA RÁPIDA DE IDENTIFICAÇÃO E POSIÇÃO DOS FIOS (DIAGRAMA 1 ➔ CÓDIGO C++) -->
+        <div style="background:#0F172A;border:2px solid #38BDF8;border-radius:18px;padding:16px 20px;margin-bottom:16px;box-shadow:0 8px 30px rgba(56,189,248,0.15);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="font-size:1.6rem;">📋🏷️</span>
+                    <div>
+                        <strong style="color:#FDE68A;font-family:'Fredoka One',cursive;font-size:1.15rem;display:block;">
+                            Tabela de Identificação e Posição de Cada Fio
+                        </strong>
+                        <span style="color:#94A3B8;font-size:0.8rem;">
+                            Conferência 100% precisa entre os pinos do Diagrama de Montagem e o Código C++ Oficial
+                        </span>
+                    </div>
+                </div>
+                <div style="background:rgba(16,185,129,0.15);border:1px solid #10B981;color:#6EE7B7;padding:4px 12px;border-radius:12px;font-size:0.78rem;font-weight:900;">
+                    ✓ Zero fios sobretraçados • Canais separados
+                </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:0.82rem;min-width:680px;">
+                    <thead>
+                        <tr style="background:#1E293B;color:#94A3B8;border-bottom:2px solid #334155;text-align:left;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;">
+                            <th style="padding:8px 12px;">Fio &amp; Etiqueta</th>
+                            <th style="padding:8px 12px;">Origem</th>
+                            <th style="padding:8px 12px;">Destino</th>
+                            <th style="padding:8px 12px;">Pino no Código C++</th>
+                            <th style="padding:8px 12px;">Função / Observação</th>
+                        </tr>
+                    </thead>
+                    <tbody style="line-height:1.5;">
+                        <!-- ENERGIA MESTRE -->
+                        <tr style="background:rgba(239,68,68,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#FCA5A5;">🔴 5V Mestre</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino 5V</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Protoboard <b>Trilha Vermelha (+)</b></td>
+                            <td style="padding:7px 12px;color:#94A3B8;font-family:monospace;">(Alimentação 5V)</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Leva +5V para a protoboard e todos os módulos</td>
+                        </tr>
+                        <tr style="background:rgba(56,189,248,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#BAE6FD;">🔵 GND Mestre</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino GND</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Protoboard <b>Trilha Azul (-)</b></td>
+                            <td style="padding:7px 12px;color:#94A3B8;font-family:monospace;">(Aterramento 0V)</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Referência terra comum para todos os circuitos</td>
+                        </tr>
+
+                        <!-- SENSOR ULTRASSÔNICO HC-SR04 -->
+                        <tr style="background:rgba(251,191,36,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#FDE68A;">🟡 D6 ➔ Trig</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 6</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">HC-SR04 <b>Pino Trig</b> (Col 6)</td>
+                            <td style="padding:7px 12px;color:#FBBF24;font-family:monospace;font-weight:bold;">PIN_TRIG = 6;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Dispara o pulso sonoro de radar de 10µs</td>
+                        </tr>
+                        <tr style="background:rgba(16,185,129,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#A7F3D0;">🟢 D5 ➔ Echo</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 5</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">HC-SR04 <b>Pino Echo</b> (Col 7)</td>
+                            <td style="padding:7px 12px;color:#34D399;font-family:monospace;font-weight:bold;">PIN_ECHO = 5;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Lê o tempo de retorno com pulseIn()</td>
+                        </tr>
+
+                        <!-- SENSOR DE SOM & PALMAS -->
+                        <tr style="background:rgba(192,132,252,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#E9D5FF;">🟣 A0 ➔ Som OUT</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Sensor Som <b>Pino OUT</b> (Col 14)</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Arduino <b>Pino Analógico A0</b></td>
+                            <td style="padding:7px 12px;color:#C084FC;font-family:monospace;font-weight:bold;">PIN_SOM = A0;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Detecta pico de volume da palma (canal central y=202)</td>
+                        </tr>
+
+                        <!-- LED FAROL NO PINO 13 -->
+                        <tr style="background:rgba(56,189,248,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#BAE6FD;">💡 D13 ➔ LED</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 13</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">LED <b>Ânodo (+)</b> (Col 18)</td>
+                            <td style="padding:7px 12px;color:#38BDF8;font-family:monospace;font-weight:bold;">PIN_LED = 13;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Acende faróis (cátodo na Col 19 via resistor 220Ω ➔ GND)</td>
+                        </tr>
+
+                        <!-- BUZZER NO PINO 4 -->
+                        <tr style="background:rgba(249,115,22,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#FED7AA;">🔔 D4 ➔ Buzzer</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 4</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Buzzer <b>Pino (+)</b> (Col 23)</td>
+                            <td style="padding:7px 12px;color:#F97316;font-family:monospace;font-weight:bold;">PIN_BUZZER = 4;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Alarme suave de aproximação tone(4, freq)</td>
+                        </tr>
+
+                        <!-- BARRAMENTO DO LCD 16X2 (6 FIOS DIGITAIS) -->
+                        <tr style="background:rgba(167,139,250,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#DDD6FE;">📟 D12 ➔ RS</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 12</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">LCD <b>Pino 4 (RS)</b></td>
+                            <td style="padding:7px 12px;color:#A78BFA;font-family:monospace;font-weight:bold;">RS = 12;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Seleção de Registrador (Comandos vs Caracteres)</td>
+                        </tr>
+                        <tr style="background:rgba(192,132,252,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#F3E8FF;">📟 D11 ➔ EN</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 11</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">LCD <b>Pino 6 (Enable)</b></td>
+                            <td style="padding:7px 12px;color:#C084FC;font-family:monospace;font-weight:bold;">EN = 11;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Pulso de confirmação de leitura do display</td>
+                        </tr>
+                        <tr style="background:rgba(56,189,248,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#BAE6FD;">📟 D10 ➔ D4</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 10</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">LCD <b>Pino 11 (D4)</b></td>
+                            <td style="padding:7px 12px;color:#38BDF8;font-family:monospace;font-weight:bold;">D4 = 10;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Bit 4 de dados da matriz 4-bits</td>
+                        </tr>
+                        <tr style="background:rgba(2,132,199,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#93C5FD;">📟 D9 ➔ D5</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 9</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">LCD <b>Pino 12 (D5)</b></td>
+                            <td style="padding:7px 12px;color:#60A5FA;font-family:monospace;font-weight:bold;">D5 = 9;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Bit 5 de dados da matriz 4-bits</td>
+                        </tr>
+                        <tr style="background:rgba(6,182,212,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#A5F3FC;">📟 D8 ➔ D6</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 8</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">LCD <b>Pino 13 (D6)</b></td>
+                            <td style="padding:7px 12px;color:#22D3EE;font-family:monospace;font-weight:bold;">D6 = 8;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Bit 6 de dados da matriz 4-bits</td>
+                        </tr>
+                        <tr style="background:rgba(20,184,166,0.06);border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#99F6E4;">📟 D7 ➔ D7</td>
+                            <td style="padding:7px 12px;color:#F8FAFC;">Arduino <b>Pino Digital 7</b></td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">LCD <b>Pino 14 (D7)</b></td>
+                            <td style="padding:7px 12px;color:#2DD4BF;font-family:monospace;font-weight:bold;">D7 = 7;</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Bit 7 de dados da matriz 4-bits</td>
+                        </tr>
+
+                        <!-- ALIMENTAÇÃO DIRETA DO LCD (6 FIOS LOCAIS NA PROTOBOARD) -->
+                        <tr style="background:#0F172A;border-bottom:1px solid #1E293B;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#FDE68A;">⚡ LCD Energia &amp; GND</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Pinos 1(VSS), 3(V0), 5(RW), 16(K)</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Trilha Azul (-) GND</td>
+                            <td style="padding:7px 12px;color:#94A3B8;font-family:monospace;">Direto no GND</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;"><b>V0 no GND dá contraste máximo</b> (dispensa potenciômetro!)</td>
+                        </tr>
+                        <tr style="background:#0F172A;">
+                            <td style="padding:7px 12px;font-weight:bold;color:#FCA5A5;">💡 LCD Backlight 5V</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Pinos 2(VDD) e 15(A)</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;">Trilha Vermelha (+) 5V</td>
+                            <td style="padding:7px 12px;color:#94A3B8;font-family:monospace;">Direto no 5V</td>
+                            <td style="padding:7px 12px;color:#CBD5E1;"><b>Pino 15 no 5V mantém luz acesa</b> (dispensa dimmer!)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- PROTOBOARD & ARDUINO INTERATIVO EM SVG DE ALTA DEFINIÇÃO -->
         <div style="position:relative;background:#0B1120;border:2px solid #334155;border-radius:20px;padding:16px;box-shadow:0 12px 35px rgba(0,0,0,0.6);overflow-x:auto;">
             <!-- Ponto dinâmico de fumacinha cartunesca em caso de erro -->
@@ -1707,9 +1861,12 @@ function a9_renderInteractiveBreadboardSvg() {
 
         <!-- 1. ENERGIA MESTRE (5V e GND DO ARDUINO PARA A PROTOBOARD) -->
         ${c.vcc_power ? `
-            <path d="M 155 298 C 200 420, 320 60, 385 93" fill="none" stroke="#EF4444" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M 155 298 C 210 298, 298 250, 312 170 C 322 105, 345 93, 385 93" fill="none" stroke="#EF4444" stroke-width="4.5" stroke-linecap="round"/>
             <circle cx="155" cy="298" r="4.5" fill="#EF4444" stroke="white" stroke-width="1.5"/>
             <circle cx="385" cy="93" r="4.5" fill="#EF4444" stroke="white" stroke-width="1.5"/>
+            <!-- Etiqueta de Identificação do Fio 5V -->
+            <rect x="250" y="210" width="72" height="18" rx="5" fill="#1E293B" stroke="#EF4444" stroke-width="1.5"/>
+            <text x="286" y="222" text-anchor="middle" fill="#FCA5A5" font-size="7" font-weight="900">5V Mestre</text>
         ` : `
             <g class="a9-snap-target" onclick="a9_snapComponent('vcc_power')" title="Encaixar Fio 5V Mestre na Trilha Vermelha">
                 ${isPinActive('vcc_power') ? `
@@ -1729,9 +1886,12 @@ function a9_renderInteractiveBreadboardSvg() {
         `}
 
         ${c.gnd_power ? `
-            <path d="M 180 298 C 230 430, 335 70, 407 107" fill="none" stroke="#334155" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M 180 298 C 230 298, 318 250, 332 170 C 342 110, 365 107, 407 107" fill="none" stroke="#334155" stroke-width="4.5" stroke-linecap="round"/>
             <circle cx="180" cy="298" r="4.5" fill="#334155" stroke="white" stroke-width="1.5"/>
             <circle cx="407" cy="107" r="4.5" fill="#334155" stroke="white" stroke-width="1.5"/>
+            <!-- Etiqueta de Identificação do Fio GND -->
+            <rect x="246" y="246" width="80" height="18" rx="5" fill="#1E293B" stroke="#38BDF8" stroke-width="1.5"/>
+            <text x="286" y="258" text-anchor="middle" fill="#BAE6FD" font-size="7" font-weight="900">GND Mestre</text>
         ` : `
             <g class="a9-snap-target" onclick="a9_snapComponent('gnd_power')" title="Encaixar Fio GND Mestre na Trilha Azul">
                 ${isPinActive('gnd_power') ? `
@@ -1798,29 +1958,39 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- Jumper Trig (D6 ➔ Coluna 6) -->
+        <!-- Jumper Trig (D6 ➔ Coluna 6) - Arco aéreo dedicado y=48 (Sem sobretraçar) -->
         ${c.sonar_trig ? `
-            <path d="M 225 86 C 290 20, 420 30, 482 135" fill="none" stroke="#FBBF24" stroke-width="4" stroke-linecap="round"/>
-            <circle cx="225" cy="86" r="4" fill="#FBBF24" stroke="white" stroke-width="1"/>
+            <path d="M 247 86 C 255 48, 482 48, 482 135" fill="none" stroke="#FBBF24" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="247" cy="86" r="4" fill="#FBBF24" stroke="white" stroke-width="1"/>
             <circle cx="482" cy="135" r="4" fill="#FBBF24" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D6 ➔ Trig -->
+            <rect x="325" y="39" width="84" height="17" rx="5" fill="#1E293B" stroke="#FBBF24" stroke-width="1.5"/>
+            <text x="367" y="50" text-anchor="middle" fill="#FDE68A" font-size="6.5" font-weight="900">D6 ➔ Trig</text>
         ` : (c.sonar_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('sonar_trig')" title="Ligar D6 no Trig">
                 <circle cx="482" cy="135" r="5" fill="none" stroke="#FBBF24" class="a9-beacon-ring" style="--glow-c:#FBBF24;"/>
                 <circle cx="482" cy="135" r="6.5" fill="rgba(251,191,36,0.4)" stroke="#FBBF24" stroke-width="2.5" class="a9-pin-core ${isPinActive('sonar_trig') ? 'glow-active' : 'glow-soft'}" style="--glow-c:#FBBF24;"/>
                 <text x="482" y="125" text-anchor="middle" fill="#FBBF24" font-size="6" font-weight="bold">Trig (D6)</text>
+                <circle cx="247" cy="86" r="6" fill="none" stroke="#FBBF24" class="a9-beacon-ring" style="--glow-c:#FBBF24;"/>
+                <circle cx="247" cy="86" r="7" fill="#FBBF24" stroke="#FFFFFF" stroke-width="2" class="a9-pin-core glow-active" style="--glow-c:#FBBF24;"/>
             </g>
         ` : '')}
 
-        <!-- Jumper Echo (D5 ➔ Coluna 7) -->
+        <!-- Jumper Echo (D5 ➔ Coluna 7) - Arco aéreo dedicado y=64 (Sem sobretraçar) -->
         ${c.sonar_echo ? `
-            <path d="M 245 86 C 310 10, 440 20, 504 135" fill="none" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
-            <circle cx="245" cy="86" r="4" fill="#10B981" stroke="white" stroke-width="1"/>
+            <path d="M 263 86 C 270 64, 504 64, 504 135" fill="none" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="263" cy="86" r="4" fill="#10B981" stroke="white" stroke-width="1"/>
             <circle cx="504" cy="135" r="4" fill="#10B981" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D5 ➔ Echo -->
+            <rect x="345" y="55" width="84" height="17" rx="5" fill="#1E293B" stroke="#10B981" stroke-width="1.5"/>
+            <text x="387" y="66" text-anchor="middle" fill="#A7F3D0" font-size="6.5" font-weight="900">D5 ➔ Echo</text>
         ` : (c.sonar_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('sonar_echo')" title="Ligar D5 no Echo">
                 <circle cx="504" cy="135" r="5" fill="none" stroke="#10B981" class="a9-beacon-ring" style="--glow-c:#10B981;"/>
                 <circle cx="504" cy="135" r="6.5" fill="rgba(16,185,129,0.4)" stroke="#10B981" stroke-width="2.5" class="a9-pin-core ${isPinActive('sonar_echo') ? 'glow-active' : 'glow-soft'}" style="--glow-c:#10B981;"/>
                 <text x="504" y="125" text-anchor="middle" fill="#10B981" font-size="6" font-weight="bold">Echo (D5)</text>
+                <circle cx="263" cy="86" r="6" fill="none" stroke="#10B981" class="a9-beacon-ring" style="--glow-c:#10B981;"/>
+                <circle cx="263" cy="86" r="7" fill="#10B981" stroke="#FFFFFF" stroke-width="2" class="a9-pin-core glow-active" style="--glow-c:#10B981;"/>
             </g>
         ` : '')}
 
@@ -1869,16 +2039,21 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- Jumper OUT do Som (Coluna 14 ➔ Arduino A0) -->
+        <!-- Jumper OUT do Som (Coluna 14 ➔ Arduino A0) - Canal central protegido y=202 (Sem sobretraçar LCD) -->
         ${c.sound_out ? `
-            <path d="M 210 298 C 290 460, 560 320, 649 135" fill="none" stroke="#C084FC" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 210 298 C 245 298, 335 210, 360 202 L 649 202 L 649 135" fill="none" stroke="#C084FC" stroke-width="4" stroke-linecap="round"/>
             <circle cx="210" cy="298" r="4" fill="#C084FC" stroke="white" stroke-width="1"/>
             <circle cx="649" cy="135" r="4" fill="#C084FC" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação A0 ➔ Som OUT -->
+            <rect x="455" y="193" width="94" height="17" rx="5" fill="#1E293B" stroke="#C084FC" stroke-width="1.5"/>
+            <text x="502" y="204" text-anchor="middle" fill="#E9D5FF" font-size="6.5" font-weight="900">A0 ➔ Som OUT</text>
         ` : (c.sound_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('sound_out')" title="Ligar OUT no pino A0">
                 <circle cx="649" cy="135" r="5" fill="none" stroke="#C084FC" class="a9-beacon-ring" style="--glow-c:#C084FC;"/>
                 <circle cx="649" cy="135" r="6.5" fill="rgba(192,132,252,0.4)" stroke="#C084FC" stroke-width="2.5" class="a9-pin-core ${isPinActive('sound_out') ? 'glow-active' : 'glow-soft'}" style="--glow-c:#C084FC;"/>
                 <text x="649" y="125" text-anchor="middle" fill="#C084FC" font-size="6" font-weight="bold">OUT (A0)</text>
+                <circle cx="210" cy="298" r="6" fill="none" stroke="#C084FC" class="a9-beacon-ring" style="--glow-c:#C084FC;"/>
+                <circle cx="210" cy="298" r="7" fill="#C084FC" stroke="#FFFFFF" stroke-width="2" class="a9-pin-core glow-active" style="--glow-c:#C084FC;"/>
             </g>
         ` : '')}
 
@@ -1918,20 +2093,25 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- Jumper D13 do Arduino ➔ Coluna 18 (Ânodo do LED) -->
+        <!-- Jumper D13 do Arduino ➔ Coluna 18 (Ânodo do LED) - Arco aéreo superior y=12 (Mais alto, sem sobretraçar) -->
         ${c.led_d13 ? `
-            <path d="M 145 86 C 220 5, 660 10, 730 142" fill="none" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
-            <circle cx="145" cy="86" r="4" fill="#38BDF8" stroke="white" stroke-width="1"/>
+            <path d="M 135 86 C 135 12, 730 12, 730 142" fill="none" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="135" cy="86" r="4" fill="#38BDF8" stroke="white" stroke-width="1"/>
             <circle cx="730" cy="142" r="4" fill="#38BDF8" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D13 ➔ LED -->
+            <rect x="375" y="4" width="96" height="17" rx="5" fill="#1E293B" stroke="#38BDF8" stroke-width="1.5"/>
+            <text x="423" y="15" text-anchor="middle" fill="#BAE6FD" font-size="6.5" font-weight="900">D13 ➔ LED (+ Farol)</text>
         ` : (c.led_component ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('led_d13')" title="Conectar D13 no Ânodo do LED">
                 <circle cx="730" cy="142" r="5" fill="none" stroke="#38BDF8" class="a9-beacon-ring" style="--glow-c:#38BDF8;"/>
                 <circle cx="730" cy="142" r="6.5" fill="rgba(56,189,248,0.4)" stroke="#38BDF8" stroke-width="2.5" class="a9-pin-core ${isPinActive('led_d13') ? 'glow-active' : 'glow-soft'}" style="--glow-c:#38BDF8;"/>
                 <text x="730" y="125" text-anchor="middle" fill="#38BDF8" font-size="6" font-weight="bold">D13 (Luz)</text>
+                <circle cx="135" cy="86" r="6" fill="none" stroke="#38BDF8" class="a9-beacon-ring" style="--glow-c:#38BDF8;"/>
+                <circle cx="135" cy="86" r="7" fill="#38BDF8" stroke="#FFFFFF" stroke-width="2" class="a9-pin-core glow-active" style="--glow-c:#38BDF8;"/>
             </g>
         ` : '')}
 
-        <!-- 5. ALARME BUZZER DE RÉ (CORPO + SINAL D10 + RETORNO GND) -->
+        <!-- 5. ALARME BUZZER DE RÉ (CORPO + SINAL D4 + RETORNO GND) -->
         ${c.buzzer_component ? `
             <g transform="translate(830, 126)">
                 <circle cx="22" cy="22" r="20" fill="#1E293B" stroke="#F97316" stroke-width="2"/>
@@ -1947,11 +2127,14 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         `}
 
-        <!-- Jumper Sinal D4 ➔ Coluna 23 (+) do Buzzer -->
+        <!-- Jumper Sinal D4 ➔ Coluna 23 (+) do Buzzer - Arco aéreo y=30 (Sem sobretraçar) -->
         ${c.buzzer_signal ? `
-            <path d="M 279 86 C 340 30, 760 15, 842 142" fill="none" stroke="#F97316" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 279 86 C 295 30, 842 30, 842 142" fill="none" stroke="#F97316" stroke-width="4" stroke-linecap="round"/>
             <circle cx="279" cy="86" r="4" fill="#F97316" stroke="white" stroke-width="1"/>
             <circle cx="842" cy="142" r="4" fill="#F97316" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D4 ➔ Buzzer -->
+            <rect x="560" y="21" width="100" height="17" rx="5" fill="#1E293B" stroke="#F97316" stroke-width="1.5"/>
+            <text x="610" y="32" text-anchor="middle" fill="#FED7AA" font-size="6.5" font-weight="900">D4 ➔ Buzzer (+)</text>
         ` : (c.buzzer_component ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('buzzer_signal')" title="Ligar D4 no (+) do Buzzer">
                 <circle cx="842" cy="142" r="5" fill="none" stroke="#F97316" class="a9-beacon-ring" style="--glow-c:#F97316;"/>
@@ -2050,7 +2233,7 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- 3. Jumper V0 (Pino 3 LCD ➔ Trilha Azul GND - Contraste Fixo) -->
+        <!-- 3. Jumper V0 (Pino 3 LCD ➔ Trilha Azul GND - Contraste Fixo Máximo) -->
         ${c.lcd_v0 ? `
             <line x1="430" y1="368" x2="430" y2="290" stroke="#475569" stroke-width="3.5" stroke-linecap="round"/>
             <circle cx="430" cy="368" r="3.5" fill="#475569" stroke="white" stroke-width="1"/>
@@ -2063,11 +2246,14 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- 4. Jumper RS (Pino 4 LCD ➔ Pino D12 Arduino) -->
+        <!-- 4. Jumper RS (Pino 4 LCD ➔ Pino D12 Arduino) - Faixa paralela dedicada 1 (Sem sobretraçar) -->
         ${c.lcd_rs ? `
-            <path d="M 151 86 C 180 230, 420 380, 470 368" fill="none" stroke="#A78BFA" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 151 86 C 160 210, 440 330, 470 368" fill="none" stroke="#A78BFA" stroke-width="3.5" stroke-linecap="round"/>
             <circle cx="151" cy="86" r="4" fill="#A78BFA" stroke="#0F172A" stroke-width="1"/>
             <circle cx="470" cy="368" r="4" fill="#A78BFA" stroke="#0F172A" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D12 ➔ RS -->
+            <rect x="260" y="260" width="76" height="17" rx="5" fill="#1E293B" stroke="#A78BFA" stroke-width="1.5"/>
+            <text x="298" y="271" text-anchor="middle" fill="#DDD6FE" font-size="6.5" font-weight="900">D12 ➔ RS</text>
         ` : (c.lcd_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('lcd_rs')" title="Ligar Pino 4 (RS) no Pino Digital 12 do Arduino">
                 <circle cx="470" cy="368" r="5" fill="none" stroke="#A78BFA" class="a9-beacon-ring" style="--glow-c:#A78BFA;"/>
@@ -2091,11 +2277,14 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- 6. Jumper Enable (Pino 6 LCD ➔ Pino D11 Arduino) -->
+        <!-- 6. Jumper Enable (Pino 6 LCD ➔ Pino D11 Arduino) - Faixa paralela dedicada 2 -->
         ${c.lcd_en ? `
-            <path d="M 167 86 C 200 230, 480 380, 550 368" fill="none" stroke="#C084FC" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 167 86 C 180 215, 520 335, 550 368" fill="none" stroke="#C084FC" stroke-width="3.5" stroke-linecap="round"/>
             <circle cx="167" cy="86" r="4" fill="#C084FC" stroke="#0F172A" stroke-width="1"/>
             <circle cx="550" cy="368" r="4" fill="#C084FC" stroke="#0F172A" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D11 ➔ EN -->
+            <rect x="320" y="275" width="76" height="17" rx="5" fill="#1E293B" stroke="#C084FC" stroke-width="1.5"/>
+            <text x="358" y="286" text-anchor="middle" fill="#F3E8FF" font-size="6.5" font-weight="900">D11 ➔ EN</text>
         ` : (c.lcd_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('lcd_en')" title="Ligar Pino 6 (Enable) no Pino Digital 11 do Arduino">
                 <circle cx="550" cy="368" r="5" fill="none" stroke="#C084FC" class="a9-beacon-ring" style="--glow-c:#C084FC;"/>
@@ -2106,11 +2295,14 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- 7. Jumper D4 (Pino 11 LCD ➔ Pino D10 Arduino) -->
+        <!-- 7. Jumper D4 (Pino 11 LCD ➔ Pino D10 Arduino) - Faixa paralela dedicada 3 -->
         ${c.lcd_d4 ? `
-            <path d="M 183 86 C 220 240, 640 400, 750 368" fill="none" stroke="#38BDF8" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 183 86 C 200 220, 715 340, 750 368" fill="none" stroke="#38BDF8" stroke-width="3.5" stroke-linecap="round"/>
             <circle cx="183" cy="86" r="4" fill="#38BDF8" stroke="white" stroke-width="1"/>
             <circle cx="750" cy="368" r="4" fill="#38BDF8" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D10 ➔ D4 -->
+            <rect x="420" y="295" width="76" height="17" rx="5" fill="#1E293B" stroke="#38BDF8" stroke-width="1.5"/>
+            <text x="458" y="306" text-anchor="middle" fill="#BAE6FD" font-size="6.5" font-weight="900">D10 ➔ D4</text>
         ` : (c.lcd_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('lcd_d4')" title="Ligar Pino 11 (D4) no Pino Digital 10 do Arduino">
                 <circle cx="750" cy="368" r="5" fill="none" stroke="#38BDF8" class="a9-beacon-ring" style="--glow-c:#38BDF8;"/>
@@ -2121,11 +2313,14 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- 8. Jumper D5 (Pino 12 LCD ➔ Pino D9 Arduino) -->
+        <!-- 8. Jumper D5 (Pino 12 LCD ➔ Pino D9 Arduino) - Faixa paralela dedicada 4 -->
         ${c.lcd_d5 ? `
-            <path d="M 199 86 C 240 240, 680 400, 790 368" fill="none" stroke="#0284C7" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 199 86 C 220 225, 755 345, 790 368" fill="none" stroke="#0284C7" stroke-width="3.5" stroke-linecap="round"/>
             <circle cx="199" cy="86" r="4" fill="#0284C7" stroke="white" stroke-width="1"/>
             <circle cx="790" cy="368" r="4" fill="#0284C7" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D9 ➔ D5 -->
+            <rect x="460" y="310" width="72" height="17" rx="5" fill="#1E293B" stroke="#0284C7" stroke-width="1.5"/>
+            <text x="496" y="321" text-anchor="middle" fill="#93C5FD" font-size="6.5" font-weight="900">D9 ➔ D5</text>
         ` : (c.lcd_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('lcd_d5')" title="Ligar Pino 12 (D5) no Pino Digital 9 do Arduino">
                 <circle cx="790" cy="368" r="5" fill="none" stroke="#0284C7" class="a9-beacon-ring" style="--glow-c:#0284C7;"/>
@@ -2136,11 +2331,14 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- 9. Jumper D6 (Pino 13 LCD ➔ Pino D8 Arduino) -->
+        <!-- 9. Jumper D6 (Pino 13 LCD ➔ Pino D8 Arduino) - Faixa paralela dedicada 5 -->
         ${c.lcd_d6 ? `
-            <path d="M 215 86 C 260 240, 720 400, 830 368" fill="none" stroke="#06B6D4" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 215 86 C 240 230, 795 350, 830 368" fill="none" stroke="#06B6D4" stroke-width="3.5" stroke-linecap="round"/>
             <circle cx="215" cy="86" r="4" fill="#06B6D4" stroke="white" stroke-width="1"/>
             <circle cx="830" cy="368" r="4" fill="#06B6D4" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D8 ➔ D6 -->
+            <rect x="500" y="325" width="72" height="17" rx="5" fill="#1E293B" stroke="#06B6D4" stroke-width="1.5"/>
+            <text x="536" y="336" text-anchor="middle" fill="#A5F3FC" font-size="6.5" font-weight="900">D8 ➔ D6</text>
         ` : (c.lcd_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('lcd_d6')" title="Ligar Pino 13 (D6) no Pino Digital 8 do Arduino">
                 <circle cx="830" cy="368" r="5" fill="none" stroke="#06B6D4" class="a9-beacon-ring" style="--glow-c:#06B6D4;"/>
@@ -2151,11 +2349,14 @@ function a9_renderInteractiveBreadboardSvg() {
             </g>
         ` : '')}
 
-        <!-- 10. Jumper D7 (Pino 14 LCD ➔ Pino D7 Arduino) -->
+        <!-- 10. Jumper D7 (Pino 14 LCD ➔ Pino D7 Arduino) - Faixa paralela dedicada 6 -->
         ${c.lcd_d7 ? `
-            <path d="M 231 86 C 280 240, 760 400, 870 368" fill="none" stroke="#14B8A6" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 231 86 C 260 235, 835 355, 870 368" fill="none" stroke="#14B8A6" stroke-width="3.5" stroke-linecap="round"/>
             <circle cx="231" cy="86" r="4" fill="#14B8A6" stroke="white" stroke-width="1"/>
             <circle cx="870" cy="368" r="4" fill="#14B8A6" stroke="white" stroke-width="1"/>
+            <!-- Etiqueta de Identificação D7 ➔ D7 -->
+            <rect x="540" y="340" width="72" height="17" rx="5" fill="#1E293B" stroke="#14B8A6" stroke-width="1.5"/>
+            <text x="576" y="351" text-anchor="middle" fill="#99F6E4" font-size="6.5" font-weight="900">D7 ➔ D7</text>
         ` : (c.lcd_module ? `
             <g class="a9-snap-target" onclick="a9_snapComponent('lcd_d7')" title="Ligar Pino 14 (D7) no Pino Digital 7 do Arduino">
                 <circle cx="870" cy="368" r="5" fill="none" stroke="#14B8A6" class="a9-beacon-ring" style="--glow-c:#14B8A6;"/>
@@ -2269,17 +2470,22 @@ function a9_renderMission1Clap() {
                     </div>
                 </div>
 
-                <!-- Código C++ correspondente -->
+                <!-- Código C++ correspondente com pinos 100% oficiais -->
                 <div style="margin-top:20px;text-align:left;" class="a9-live-code-block">
-                    <div style="color:#64748B;">// Código Arduino da Luz por Palmas:</div>
+                    <div style="color:#64748B;">// Declaração de Pinos Oficiais (Diagrama &amp; Placa):</div>
+                    <div style="color:#94A3B8;">const int PIN_SOM = A0;   <span style="color:#64748B;">// Microfone OUT no pino A0</span></div>
+                    <div style="color:#94A3B8;">const int PIN_LED = 13;   <span style="color:#64748B;">// Farol no Pino Digital 13</span></div>
+                    <div style="color:#94A3B8;">bool luzAcesa = false;</div>
+                    <br>
+                    <div style="color:#64748B;">// Leitura da palma e alternância do estado do farol:</div>
                     <div class="a9-code-line ${isLit ? 'active-executing' : ''}">
                         if (analogRead(PIN_SOM) &gt; 650) {
                     </div>
                     <div class="a9-code-line ${isLit ? 'active-executing' : ''}" style="padding-left:18px;">
-                        faroisLigados = !faroisLigados;
+                        luzAcesa = !luzAcesa;
                     </div>
                     <div class="a9-code-line ${isLit ? 'active-executing' : ''}" style="padding-left:18px;">
-                        digitalWrite(PIN_FAROL, faroisLigados ? HIGH : LOW);
+                        digitalWrite(PIN_LED, luzAcesa ? HIGH : LOW);
                     </div>
                     <div class="a9-code-line">}</div>
                 </div>
@@ -2694,6 +2900,9 @@ function a9_renderMission3Radar() {
                 </div>
 
                 <div class="a9-live-code-block">
+                    <div style="color:#64748B;margin-bottom:6px;">// Pinos Oficiais da Missão: Trig=D6, Echo=D5, Buzzer=D4</div>
+                    <div style="color:#94A3B8;font-size:0.78rem;">const int PIN_TRIG = 6; const int PIN_ECHO = 5;</div>
+                    <div style="color:#94A3B8;font-size:0.78rem;margin-bottom:6px;">const int PIN_BUZZER = 4;</div>
                     <div class="a9-code-line ${stage.activeBranch === 'critical' ? 'active-executing' : ''}">
                         if (distancia &lt;= <button class="a9-num-stepper" onclick="a9_adjustThreshold('critical', -1)">-</button><b style="color:#EF4444;">${A9_STATE.criticalDistThreshold}</b><button class="a9-num-stepper" onclick="a9_adjustThreshold('critical', +1)">+</button>) {
                     </div>

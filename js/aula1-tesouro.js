@@ -19,8 +19,8 @@
                 .tesouro-wrapper .cell.platform::after { content:''; position:absolute; top:3px; right:3px; width:6px; height:6px; border-radius:50%; background:#F59E0B; opacity:0.8; }
 
                 /* Robô SVG */
-                .tesouro-wrapper .cell.robot { background:rgba(254,240,138,0.2); border-color:#F59E0B; box-shadow:0 0 16px rgba(245,158,11,0.5); z-index:5; }
-                .tesouro-wrapper .cell.robot .robot-svg { animation:robotIdle 1s ease-in-out infinite; filter:drop-shadow(0 0 6px rgba(245,158,11,0.6)); }
+                .tesouro-wrapper .cell.robot { background:rgba(254,240,138,0.2); border-color:#F59E0B; box-shadow:0 0 16px rgba(245,158,11,0.5); z-index:10 !important; }
+                .tesouro-wrapper .cell.robot .robot-svg { animation:robotIdle 1s ease-in-out infinite; filter:drop-shadow(0 0 6px rgba(245,158,11,0.6)); position:relative; z-index:10; }
                 .tesouro-wrapper .cell.robot.moving .robot-svg { animation:robotWalk 0.3s ease-in-out; }
                 .tesouro-wrapper .cell.robot.crash { background:rgba(239,68,68,0.25); border-color:#EF4444; box-shadow:0 0 25px rgba(239,68,68,0.6); animation:t_shake 0.3s ease-in-out; }
                 .tesouro-wrapper .cell.robot.crash .robot-svg { animation:robotCrash 0.4s ease-in-out; }
@@ -40,14 +40,21 @@
                 .tesouro-wrapper .cell.obstacle.path-block::after { content:''; }
 
                 /* Tesouro no pedestal */
-                .tesouro-wrapper .cell.treasure { background:rgba(245,158,11,0.18); border-color:#F59E0B; animation:treasureGlow 1.5s ease-in-out infinite; }
+                .tesouro-wrapper .cell.treasure { background:rgba(245,158,11,0.18); border-color:#F59E0B; animation:treasureGlow 1.5s ease-in-out infinite; z-index:4; }
                 .tesouro-wrapper .cell.treasure.elevated { border-color:#FCD34D; box-shadow:0 0 20px rgba(245,158,11,0.5), 0 8px 0 rgba(0,0,0,0.3); transform:translateY(-4px); }
                 .tesouro-wrapper .cell.treasure.elevated::before { content:''; position:absolute; bottom:-8px; left:10%; width:80%; height:8px; background:linear-gradient(90deg,transparent,#92400E,transparent); border-radius:4px; z-index:0; }
                 @keyframes treasureGlow { 0%,100%{box-shadow:0 0 12px rgba(245,158,11,0.3)} 50%{box-shadow:0 0 30px rgba(245,158,11,0.8),0 10px 0 rgba(0,0,0,0.3)} }
 
+                /* Indicador fantasma do tesouro em andares superiores */
+                .tesouro-wrapper .cell.treasure-ghost { background:radial-gradient(circle,rgba(245,158,11,0.12) 0%,rgba(30,41,59,0.5) 70%); border:2px dashed rgba(245,158,11,0.45); position:relative; }
+                .tesouro-wrapper .cell.treasure-ghost::after { content:'🏆'; font-size:1.3rem; opacity:0.35; filter:drop-shadow(0 0 8px rgba(245,158,11,0.35)); animation:treasureGhostPulse 2s infinite ease-in-out; }
+                .tesouro-wrapper .cell.treasure-ghost::before { content:attr(data-floor-label); position:absolute; bottom:2px; font-size:0.55rem; font-weight:900; color:#FCD34D; background:rgba(15,23,42,0.9); padding:1px 4px; border-radius:4px; z-index:3; border:1px solid rgba(245,158,11,0.4); }
+                @keyframes treasureGhostPulse { 0%,100%{opacity:0.25;transform:scale(0.92)} 50%{opacity:0.65;transform:scale(1.08)} }
+
                 /* Escada */
                 .tesouro-wrapper .cell.ladder { background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(245,158,11,0.08)); border-color:#F59E0B; border-style:dashed; }
-                .tesouro-wrapper .cell.ladder::after { content:'🪜'; position:absolute; font-size:1.8rem; opacity:0.95; filter:drop-shadow(0 2px 3px rgba(0,0,0,0.5)); z-index:2; }
+                .tesouro-wrapper .cell.ladder::after { content:'🪜'; position:absolute; font-size:1.8rem; opacity:0.95; filter:drop-shadow(0 2px 3px rgba(0,0,0,0.5)); z-index:2; transition:all 0.2s; }
+                .tesouro-wrapper .cell.ladder.robot::after { opacity:0.22; transform:scale(0.6) translate(-10px,-10px); }
                 .tesouro-wrapper .cell.ladder.ladder-up::before { content:'⬆'; position:absolute; top:2px; right:3px; font-size:0.7rem; color:#34D399; z-index:3; animation:ladderPulse 1s infinite; }
                 .tesouro-wrapper .cell.ladder.ladder-down::before { content:'⬇'; position:absolute; top:2px; right:3px; font-size:0.7rem; color:#EF4444; z-index:3; }
                 @keyframes ladderPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
@@ -65,8 +72,10 @@
                 .tesouro-wrapper .cell.solution-path::before { content:attr(data-step); position:absolute; font-size:0.7rem; font-weight:900; color:#38BDF8; top:2px; left:4px; z-index:5; }
 
                 .tesouro-wrapper .controls { display:flex; gap:10px; justify-content:center; margin:14px 0; flex-wrap:wrap; }
-                .tesouro-wrapper .btn { background:#475569; border:none; color:white; padding:12px 18px; border-radius:14px; font-size:1.5rem; border-bottom:5px solid #1E293B; cursor:pointer; min-width:56px; transition:0.1s; font-weight:900; }
+                .tesouro-wrapper .btn { background:#475569; border:none; color:white; padding:10px 16px; border-radius:14px; font-size:1.4rem; border-bottom:5px solid #1E293B; cursor:pointer; min-width:56px; transition:0.1s; font-weight:900; text-align:center; }
                 .tesouro-wrapper .btn:active { transform:translateY(4px); border-bottom-width:1px; }
+                .tesouro-wrapper .btn.btn-key-pressed { transform:translateY(4px) !important; border-bottom-width:1px !important; box-shadow:0 0 18px #38BDF8 !important; background:#0284C7 !important; color:#FFFFFF !important; }
+                .tesouro-wrapper .btn .t-btn-sub { display:block; font-size:0.62rem; font-weight:800; opacity:0.85; margin-top:2px; font-family:monospace; letter-spacing:0.5px; }
                 .tesouro-wrapper .btn.special { background:linear-gradient(135deg,#8B5CF6,#7C3AED); font-size:1rem; border-bottom-color:#5B21B6; }
                 .tesouro-wrapper .code-area { background:#0F172A; border-radius:14px; min-height:46px; padding:10px; border:2px dashed #334155; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
                 .tesouro-wrapper .code-slot { background:#1E293B; padding:4px 12px; border-radius:8px; color:#F59E0B; font-size:1.1rem; font-weight:900; }
@@ -74,6 +83,22 @@
                 .tesouro-wrapper .btn-run { background:linear-gradient(135deg,#10B981,#059669); flex:2; border-bottom:4px solid #047857; font-size:1rem; }
                 .tesouro-wrapper .btn-clear { background:#EF4444; flex:1; border-bottom:4px solid #991B1B; }
                 .tesouro-wrapper .btn-undo { background:#F59E0B; flex:1; border-bottom:4px solid #B45309; color:#0F172A; }
+                
+                /* Barra de atalhos e teclado interativo */
+                .t-keyboard-banner { background:linear-gradient(135deg,rgba(15,23,42,0.95),rgba(30,41,59,0.9)); border:2px solid #38BDF8; border-radius:16px; padding:10px 14px; margin:10px 0; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; box-shadow:0 4px 20px rgba(56,189,248,0.15); }
+                .t-kb-info { display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#E2E8F0; }
+                .t-kb-badges { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+                .t-kb-key { background:#0F172A; border:1px solid #475569; border-bottom:2px solid #334155; color:#FCD34D; font-family:monospace; font-size:0.72rem; font-weight:800; padding:3px 7px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.4); }
+                
+                /* Alternador de Modo: Ao Vivo (Teclado) vs Montar Lista */
+                .t-mode-toggle-wrap { display:flex; gap:8px; justify-content:center; margin:10px 0 4px; flex-wrap:wrap; }
+                .t-mode-btn { background:#1E293B; border:1px solid #334155; color:#94A3B8; padding:8px 16px; border-radius:24px; font-size:0.85rem; font-weight:900; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:6px; }
+                .t-mode-btn:hover { border-color:#64748B; color:#F1F5F9; }
+                .t-mode-btn.active { background:linear-gradient(135deg,#0284C7,#0369A1); color:#FFFFFF; border-color:#38BDF8; box-shadow:0 0 14px rgba(56,189,248,0.45); }
+                
+                /* Mini toast feedback */
+                .t-mini-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(40px); background:rgba(15,23,42,0.97); color:#F1F5F9; border:2px solid #F59E0B; padding:10px 20px; border-radius:30px; font-weight:800; font-size:0.9rem; z-index:1000; opacity:0; transition:all 0.25s cubic-bezier(0.175,0.885,0.32,1.275); pointer-events:none; box-shadow:0 8px 30px rgba(0,0,0,0.6), 0 0 15px rgba(245,158,11,0.35); }
+                .t-mini-toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
                 .tesouro-wrapper .level-bar { display:flex; gap:8px; justify-content:center; margin:8px 0; flex-wrap:wrap; }
                 .tesouro-wrapper .level-btn { background:#334155; border:none; color:#94A3B8; padding:7px 18px; border-radius:30px; font-weight:900; cursor:pointer; transition:0.2s; }
                 .tesouro-wrapper .level-btn.active { background:#F59E0B; color:#0F172A; box-shadow:0 0 15px rgba(245,158,11,0.4); }
@@ -227,11 +252,82 @@
                 .t-game-left { display:flex; flex-direction:column; gap:10px; }
                 .t-cmds-panel { background:#0F172A; border:2px solid #334155; border-radius:16px; padding:12px; }
                 .t-cmds-panel h4 { color:#FBBF24; margin:0 0 8px; font-size:0.85rem; font-family:'Fredoka One'; }
+
+                /* ================= SEÇÃO LÚDICA DE PORTUGOL & ALGORITMOS ================= */
+                .t-portugol-content { animation: ardFadeIn 0.35s ease; }
+                .t-portugol-hero { background: linear-gradient(135deg, rgba(2,132,199,0.25), rgba(15,23,42,0.95)); border: 2px solid #38BDF8; border-radius: 20px; padding: 18px 22px; margin-bottom: 16px; position: relative; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+                .t-portugol-hero-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+                .t-portugol-badge-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
+                .t-portugol-badge { background: #0F172A; border: 1px solid #38BDF8; color: #7DD3FC; padding: 4px 12px; border-radius: 12px; font-size: 0.78rem; font-weight: 800; }
+                .t-portugol-badge.gold { border-color: #F59E0B; color: #FCD34D; }
+                .t-portugol-badge.green { border-color: #10B981; color: #6EE7B7; }
+
+                /* Bloco do Código Portugol com Janela Estilo Computador */
+                .t-portugol-window { background: #0B132B; border: 2px solid #334155; border-radius: 18px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+                .t-portugol-window-header { background: #1E293B; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; flex-wrap: wrap; gap: 8px; }
+                .t-portugol-dots { display: flex; gap: 6px; }
+                .t-portugol-dot { width: 10px; height: 10px; border-radius: 50%; }
+                .t-portugol-dot.red { background: #EF4444; }
+                .t-portugol-dot.yellow { background: #F59E0B; }
+                .t-portugol-dot.green { background: #10B981; }
+                .t-portugol-filename { color: #CBD5E1; font-family: 'Fira Code', monospace; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+                .t-portugol-code-area { padding: 14px 16px; font-family: 'Fira Code', monospace; font-size: 0.86rem; line-height: 1.65; color: #E2E8F0; max-height: 380px; overflow-y: auto; background: #080D1A; }
+                .t-portugol-code-line { display: flex; gap: 12px; padding: 2px 6px; border-radius: 6px; transition: background 0.2s, transform 0.15s; }
+                .t-portugol-line-num { color: #475569; user-select: none; min-width: 26px; text-align: right; font-weight: 700; font-size: 0.8rem; }
+                .t-portugol-line-code { flex: 1; word-break: break-word; }
+                .t-portugol-code-line.active-cpu-step { background: rgba(56, 189, 248, 0.28); border-left: 3px solid #38BDF8; transform: translateX(4px); box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+                .t-portugol-code-line.active-cpu-step .t-portugol-line-num { color: #FCD34D; }
+
+                /* Realces de Sintaxe */
+                .p-kw { color: #F43F5E; font-weight: 800; }
+                .p-type { color: #A78BFA; font-weight: 700; }
+                .p-fn { color: #38BDF8; font-weight: 700; }
+                .p-str { color: #34D399; }
+                .p-comment { color: #64748B; font-style: italic; }
+                .p-var { color: #FBBF24; font-weight: 700; }
+
+                /* Monitor da CPU */
+                .t-cpu-monitor { background: linear-gradient(135deg, #022c22, #064e3b); border: 2px solid #10B981; border-radius: 16px; padding: 14px 18px; margin-bottom: 18px; display: flex; align-items: flex-start; gap: 14px; box-shadow: 0 6px 25px rgba(16,185,129,0.2); }
+                .t-cpu-icon { font-size: 2rem; animation: pulseGlow 1.5s infinite alternate; }
+                .t-cpu-info h4 { margin: 0 0 4px; color: #6EE7B7; font-family: 'Fredoka One', cursive; font-size: 1rem; }
+                .t-cpu-info p { margin: 0; color: #D1FAE5; font-size: 0.88rem; line-height: 1.45; }
+
+                /* Painel Tríade: 3 Mundos */
+                .t-triade-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px; }
+                .t-triade-card { background: #1E293B; border: 2px solid #334155; border-radius: 18px; padding: 18px; transition: transform 0.2s, border-color 0.2s; position: relative; }
+                .t-triade-card:hover { transform: translateY(-3px); border-color: #38BDF8; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+                .t-triade-card.card-humano { border-top: 4px solid #F59E0B; }
+                .t-triade-card.card-portugol { border-top: 4px solid #38BDF8; }
+                .t-triade-card.card-computador { border-top: 4px solid #10B981; }
+                .t-triade-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+                .t-triade-icon { font-size: 2rem; }
+                .t-triade-title { font-family: 'Fredoka One', cursive; font-size: 1.05rem; color: #F1F5F9; margin: 0; }
+                .t-triade-subtitle { font-size: 0.78rem; color: #94A3B8; font-weight: 800; text-transform: uppercase; }
+                .t-triade-body { color: #CBD5E1; font-size: 0.86rem; line-height: 1.55; }
+                .t-triade-body ul { margin: 8px 0 0; padding-left: 18px; }
+                .t-triade-body li { margin-bottom: 6px; }
+
+                /* Cards Lúdicos / Regras de Ouro */
+                .t-regras-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 20px; }
+                .t-regra-card { background: rgba(15, 23, 42, 0.7); border: 1px dashed #475569; border-radius: 16px; padding: 14px; display: flex; gap: 12px; align-items: flex-start; }
+                .t-regra-emoji { font-size: 2rem; line-height: 1; }
+                .t-regra-title { color: #FCD34D; font-family: 'Fredoka One'; font-size: 0.95rem; margin-bottom: 4px; }
+                .t-regra-desc { color: #94A3B8; font-size: 0.82rem; line-height: 1.45; }
+
+                /* Quiz Rápido Maker */
+                .t-portugol-quiz { background: #0F172A; border: 2px solid #F59E0B; border-radius: 18px; padding: 18px; margin-bottom: 18px; }
+                .t-quiz-title { color: #FCD34D; font-family: 'Fredoka One'; font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+                .t-quiz-options { display: grid; gap: 8px; margin-top: 10px; }
+                .t-quiz-opt { background: #1E293B; border: 1px solid #334155; color: #E2E8F0; padding: 10px 14px; border-radius: 12px; font-size: 0.88rem; font-weight: 700; cursor: pointer; text-align: left; transition: all 0.15s; font-family: 'Fira Code', monospace; }
+                .t-quiz-opt:hover { border-color: #38BDF8; background: #334155; }
+                .t-quiz-opt.correct { background: rgba(16,185,129,0.2) !important; border-color: #10B981 !important; color: #6EE7B7 !important; }
+                .t-quiz-opt.incorrect { background: rgba(239,68,68,0.2) !important; border-color: #EF4444 !important; color: #FCA5A5 !important; }
             </style>
             <div class="tesouro-wrapper">
                 <div class="t-subtabs" id="t_subtabs">
-                    <button class="t-subtab active" data-subtab="jogar" onclick="t_switchSubtab('jogar')">🎮 Jogar</button>
-                    <button class="t-subtab" data-subtab="guia" onclick="t_switchSubtab('guia')">📖 Guia & Código</button>
+                    <button class="t-subtab active" data-subtab="jogar" onclick="t_switchSubtab('jogar')">🎮 1. Jogar & Explorar</button>
+                    <button class="t-subtab" data-subtab="portugol" onclick="t_switchSubtab('portugol')">📜 2. Portugol & Algoritmo 🌟</button>
+                    <button class="t-subtab" data-subtab="guia" onclick="t_switchSubtab('guia')">📖 3. Guia & C++</button>
                 </div>
                 <div class="t-slides-container t-guia-content" id="t_slides">
                     <!-- Slide 1: Teoria -->
@@ -279,14 +375,15 @@
                     </div>
                 </div>
                 <div class="level-bar">
-                    <button class="level-btn active" data-level="1">⭐ Nível 1 — Térreo</button>
-                    <button class="level-btn" data-level="2">⭐⭐ Nível 2 — Plataforma Elevada</button>
-                    <button class="level-btn" data-level="3">⭐⭐⭐ Nível 3 — Torre</button>
+                    <button type="button" class="level-btn active" id="t_lvl_btn_1" data-level="1" onclick="t_switchLevel(1)">⭐ Nível 1 — Térreo</button>
+                    <button type="button" class="level-btn" id="t_lvl_btn_2" data-level="2" onclick="t_switchLevel(2)">⭐⭐ Nível 2 — Plataforma Elevada</button>
+                    <button type="button" class="level-btn" id="t_lvl_btn_3" data-level="3" onclick="t_switchLevel(3)">⭐⭐⭐ Nível 3 — Torre</button>
                 </div>
                 <div class="t-floor-bar t-jogar-content" id="t_floor_bar">
                     <span style="color:#94A3B8;font-weight:800;font-size:0.85rem;">Andar:</span>
                     <span style="display:flex;gap:8px;align-items:center;" id="t_floor_dots"></span>
                     <span style="color:#F59E0B;font-weight:900;font-size:0.82rem;" id="t_floor_label">1 / 1</span>
+                    <span id="t_floor_hint" style="color:#38BDF8;font-size:0.82rem;font-weight:800;margin-left:auto;"></span>
                 </div>
                 <div class="board-wrap t-jogar-content">
                     <div class="t-bg-icons">
@@ -300,7 +397,7 @@
                     <div class="board" id="t_board"></div>
                     <div class="t-floor-transition" id="t_floor_transition"><span id="t_transition_text"></span></div>
                 </div>
-                <div class="t-floor-preview t-guia-content" id="t_floor_preview">
+                <div class="t-floor-preview t-jogar-content" id="t_floor_preview">
                     <div class="t-floor-preview-header">
                         <span style="color:#FCD34D;font-weight:900;font-size:0.95rem;">🗺️ Mini-mapa do <span id="t_preview_floor_label">Próximo Andar</span></span>
                         <span style="color:#64748B;font-size:0.78rem;" id="t_preview_hint">Planeje sua rota antes de SUBIR a escada!</span>
@@ -314,19 +411,63 @@
                         <span><span class="t-dot" style="background:#F59E0B;border:1px solid #FCD34D;"></span> Você ⬇</span>
                     </div>
                 </div>
-                <div class="controls t-jogar-content">
-                    <button class="btn" onclick="t_addCmd('UP')" title="Mover para cima">⬆</button>
-                    <button class="btn" onclick="t_addCmd('DOWN')" title="Mover para baixo">⬇</button>
-                    <button class="btn" onclick="t_addCmd('LEFT')" title="Mover para esquerda">⬅</button>
-                    <button class="btn" onclick="t_addCmd('RIGHT')" title="Mover para direita">➡</button>
-                    <button class="btn special" onclick="t_addCmd('SUBIR')">🪜 Subir</button>
-                    <button class="btn special" onclick="t_addCmd('DESCER')">🪜 Descer</button>
+                <div class="t-keyboard-banner t-jogar-content">
+                    <div class="t-kb-info">
+                        <span style="font-size:1.3rem;">⌨️</span>
+                        <span><strong>Teclado Ativo:</strong> Mova o robô com as <b>Setas</b> ou <b>W A S D</b>!</span>
+                    </div>
+                    <div class="t-kb-badges">
+                        <span class="t-kb-key" title="Mover para Cima">↑ W</span>
+                        <span class="t-kb-key" title="Mover para Baixo">↓ S</span>
+                        <span class="t-kb-key" title="Mover para Esquerda">← A</span>
+                        <span class="t-kb-key" title="Mover para Direita">→ D</span>
+                        <span class="t-kb-key" title="Subir Escada">U Subir</span>
+                        <span class="t-kb-key" title="Descer Escada">J Descer</span>
+                        <span class="t-kb-key" title="Desfazer">⌫ Desfazer</span>
+                        <span class="t-kb-key" title="Executar">↵ Enter</span>
+                    </div>
                 </div>
-                <div class="code-area t-jogar-content" id="t_codeArea"><span style="color:#64748B;">Adicione comandos...</span></div>
+
+                <div class="t-mode-toggle-wrap t-jogar-content">
+                    <button type="button" id="t_mode_live_btn" class="t-mode-btn active" onclick="t_setInputMode('live')" title="Cada tecla move o robô ao vivo no grid e monta o código C++">
+                        <i class="fa-solid fa-gamepad"></i> 🕹️ Mover ao Vivo (Teclado)
+                    </button>
+                    <button type="button" id="t_mode_batch_btn" class="t-mode-btn" onclick="t_setInputMode('batch')" title="Monte primeiro a lista completa e clique em Executar">
+                        <i class="fa-solid fa-list-check"></i> 📋 Planejar em Bloco (Play)
+                    </button>
+                </div>
+
+                <div class="controls t-jogar-content">
+                    <button class="btn" id="t_btn_up" onclick="t_addCmd('UP')" title="Mover para cima (Seta Cima ou W)">
+                        ⬆<span class="t-btn-sub">W / ↑</span>
+                    </button>
+                    <button class="btn" id="t_btn_down" onclick="t_addCmd('DOWN')" title="Mover para baixo (Seta Baixo ou S)">
+                        ⬇<span class="t-btn-sub">S / ↓</span>
+                    </button>
+                    <button class="btn" id="t_btn_left" onclick="t_addCmd('LEFT')" title="Mover para esquerda (Seta Esquerda ou A)">
+                        ⬅<span class="t-btn-sub">A / ←</span>
+                    </button>
+                    <button class="btn" id="t_btn_right" onclick="t_addCmd('RIGHT')" title="Mover para direita (Seta Direita ou D)">
+                        ➡<span class="t-btn-sub">D / →</span>
+                    </button>
+                    <button class="btn special" id="t_btn_subir" onclick="t_addCmd('SUBIR')" title="Subir escada (Tecla U)">
+                        🪜 Subir<span class="t-btn-sub">[U]</span>
+                    </button>
+                    <button class="btn special" id="t_btn_descer" onclick="t_addCmd('DESCER')" title="Descer escada (Tecla J)">
+                        🪜 Descer<span class="t-btn-sub">[J]</span>
+                    </button>
+                </div>
+                <div class="code-area t-jogar-content" id="t_codeArea"><span style="color:#64748B;">Adicione comandos ou use as setas do teclado...</span></div>
                 <div class="actions t-jogar-content">
-                    <button class="btn btn-undo" style="background:#F59E0B;color:#0F172A;flex:1;border-bottom:4px solid #B45309;" onclick="t_undoCmd()"><i class="fas fa-undo"></i></button>
-                    <button class="btn btn-clear" onclick="t_clearCode()"><i class="fas fa-trash"></i></button>
-                    <button class="btn btn-run" onclick="t_runCode()"><i class="fas fa-play"></i> Executar</button>
+                    <button class="btn btn-undo" id="t_btn_undo" style="background:#F59E0B;color:#0F172A;flex:1;border-bottom:4px solid #B45309;" onclick="t_undoCmd()" title="Desfazer último passo (Backspace ou Ctrl+Z)">
+                        <i class="fas fa-undo"></i> <span style="font-size:0.75rem;opacity:0.85;display:block;">[⌫ Backspace]</span>
+                    </button>
+                    <button class="btn btn-clear" id="t_btn_clear" onclick="t_clearCode()" title="Limpar tudo e reiniciar robô (Esc ou Delete)">
+                        <i class="fas fa-trash"></i> <span style="font-size:0.75rem;opacity:0.85;display:block;">[Esc]</span>
+                    </button>
+                    <button class="btn btn-run" id="t_btn_run" onclick="t_runCode()" title="Executar sequência completa (Enter)">
+                        <i class="fas fa-play"></i> Executar <span style="font-size:0.75rem;opacity:0.85;">[↵ Enter]</span>
+                    </button>
                 </div>
                 <div class="t-error-counter t-jogar-content" id="t_err_counter"></div>
                 <div class="t-demo-board-wrap t-guia-content" id="t_demo_board_wrap">
@@ -366,6 +507,201 @@
                         <pre id="t_arduinoCode"></pre>
                     </div>
                 </div>
+
+                <!-- ================= SEÇÃO LÚDICA: PORTUGOL & COMO O ROBÔ PENSA ================= -->
+                <div class="t-portugol-content t-hidden-tab" id="t_portugol_container">
+                    <!-- Hero Banner Dr. Byte -->
+                    <div class="t-portugol-hero">
+                        <div class="t-portugol-hero-top">
+                            <div style="display:flex;align-items:center;gap:14px;">
+                                <div style="font-size:3.2rem;animation:robotFloat 3s ease-in-out infinite;">🤖</div>
+                                <div>
+                                    <h3 style="color:#F1F5F9;font-family:'Fredoka One',cursive;font-size:1.35rem;margin:0 0 4px;">
+                                        O Seu Algoritmo em Portugol!
+                                    </h3>
+                                    <p style="color:#CBD5E1;font-size:0.88rem;margin:0;line-height:1.45;">
+                                        No computador, nós mandamos comandos e o robô anda! Veja a sua <b>receita de bolo lógica</b> escrita em Portugol:
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="t-portugol-badge-wrap">
+                                <span class="t-portugol-badge" id="t_portugol_level_badge">⭐ Nível 1 (Térreo)</span>
+                                <span class="t-portugol-badge green" id="t_portugol_steps_badge">🐾 8 Passos</span>
+                                <span class="t-portugol-badge gold" id="t_portugol_status_badge">🎮 Criado por você no jogo!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terminal de Código Portugol -->
+                    <div class="t-portugol-window" id="t_portugol_window">
+                        <div class="t-portugol-window-header">
+                            <div class="t-portugol-dots">
+                                <span class="t-portugol-dot red"></span>
+                                <span class="t-portugol-dot yellow"></span>
+                                <span class="t-portugol-dot green"></span>
+                            </div>
+                            <span class="t-portugol-filename">
+                                <i class="fa-solid fa-file-code" style="color:#38BDF8;"></i> meu_algoritmo_maker.alg (Portugol)
+                            </span>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                                <button type="button" onclick="t_copyPortugolCode()" style="background:#1E293B;border:1px solid #475569;color:#CBD5E1;padding:6px 14px;border-radius:10px;font-size:0.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+                                    <i class="fa-regular fa-copy" style="color:#38BDF8;"></i> Copiar Portugol
+                                </button>
+                                <button type="button" id="t_btn_run_pt_sim" onclick="t_runPortugolCpuSimulation()" style="background:linear-gradient(135deg,#0284C7,#0369A1);border:1px solid #38BDF8;color:white;padding:6px 16px;border-radius:10px;font-size:0.8rem;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 0 12px rgba(56,189,248,0.35);">
+                                    <i class="fa-solid fa-play"></i> ▶ Ver Computador Executando Passo a Passo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="t-portugol-code-area" id="t_portugol_code_area"></div>
+                    </div>
+
+                    <!-- Monitor do Chip / CPU do Robô -->
+                    <div class="t-cpu-monitor" id="t_portugol_cpu_monitor">
+                        <div class="t-cpu-icon">🧠</div>
+                        <div class="t-cpu-info">
+                            <h4>Cérebro Eletrônico do Robô (Chip ATmega / CPU)</h4>
+                            <p id="t_portugol_cpu_text">
+                                Clique em <i>"▶ Ver Computador Executando Passo a Passo"</i> acima para ver em câmera lenta como o processador lê cada linha do seu Portugol e aciona os motores com pulsos de 5 Volts!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- A Tríplice Tradução: Como o Pensamento vira Robô Andando -->
+                    <div style="margin:24px 0 12px;">
+                        <h4 style="color:#FCD34D;font-family:'Fredoka One';font-size:1.2rem;margin:0 0 4px;display:flex;align-items:center;gap:8px;">
+                            <i class="fa-solid fa-network-wired" style="color:#38BDF8;"></i> A Tríplice Tradução: O que aconteceu quando você jogou?
+                        </h4>
+                        <p style="color:#94A3B8;font-size:0.88rem;margin:0 0 14px;line-height:1.5;">
+                            Veja como a sua ideia na cabeça vira código em Portugol e depois vira movimento físico nas rodas do robô:
+                        </p>
+                    </div>
+
+                    <div class="t-triade-grid">
+                        <!-- Card 1: Mente Humana -->
+                        <div class="t-triade-card card-humano">
+                            <div class="t-triade-header">
+                                <div class="t-triade-icon">💡</div>
+                                <div>
+                                    <div class="t-triade-subtitle">1. Sua Mente</div>
+                                    <h4 class="t-triade-title">Pensamento Humano</h4>
+                                </div>
+                            </div>
+                            <div class="t-triade-body">
+                                Você olhou para o labirinto, viu onde estavam os obstáculos ✖ e o tesouro 🏆 e planejou:
+                                <ul>
+                                    <li><i>"Se eu andar reto eu bato na parede!"</i></li>
+                                    <li><i>"Vou desviar para a direita e descer até a escada!"</i></li>
+                                </ul>
+                                O ser humano enxerga o todo, tem imaginação e toma decisões inteligentes!
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Portugol -->
+                        <div class="t-triade-card card-portugol">
+                            <div class="t-triade-header">
+                                <div class="t-triade-icon">📜</div>
+                                <div>
+                                    <div class="t-triade-subtitle">2. O Algoritmo</div>
+                                    <h4 class="t-triade-title">Linguagem Portugol</h4>
+                                </div>
+                            </div>
+                            <div class="t-triade-body">
+                                Como o computador <b>não lê mentes</b>, você transformou sua ideia numa lista finita de ordens em português:
+                                <ul>
+                                    <li><code>andarDireita()</code></li>
+                                    <li><code>andarBaixo()</code></li>
+                                    <li><code>subirEscada()</code></li>
+                                </ul>
+                                É a <b>receita de bolo</b> da programação: sem palavras difíceis em inglês!
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Computador / Arduino -->
+                        <div class="t-triade-card card-computador">
+                            <div class="t-triade-header">
+                                <div class="t-triade-icon">⚡</div>
+                                <div>
+                                    <div class="t-triade-subtitle">3. A Máquina</div>
+                                    <h4 class="t-triade-title">Chip &amp; Motores</h4>
+                                </div>
+                            </div>
+                            <div class="t-triade-body">
+                                O processador do robô lê a primeira ordem da memória e manda <b>eletricidade de 5 Volts (+5V)</b>:
+                                <ul>
+                                    <li>Os elétrons correm pelos fios até o motor da roda.</li>
+                                    <li>A rodinha dá 1 giro exato para mover 1 quadrado!</li>
+                                    <li>O chip passa para a próxima linha até achar o baú!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3 Regras de Ouro dos Algoritmos -->
+                    <div style="margin:24px 0 12px;">
+                        <h4 style="color:#34D399;font-family:'Fredoka One';font-size:1.2rem;margin:0 0 4px;display:flex;align-items:center;gap:8px;">
+                            <i class="fa-solid fa-graduation-cap"></i> As 3 Regras de Ouro de Todo Criador de Código:
+                        </h4>
+                    </div>
+
+                    <div class="t-regras-grid">
+                        <div class="t-regra-card">
+                            <span class="t-regra-emoji">🍰</span>
+                            <div>
+                                <div class="t-regra-title">1. A Ordem Importa Tudo!</div>
+                                <div class="t-regra-desc">
+                                    Se você colocar o sapato antes da meia, não dá certo! No computador é igualzinho: inverter a ordem dos comandos faz o robô bater na parede.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="t-regra-card">
+                            <span class="t-regra-emoji">🤖</span>
+                            <div>
+                                <div class="t-regra-title">2. O Robô é 100% Obediente</div>
+                                <div class="t-regra-desc">
+                                    Ele nunca tem preguiça, mas nunca adivinha atalhos. Se você mandar ele andar na parede, ele bate! A inteligência de verdade é SEMPRE SUA.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="t-regra-card">
+                            <span class="t-regra-emoji">🧩</span>
+                            <div>
+                                <div class="t-regra-title">3. Dividir para Conquistar</div>
+                                <div class="t-regra-desc">
+                                    Um labirinto com escadas e obstáculos parece difícil, mas quando você divide em passos simples de 1 em 1 bloco, você resolve qualquer desafio!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini Quiz Lúdico de Fixação -->
+                    <div class="t-portugol-quiz">
+                        <div class="t-quiz-title">
+                            <i class="fa-solid fa-puzzle-piece" style="color:#F59E0B;"></i> Desafio Rápido: Descubra o Algoritmo!
+                        </div>
+                        <p style="color:#CBD5E1;font-size:0.92rem;margin:0 0 10px;line-height:1.5;">
+                            Se o seu robô está na casa inicial e o baú de ouro está <b>duas casas logo abaixo</b>, qual algoritmo em Portugol você deve enviar?
+                        </p>
+                        <div class="t-quiz-options">
+                            <button type="button" class="t-quiz-opt" onclick="t_checkQuizAnswer(0, this)">
+                                A) andarDireita(); andarCima();
+                            </button>
+                            <button type="button" class="t-quiz-opt" onclick="t_checkQuizAnswer(1, this)">
+                                B) andarBaixo(); andarBaixo();
+                            </button>
+                            <button type="button" class="t-quiz-opt" onclick="t_checkQuizAnswer(2, this)">
+                                C) pularMagicamenteNoTesouro();
+                            </button>
+                        </div>
+                        <div id="t_quiz_feedback" style="display:none;margin-top:12px;padding:12px 16px;border-radius:12px;background:#1E293B;font-size:0.9rem;line-height:1.5;"></div>
+                    </div>
+
+                    <!-- Botão de Voltar para Jogar -->
+                    <div style="text-align:center;margin:24px 0 10px;">
+                        <button type="button" onclick="t_switchSubtab('jogar')" style="background:linear-gradient(135deg,#10B981,#059669);border:none;color:white;padding:14px 32px;border-radius:30px;font-weight:900;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 25px rgba(16,185,129,0.45);border-bottom:4px solid #047857;transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            🎮 Voltar para a Pista e Jogar Mais!
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="modal" id="t_modal"><div class="modal-box"><div class="modal-icon" id="t_mIcon">🎉</div><h2 class="modal-title" id="t_mTitle">Parabéns!</h2><p class="modal-text" id="t_mText">Mensagem</p><button class="btn-modal" onclick="t_closeModal()">Ok!</button></div></div>
         `;
@@ -378,6 +714,9 @@
     let t_level = 1, t_seq = [], t_running = false, t_robotPos = {x:0,y:0,z:0}, t_treasurePos = {x:4,y:4,z:0}, t_floors = [], t_gridSize = 5;
     let t_errors = 0, t_codePanelOpen = false;
     let t_visitedFootprints = [], t_robotDir = 'RIGHT';
+    let t_inputMode = 'live'; // 'live' (setas movem robô ao vivo) ou 'batch' (monta lista)
+    let t_history = []; // Histórico de passos para desfazer em tempo real
+    let t_lastCompletedSeq = {}; // Guarda o último caminho vencedor de cada nível
 
     const T_ROBOT_SVG = `<svg class="robot-svg" width="32" height="38" viewBox="0 0 32 38" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="8" y="10" width="16" height="14" rx="4" fill="#60A5FA" stroke="#3B82F6" stroke-width="1.5"/>
@@ -408,34 +747,37 @@
         document.querySelectorAll('.t-subtab').forEach(b => b.classList.toggle('active', b.dataset.subtab === name));
         const guiaEls = document.querySelectorAll('.t-guia-content');
         const jogarEls = document.querySelectorAll('.t-jogar-content');
+        const portugolEls = document.querySelectorAll('.t-portugol-content');
         guiaEls.forEach(el => el.classList.toggle('t-hidden-tab', name !== 'guia'));
         jogarEls.forEach(el => el.classList.toggle('t-hidden-tab', name !== 'jogar'));
+        portugolEls.forEach(el => el.classList.toggle('t-hidden-tab', name !== 'portugol'));
+        if (name === 'portugol') {
+            t_updatePortugolContent();
+        }
     }
 
     function t_init() {
+        t_history = [];
+        t_registerKeyboardListener();
+        t_setInputMode(t_inputMode);
         document.querySelectorAll('.tesouro-wrapper .level-btn').forEach(btn => {
             btn.onclick = () => {
-                document.querySelectorAll('.tesouro-wrapper .level-btn').forEach(b=>b.classList.remove('active'));
-                btn.classList.add('active');
-                t_level = parseInt(btn.dataset.level);
-                t_errors = 0;
-                t_updateErrorCounter();
-                t_initLevel();
-                t_clearCode();
-                t_switchSubtab('jogar');
-                setTimeout(() => t_checkLevelTutorial(t_level), 300);
+                const lvl = parseInt(btn.dataset.level, 10);
+                t_switchLevel(lvl);
             };
         });
         t_initLevel();
         t_updateArduinoCode();
+        t_updatePortugolContent();
         t_updateErrorCounter();
         t_switchSubtab('jogar');
+        t_updateLevelButtonsUI();
         setTimeout(() => {
             if(!localStorage.getItem('tesouro_slides_done')) {
                 // Slides já estão visíveis no DOM
             } else {
-                document.getElementById('t_slides').style.display = 'none';
-                // Se slides já vistos mas tutorial nível 1 não, mostra logo o tut
+                const slidesEl = document.getElementById('t_slides');
+                if (slidesEl) slidesEl.style.display = 'none';
                 if(!localStorage.getItem('tesouro_tut_lvl_1')) {
                     setTimeout(() => t_checkLevelTutorial(1), 500);
                 }
@@ -445,15 +787,11 @@
     
     // ================= SISTEMA DE TUTORIAIS POR NÍVEL =================
     function t_checkLevelTutorial(lvl) {
-        const key = 'tesouro_tut_lvl_' + lvl;
-        if(localStorage.getItem(key)) return; // Already shown
-        
         if(lvl === 1) {
-            t_showTutorialIntro();
-        } else if(lvl === 2) {
-            t_showLevel2Tutorial();
-        } else if(lvl === 3) {
-            t_showLevel3Tutorial();
+            const key = 'tesouro_tut_lvl_1';
+            if(!localStorage.getItem(key)) {
+                t_showTutorialIntro();
+            }
         }
     }
     
@@ -919,22 +1257,13 @@
     let t_autoAdvTimer = null;
     function t_checkAutoAdvance() {
         if(t_level < 3) {
+            if (t_autoAdvTimer) clearTimeout(t_autoAdvTimer);
             t_autoAdvTimer = setTimeout(() => {
                 t_autoAdvTimer = null;
-                // Fecha o modal de vitória
-                document.getElementById('t_modal').classList.remove('active');
+                const modal = document.getElementById('t_modal');
+                if (modal) modal.classList.remove('active');
                 const nextLevel = t_level + 1;
-                const nextBtn = document.querySelector(`.tesouro-wrapper .level-btn[data-level="${nextLevel}"]`);
-                if(nextBtn) {
-                    nextBtn.click();
-                    // Tutorial do novo nível
-                    if(nextLevel === 2 && !localStorage.getItem('tesouro_tut_lvl_2')) {
-                        setTimeout(() => t_showLevel2Tutorial(), 800);
-                    }
-                    if(nextLevel === 3 && !localStorage.getItem('tesouro_tut_lvl_3')) {
-                        setTimeout(() => t_showLevel3Tutorial(), 800);
-                    }
-                }
+                t_switchLevel(nextLevel);
             }, 2500);
         }
     }
@@ -1133,6 +1462,9 @@
     }
 
     function t_initLevel() {
+        t_history = [];
+        t_visitedFootprints = [];
+        t_robotDir = 'RIGHT';
         if(t_level===1){
             t_gridSize=5; t_treasurePos={x:4,y:4,z:0}; t_robotPos={x:0,y:0,z:0};
             t_floors = [ { obstacles:[{x:1,y:1},{x:3,y:2}], ladders:[] } ];
@@ -1181,6 +1513,7 @@
                 const isObs = floor.obstacles.some(o=>o.x===x&&o.y===y);
                 const isLad = floor.ladders.some(l=>l.x===x&&l.y===y);
                 const isTreas = t_treasurePos.x===x && t_treasurePos.y===y && t_treasurePos.z===t_robotPos.z;
+                const isTreasGhost = t_treasurePos.x===x && t_treasurePos.y===y && t_treasurePos.z > t_robotPos.z;
                 if(isObs) cell.classList.add('obstacle');
                 if(isLad) {
                     cell.classList.add('ladder');
@@ -1190,9 +1523,12 @@
                     cell.classList.add('treasure');
                     if(t_robotPos.z > 0) cell.classList.add('elevated');
                     cell.innerHTML = T_TREASURE_SVG;
+                } else if(isTreasGhost) {
+                    cell.classList.add('treasure-ghost');
+                    cell.setAttribute('data-floor-label', `Andar ${t_treasurePos.z + 1}`);
                 }
                 const hasFootprint = t_visitedFootprints.some(f => f.x === x && f.y === y && f.z === t_robotPos.z);
-                if(hasFootprint && !isObs && !isTreas) {
+                if(hasFootprint && !isObs && !isTreas && !isTreasGhost) {
                     const foot = document.createElement('div');
                     foot.className = 't-footprint-marker';
                     foot.innerHTML = '🐾';
@@ -1208,6 +1544,7 @@
     function t_updateFloorBar() {
         const dotsContainer = document.getElementById('t_floor_dots');
         const label = document.getElementById('t_floor_label');
+        const hint = document.getElementById('t_floor_hint');
         const numFloors = t_floors.length;
         if(!dotsContainer || !label) return;
         dotsContainer.innerHTML = '';
@@ -1222,6 +1559,16 @@
         if(t_robotPos.z === 0) label.style.color = '#94A3B8';
         else if(t_robotPos.z === 1) label.style.color = '#34D399';
         else label.style.color = '#F59E0B';
+        
+        if (hint) {
+            if (numFloors === 1) {
+                hint.innerText = '🎯 Chegue até o baú!';
+            } else if (t_robotPos.z < t_treasurePos.z) {
+                hint.innerText = `🪜 Vá até a escada para subir ao Andar ${t_treasurePos.z + 1}!`;
+            } else {
+                hint.innerText = '🏆 Você está no andar do tesouro! Desvie e pegue o baú!';
+            }
+        }
         t_renderFloorPreview();
     }
     
@@ -1339,11 +1686,12 @@
         t_drawRobot(t_robotPos.x, t_robotPos.y, 'climbing');
         await t_sleep(400);
         overlay.classList.remove('show');
+        t_drawRobot(t_robotPos.x, t_robotPos.y, '', t_robotDir);
     }
 
     function t_drawRobot(x, y, status='', dir=t_robotDir) {
         document.querySelectorAll('.tesouro-wrapper .robot').forEach(el => {
-            el.classList.remove('robot','crash','win','moving');
+            el.classList.remove('robot','crash','win','moving','climbing');
             el.innerHTML = el.classList.contains('treasure') ? T_TREASURE_SVG : '';
         });
         const cell = document.getElementById(`tc-${x}-${y}`);
@@ -1355,53 +1703,317 @@
         }
     }
 
-    function t_addCmd(c) {
-        playSound('click');
-        if(t_running) return;
+    function t_setInputMode(mode) {
+        t_inputMode = mode;
+        const btnLive = document.getElementById('t_mode_live_btn');
+        const btnBatch = document.getElementById('t_mode_batch_btn');
+        if (btnLive) btnLive.classList.toggle('active', mode === 'live');
+        if (btnBatch) btnBatch.classList.toggle('active', mode === 'batch');
+        if (typeof playSound === 'function') playSound('click');
+        t_showMiniToast(mode === 'live' ? '🕹️ Modo Teclado Ao Vivo ativado!' : '📋 Modo Montar Lista ativado!');
+    }
+
+    function t_renderCodeSlots() {
         const area = document.getElementById('t_codeArea');
-        if(t_seq.length===0) area.innerHTML = '';
-        t_seq.push(c);
-        const arrows = {UP:'⬆',DOWN:'⬇',LEFT:'⬅',RIGHT:'➡',SUBIR:'🪜⬆',DESCER:'🪜⬇'};
-        const el = document.createElement('div');
-        el.className = 'code-slot';
-        el.innerText = arrows[c] || c;
-        el.title = c;
-        area.appendChild(el);
+        if (!area) return;
+        const arrows = { UP: '⬆ Cima', DOWN: '⬇ Baixo', LEFT: '⬅ Esq', RIGHT: '➡ Dir', SUBIR: '🪜 Subir', DESCER: '🪜 Descer' };
+        if (t_seq.length === 0) {
+            area.innerHTML = '<span style="color:#64748B;">Adicione comandos ou use as setas do teclado...</span>';
+        } else {
+            area.innerHTML = t_seq.map((c, i) => `<div class="code-slot" title="Passo ${i + 1}: ${c}">${arrows[c] || c}</div>`).join('');
+        }
+    }
+
+    function t_flashBtn(btnId) {
+        const btn = document.getElementById(btnId);
+        if (!btn) return;
+        btn.classList.add('btn-key-pressed');
+        setTimeout(() => btn.classList.remove('btn-key-pressed'), 160);
+    }
+
+    function t_showMiniToast(msg) {
+        let toast = document.getElementById('t_mini_toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 't_mini_toast';
+            toast.className = 't-mini-toast';
+            document.body.appendChild(toast);
+        }
+        toast.innerText = msg;
+        toast.classList.add('show');
+        if (window._tToastTimeout) clearTimeout(window._tToastTimeout);
+        window._tToastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2200);
+    }
+
+    async function t_moveStep(cmd) {
+        if (t_running || t_tutorialRunning) return;
+        const floor = t_floors[t_robotPos.z];
+        if (!floor) return;
+
+        let nx = t_robotPos.x;
+        let ny = t_robotPos.y;
+        let nz = t_robotPos.z;
+        let newDir = t_robotDir;
+
+        if (cmd === 'UP') { ny--; newDir = 'UP'; }
+        else if (cmd === 'DOWN') { ny++; newDir = 'DOWN'; }
+        else if (cmd === 'LEFT') { nx--; newDir = 'LEFT'; }
+        else if (cmd === 'RIGHT') { nx++; newDir = 'RIGHT'; }
+        else if (cmd === 'SUBIR' || cmd === 'DESCER') {
+            const onLadder = floor.ladders && floor.ladders.some(l => l.x === t_robotPos.x && l.y === t_robotPos.y);
+            if (!onLadder) {
+                t_drawRobot(t_robotPos.x, t_robotPos.y, 'crash', t_robotDir);
+                if (typeof playSound === 'function') playSound('error');
+                t_showMiniToast('🪜 Fique sobre a escada para subir ou descer!');
+                setTimeout(() => t_drawRobot(t_robotPos.x, t_robotPos.y, '', t_robotDir), 350);
+                return;
+            }
+            if (cmd === 'SUBIR') {
+                if (nz >= t_floors.length - 1) {
+                    t_drawRobot(t_robotPos.x, t_robotPos.y, 'crash', t_robotDir);
+                    if (typeof playSound === 'function') playSound('error');
+                    t_showMiniToast('Não há andares mais altos!');
+                    setTimeout(() => t_drawRobot(t_robotPos.x, t_robotPos.y, '', t_robotDir), 350);
+                    return;
+                }
+                nz++;
+            } else {
+                if (nz <= 0) {
+                    t_drawRobot(t_robotPos.x, t_robotPos.y, 'crash', t_robotDir);
+                    if (typeof playSound === 'function') playSound('error');
+                    t_showMiniToast('Você já está no andar térreo!');
+                    setTimeout(() => t_drawRobot(t_robotPos.x, t_robotPos.y, '', t_robotDir), 350);
+                    return;
+                }
+                nz--;
+            }
+
+            t_history.push({
+                pos: { ...t_robotPos },
+                dir: t_robotDir,
+                cmd: cmd,
+                footprint: null
+            });
+
+            t_seq.push(cmd);
+            t_renderCodeSlots();
+            t_updateArduinoCode();
+
+            if (typeof playSound === 'function') playSound('success');
+            const oldZ = t_robotPos.z;
+            t_robotPos = { x: t_robotPos.x, y: t_robotPos.y, z: nz };
+            await t_showFloorTransition(cmd === 'SUBIR' ? 'up' : 'down', oldZ, nz);
+            return;
+        }
+
+        // Checagem de limites do grid
+        if (nx < 0 || nx >= t_gridSize || ny < 0 || ny >= t_gridSize) {
+            t_robotDir = newDir;
+            t_drawRobot(t_robotPos.x, t_robotPos.y, 'crash', t_robotDir);
+            if (typeof playSound === 'function') playSound('error');
+            t_showMiniToast('⚠️ Parede! O robô chegou ao limite do mapa.');
+            setTimeout(() => t_drawRobot(t_robotPos.x, t_robotPos.y, '', t_robotDir), 350);
+            return;
+        }
+
+        // Checagem de obstáculos
+        if (floor.obstacles && floor.obstacles.some(o => o.x === nx && o.y === ny)) {
+            t_robotDir = newDir;
+            t_drawRobot(t_robotPos.x, t_robotPos.y, 'crash', t_robotDir);
+            if (typeof playSound === 'function') playSound('error');
+            t_showMiniToast('💥 Bloqueado! Obstáculo no caminho.');
+            setTimeout(() => t_drawRobot(t_robotPos.x, t_robotPos.y, '', t_robotDir), 350);
+            return;
+        }
+
+        // Movimento Válido!
+        const prevPos = { ...t_robotPos };
+        const prevDir = t_robotDir;
+        t_robotDir = newDir;
+
+        t_visitedFootprints.push({ x: prevPos.x, y: prevPos.y, z: prevPos.z });
+        t_history.push({
+            pos: prevPos,
+            dir: prevDir,
+            cmd: cmd,
+            footprint: { x: prevPos.x, y: prevPos.y, z: prevPos.z }
+        });
+
+        t_robotPos = { x: nx, y: ny, z: nz };
+        t_seq.push(cmd);
+
+        if (typeof playSound === 'function') playSound('step');
+        t_renderCodeSlots();
         t_updateArduinoCode();
+
+        const prevCell = document.getElementById(`tc-${prevPos.x}-${prevPos.y}`);
+        if (prevCell) {
+            prevCell.classList.remove('robot');
+            prevCell.innerHTML = '<div class="t-footprint-marker">🐾</div>';
+        }
+        const newCell = document.getElementById(`tc-${nx}-${ny}`);
+        if (newCell) {
+            newCell.classList.add('robot', 'moving');
+            const dirClass = (t_robotDir || 'RIGHT').toLowerCase();
+            newCell.innerHTML = T_ROBOT_SVG + `<div class="t-robot-dir-indicator dir-${dirClass}">➤</div>`;
+            setTimeout(() => newCell.classList.remove('moving'), 250);
+        }
+
+        const isNowOnLadder = floor.ladders && floor.ladders.some(l => l.x === nx && l.y === ny);
+        if (isNowOnLadder) {
+            t_showMiniToast('🪜 Você está na escada! Pressione [U] ou clique em SUBIR!');
+        }
+
+        if (t_robotPos.x === t_treasurePos.x && t_robotPos.y === t_treasurePos.y && t_robotPos.z === t_treasurePos.z) {
+            t_drawRobot(t_robotPos.x, t_robotPos.y, 'win', t_robotDir);
+            t_spawnConfetti();
+            t_lastCompletedSeq[t_level] = [...t_seq];
+            const nextMsg = t_level < 3 ? `<br><br><span style="color:#38BDF8;font-size:0.9rem;">Nível ${t_level + 1} desbloqueado em 3 segundos...</span>` : '';
+            t_showModal('🏆', 'Tesouro Encontrado! 🎉', 'Parabéns! Você guiou o robô até o tesouro com o teclado!' + nextMsg);
+            if (typeof playSound === 'function') playSound('success');
+            let saved = JSON.parse(localStorage.getItem('tesouro_levels') || '[]');
+            if (!saved.includes(t_level)) saved.push(t_level);
+            localStorage.setItem('tesouro_levels', JSON.stringify(saved));
+            if (typeof updateTrail === 'function') updateTrail();
+            t_checkAutoAdvance();
+        }
+    }
+
+    function t_addCmd(c) {
+        if (t_running || t_tutorialRunning) return;
+        if (t_inputMode === 'live') {
+            t_moveStep(c);
+        } else {
+            if (typeof playSound === 'function') playSound('click');
+            t_seq.push(c);
+            t_renderCodeSlots();
+            t_updateArduinoCode();
+        }
     }
 
     function t_undoCmd() {
-        if(t_running || t_seq.length===0) return;
-        playSound('click');
-        t_seq.pop();
-        const area = document.getElementById('t_codeArea');
-        const arrows = {UP:'⬆',DOWN:'⬇',LEFT:'⬅',RIGHT:'➡',SUBIR:'🪜⬆',DESCER:'🪜⬇'};
-        if(t_seq.length===0) {
-            area.innerHTML = '<span style="color:#64748B;">Adicione comandos...</span>';
+        if (t_running || t_tutorialRunning || t_seq.length === 0) return;
+        if (typeof playSound === 'function') playSound('click');
+        if (t_inputMode === 'live' && t_history.length > 0) {
+            const last = t_history.pop();
+            t_seq.pop();
+            t_robotPos = { ...last.pos };
+            t_robotDir = last.dir;
+            if (last.footprint) {
+                const idx = t_visitedFootprints.findIndex(f => f.x === last.footprint.x && f.y === last.footprint.y && f.z === last.footprint.z);
+                if (idx !== -1) t_visitedFootprints.splice(idx, 1);
+            }
+            t_renderBoard();
         } else {
-            area.innerHTML = t_seq.map(c=>`<div class="code-slot" title="${c}">${arrows[c]||c}</div>`).join('');
+            t_seq.pop();
         }
+        t_renderCodeSlots();
         t_updateArduinoCode();
     }
 
     function t_clearCode() {
-        t_seq=[];
-        const area = document.getElementById('t_codeArea');
-        if(area) area.innerHTML = '<span style="color:#64748B;">Adicione comandos...</span>';
-        t_robotPos={x:0,y:0,z:0};
+        t_seq = [];
+        t_history = [];
+        t_robotPos = { x: 0, y: 0, z: 0 };
         t_visitedFootprints = [];
         t_robotDir = 'RIGHT';
         t_renderBoard();
+        t_renderCodeSlots();
         t_updateArduinoCode();
         const box = document.getElementById('t_solution_box');
-        if(box) box.classList.remove('visible');
+        if (box) box.classList.remove('visible');
         const demoWrap = document.getElementById('t_demo_board_wrap');
-        if(demoWrap) demoWrap.classList.remove('visible');
+        if (demoWrap) demoWrap.classList.remove('visible');
         t_currentSol = null;
-        // Clear solution highlights
         document.querySelectorAll('.tesouro-wrapper .solution-path').forEach(c => { c.classList.remove('solution-path'); delete c.dataset.step; });
         const cursor = document.getElementById('t_demo_cursor');
-        if(cursor) cursor.classList.remove('visible');
+        if (cursor) cursor.classList.remove('visible');
+    }
+
+    function t_handleKeyDown(e) {
+        const tab = document.getElementById('tab-tesouro');
+        if (!tab || !tab.classList.contains('active')) return;
+
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+
+        const subtabJogar = document.querySelector('.t-subtab[data-subtab="jogar"]');
+        if (subtabJogar && !subtabJogar.classList.contains('active')) return;
+
+        const modal = document.getElementById('t_modal');
+        if (modal && modal.classList.contains('active')) {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+                e.preventDefault();
+                t_closeModal();
+            }
+            return;
+        }
+
+        const tut = document.getElementById('t_tutorial_overlay');
+        if (tut && tut.classList.contains('active')) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                t_tutorialAction();
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                t_skipTutorial();
+            }
+            return;
+        }
+
+        if (t_running || t_tutorialRunning) return;
+
+        let cmd = null;
+        let btnId = null;
+
+        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+            cmd = 'UP';
+            btnId = 't_btn_up';
+        } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+            cmd = 'DOWN';
+            btnId = 't_btn_down';
+        } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+            cmd = 'LEFT';
+            btnId = 't_btn_left';
+        } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+            cmd = 'RIGHT';
+            btnId = 't_btn_right';
+        } else if (e.key === 'u' || e.key === 'U' || e.key === 'PageUp') {
+            cmd = 'SUBIR';
+            btnId = 't_btn_subir';
+        } else if (e.key === 'j' || e.key === 'J' || e.key === 'PageDown') {
+            cmd = 'DESCER';
+            btnId = 't_btn_descer';
+        } else if (e.key === 'Backspace' || (e.ctrlKey && (e.key === 'z' || e.key === 'Z'))) {
+            e.preventDefault();
+            t_flashBtn('t_btn_undo');
+            t_undoCmd();
+            return;
+        } else if (e.key === 'Escape' || e.key === 'Delete') {
+            e.preventDefault();
+            t_flashBtn('t_btn_clear');
+            t_clearCode();
+            return;
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            t_flashBtn('t_btn_run');
+            t_runCode();
+            return;
+        }
+
+        if (cmd) {
+            e.preventDefault();
+            if (btnId) t_flashBtn(btnId);
+            t_addCmd(cmd);
+        }
+    }
+
+    function t_registerKeyboardListener() {
+        if (!window._tesouroKeyHandlerRegistered) {
+            window.addEventListener('keydown', t_handleKeyDown);
+            window._tesouroKeyHandlerRegistered = true;
+        }
     }
 
     function t_updateArduinoCode() {
@@ -1439,7 +2051,10 @@
 
     function t_copyCode() {
         const el = document.getElementById('t_arduinoCode');
-        if(el) { navigator.clipboard.writeText(el.innerText); alert('Código copiado! 📋'); }
+        if(el) {
+            navigator.clipboard.writeText(el.innerText);
+            t_showMiniToast('Código Arduino C++ copiado! 📋');
+        }
     }
 
     function t_sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
@@ -1481,13 +2096,14 @@
             if(cmd==='RIGHT') { nx++; t_robotDir = 'RIGHT'; }
             if(cmd==='SUBIR'||cmd==='DESCER') {
                 if(floor.ladders.some(l=>l.x===t_robotPos.x&&l.y===t_robotPos.y)) {
+                    const oldZ = t_robotPos.z;
                     if(cmd==='SUBIR'&&nz<t_floors.length-1) nz++;
                     else if(cmd==='DESCER'&&nz>0) nz--;
                     else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash',t_robotDir); t_triggerError('Sem saída!','Não há mais andares nessa direção!','Use a escada 🪜 na posição certa.'); return; }
                     const dir = cmd==='SUBIR'?'up':'down';
                     playSound('success');
                     t_robotPos={x:t_robotPos.x,y:t_robotPos.y,z:nz};
-                    await t_showFloorTransition(dir, t_robotPos.z, nz);
+                    await t_showFloorTransition(dir, oldZ, nz);
                     continue;
                 } else { t_drawRobot(t_robotPos.x,t_robotPos.y,'crash',t_robotDir); t_triggerError('Sem escada!','Você precisa estar sobre a escada 🪜 para subir ou descer!','Posicione o robô exatamente no quadrado com a escada.'); return; }
             }
@@ -1517,6 +2133,7 @@
         if(t_robotPos.x===t_treasurePos.x&&t_robotPos.y===t_treasurePos.y&&t_robotPos.z===t_treasurePos.z) {
             t_drawRobot(t_robotPos.x,t_robotPos.y,'win',t_robotDir);
             t_spawnConfetti();
+            t_lastCompletedSeq[t_level] = [...t_seq];
             const nextMsg = t_level < 3 ? `<br><br><span style="color:#38BDF8;font-size:0.9rem;">Nível ${t_level+1} desbloqueado em 3 segundos...</span>` : '';
             t_showModal('🏆','Tesouro Encontrado! 🎉','O robô chegou ao pote de ouro! Incrível!'+nextMsg);
             playSound('success');
@@ -1538,9 +2155,16 @@
             const res = window.makerLeaderboard.recordCompletion('tesouro', t_level, elapsed);
             speedrunHTML = window.makerLeaderboard.generateWinTimeCardHTML('tesouro', t_level, res);
         }
+        const portugolBtnHTML = `
+            <div style="margin: 16px 0 10px;">
+                <button type="button" onclick="t_goToPortugolExplanation()" style="background:linear-gradient(135deg, #0284C7, #0369A1); border:2px solid #38BDF8; color:white; padding:12px 18px; border-radius:18px; font-weight:900; font-size:0.95rem; cursor:pointer; width:100%; box-shadow:0 0 18px rgba(56,189,248,0.45); display:flex; align-items:center; justify-content:center; gap:8px; transition:transform 0.15s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                    <span>📜</span> <span>Ver o Algoritmo em Portugol que Você Criou!</span> <span>🚀</span>
+                </button>
+            </div>
+        `;
         document.getElementById('t_mIcon').innerText=icon; 
         document.getElementById('t_mTitle').innerText=title; 
-        document.getElementById('t_mText').innerHTML=text + speedrunHTML; 
+        document.getElementById('t_mText').innerHTML=text + speedrunHTML + portugolBtnHTML; 
         document.getElementById('t_modal').classList.add('active'); 
     }
     function t_closeModal(){ document.getElementById('t_modal').classList.remove('active'); if(t_autoAdvTimer){clearTimeout(t_autoAdvTimer);t_autoAdvTimer=null;} t_clearCode(); }
@@ -1574,12 +2198,25 @@
         lvl = parseInt(lvl, 10);
         if (isNaN(lvl) || lvl < 1) lvl = 1;
 
+        if (t_autoAdvTimer) {
+            clearTimeout(t_autoAdvTimer);
+            t_autoAdvTimer = null;
+        }
+        t_tutorialRunning = false;
+        t_running = false;
+        const tutOverlay = document.getElementById('t_tutorial_overlay');
+        if (tutOverlay) tutOverlay.classList.remove('active');
+        const tutCounter = document.getElementById('t_tutorial_counter');
+        if (tutCounter) tutCounter.classList.remove('show');
+        const modal = document.getElementById('t_modal');
+        if (modal) modal.classList.remove('active');
+
         // Regra Estrita: NÃO DEIXA AVANÇAR SEM PASSAR PELO NÍVEL ANTERIOR!
         const saved = JSON.parse(localStorage.getItem('tesouro_levels') || '[]');
         for (let prev = 1; prev < lvl; prev++) {
             if (!saved.includes(prev)) {
                 if (typeof playSound === 'function') playSound('error');
-                alert(`🔒 Nível ${lvl} Bloqueado!\n\nVocê precisa programar o robô e encontrar o tesouro no Nível ${prev} com sucesso antes de avançar para o próximo nível!`);
+                t_showMiniToast(`🔒 Nível ${lvl} bloqueado! Conclua o Nível ${prev} primeiro.`);
                 return;
             }
         }
@@ -1594,7 +2231,14 @@
         t_clearCode();
         t_switchSubtab('jogar');
         t_updateLevelButtonsUI();
+        if (typeof playSound === 'function') playSound('click');
         if(window.makerLeaderboard) window.makerLeaderboard.startTimer('tesouro', lvl);
+
+        if (lvl === 2) {
+            t_showMiniToast('🪜 Nível 2 iniciado! Suba a escada para chegar ao 2º Andar!');
+        } else if (lvl === 3) {
+            t_showMiniToast('🚀 Nível 3 iniciado! Supere as escadas e chegue ao topo!');
+        }
     }
     window.t_switchLevel = t_switchLevel;
     
@@ -1613,4 +2257,229 @@
             }, i * 60);
         }
     }
+
+    // =========================================================================
+    // MÓDULO PEDAGÓGICO: PORTUGOL & COMO O ROBÔ PENSA
+    // =========================================================================
+
+    function t_goToPortugolExplanation() {
+        if (t_autoAdvTimer) {
+            clearTimeout(t_autoAdvTimer);
+            t_autoAdvTimer = null;
+        }
+        const modal = document.getElementById('t_modal');
+        if (modal) modal.classList.remove('active');
+        t_switchSubtab('portugol');
+        if (typeof playSound === 'function') playSound('click');
+        t_showMiniToast('📜 Veja o seu Algoritmo em Portugol!');
+        setTimeout(() => {
+            const win = document.getElementById('t_portugol_window');
+            if (win) win.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150);
+    }
+    window.t_goToPortugolExplanation = t_goToPortugolExplanation;
+
+    function t_updatePortugolContent() {
+        const codeArea = document.getElementById('t_portugol_code_area');
+        const levelBadge = document.getElementById('t_portugol_level_badge');
+        const stepsBadge = document.getElementById('t_portugol_steps_badge');
+        const statusBadge = document.getElementById('t_portugol_status_badge');
+        const cpuText = document.getElementById('t_portugol_cpu_text');
+        if (!codeArea) return;
+
+        let steps = [];
+        let isUserCode = false;
+        if (t_seq && t_seq.length > 0) {
+            steps = [...t_seq];
+            isUserCode = true;
+        } else if (t_lastCompletedSeq && t_lastCompletedSeq[t_level] && t_lastCompletedSeq[t_level].length > 0) {
+            steps = [...t_lastCompletedSeq[t_level]];
+            isUserCode = true;
+        } else {
+            const defaults = {
+                1: ['RIGHT','RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN'],
+                2: ['RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN','SUBIR','DOWN','RIGHT','RIGHT'],
+                3: ['RIGHT','RIGHT','RIGHT','DOWN','DOWN','DOWN','DOWN','SUBIR','UP','UP','UP','RIGHT','RIGHT','SUBIR','RIGHT','DOWN','DOWN','DOWN','DOWN','DOWN']
+            };
+            steps = defaults[t_level] || defaults[1];
+            isUserCode = false;
+        }
+
+        const levelNames = { 1: 'Nível 1 (Térreo)', 2: 'Nível 2 (Plataforma)', 3: 'Nível 3 (Torre)' };
+        if (levelBadge) levelBadge.innerText = `⭐ ${levelNames[t_level] || 'Nível ' + t_level}`;
+        if (stepsBadge) stepsBadge.innerText = `🐾 ${steps.length} Passos no Algoritmo`;
+        if (statusBadge) {
+            statusBadge.innerText = isUserCode ? '🎮 Criado por você no jogo!' : '💡 Solução Ideal do Nível';
+            statusBadge.className = 't-portugol-badge ' + (isUserCode ? 'gold' : 'green');
+        }
+        if (cpuText) {
+            cpuText.innerHTML = `Pronto para executar! Seu algoritmo tem <b>${steps.length} comandos sequenciais</b>. Clique em <i>"▶ Ver Computador Executando Passo a Passo"</i> acima para ver a CPU acionando os motores!`;
+        }
+
+        const lines = [];
+        let lineNum = 1;
+        const addLine = (codeStr, isExecutable = false, stepCmd = '', stepIndex = -1) => {
+            const execAttr = isExecutable ? ` data-step-idx="${stepIndex}" data-step-cmd="${stepCmd}" class="t-portugol-code-line t-portugol-step"` : ` class="t-portugol-code-line"`;
+            lines.push(`<div id="pt_line_${lineNum}"${execAttr}><span class="t-portugol-line-num">${lineNum}</span><span class="t-portugol-line-code">${codeStr}</span></div>`);
+            lineNum++;
+        };
+
+        const kw = txt => `<span class="p-kw">${txt}</span>`;
+        const fn = txt => `<span class="p-fn">${txt}</span>`;
+        const str = txt => `<span class="p-str">${txt}</span>`;
+        const cmt = txt => `<span class="p-comment">${txt}</span>`;
+        const vr = txt => `<span class="p-var">${txt}</span>`;
+        const tp = txt => `<span class="p-type">${txt}</span>`;
+
+        addLine(`${kw('algoritmo')} ${str(`"CacaAoTesouro_Nivel${t_level}"`)}`);
+        addLine(`${cmt('// ==========================================================')}`);
+        addLine(`${cmt('// 🤖 CRIADORES DE CÓDIGO — LABORATÓRIO MAKER')}`);
+        addLine(`${cmt(`// 👤 AUTOR: ${isUserCode ? 'Você (Pequeno(a) Programador(a) Maker!)' : 'Robô Astro'}`)}`);
+        addLine(`${cmt('// 🎯 MISSÃO: Levar o robô até o tesouro usando ALGORITMOS!')}`);
+        addLine(`${cmt('// ==========================================================')}`);
+        addLine(``);
+        addLine(`${kw('var')}`);
+        addLine(`    ${vr('posicaoX')}, ${vr('posicaoY')} : ${tp('inteiro')}   ${cmt('// Guarda a posição do robô no mapa')}`);
+        addLine(`    ${vr('andarAtual')} : ${tp('inteiro')}           ${cmt('// Guarda o andar atual (1, 2 ou 3)')}`);
+        addLine(`    ${vr('tesouroEncontrado')} : ${tp('logico')}    ${cmt('// Fica VERDADEIRO quando alcança o baú!')}`);
+        addLine(``);
+        addLine(`${kw('inicio')}`);
+        addLine(`    ${cmt('// 🔌 1. LIGANDO O ROBÔ E INICIALIZANDO SENSORES:')}`);
+        addLine(`    ${fn('escreva')}(${str('"🤖 Bip-bop! Robô ligado e aguardando instruções..."')})`);
+        addLine(`    ${vr('posicaoX')} <- 0`);
+        addLine(`    ${vr('posicaoY')} <- 0`);
+        addLine(`    ${vr('andarAtual')} <- 1`);
+        addLine(`    ${vr('tesouroEncontrado')} <- ${kw('falso')}`);
+        addLine(``);
+        addLine(`    ${cmt('// 🚀 2. O SEU ALGORITMO (ORDENS EXECUTADAS NA SEQUÊNCIA EXATA):')}`);
+
+        steps.forEach((cmd, idx) => {
+            let fnCall = '';
+            let explanation = '';
+            if (cmd === 'RIGHT') {
+                fnCall = `${fn('andarDireita')}()`;
+                explanation = `${cmt(`// Passo ${idx + 1}: ➡️ Move 1 casa para o Leste (X aumenta)`)}`;
+            } else if (cmd === 'DOWN') {
+                fnCall = `${fn('andarBaixo')}()`;
+                explanation = `${cmt(`// Passo ${idx + 1}: ⬇️ Move 1 casa para o Sul (Y aumenta)`)}`;
+            } else if (cmd === 'LEFT') {
+                fnCall = `${fn('andarEsquerda')}()`;
+                explanation = `${cmt(`// Passo ${idx + 1}: ⬅️ Move 1 casa para o Oeste (X diminui)`)}`;
+            } else if (cmd === 'UP') {
+                fnCall = `${fn('andarCima')}()`;
+                explanation = `${cmt(`// Passo ${idx + 1}: ⬆️ Move 1 casa para o Norte (Y diminui)`)}`;
+            } else if (cmd === 'SUBIR') {
+                fnCall = `${fn('subirEscada')}()`;
+                explanation = `${cmt(`// Passo ${idx + 1}: 🪜 Sobe a escada para o andar superior!`)}`;
+            } else if (cmd === 'DESCER') {
+                fnCall = `${fn('descerEscada')}()`;
+                explanation = `${cmt(`// Passo ${idx + 1}: 🪜 Desce a escada para o andar térreo!`)}`;
+            }
+            addLine(`    ${fnCall}   ${explanation}`, true, cmd, idx);
+        });
+
+        addLine(``);
+        addLine(`    ${cmt('// 🏆 3. DESTINO ALCANÇADO COM SUCESSO:')}`);
+        addLine(`    ${fn('abrirBauTesouro')}()   ${cmt('// Robô alcança o baú dourado!')}`);
+        addLine(`    ${vr('tesouroEncontrado')} <- ${kw('verdadeiro')}`);
+        addLine(`    ${fn('escreva')}(${str('"🎉 Parabéns! Algoritmo executado com 100% de precisão!"')})`);
+        addLine(`${kw('fimalgoritmo')}`);
+
+        codeArea.innerHTML = lines.join('');
+    }
+    window.t_updatePortugolContent = t_updatePortugolContent;
+
+    function t_copyPortugolCode() {
+        const codeArea = document.getElementById('t_portugol_code_area');
+        if (!codeArea) return;
+        const textToCopy = Array.from(codeArea.querySelectorAll('.t-portugol-line-code'))
+            .map(el => el.innerText)
+            .join('\n');
+        navigator.clipboard.writeText(textToCopy);
+        if (typeof playSound === 'function') playSound('click');
+        t_showMiniToast('Código em Portugol copiado! 📋');
+    }
+    window.t_copyPortugolCode = t_copyPortugolCode;
+
+    let t_portugolSimRunning = false;
+    async function t_runPortugolCpuSimulation() {
+        if (t_portugolSimRunning) return;
+        t_portugolSimRunning = true;
+        const btn = document.getElementById('t_btn_run_pt_sim');
+        const cpuText = document.getElementById('t_portugol_cpu_text');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '⚡ Computador Processando...';
+        }
+
+        const stepEls = document.querySelectorAll('.t-portugol-step');
+        const actionsMap = {
+            'RIGHT': { action: 'Rodas Direitas e Esquerdas giram para a DIREITA ➡️', pin: 'Pino Digital 9 ligado com +5V', sound: 'step' },
+            'DOWN': { action: 'Motores invertem polaridade e robô desce ⬇️', pin: 'Pino Digital 10 ligado com +5V', sound: 'step' },
+            'LEFT': { action: 'Roda esquerda gira para trás e vira à ESQUERDA ⬅️', pin: 'Pino Digital 6 ligado com +5V', sound: 'step' },
+            'UP': { action: 'Motores avançam para o NORTE ⬆️', pin: 'Pino Digital 5 ligado com +5V', sound: 'step' },
+            'SUBIR': { action: 'Sensor detecta degraus e aciona motor elevador 🪜', pin: 'Pino PWM 11 em ciclo alto', sound: 'success' },
+            'DESCER': { action: 'Desce suavemente pela escada até o piso térreo 🪜', pin: 'Pino PWM 11 em ciclo baixo', sound: 'step' }
+        };
+
+        for (let i = 0; i < stepEls.length; i++) {
+            const el = stepEls[i];
+            const cmd = el.dataset.stepCmd;
+            const stepIdx = parseInt(el.dataset.stepIdx, 10);
+            const info = actionsMap[cmd] || { action: 'Comando executado', pin: 'Sinal elétrico ativo', sound: 'step' };
+
+            document.querySelectorAll('.t-portugol-code-line').forEach(l => l.classList.remove('active-cpu-step'));
+            el.classList.add('active-cpu-step');
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            if (cpuText) {
+                cpuText.innerHTML = `⚡ <b>[Instrução ${stepIdx + 1} de ${stepEls.length}]</b><br>` +
+                    `📖 <i>Lendo do Portugol:</i> <span style="color:#38BDF8;font-weight:900;">${cmd}()</span><br>` +
+                    `🔌 <i>Dentro do Chip Arduino:</i> <span style="color:#FBBF24;">${info.pin}</span><br>` +
+                    `🦾 <i>Ação Física no Robô:</i> <span style="color:#6EE7B7;font-weight:800;">${info.action}</span>`;
+            }
+
+            if (typeof playSound === 'function') playSound(info.sound || 'step');
+            await t_sleep(700);
+        }
+
+        document.querySelectorAll('.t-portugol-code-line').forEach(l => l.classList.remove('active-cpu-step'));
+        if (cpuText) {
+            cpuText.innerHTML = `🏆 <b style="color:#FCD34D;">FIM DO ALGORITMO!</b><br>` +
+                `<span style="color:#A7F3D0;">O processador leu linha por linha, enviou os pulsos elétricos exatos e o robô chegou ao tesouro sem bater em nada! Isso é PROGRAMAÇÃO DE VERDADE! 🎉</span>`;
+        }
+        if (typeof playSound === 'function') playSound('success');
+        t_showMiniToast('🎉 Simulação concluída com sucesso!');
+
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '▶ Simular o Computador Pensando Novamente';
+        }
+        t_portugolSimRunning = false;
+    }
+    window.t_runPortugolCpuSimulation = t_runPortugolCpuSimulation;
+
+    function t_checkQuizAnswer(optIdx, btnEl) {
+        const feedbackEl = document.getElementById('t_quiz_feedback');
+        document.querySelectorAll('.t-quiz-opt').forEach(b => b.classList.remove('correct', 'incorrect'));
+        if (optIdx === 1) { // Opção B é a correta
+            btnEl.classList.add('correct');
+            if (typeof playSound === 'function') playSound('success');
+            if (feedbackEl) {
+                feedbackEl.style.display = 'block';
+                feedbackEl.style.color = '#6EE7B7';
+                feedbackEl.innerHTML = `🎉 <b>ACERTOU EM CHEIO!</b> Exatamente: como o tesouro está para baixo, você precisa de 2 comandos <code>andarBaixo()</code> em sequência. O robô nunca adivinha atalhos!`;
+            }
+        } else {
+            btnEl.classList.add('incorrect');
+            if (typeof playSound === 'function') playSound('error');
+            if (feedbackEl) {
+                feedbackEl.style.display = 'block';
+                feedbackEl.style.color = '#FCA5A5';
+                feedbackEl.innerHTML = `❌ <b>Quase lá!</b> Lembre-se: o robô só faz o que mandamos passo a passo. Tente a opção que manda ele andar para baixo 2 vezes!`;
+            }
+        }
+    }
+    window.t_checkQuizAnswer = t_checkQuizAnswer;
+
 
